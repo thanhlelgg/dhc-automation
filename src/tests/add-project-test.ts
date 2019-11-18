@@ -1,14 +1,18 @@
 import { gondola, TestCase, TestModule } from "gondolajs";
-import loginPage from "../pages/loginPage";
-import addProjectPage from "../pages/addProjectPage";
-import businessSystempage from "../pages/businessSystemPage";
-import listProjectPage from "../pages/listProjectPage";
+import loginPage from "../pages/login-page";
+import addProjectPage from "../pages/add-project-page";
+import businessSystempage from "../pages/business-system-page";
+import listProjectPage from "../pages/list-project-page";
 import { constants } from "../common/constants";
 
 TestModule("");
-TestCase("Verify add project successfully", async () => {
+
+Before(async () => {
     await loginPage.openWebsite();
     await loginPage.login(constants.adminUserName, constants.adminPassword);
+});
+
+TestCase("Verify add project successfully", async () => {
     await loginPage.gotoBusinessSystem();
     await businessSystempage.gotoAddProjectPage();
     await addProjectPage.inputProjectOverview("123", constants.projectForms.result, "test", "営業部", "西川三郎", "2019-08-13", "2019-08-16", "2019-08-13", "2019-08-16", constants.accuracyTypes.high,
@@ -21,5 +25,5 @@ TestCase("Verify add project successfully", async () => {
 
     // verify result
     await businessSystempage.gotoListProject();
-    await listProjectPage.checkProjectExist(projectCode);
+    await gondola.checkControlExist(listProjectPage.getProjectLink(projectCode));
 });

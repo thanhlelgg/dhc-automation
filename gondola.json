@@ -1,5 +1,5 @@
 {
-    "tests": "./built/**/addProject_test.js",
+    "tests": "./built/**/*-test.js",
     "timeout": 10000,
     "output": "./results",
     "helpers": {
@@ -15,7 +15,7 @@
             "require": "gondolajs/built/helper/gondolahelper"
         },
         "HoaHelper": {
-            "require": "./built/helper/hoaHelper"
+            "require": "./built/helper/hoa-helpers"
         },
         "Mochawesome": {
             "uniqueScreenshotNames": true

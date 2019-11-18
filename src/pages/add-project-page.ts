@@ -1,15 +1,14 @@
 import { action, gondola, locator, page } from "gondolajs";
-import { generalPage } from "./generalPage";
+import { generalPage } from "./general-page";
 import { utilities } from "../common/utilities";
 import { constants } from "../common/constants";
 @page
 export class projectPage extends generalPage{
     protected itemStr = "(//div[@role='row']//div[contains(.,'{0}')])[1]";
 
-    // project result 
+    //#region project result 
     @locator
-    protected subTitleProjectResult = {xpath: "//div[.='出来高明細']"};
-
+    protected subTitleProjectResult = "//div[.='出来高明細']";
     //protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]//input[@type='checkbox']/preceding-sibling::input";
     protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]";
     protected roleRowStr = "//tr[contains(.,'{0}')]";
@@ -28,12 +27,14 @@ export class projectPage extends generalPage{
     protected taxIdByRoleStr = "//tr[contains(.,'{0}')]//select[contains(@id, 'tax-id')]";
     protected notebyRoleStr = "//tr[contains(.,'{0}')]//textarea[contains(@id, 'note')]";
     protected outputOrderbyRoleStr = "//tr[contains(.,'{0}')]//input[contains(@id, 'output-order')]";
-
-    // search item
+    //#endregion
+    
+    //#region Search
     @locator
-    protected itemFilter = {xpath: "//input[@id='modal-items-filter']"};
+    protected itemFilter = "//input[@id='modal-items-filter']";
     @locator 
     protected itemTable = {id: "modal-items-table"};
+    //#endregion
 
     @locator
     protected projectCode = {id: "number"};
@@ -41,7 +42,8 @@ export class projectPage extends generalPage{
     protected projectName = {id: "name"};
     @locator
     protected projectForm = {name: "project_form"};
-    // search customer
+
+    //#region Search customer
     @locator
     protected searchCustomerField = {id: "search-business-customers"};
     @locator
@@ -52,20 +54,25 @@ export class projectPage extends generalPage{
     protected customerRepNameFilter = {id: "modal-business-customers-filter-rep-name"};
     @locator
     protected customerTable = {id: "modal-business-customers-table"};
-    // search department
+    //#endregion
+
+    //#region search department
     @locator
     protected searchDepartmentField = {id: "search-departments"};
     @locator
     protected departmentFilter = {id: "modal-departments-filter"};
     @locator
     protected departmentTable = {id: "modal-departments-table"};
-    // search worker
+    //#endregion
+
+    //#region search worker
     @locator
     protected searchWorkerField = {id: "search-workers"};
     @locator
     protected workerFilter = {id: "modal-workers-filter"};
+    //#endregion
 
-    // dates
+    //#region dates
     @locator
     protected startDate = {name: "start_date"};
     @locator
@@ -74,6 +81,7 @@ export class projectPage extends generalPage{
     protected scheduleStartDate = {name: "scheduled_start_date"};
     @locator
     protected scheduleEndDate = {name: "scheduled_end_date"};
+    //#endregion
     
     @locator
     protected accuracy = {name: "accuracy"};
@@ -88,23 +96,23 @@ export class projectPage extends generalPage{
     @locator
     protected closingDate = {name: "closing_date"};
 
-    // search Segment
+    //#region search Segment
     @locator
     protected searchSegmentField = {id: "search-segments"};
     @locator
     protected segmentFilter = {id: "modal-segments-filter"};
     @locator
     protected segmentTable = {id: "modal-segments-table"};
+    //#endregion
 
     @locator
     protected tag = {id: "tag"};
     @locator
     protected description = {id: "description"};
 
-    // project detail
+    //#region project detail
     @locator
     protected addProjectDetailBtn = {id: "project-details-add-row"};
-
     protected removeIconByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//a[@class='remove-project-details']";
     protected detailNamebyRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[@id='project-details-i-name']";
     protected searchItemByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[@class='search-items  form-control']";
@@ -118,8 +126,9 @@ export class projectPage extends generalPage{
     protected deliveryDateByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, 'delivery_date')]";
     protected acceptedDateByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, 'accepted_date')]";
     protected billingDateByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, 'billing_date')]";
+    //#endregion
 
-    // resource
+    //#region resource
     @locator
     protected searchLabField = {id: "search-labs"};
     @locator
@@ -130,7 +139,6 @@ export class projectPage extends generalPage{
     protected workEndTime = {id: "work_end_time_in_utc"};
     @locator
     protected addResourceButton = {id: "project-resources-add-row"};
-
     protected removeResourceButtonByRowStr = "//div[@id='project-resources']//div[@class='tabulator-table']/div[{0}]//a[@href='javascript:;']";
     protected resourceDateByRowStr = "//div[@id='project-resources']//div[@class='tabulator-table']/div[{0}]//input[@class='date-picker form-control']";
     protected countPMByRowStr = "//div[@id='project-resources']//div[@class='tabulator-table']/div[{0}]//input[@id='project-resources-i-project-resource-headcounts-0-count']";
@@ -143,14 +151,14 @@ export class projectPage extends generalPage{
     protected countReserve3ByRowStr = "//div[@id='project-resources']//div[@class='tabulator-table']/div[{0}]//input[@id='project-resources-i-project-resource-headcounts-7-count']";
     protected countReserve4ByRowStr = "//div[@id='project-resources']//div[@class='tabulator-table']/div[{0}]//input[@id='project-resources-i-project-resource-headcounts-8-count']";
     protected countReserve5ByRowStr = "//div[@id='project-resources']//div[@class='tabulator-table']/div[{0}]//input[@id='project-resources-i-project-resource-headcounts-9-count']";
+    //#endregion
 
-    // save button
     @locator
     protected saveButton = {css: ".btn-info"};
 
-    // project ordered detail
-    protected subTitleProjectOrderedDetail = {xpath: "//div[.='非稼働明細']"};
-    protected addProjectOrderedDetailBtn = {xpath: "//div[@id='project-ordered-detail']/button"};
+    //#region project ordered detail
+    protected subTitleProjectOrderedDetail = "//div[.='非稼働明細']";
+    protected addProjectOrderedDetailBtn = "//div[@id='project-ordered-detail']/button";
     protected projectOrderedNameStr = "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[name]') and not(contains(@name, 'item'))]";
     protected projectOrderedSearchItemStr = "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[item][name]')]";
     protected projectOrderedDebitCreditStr = "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//select[contains(@name, '[debit_credit_group_id]')]";
@@ -163,10 +171,11 @@ export class projectPage extends generalPage{
     protected projectOrderedDeliveryDateStr = "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[delivery_date]')]";
     protected projectOrderedRecordDateStr = "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[record_date]')]";
     protected projectOrderedBillingDateStr = "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[billing_date]')]";
-
+    //#endregion
+    
     @action("selectItem")
     public async selectItem(itemName: string){
-        let itemXpath = {xpath: utilities.formatString(this.itemStr, itemName)};
+        let itemXpath = utilities.formatString(this.itemStr, itemName);
         await gondola.click(itemXpath);
     }
 
@@ -212,9 +221,9 @@ export class projectPage extends generalPage{
 
     @action("searchItem")
     public async searchItem(item: string, index: any, position: string){
-        let searchItemXpath = {xpath: utilities.formatString(this.searchItemByRoleStr, index)};
+        let searchItemXpath = utilities.formatString(this.searchItemByRoleStr, index);
         if (position == "detail"){
-            searchItemXpath = {xpath: utilities.formatString(this.searchItemByRowStr, index)};
+            searchItemXpath = utilities.formatString(this.searchItemByRowStr, index);
         } 
         
         await gondola.click(searchItemXpath);
@@ -261,26 +270,26 @@ export class projectPage extends generalPage{
         unitPriceWeekdayLateOT: string, unitPriceHolidayLate: string, isTaxable: boolean, taxId: string, note: string, outputOrder: string){
         let formExist = await gondola.doesControlExist(this.subTitleProjectResult);
         if (formExist){
-            let checkBoxXpath = {xpath: utilities.formatString(this.roleCheckboxStr, role)};
+            let checkBoxXpath = utilities.formatString(this.roleCheckboxStr, role);
             await gondola.click(checkBoxXpath);
             await this.searchItem(item, role, "result bases");
-            await gondola.select({xpath: utilities.formatString(this.debitCreditByRoleStr, role)}, debitCredit);
-            await gondola.enter({xpath: utilities.formatString(this.planPeopleByRoleStr, role)}, planPeople + "");
-            await gondola.enter({xpath: utilities.formatString(this.planTimeByRoleStr, role)}, planTime + "");
+            await gondola.select(utilities.formatString(this.debitCreditByRoleStr, role), debitCredit);
+            await gondola.enter(utilities.formatString(this.planPeopleByRoleStr, role), planPeople + "");
+            await gondola.enter(utilities.formatString(this.planTimeByRoleStr, role), planTime + "");
             // check plan total time
-            await this.checkPlanTotalTime(planTime, planPeople, {xpath: utilities.formatString(this.planTotalTimeByRoleStr, role)});
-            await this.enterText({xpath: utilities.formatString(this.unitPriceWeekdayByRoleStr, role)}, unitPriceWeekday);
-            await gondola.enter({xpath: utilities.formatString(this.unitPriceWeekdayOTByRoleStr, role)}, unitPriceWeekdayOT);
-            await gondola.enter({xpath: utilities.formatString(this.unitPriceHolidayByRoleStr, role)}, unitPriceHoliday);
-            await gondola.enter({xpath: utilities.formatString(this.unitPriceWeekdayLateByRoleStr, role)}, unitPriceWeekDayLate);
-            await gondola.enter({xpath: utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, role)}, unitPriceWeekdayLateOT);
-            await gondola.enter({xpath: utilities.formatString(this.unitPriceHolidayLateByRoleStr, role)}, unitPriceHolidayLate);
-            await gondola.setState({xpath: utilities.formatString(this.isTaxableByRoleStr, role)}, isTaxable);
+            await this.checkPlanTotalTime(planTime, planPeople, utilities.formatString(this.planTotalTimeByRoleStr, role));
+            await this.enterText(utilities.formatString(this.unitPriceWeekdayByRoleStr, role), unitPriceWeekday);
+            await gondola.enter(utilities.formatString(this.unitPriceWeekdayOTByRoleStr, role), unitPriceWeekdayOT);
+            await gondola.enter(utilities.formatString(this.unitPriceHolidayByRoleStr, role), unitPriceHoliday);
+            await gondola.enter(utilities.formatString(this.unitPriceWeekdayLateByRoleStr, role), unitPriceWeekDayLate);
+            await gondola.enter(utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, role), unitPriceWeekdayLateOT);
+            await gondola.enter(utilities.formatString(this.unitPriceHolidayLateByRoleStr, role), unitPriceHolidayLate);
+            await gondola.setState(utilities.formatString(this.isTaxableByRoleStr, role), isTaxable);
             if (isTaxable){
-                await gondola.select({xpath: utilities.formatString(this.taxIdByRoleStr, role)}, taxId);
+                await gondola.select(utilities.formatString(this.taxIdByRoleStr, role), taxId);
             }
-            await gondola.enter({xpath: utilities.formatString(this.notebyRoleStr, role)}, note);
-            await gondola.enter({xpath: utilities.formatString(this.outputOrderbyRoleStr, role)}, outputOrder);
+            await gondola.enter(utilities.formatString(this.notebyRoleStr, role), note);
+            await gondola.enter(utilities.formatString(this.outputOrderbyRoleStr, role), outputOrder);
 
         }
     }
@@ -289,18 +298,18 @@ export class projectPage extends generalPage{
     public async addProjectDetails(index : any, detailName: string, item: string, debitCredit: string, isTaxable: boolean, taxId: string,
         quantity: string, unit: string, unitPrice: string, shipDate: string, deliveryDate: string, acceptedDate: string, billingDate: string){
         await gondola.click(this.addProjectDetailBtn);
-        await gondola.enter({xpath: utilities.formatString(this.detailNamebyRowStr, index)}, detailName);
+        await gondola.enter(utilities.formatString(this.detailNamebyRowStr, index), detailName);
         await this.searchItem(item, index, "detail");
-        await gondola.select({xpath: utilities.formatString(this.debitCreditByRowStr, index)}, debitCredit);
-        await gondola.setState({xpath: utilities.formatString(this.isTaxableByRowStr, index)}, isTaxable);
-        await gondola.select({xpath: utilities.formatString(this.taxIdByRowStr, index)}, taxId);
-        await gondola.enter({xpath: utilities.formatString(this.quantityByRowStr, index)}, quantity);
-        await gondola.enter({xpath: utilities.formatString(this.unitByRowStr, index)}, unit);
-        await gondola.enter({xpath: utilities.formatString(this.unitPriceByRowStr, index)}, unitPrice);
-        await gondola.enter({xpath: utilities.formatString(this.shipDateByRowStr, index)}, shipDate);
-        await gondola.enter({xpath: utilities.formatString(this.deliveryDateByRowStr, index)}, deliveryDate);
-        await gondola.enter({xpath: utilities.formatString(this.acceptedDateByRowStr, index)}, acceptedDate);
-        await gondola.enter({xpath: utilities.formatString(this.billingDateByRowStr, index)}, billingDate);
+        await gondola.select(utilities.formatString(this.debitCreditByRowStr, index), debitCredit);
+        await gondola.setState(utilities.formatString(this.isTaxableByRowStr, index), isTaxable);
+        await gondola.select(utilities.formatString(this.taxIdByRowStr, index), taxId);
+        await gondola.enter(utilities.formatString(this.quantityByRowStr, index), quantity);
+        await gondola.enter(utilities.formatString(this.unitByRowStr, index), unit);
+        await gondola.enter(utilities.formatString(this.unitPriceByRowStr, index), unitPrice);
+        await gondola.enter(utilities.formatString(this.shipDateByRowStr, index), shipDate);
+        await gondola.enter(utilities.formatString(this.deliveryDateByRowStr, index), deliveryDate);
+        await gondola.enter(utilities.formatString(this.acceptedDateByRowStr, index), acceptedDate);
+        await gondola.enter(utilities.formatString(this.billingDateByRowStr, index), billingDate);
     }
 
     @action("inputProjectResource")
@@ -314,17 +323,17 @@ export class projectPage extends generalPage{
     public async addResourceRow(index: any, resourceDate: string, countPM: string, countLeader: string, countTester: string, countDesigner: string,
         countExpert: string, countReserve1: string, countReserve2: string, countReserve3: string, countReserve4: string, countReserve5: string){
         await gondola.click(this.addResourceButton);
-        await gondola.enter({xpath: utilities.formatString(this.resourceDateByRowStr, index)}, resourceDate);
-        await gondola.enter({xpath: utilities.formatString(this.countPMByRowStr, index)}, countPM);
-        await gondola.enter({xpath: utilities.formatString(this.countLeaderByRowStr, index)}, countLeader);
-        await gondola.enter({xpath: utilities.formatString(this.countTesterByRowStr, index)}, countTester);
-        await gondola.enter({xpath: utilities.formatString(this.countDesignerByRowStr, index)}, countDesigner);
-        await gondola.enter({xpath: utilities.formatString(this.countExpertByRowStr, index)}, countExpert);
-        await gondola.enter({xpath: utilities.formatString(this.countReserve1ByRowStr, index)}, countReserve1);
-        await gondola.enter({xpath: utilities.formatString(this.countReserve2ByRowStr, index)}, countReserve2);
-        await gondola.enter({xpath: utilities.formatString(this.countReserve3ByRowStr, index)}, countReserve3);
-        await gondola.enter({xpath: utilities.formatString(this.countReserve4ByRowStr, index)}, countReserve4);
-        await gondola.enter({xpath: utilities.formatString(this.countReserve5ByRowStr, index)}, countReserve5);
+        await gondola.enter(utilities.formatString(this.resourceDateByRowStr, index), resourceDate);
+        await gondola.enter(utilities.formatString(this.countPMByRowStr, index), countPM);
+        await gondola.enter(utilities.formatString(this.countLeaderByRowStr, index), countLeader);
+        await gondola.enter(utilities.formatString(this.countTesterByRowStr, index), countTester);
+        await gondola.enter(utilities.formatString(this.countDesignerByRowStr, index), countDesigner);
+        await gondola.enter(utilities.formatString(this.countExpertByRowStr, index), countExpert);
+        await gondola.enter(utilities.formatString(this.countReserve1ByRowStr, index), countReserve1);
+        await gondola.enter(utilities.formatString(this.countReserve2ByRowStr, index), countReserve2);
+        await gondola.enter(utilities.formatString(this.countReserve3ByRowStr, index), countReserve3);
+        await gondola.enter(utilities.formatString(this.countReserve4ByRowStr, index), countReserve4);
+        await gondola.enter(utilities.formatString(this.countReserve5ByRowStr, index), countReserve5);
     }
 
     @action("saveNewProject")

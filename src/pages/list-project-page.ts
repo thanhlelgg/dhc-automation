@@ -36,7 +36,7 @@ export class listProjectPage {
     @locator
     protected scheduleEndDateEnd = {id: "scheduled-end-date-end"};
     @locator
-    protected searchButton = {xpath: "//button[@class='btn btn-info px-5 mr-2']"};
+    protected searchButton = "//button[@class='btn btn-info px-5 mr-2']";
 
     protected editProjectLinkStr = "//a[.='{0}']";
 
@@ -92,10 +92,9 @@ export class listProjectPage {
             await gondola.click(this.searchButton);
     }
 
-    @action("checkProjectExit")
-    public async checkProjectExist(projectCode: string){
-        let editLink = {xpath: utilities.formatString(this.editProjectLinkStr, projectCode)};
-        await gondola.checkControlExist(editLink);
+    @action("getProjectLink")
+    public getProjectLink(projectCode: string){
+        return utilities.formatString(this.editProjectLinkStr, projectCode);
     }
 }
 export default new listProjectPage();

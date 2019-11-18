@@ -8,11 +8,11 @@ export class generalPage {
     @locator
     protected captionSubject = {css: ".page-title-text"};
     @locator
-    protected homeLink = {xpath: "//a[.='ホーム']"};
+    protected homeLink = "//a[.='ホーム']";
     @locator
-    protected businessSystemLink = {xpath: "//a[.='営業管理']"};
+    protected businessSystemLink = "//a[.='営業管理']";
     @locator
-    protected taskSystemLink = {xpath: "//a[.='業務管理']"};
+    protected taskSystemLink = "//a[.='業務管理']";
 
     @action("gotoHome")
     public async gotoHome(){

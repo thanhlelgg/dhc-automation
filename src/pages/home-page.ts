@@ -1,5 +1,5 @@
 import { action, gondola, locator, page } from "gondolajs";
-import { generalPage } from "./generalPage";
+import { generalPage } from "./general-page";
 @page
 export class homePage extends generalPage{
 
