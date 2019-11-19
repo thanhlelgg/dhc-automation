@@ -248,16 +248,16 @@ export class projectPage extends generalPage{
         await this.searchCustomerByName(projectOverview.$customerName);
         await this.searchDepartment(projectOverview.$department);
         await this.searchWorker(projectOverview.$workerName);
-        if (projectOverview.$startDate != undefined){
+        if (projectOverview.$startDate !== undefined){
             await this.enterText(this.startDate, projectOverview.$startDate);
         }
-        if (projectOverview.$endDate != undefined){
+        if (projectOverview.$endDate !== undefined){
             await this.enterText(this.endDate, projectOverview.$endDate);
         }
-        if (projectOverview.$scheduleStartDate != undefined){
+        if (projectOverview.$scheduleStartDate !== undefined){
             await this.enterText(this.scheduleStartDate, projectOverview.$scheduleStartDate);
         }
-        if (projectOverview.$scheduleEndDate != undefined){
+        if (projectOverview.$scheduleEndDate !== undefined){
             await this.enterText(this.scheduleEndDate, projectOverview.$scheduleEndDate);
         }
         await gondola.select(this.accuracy, projectOverview.$accuracy);
@@ -267,17 +267,17 @@ export class projectPage extends generalPage{
         await gondola.select(this.billingType, projectOverview.$billingType);
         await gondola.select(this.closingDate, projectOverview.$closingDate);
         await this.searchSegment(projectOverview.$segment);
-        if (projectOverview.$tag != undefined){
+        if (projectOverview.$tag !== undefined){
             await this.enterText(this.tag, projectOverview.$tag);
         }
-        if (projectOverview.$description != undefined){
+        if (projectOverview.$description !== undefined){
             await this.enterText(this.description, projectOverview.$description);
         }
     }
 
     @action("inputProjectResultBases")
     public async inputProjectResultBases(role: string, item: string, debitCredit: string, planPeople: number, planTime: number,
-        planTotalTime: string, unitPriceWeekday: string, unitPriceWeekdayOT: string, unitPriceHoliday: string, unitPriceWeekDayLate: string,
+        unitPriceWeekday: string, unitPriceWeekdayOT: string, unitPriceHoliday: string, unitPriceWeekDayLate: string,
         unitPriceWeekdayLateOT: string, unitPriceHolidayLate: string, isTaxable: boolean, taxId: string, note: string, outputOrder: string){
         let formExist = await gondola.doesControlExist(this.subTitleProjectResult);
         if (formExist){
@@ -299,9 +299,14 @@ export class projectPage extends generalPage{
             if (isTaxable){
                 await gondola.select(utilities.formatString(this.taxIdByRoleStr, role), taxId);
             }
-            await gondola.enter(utilities.formatString(this.notebyRoleStr, role), note);
-            await gondola.enter(utilities.formatString(this.outputOrderbyRoleStr, role), outputOrder);
 
+            if (note !== undefined){
+                await gondola.enter(utilities.formatString(this.notebyRoleStr, role), note);
+            }
+            if (outputOrder !== undefined){
+                await gondola.enter(utilities.formatString(this.outputOrderbyRoleStr, role), outputOrder);
+            }
+            
         }
     }
 
@@ -317,10 +322,18 @@ export class projectPage extends generalPage{
         await gondola.enter(utilities.formatString(this.quantityByRowStr, index), quantity);
         await gondola.enter(utilities.formatString(this.unitByRowStr, index), unit);
         await gondola.enter(utilities.formatString(this.unitPriceByRowStr, index), unitPrice);
-        await gondola.enter(utilities.formatString(this.shipDateByRowStr, index), shipDate);
-        await gondola.enter(utilities.formatString(this.deliveryDateByRowStr, index), deliveryDate);
-        await gondola.enter(utilities.formatString(this.acceptedDateByRowStr, index), acceptedDate);
-        await gondola.enter(utilities.formatString(this.billingDateByRowStr, index), billingDate);
+        if (shipDate !== undefined){
+            await gondola.enter(utilities.formatString(this.shipDateByRowStr, index), shipDate);
+        }
+        if (deliveryDate !== undefined){
+            await gondola.enter(utilities.formatString(this.deliveryDateByRowStr, index), deliveryDate);
+        }
+        if (acceptedDate !== undefined){
+            await gondola.enter(utilities.formatString(this.acceptedDateByRowStr, index), acceptedDate);
+        }
+        if (billingDate !== undefined){
+            await gondola.enter(utilities.formatString(this.billingDateByRowStr, index), billingDate);
+        }
     }
 
     @action("inputProjectResource")

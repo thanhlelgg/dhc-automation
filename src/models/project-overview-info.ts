@@ -1,5 +1,3 @@
-import utilities from "../common/utilities";
-
 interface IProjectOverviewInfo {
     projectName: string;
     projectForm: string;
@@ -25,8 +23,8 @@ export class ProjectOverviewInfo {
 
     private projectOverview: IProjectOverviewInfo;
 
-    constructor(projectOverview: IProjectOverviewInfo) {
-        this.projectOverview = projectOverview;
+    constructor($projectOverview: IProjectOverviewInfo) {
+        this.projectOverview = $projectOverview;
     }
 
     /**

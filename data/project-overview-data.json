@@ -15,9 +15,6 @@
     "billingType": "得意先合算",
     "closingDate": "1",
     "segment": "123",
-    "tag": [
-        "123",
-        "abc"
-    ],
+    "tag": "123,test",
     "description": "string"
 }

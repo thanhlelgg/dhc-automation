@@ -6,7 +6,7 @@ export class utilities {
         return str;
     }
 
-    public mapJsonToClass(mapper: any, json: any): any {
+    public static mapJsonToClass(mapper: any, json: any): any {
       let adaptedObj: any = {};
       const fields: Array<string> = Object.keys(mapper);
       for (let field of fields) {
