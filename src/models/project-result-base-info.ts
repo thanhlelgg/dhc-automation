@@ -11,7 +11,7 @@ interface IProjectResultBaseInfo {
     unitPriceWeekdayLateOT: string; 
     unitPriceHolidayLate: string; 
     isTaxable: boolean; 
-    taxId?: string; 
+    taxId: string; 
     note?: string; 
     outputOrder?: string;
 }
@@ -122,9 +122,9 @@ export class ProjectResultBaseInfo{
 
     /**
      * Getter $taxId
-     * @return {string | undefined}
+     * @return {string}
      */
-	public get $taxId(): string | undefined{
+	public get $taxId(): string{
 		return this.projectResultBase.taxId;
 	}
 
@@ -134,6 +134,14 @@ export class ProjectResultBaseInfo{
      */
 	public get $note(): string |undefined {
 		return this.projectResultBase.note;
+    }
+    
+    /**
+     * Getter $outputOrder
+     * @return {string | undefined}
+     */
+	public get $outputOrder(): string |undefined {
+		return this.projectResultBase.outputOrder;
 	}
 
     /**
@@ -234,9 +242,9 @@ export class ProjectResultBaseInfo{
 
     /**
      * Setter $taxId
-     * @param {string | undefined} value
+     * @param {string} value
      */
-	public set $taxId(value: string | undefined) {
+	public set $taxId(value: string) {
 		this.projectResultBase.taxId = value;
 	}
 
@@ -246,5 +254,13 @@ export class ProjectResultBaseInfo{
      */
 	public set $note(value: string | undefined) {
 		this.projectResultBase.note = value;
+    }
+    
+    /**
+     * Setter $outputOrder
+     * @param {string | undefined} value
+     */
+	public set $outputOrder(value: string | undefined) {
+		this.projectResultBase.outputOrder = value;
 	}
 }

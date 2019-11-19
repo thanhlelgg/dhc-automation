@@ -4,8 +4,11 @@ import addProjectPage from "../pages/add-project-page";
 import businessSystempage from "../pages/business-system-page";
 import listProjectPage from "../pages/list-project-page";
 import { constants } from "../common/constants";
-import { ProjectOverviewInfo } from "../models/project-overview-info";
+import { ProjectOverviewInfo, IProjectOverviewInfo } from "../models/project-overview-info";
 import { utilities } from "../common/utilities";
+import { ProjectResultBaseInfo } from "../models/project-result-base-info";
+import { ProjectDetailInfo } from "../models/project-detail-info";
+import { ProjectResourceInfo } from "../models/project-resource-info";
 
 TestModule("");
 
@@ -15,33 +18,21 @@ Before(async () => {
 });
 
 TestCase("Verify add project successfully", async () => {
-    var projectOverview = new ProjectOverviewInfo({
-        projectName: "123", 
-        projectForm: constants.projectForms.result, 
-        customerName: "test", 
-        department: "営業部", 
-        workerName: "西川三郎", 
-        startDate: undefined, 
-        endDate: undefined, 
-        scheduleStartDate: undefined, 
-        scheduleEndDate: undefined, 
-        accuracy: constants.accuracyTypes.high,
-        status: constants.projectStatuses.delivered, 
-        workingPlace: constants.projectPlace.dispatch, 
-        currencyId: constants.currencyIds.jpy, 
-        billingType: constants.billingTypes.consolidate, 
-        closingDate: constants.closingDates[1], 
-        segment: "123", 
-        tag: "123,test", 
-        description: "123"
-    });
+    const projectOverviewData = importData("./data/project-overview-data.json");
+    let projectOverview = new ProjectOverviewInfo(projectOverviewData[0]);
+    const projectResultBaseData = importData("./data/project-result-base-data.json");
+    let projectResultBase = new ProjectResultBaseInfo(projectResultBaseData[0]);
+    const projectDetailData = importData("./data/project-detail-data.json");
+    let projectDetail = new ProjectDetailInfo(projectDetailData[0]);
+    const projectResourceData = importData("./data/project-resource-data.json");
+    let projectResource = new ProjectResourceInfo(projectResourceData[0]);
     await loginPage.gotoBusinessSystem();
     await businessSystempage.gotoAddProjectPage();
     await addProjectPage.inputProjectOverview(projectOverview);
-    await addProjectPage.inputProjectResultBases(constants.projectRole.designer, "SES", constants.debitCreditGroupIds.advance, 2, 8, "3000", "4000", "5000", "5000", "5000", "7000", true, constants.taxIds[10], "123", "4");
-    await addProjectPage.addProjectDetails("1", "abc", "SES", constants.debitCreditGroupIds.advance, true, constants.taxIds[10], "1", "1", "1", "2019-08-13", "2019-08-16", "2019-08-17", "2019-08-18");
+    await addProjectPage.inputProjectResultBases(projectResultBase);
+    await addProjectPage.addProjectDetails("1", projectDetail);
     await addProjectPage.inputProjectResource("ZEG", "08:00", "17:30");
-    await addProjectPage.addResourceRow("1", "2019-08-13", "1", "1", "2", "1", "1", "0", "0", "0", "0", "0");
+    await addProjectPage.addResourceRow("1", projectResource);
     let projectCode = await addProjectPage.getProjectCode();
     await addProjectPage.saveNewProject();
 

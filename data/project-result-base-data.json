@@ -1,0 +1,17 @@
+{
+    "role": "設計者",
+    "item": "SES",
+    "debitCredit": "前受",
+    "planPeople": 2,
+    "planTime": 8,
+    "unitPriceWeekday": "3000",
+    "unitPriceWeekdayOT": "4000",
+    "unitPriceHoliday": "5000",
+    "unitPriceWeekDayLate": "5000",
+    "unitPriceWeekdayLateOT": "5000",
+    "unitPriceHolidayLate": "7000",
+    "isTaxable": true,
+    "taxId": "10%",
+    "note": null,
+    "outputOrder": "4"
+}

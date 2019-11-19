@@ -1,4 +1,4 @@
-interface IProjectOverviewInfo {
+export interface IProjectOverviewInfo {
     projectName: string;
     projectForm: string;
     customerName: string;

@@ -3,6 +3,9 @@ import { generalPage } from "./general-page";
 import { utilities } from "../common/utilities";
 import { constants } from "../common/constants";
 import { ProjectOverviewInfo } from "../models/project-overview-info";
+import { ProjectResultBaseInfo } from "../models/project-result-base-info";
+import { ProjectDetailInfo } from "../models/project-detail-info";
+import { ProjectResourceInfo } from "../models/project-resource-info";
 @page
 export class projectPage extends generalPage{
     protected itemStr = "(//div[@role='row']//div[contains(.,'{0}')])[1]";
@@ -248,16 +251,16 @@ export class projectPage extends generalPage{
         await this.searchCustomerByName(projectOverview.$customerName);
         await this.searchDepartment(projectOverview.$department);
         await this.searchWorker(projectOverview.$workerName);
-        if (projectOverview.$startDate !== undefined){
+        if (projectOverview.$startDate !== undefined && projectOverview.$startDate !== null){
             await this.enterText(this.startDate, projectOverview.$startDate);
         }
-        if (projectOverview.$endDate !== undefined){
+        if (projectOverview.$endDate !== undefined && projectOverview.$endDate !== null){
             await this.enterText(this.endDate, projectOverview.$endDate);
         }
-        if (projectOverview.$scheduleStartDate !== undefined){
+        if (projectOverview.$scheduleStartDate !== undefined && projectOverview.$scheduleStartDate !== null){
             await this.enterText(this.scheduleStartDate, projectOverview.$scheduleStartDate);
         }
-        if (projectOverview.$scheduleEndDate !== undefined){
+        if (projectOverview.$scheduleEndDate !== undefined && projectOverview.$scheduleEndDate !== null){
             await this.enterText(this.scheduleEndDate, projectOverview.$scheduleEndDate);
         }
         await gondola.select(this.accuracy, projectOverview.$accuracy);
@@ -267,72 +270,69 @@ export class projectPage extends generalPage{
         await gondola.select(this.billingType, projectOverview.$billingType);
         await gondola.select(this.closingDate, projectOverview.$closingDate);
         await this.searchSegment(projectOverview.$segment);
-        if (projectOverview.$tag !== undefined){
+        if (projectOverview.$tag !== undefined && projectOverview.$tag !== null){
             await this.enterText(this.tag, projectOverview.$tag);
         }
-        if (projectOverview.$description !== undefined){
+        if (projectOverview.$description !== undefined && projectOverview.$description !== null){
             await this.enterText(this.description, projectOverview.$description);
         }
     }
 
     @action("inputProjectResultBases")
-    public async inputProjectResultBases(role: string, item: string, debitCredit: string, planPeople: number, planTime: number,
-        unitPriceWeekday: string, unitPriceWeekdayOT: string, unitPriceHoliday: string, unitPriceWeekDayLate: string,
-        unitPriceWeekdayLateOT: string, unitPriceHolidayLate: string, isTaxable: boolean, taxId: string, note: string, outputOrder: string){
+    public async inputProjectResultBases(projectResultBase: ProjectResultBaseInfo){
         let formExist = await gondola.doesControlExist(this.subTitleProjectResult);
         if (formExist){
-            let checkBoxXpath = utilities.formatString(this.roleCheckboxStr, role);
+            let checkBoxXpath = utilities.formatString(this.roleCheckboxStr, projectResultBase.$role);
             await gondola.click(checkBoxXpath);
-            await this.searchItem(item, role, "result bases");
-            await gondola.select(utilities.formatString(this.debitCreditByRoleStr, role), debitCredit);
-            await gondola.enter(utilities.formatString(this.planPeopleByRoleStr, role), planPeople + "");
-            await gondola.enter(utilities.formatString(this.planTimeByRoleStr, role), planTime + "");
+            await this.searchItem(projectResultBase.$item, projectResultBase.$role, "result bases");
+            await gondola.select(utilities.formatString(this.debitCreditByRoleStr, projectResultBase.$role), projectResultBase.$debitCredit);
+            await gondola.enter(utilities.formatString(this.planPeopleByRoleStr, projectResultBase.$role), projectResultBase.$planPeople + "");
+            await gondola.enter(utilities.formatString(this.planTimeByRoleStr, projectResultBase.$role), projectResultBase.$planTime + "");
             // check plan total time
-            await this.checkPlanTotalTime(planTime, planPeople, utilities.formatString(this.planTotalTimeByRoleStr, role));
-            await this.enterText(utilities.formatString(this.unitPriceWeekdayByRoleStr, role), unitPriceWeekday);
-            await gondola.enter(utilities.formatString(this.unitPriceWeekdayOTByRoleStr, role), unitPriceWeekdayOT);
-            await gondola.enter(utilities.formatString(this.unitPriceHolidayByRoleStr, role), unitPriceHoliday);
-            await gondola.enter(utilities.formatString(this.unitPriceWeekdayLateByRoleStr, role), unitPriceWeekDayLate);
-            await gondola.enter(utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, role), unitPriceWeekdayLateOT);
-            await gondola.enter(utilities.formatString(this.unitPriceHolidayLateByRoleStr, role), unitPriceHolidayLate);
-            await gondola.setState(utilities.formatString(this.isTaxableByRoleStr, role), isTaxable);
-            if (isTaxable){
-                await gondola.select(utilities.formatString(this.taxIdByRoleStr, role), taxId);
+            await this.checkPlanTotalTime(projectResultBase.$planTime, projectResultBase.$planPeople, utilities.formatString(this.planTotalTimeByRoleStr, projectResultBase.$role));
+            await this.enterText(utilities.formatString(this.unitPriceWeekdayByRoleStr, projectResultBase.$role), projectResultBase.$unitPriceWeekday);
+            await gondola.enter(utilities.formatString(this.unitPriceWeekdayOTByRoleStr, projectResultBase.$role), projectResultBase.$unitPriceWeekdayOT);
+            await gondola.enter(utilities.formatString(this.unitPriceHolidayByRoleStr, projectResultBase.$role), projectResultBase.$unitPriceHoliday);
+            await gondola.enter(utilities.formatString(this.unitPriceWeekdayLateByRoleStr, projectResultBase.$role), projectResultBase.$unitPriceWeekDayLate);
+            await gondola.enter(utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, projectResultBase.$role), projectResultBase.$unitPriceWeekdayLateOT);
+            await gondola.enter(utilities.formatString(this.unitPriceHolidayLateByRoleStr, projectResultBase.$role), projectResultBase.$unitPriceHolidayLate);
+            await gondola.setState(utilities.formatString(this.isTaxableByRoleStr, projectResultBase.$role), projectResultBase.$isTaxable);
+            if (projectResultBase.$isTaxable){
+                await gondola.select(utilities.formatString(this.taxIdByRoleStr, projectResultBase.$role), projectResultBase.$taxId);
             }
 
-            if (note !== undefined){
-                await gondola.enter(utilities.formatString(this.notebyRoleStr, role), note);
+            if (projectResultBase.$note !== undefined && projectResultBase.$note !== null){
+                await gondola.enter(utilities.formatString(this.notebyRoleStr, projectResultBase.$role), projectResultBase.$note);
             }
-            if (outputOrder !== undefined){
-                await gondola.enter(utilities.formatString(this.outputOrderbyRoleStr, role), outputOrder);
+            if (projectResultBase.$outputOrder !== undefined && projectResultBase.$outputOrder !== null){
+                await gondola.enter(utilities.formatString(this.outputOrderbyRoleStr, projectResultBase.$role), projectResultBase.$outputOrder);
             }
             
         }
     }
 
     @action("addProjectDetails")
-    public async addProjectDetails(index : any, detailName: string, item: string, debitCredit: string, isTaxable: boolean, taxId: string,
-        quantity: string, unit: string, unitPrice: string, shipDate: string, deliveryDate: string, acceptedDate: string, billingDate: string){
+    public async addProjectDetails(index : any, projectDetail : ProjectDetailInfo){
         await gondola.click(this.addProjectDetailBtn);
-        await gondola.enter(utilities.formatString(this.detailNamebyRowStr, index), detailName);
-        await this.searchItem(item, index, "detail");
-        await gondola.select(utilities.formatString(this.debitCreditByRowStr, index), debitCredit);
-        await gondola.setState(utilities.formatString(this.isTaxableByRowStr, index), isTaxable);
-        await gondola.select(utilities.formatString(this.taxIdByRowStr, index), taxId);
-        await gondola.enter(utilities.formatString(this.quantityByRowStr, index), quantity);
-        await gondola.enter(utilities.formatString(this.unitByRowStr, index), unit);
-        await gondola.enter(utilities.formatString(this.unitPriceByRowStr, index), unitPrice);
-        if (shipDate !== undefined){
-            await gondola.enter(utilities.formatString(this.shipDateByRowStr, index), shipDate);
+        await gondola.enter(utilities.formatString(this.detailNamebyRowStr, index), projectDetail.$detailName);
+        await this.searchItem(projectDetail.$item, index, "detail");
+        await gondola.select(utilities.formatString(this.debitCreditByRowStr, index), projectDetail.$debitCredit);
+        await gondola.setState(utilities.formatString(this.isTaxableByRowStr, index), projectDetail.$isTaxable);
+        await gondola.select(utilities.formatString(this.taxIdByRowStr, index), projectDetail.$taxId);
+        await gondola.enter(utilities.formatString(this.quantityByRowStr, index), projectDetail.$quantity);
+        await gondola.enter(utilities.formatString(this.unitByRowStr, index), projectDetail.$unit);
+        await gondola.enter(utilities.formatString(this.unitPriceByRowStr, index), projectDetail.$unitPrice);
+        if (projectDetail.$shipDate !== undefined && projectDetail.$shipDate !== null){
+            await gondola.enter(utilities.formatString(this.shipDateByRowStr, index), projectDetail.$shipDate);
         }
-        if (deliveryDate !== undefined){
-            await gondola.enter(utilities.formatString(this.deliveryDateByRowStr, index), deliveryDate);
+        if (projectDetail.$deliveryDate !== undefined && projectDetail.$deliveryDate !== null){
+            await gondola.enter(utilities.formatString(this.deliveryDateByRowStr, index), projectDetail.$deliveryDate);
         }
-        if (acceptedDate !== undefined){
-            await gondola.enter(utilities.formatString(this.acceptedDateByRowStr, index), acceptedDate);
+        if (projectDetail.$acceptedDate !== undefined && projectDetail.$acceptedDate !== null){
+            await gondola.enter(utilities.formatString(this.acceptedDateByRowStr, index), projectDetail.$acceptedDate);
         }
-        if (billingDate !== undefined){
-            await gondola.enter(utilities.formatString(this.billingDateByRowStr, index), billingDate);
+        if (projectDetail.$billingDate !== undefined && projectDetail.$billingDate !== null){
+            await gondola.enter(utilities.formatString(this.billingDateByRowStr, index), projectDetail.$billingDate);
         }
     }
 
@@ -344,20 +344,19 @@ export class projectPage extends generalPage{
     }
 
     @action("addResourceRow")
-    public async addResourceRow(index: any, resourceDate: string, countPM: string, countLeader: string, countTester: string, countDesigner: string,
-        countExpert: string, countReserve1: string, countReserve2: string, countReserve3: string, countReserve4: string, countReserve5: string){
+    public async addResourceRow(index: any, projectResource: ProjectResourceInfo){
         await gondola.click(this.addResourceButton);
-        await gondola.enter(utilities.formatString(this.resourceDateByRowStr, index), resourceDate);
-        await gondola.enter(utilities.formatString(this.countPMByRowStr, index), countPM);
-        await gondola.enter(utilities.formatString(this.countLeaderByRowStr, index), countLeader);
-        await gondola.enter(utilities.formatString(this.countTesterByRowStr, index), countTester);
-        await gondola.enter(utilities.formatString(this.countDesignerByRowStr, index), countDesigner);
-        await gondola.enter(utilities.formatString(this.countExpertByRowStr, index), countExpert);
-        await gondola.enter(utilities.formatString(this.countReserve1ByRowStr, index), countReserve1);
-        await gondola.enter(utilities.formatString(this.countReserve2ByRowStr, index), countReserve2);
-        await gondola.enter(utilities.formatString(this.countReserve3ByRowStr, index), countReserve3);
-        await gondola.enter(utilities.formatString(this.countReserve4ByRowStr, index), countReserve4);
-        await gondola.enter(utilities.formatString(this.countReserve5ByRowStr, index), countReserve5);
+        await gondola.enter(utilities.formatString(this.resourceDateByRowStr, index), projectResource.$resourceDate);
+        await gondola.enter(utilities.formatString(this.countPMByRowStr, index), projectResource.$countPM);
+        await gondola.enter(utilities.formatString(this.countLeaderByRowStr, index), projectResource.$countLeader);
+        await gondola.enter(utilities.formatString(this.countTesterByRowStr, index), projectResource.$countTester);
+        await gondola.enter(utilities.formatString(this.countDesignerByRowStr, index), projectResource.$countDesigner);
+        await gondola.enter(utilities.formatString(this.countExpertByRowStr, index), projectResource.$countExpert);
+        await gondola.enter(utilities.formatString(this.countReserve1ByRowStr, index), projectResource.$countReserve1);
+        await gondola.enter(utilities.formatString(this.countReserve2ByRowStr, index), projectResource.$countReserve2);
+        await gondola.enter(utilities.formatString(this.countReserve3ByRowStr, index), projectResource.$countReserve3);
+        await gondola.enter(utilities.formatString(this.countReserve4ByRowStr, index), projectResource.$countReserve4);
+        await gondola.enter(utilities.formatString(this.countReserve5ByRowStr, index), projectResource.$countReserve5);
     }
 
     @action("saveNewProject")

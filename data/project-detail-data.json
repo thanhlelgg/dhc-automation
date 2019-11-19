@@ -1,0 +1,14 @@
+{
+    "detailName": "abc",
+    "item": "SES",
+    "debitCredit": "前受",
+    "isTaxable": true,
+    "taxId": "10%",
+    "quantity": "1",
+    "unit": "1",
+    "unitPrice": "1",
+    "shipDate": "2019-08-13",
+    "deliveryDate": "2019-08-16",
+    "acceptedDate": "2019-08-17",
+    "billingDate": "2019-08-18"
+}
