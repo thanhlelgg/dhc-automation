@@ -1,3 +1,6 @@
 built/
 node_modules/
 results/
+node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+node_modules/protractor/node_modules/webdriver-manager/selenium/chrome-response.xml
+/node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
