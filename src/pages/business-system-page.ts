@@ -41,6 +41,7 @@ export class businessSystemPage extends generalPage{
     protected addSegmentLink = "//a[@href='/segments/add']";
 
     public async gotoAddProjectPage(){
+        await this.waitControlExist(this.projectLink, 30);
         await gondola.click(this.projectLink);
         await gondola.waitForElement(this.addProjectLink);
         await this.waitControlExist(this.addProjectLink, 10);
@@ -49,6 +50,7 @@ export class businessSystemPage extends generalPage{
 
     @action("gotoListProject")
     public async gotoListProject(){
+        await this.waitControlExist(this.projectLink, 30);
         await gondola.click(this.projectLink);
         await gondola.waitForElement(this.listProjectLink);
         await this.waitControlExist(this.listProjectLink, 10);

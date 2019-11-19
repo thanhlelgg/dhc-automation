@@ -5,5 +5,15 @@ export class utilities {
         }
         return str;
     }
+
+    public mapJsonToClass(mapper: any, json: any): any {
+      let adaptedObj: any = {};
+      const fields: Array<string> = Object.keys(mapper);
+      for (let field of fields) {
+        const targetField: any = mapper[field];
+        adaptedObj[targetField] = json[field];
+      }
+      return adaptedObj;
+    }
 }
 export default new utilities();

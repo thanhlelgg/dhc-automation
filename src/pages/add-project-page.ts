@@ -2,6 +2,7 @@ import { action, gondola, locator, page } from "gondolajs";
 import { generalPage } from "./general-page";
 import { utilities } from "../common/utilities";
 import { constants } from "../common/constants";
+import { ProjectOverviewInfo } from "../models/project-overview-info";
 @page
 export class projectPage extends generalPage{
     protected itemStr = "(//div[@role='row']//div[contains(.,'{0}')])[1]";
@@ -106,7 +107,7 @@ export class projectPage extends generalPage{
     //#endregion
 
     @locator
-    protected tag = {id: "tag"};
+    protected tag = "//input[@id='tag']//preceding-sibling::div//input";
     @locator
     protected description = {id: "description"};
 
@@ -241,27 +242,37 @@ export class projectPage extends generalPage{
     }
 
     @action("inputProjectOverview")
-    public async inputProjectOverview(projectName: string, projectForm: string, customerName: string, department: string, workerName: string,
-        startDate: string, endDate: string, scheduleStartDate: string, scheduleEndDate: string, accuracy: string, status: string, place: string,
-        currencyId: string, billingType: string, closingDate: string, segment: string, tag: string, description: string){
-        await gondola.enter(this.projectName, projectName);
-        await gondola.select(this.projectForm, projectForm);
-        await this.searchCustomerByName(customerName);
-        await this.searchDepartment(department);
-        await this.searchWorker(workerName);
-        await this.enterText(this.startDate, startDate);
-        await this.enterText(this.endDate, endDate);
-        await this.enterText(this.scheduleStartDate, scheduleStartDate);
-        await this.enterText(this.scheduleEndDate, scheduleEndDate);
-        await gondola.select(this.accuracy, accuracy);
-        await gondola.select(this.status, status);
-        await gondola.select(this.place, place);
-        await gondola.select(this.currencyId, currencyId);
-        await gondola.select(this.billingType, billingType);
-        await gondola.select(this.closingDate, closingDate);
-        await this.searchSegment(segment);
-        await gondola.enter(this.tag, tag);
-        await gondola.enter(this.description, description);
+    public async inputProjectOverview(projectOverview: ProjectOverviewInfo){
+        await gondola.enter(this.projectName, projectOverview.$projectName);
+        await gondola.select(this.projectForm, projectOverview.$projectForm);
+        await this.searchCustomerByName(projectOverview.$customerName);
+        await this.searchDepartment(projectOverview.$department);
+        await this.searchWorker(projectOverview.$workerName);
+        if (projectOverview.$startDate != undefined){
+            await this.enterText(this.startDate, projectOverview.$startDate);
+        }
+        if (projectOverview.$endDate != undefined){
+            await this.enterText(this.endDate, projectOverview.$endDate);
+        }
+        if (projectOverview.$scheduleStartDate != undefined){
+            await this.enterText(this.scheduleStartDate, projectOverview.$scheduleStartDate);
+        }
+        if (projectOverview.$scheduleEndDate != undefined){
+            await this.enterText(this.scheduleEndDate, projectOverview.$scheduleEndDate);
+        }
+        await gondola.select(this.accuracy, projectOverview.$accuracy);
+        await gondola.select(this.status, projectOverview.$status);
+        await gondola.select(this.place, projectOverview.$workingPlace);
+        await gondola.select(this.currencyId, projectOverview.$currencyId);
+        await gondola.select(this.billingType, projectOverview.$billingType);
+        await gondola.select(this.closingDate, projectOverview.$closingDate);
+        await this.searchSegment(projectOverview.$segment);
+        if (projectOverview.$tag != undefined){
+            await this.enterText(this.tag, projectOverview.$tag);
+        }
+        if (projectOverview.$description != undefined){
+            await this.enterText(this.description, projectOverview.$description);
+        }
     }
 
     @action("inputProjectResultBases")

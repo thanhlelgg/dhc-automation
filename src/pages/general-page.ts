@@ -18,21 +18,18 @@ export class generalPage {
     public async gotoHome(){
         await this.waitControlExist(this.homeLink, 10);
         await gondola.click(this.homeLink);
-        await gondola.wait(2);
     }
 
     @action("gotoBusinessSystem")
     public async gotoBusinessSystem(){
         await this.waitControlExist(this.businessSystemLink, 10);
         await gondola.click(this.businessSystemLink);
-        await gondola.wait(2);
     }
 
     @action("gotoTaskSystem")
     public async gotoTaskSystem(){
         await this.waitControlExist(this.taskSystemLink, 10);
         await gondola.click(this.taskSystemLink);
-        await gondola.wait(2);
     }
 
     @action("openWebsite")
@@ -62,6 +59,5 @@ export class generalPage {
             controlExist = await gondola.doesControlExist(control);
         }
     }
-
 }
 export default new generalPage();

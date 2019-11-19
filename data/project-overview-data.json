@@ -1,0 +1,23 @@
+{
+    "projectName": "123",
+    "projectForm": "継続案件",
+    "customerName": "test",
+    "department": "営業部",
+    "workerName": "西川三郎",
+    "startDate": null,
+    "endDate": null,
+    "scheduleStartDate": null,
+    "scheduleEndDate": null,
+    "accuracy": "高",
+    "status": "納品済",
+    "workingPlace": "派遣",
+    "currencyId": "JPY",
+    "billingType": "得意先合算",
+    "closingDate": "1",
+    "segment": "123",
+    "tag": [
+        "123",
+        "abc"
+    ],
+    "description": "string"
+}

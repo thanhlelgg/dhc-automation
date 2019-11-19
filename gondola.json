@@ -1,5 +1,5 @@
 {
-    "tests": "./built/**/*-test.js",
+    "tests": "./built/**/add-project-test.js",
     "timeout": 10000,
     "output": "./results",
     "helpers": {
