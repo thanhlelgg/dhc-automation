@@ -15,7 +15,7 @@
             "require": "gondolajs/built/helper/gondolahelper"
         },
         "HoaHelper": {
-            "require": "./built/helper/hoa-helpers"
+            "require": "./built/helper/helpers-ext"
         },
         "Mochawesome": {
             "uniqueScreenshotNames": true
