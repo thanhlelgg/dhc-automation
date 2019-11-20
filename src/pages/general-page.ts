@@ -1,8 +1,11 @@
 import { action, gondola, locator, page } from "gondolajs";
 import { constants } from "../common/constants";
+import { translate } from "../locales/translate"
+import { ProtractorBrowser } from "protractor";
 
 @page
 export class generalPage {
+    protected translator = translate.getTranslator();
     @locator
     protected pageTitle = {css: ".page-title"};
     @locator
@@ -59,5 +62,11 @@ export class generalPage {
             controlExist = await gondola.doesControlExist(control);
         }
     }
+
+    @action("getCurrentBrowser")
+    public async getCurrentBrowser(): Promise<ProtractorBrowser> {
+        return await (gondola as any).getCurrentBrowser();
+    }
+    
 }
 export default new generalPage();

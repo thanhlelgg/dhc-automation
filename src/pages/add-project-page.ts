@@ -12,7 +12,7 @@ export class projectPage extends generalPage{
 
     //#region project result 
     @locator
-    protected subTitleProjectResult = "//div[.='出来高明細']";
+    protected subTitleProjectResult = `//div[.='${this.translator.volumeDetail}']`;
     //protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]//input[@type='checkbox']/preceding-sibling::input";
     protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]";
     protected roleRowStr = "//tr[contains(.,'{0}')]";
