@@ -8,7 +8,8 @@
         "compile": "./node_modules/.bin/tsc",
         "autocompile": "./node_modules/.bin/tsc --watch",
         "parallel": "./node_modules/.bin/gondola run-multiple parallel --reporter mochawesome",
-        "test": "./node_modules/.bin/gondola run --steps --reporter mochawesome"
+        "test": "./node_modules/.bin/gondola run --steps --reporter mochawesome",
+        "testcase": "./node_modules/.bin/gondola run --steps --grep \"BMS-2\" --reporter mochawesome"
     },
     "author": "",
     "license": "ISC",

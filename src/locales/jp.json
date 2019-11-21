@@ -1,3 +1,21 @@
 {
-    "volumeDetail": "出来高明細" 
+    "sectionName": {
+        "volumeDetail": "出来高明細"
+    },
+    "fieldName": {
+        "number": "案件番号",
+        "name": "案件名",
+        "projectForm": "案件形態",
+        "businessCustomer": "取引先",
+        "department": "部門",
+        "worker": "担当者",
+        "accuracy": "確度",
+        "status": "ステータス",
+        "place": "場所",
+        "currencyId": "取引通貨"
+    },
+    "invalidFeedback": {
+        "fieldRequired": "このフィールドは入力必須です",
+        "exceededNOC": "255文字以内で入力してください"
+    }
 }

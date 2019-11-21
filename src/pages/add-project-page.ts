@@ -12,7 +12,7 @@ export class projectPage extends generalPage{
 
     //#region project result 
     @locator
-    protected subTitleProjectResult = `//div[.='${this.translator.volumeDetail}']`;
+    protected subTitleProjectResult = `//div[.='${this.translator.sectionName.volumeDetail}']`;
     //protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]//input[@type='checkbox']/preceding-sibling::input";
     protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]";
     protected roleRowStr = "//tr[contains(.,'{0}')]";
@@ -45,7 +45,7 @@ export class projectPage extends generalPage{
     @locator
     protected projectName = {id: "name"};
     @locator
-    protected projectForm = {name: "project_form"};
+    protected projectForm = "//select[@name='project_form']";
 
     //#region Search customer
     @locator
@@ -176,6 +176,11 @@ export class projectPage extends generalPage{
     protected projectOrderedRecordDateStr = "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[record_date]')]";
     protected projectOrderedBillingDateStr = "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[billing_date]')]";
     //#endregion
+
+    //#region project result bases
+    @locator
+    protected projectResultSection = {id: "project-result-bases"};
+    //#endregion
     
     @action("selectItem")
     public async selectItem(itemName: string){
@@ -242,6 +247,21 @@ export class projectPage extends generalPage{
         await this.waitControlExist(this.labFilter, 60);
         await gondola.enter(this.labFilter, lab);
         await this.selectItem(lab);
+    }
+
+    @action("checkProjectForm")
+    public async checkProjectFormOptions(options: string[]): Promise<boolean>{
+        return await (gondola as any).areOptionsExists(this.projectForm, options);
+    }
+
+    @action("selectProjectForm")
+    public async selectProjectForm(option: string) {
+        await gondola.select(this.projectForm, option);
+    }
+
+    @action("isProjectResultSectionDisplayed")
+    public async isProjectResultSectionDisplayed(): Promise<boolean>{
+        return await (gondola as any).doesControlDisplay(this.projectResultSection);
     }
 
     @action("inputProjectOverview")

@@ -2,6 +2,7 @@ import { action, gondola, locator, page } from "gondolajs";
 import { constants } from "../common/constants";
 import { translate } from "../locales/translate"
 import { ProtractorBrowser } from "protractor";
+import { utilities } from "../common/utilities";
 
 @page
 export class generalPage {
@@ -16,6 +17,10 @@ export class generalPage {
     protected businessSystemLink = "//a[.='営業管理']";
     @locator
     protected taskSystemLink = "//a[.='業務管理']";
+    @locator
+    protected invalidFeedBackByFieldLabel = "//div[label[text()='{0}']]//div[@class='invalid-feedback']"
+    @locator
+    protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text']"
 
     @action("gotoHome")
     public async gotoHome(){
@@ -66,6 +71,18 @@ export class generalPage {
     @action("getCurrentBrowser")
     public async getCurrentBrowser(): Promise<ProtractorBrowser> {
         return await (gondola as any).getCurrentBrowser();
+    }
+
+    @action("getInvalidFeedBack")
+    public async getInvalidFeedBack(fieldName: string): Promise<string> {
+        let locator = utilities.formatString(this.invalidFeedBackByFieldLabel, fieldName);
+        return await gondola.getText(locator);
+    }
+
+    @action("enterTextFieldByLabel")
+    public async enterTextFieldByLabel(label: string, text: string): Promise<void> {
+        let locator = utilities.formatString(this.textFieldByLabel, label);
+        await gondola.enter(locator, text);
     }
     
 }
