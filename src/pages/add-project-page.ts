@@ -191,7 +191,7 @@ export class projectPage extends generalPage{
     @action("searchCustomerByName")
     public async searchCustomerByName(customerName: string){
         await gondola.click(this.searchCustomerField);
-        await this.waitControlExist(this.customerNameFilter, 60);
+        await this.waitControlExist(this.customerNameFilter, 120);
         await gondola.enter(this.customerNameFilter, customerName);
         await this.selectItem(customerName);
     }
@@ -199,7 +199,7 @@ export class projectPage extends generalPage{
     @action("searchCustomerByCode")
     public async searchCustomerByCode(customerCode: string){
         await gondola.click(this.searchCustomerField);
-        await this.waitControlExist(this.customerCodeFilter, 60);
+        await this.waitControlExist(this.customerCodeFilter, 120);
         await gondola.enter(this.customerCodeFilter, customerCode);
         await this.selectItem(customerCode);
     }
@@ -207,7 +207,7 @@ export class projectPage extends generalPage{
     @action("searchDepartment")
     public async searchDepartment(department: string){
         await gondola.click(this.searchDepartmentField);
-        await this.waitControlExist(this.departmentFilter, 60);
+        await this.waitControlExist(this.departmentFilter, 120);
         await gondola.enter(this.departmentFilter, department);
         await this.selectItem(department);
     }
@@ -215,7 +215,7 @@ export class projectPage extends generalPage{
     @action("searchWorker")
     public async searchWorker(worker: string){
         await gondola.click(this.searchWorkerField);
-        await this.waitControlExist(this.workerFilter, 60);
+        await this.waitControlExist(this.workerFilter, 120);
         await gondola.enter(this.workerFilter, worker);
         await this.selectItem(worker);
     }
@@ -223,7 +223,7 @@ export class projectPage extends generalPage{
     @action("searchSegment")
     public async searchSegment(segment: string){
         await gondola.click(this.searchSegmentField);
-        await this.waitControlExist(this.segmentFilter, 60);
+        await this.waitControlExist(this.segmentFilter, 120);
         await gondola.enter(this.segmentFilter, segment);
         await this.selectItem(segment);
     }
@@ -236,7 +236,7 @@ export class projectPage extends generalPage{
         } 
         
         await gondola.click(searchItemXpath);
-        await this.waitControlExist(this.itemFilter, 60);
+        await this.waitControlExist(this.itemFilter, 120);
         await gondola.enter(this.itemFilter, item);
         await this.selectItem(item);
     }
