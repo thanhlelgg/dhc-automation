@@ -5,7 +5,6 @@ import businessSystempage from "../pages/business-system-page";
 import listProjectPage from "../pages/list-project-page";
 import { constants } from "../common/constants";
 import { ProjectOverviewInfo, IProjectOverviewInfo } from "../models/project-overview-info";
-import { utilities } from "../common/utilities";
 import { ProjectResultBaseInfo } from "../models/project-result-base-info";
 import { ProjectDetailInfo } from "../models/project-detail-info";
 import { ProjectResourceInfo } from "../models/project-resource-info";
@@ -23,8 +22,8 @@ TestCase("BMS-108. Verify add project with form '出来高案件' successfully",
     await businessSystempage.gotoAddProjectPage();
 
     gondola.report("Step 2: 案件概要を入力する");
-     const projectOverviewData = importData("./data/project-overview-data.json");
-     let projectOverview = new ProjectOverviewInfo(projectOverviewData[0]);
+    const projectOverviewData = importData("./data/project-overview-data.json");
+    let projectOverview = new ProjectOverviewInfo(projectOverviewData[0]);
     await addProjectPage.inputProjectOverview(projectOverview);
 
     gondola.report("step 3: 出来高明細を入力する");
@@ -41,7 +40,7 @@ TestCase("BMS-108. Verify add project with form '出来高案件' successfully",
 
     gondola.report("Step 5: リソースを入力する");
     const projectResourceData = importData("./data/project-resource-data.json");
-    await addProjectPage.inputProjectResource("札幌第3Lab.(並行稼働用)", "10:00", "19:00");
+    await addProjectPage.inputProjectResource(projectResourceData[0].labName, projectResourceData[0].workingStartTime, projectResourceData[0].workingEndTime);
     for (let i = 1; i <= projectResourceData.length; i++) {
         await addProjectPage.addResourceRow(i + "", new ProjectResourceInfo(projectResourceData[i - 1]));
     }
@@ -53,6 +52,13 @@ TestCase("BMS-108. Verify add project with form '出来高案件' successfully",
     gondola.report("Verify result: new project is added successfully and display on project list page");
     await businessSystempage.gotoListProject();
     await gondola.checkControlExist(listProjectPage.getProjectLink(projectCode));
+
+    gondola.report("Verify content of new project are displayed correctly");
+    await gondola.click(listProjectPage.getProjectLink(projectCode));
+    await addProjectPage.verifyContentOfProjectOverview(projectOverview);
+    await addProjectPage.verifyContentOfProjectResultBases(projectResultBaseData);
+    await addProjectPage.verifyContentOfProjectDetails(projectDetailData);
+    await addProjectPage.verifyContentOfProjectResources(projectResourceData[0].labName, projectResourceData[0].workingStartTime, projectResourceData[0].workingEndTime, projectResourceData[0].resources);
 });
 
 TestCase("BMS-109. Verify add project with form '継続案件' successfully", async () => {
@@ -74,7 +80,7 @@ TestCase("BMS-109. Verify add project with form '継続案件' successfully", as
 
     gondola.report("Step 4: リソースを入力する");
     const projectResourceData = importData("./data/project-resource-data.json");
-    await addProjectPage.inputProjectResource("札幌第3Lab.(並行稼働用)", "10:00", "19:00");
+    await addProjectPage.inputProjectResource(projectResourceData[0].labName, projectResourceData[0].workingStartTime, projectResourceData[0].workingEndTime);
     for (let i = 1; i <= projectResourceData.length; i++) {
         await addProjectPage.addResourceRow(i + "", new ProjectResourceInfo(projectResourceData[i - 1]));
     }
@@ -107,7 +113,7 @@ TestCase("BMS-110. Verify add project with form 'ショット案件' successfull
 
     gondola.report("Step 4: リソースを入力する");
     const projectResourceData = importData("./data/project-resource-data.json");
-    await addProjectPage.inputProjectResource("札幌第3Lab.(並行稼働用)", "10:00", "19:00");
+    await addProjectPage.inputProjectResource(projectResourceData[0].labName, projectResourceData[0].workingStartTime, projectResourceData[0].workingEndTime);
     for (let i = 1; i <= projectResourceData.length; i++) {
         await addProjectPage.addResourceRow(i + "", new ProjectResourceInfo(projectResourceData[i - 1]));
     }

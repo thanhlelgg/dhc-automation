@@ -1,28 +1,33 @@
-[
-    {
-        "resourceDate": "2019-04-18",
-        "countPM": "0",
-        "countLeader": "1",
-        "countTester": "2",
-        "countDesigner": "0",
-        "countExpert": "0",
-        "countReserve1": "0",
-        "countReserve2": "0",
-        "countReserve3": "0",
-        "countReserve4": "0",
-        "countReserve5": "0"
-    },
-    {
-        "resourceDate": "2019-04-19",
-        "countPM": "0",
-        "countLeader": "1",
-        "countTester": "1",
-        "countDesigner": "0",
-        "countExpert": "0",
-        "countReserve1": "0",
-        "countReserve2": "0",
-        "countReserve3": "0",
-        "countReserve4": "0",
-        "countReserve5": "0"
-    }
-]
+{
+    "labName" : "札幌第3Lab.(並行稼働用)",
+    "workingStartTime": "10:00",
+    "workingEndTime": "19:00",
+    "resources": [
+        {
+            "resourceDate": "2019-04-18",
+            "countPM": "0",
+            "countLeader": "1",
+            "countTester": "2",
+            "countDesigner": "0",
+            "countExpert": "0",
+            "countReserve1": "0",
+            "countReserve2": "0",
+            "countReserve3": "0",
+            "countReserve4": "0",
+            "countReserve5": "0"
+        },
+        {
+            "resourceDate": "2019-04-19",
+            "countPM": "0",
+            "countLeader": "1",
+            "countTester": "1",
+            "countDesigner": "0",
+            "countExpert": "0",
+            "countReserve1": "0",
+            "countReserve2": "0",
+            "countReserve3": "0",
+            "countReserve4": "0",
+            "countReserve5": "0"
+        }
+    ]
+}
