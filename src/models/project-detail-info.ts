@@ -14,7 +14,6 @@ interface IProjectDetailInfo {
 }
 
 export class ProjectDetailInfo {
-
     private projectDetail: IProjectDetailInfo;
 
     constructor($projectDetail: IProjectDetailInfo) {
