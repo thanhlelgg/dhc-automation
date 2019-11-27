@@ -9,15 +9,27 @@
         "autocompile": "./node_modules/.bin/tsc --watch",
         "parallel": "./node_modules/.bin/gondola run-multiple parallel --reporter mochawesome",
         "test": "./node_modules/.bin/gondola run --steps --reporter mochawesome",
-        "testcase": "./node_modules/.bin/gondola run --steps --grep \"BMS-2\" --reporter mochawesome"
+        "testcase": "./node_modules/.bin/gondola run --steps --grep \"RunOnly\" --reporter mochawesome"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@types/node": "^12.12.12",
+        "dotenv": "8.2.0",
         "gondolajs": "file:lib/gondolajs-1.3.41.tgz",
-        "mochawesome": "^3.1.1",
-        "protractor": "^5.4.2",
         "i18n-ts": "1.0.5",
-        "dotenv": "8.2.0"
+        "mochawesome": "^3.1.1",
+        "mysql": "^2.17.1",
+        "protractor": "^5.4.2",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.2.20"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^2.9.0",
+        "@typescript-eslint/parser": "^2.9.0",
+        "eslint": "^6.7.1",
+        "eslint-config-prettier": "^6.7.0",
+        "eslint-plugin-prettier": "^3.1.1",
+        "prettier": "^1.19.1"
     }
 }

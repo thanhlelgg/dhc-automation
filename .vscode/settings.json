@@ -1,4 +1,11 @@
 {
+    "eslint.autoFixOnSave":  true,
+    "eslint.validate":  [
+        "javascript",
+        "javascriptreact",
+        {"language":  "typescript",  "autoFix":  true  },
+        {"language":  "typescriptreact",  "autoFix":  true  }
+    ],
     "terminal.integrated.env.windows": {
         "PATH": "${workspaceFolder}\\node_modules\\.bin\\;${env:PATH}"
     }
