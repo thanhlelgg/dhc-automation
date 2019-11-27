@@ -123,9 +123,12 @@ export class AddProjectPage extends GeneralPage {
     @locator
     protected addProjectDetailBtn = { id: 'project-details-add-row' };
     protected removeIconByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//a[@class='remove-project-details']";
-    protected detailNamebyRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, '[name]') and not(contains(@name, 'item'))]";
-    protected searchItemByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[@class='search-items  form-control']";
-    protected debitCreditByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//select[contains(@name, '[debit_credit_group_id]')]";
+    protected detailNamebyRowStr =
+        "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, '[name]') and not(contains(@name, 'item'))]";
+    protected searchItemByRowStr =
+        "//div[.='{0}']/ancestor::div[@role='row']//input[@class='search-items  form-control']";
+    protected debitCreditByRowStr =
+        "//div[.='{0}']/ancestor::div[@role='row']//select[contains(@name, '[debit_credit_group_id]')]";
     protected isTaxableByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@id, 'is-taxable')]";
     protected taxIdByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//select[contains(@name, '[tax_id]')]";
     protected quantityByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, '[quantity]')]";
@@ -673,9 +676,9 @@ export class AddProjectPage extends GeneralPage {
         }
     }
 
-    @action("verifyContentOfProjectOverview")
+    @action('verifyContentOfProjectOverview')
     public async verifyContentOfProjectOverview(projectOverview: ProjectOverviewInfo) {
-        gondola.report("Verify content of project overview");
+        gondola.report('Verify content of project overview');
         await gondola.checkEqual(await this.getTextBoxValue(this.projectName), projectOverview.$projectName);
 
         var projectForm = await this.getSelectedOption(this.projectForm);
@@ -690,29 +693,35 @@ export class AddProjectPage extends GeneralPage {
         var workerStr = await this.getTextBoxValue(this.searchWorkerField);
         await gondola.checkEqual(workerStr.includes(projectOverview.$workerName), true);
 
-        gondola.report("verify date: start date, end date, schedule start date, schedule end date");
+        gondola.report('verify date: start date, end date, schedule start date, schedule end date');
         if (projectOverview.$startDate !== null && projectOverview.$startDate !== undefined) {
             await gondola.checkEqual(await this.getTextBoxValue(this.startDate), projectOverview.$startDate);
         } else {
-            await gondola.checkEqual(await this.getTextBoxValue(this.startDate), "");
+            await gondola.checkEqual(await this.getTextBoxValue(this.startDate), '');
         }
 
         if (projectOverview.$endDate !== null && projectOverview.$endDate !== undefined) {
             await gondola.checkEqual(await this.getTextBoxValue(this.endDate), projectOverview.$endDate);
         } else {
-            await gondola.checkEqual(await this.getTextBoxValue(this.endDate), "");
+            await gondola.checkEqual(await this.getTextBoxValue(this.endDate), '');
         }
 
         if (projectOverview.$scheduleStartDate !== null && projectOverview.$scheduleStartDate !== undefined) {
-            await gondola.checkEqual(await this.getTextBoxValue(this.scheduleStartDate), projectOverview.$scheduleStartDate);
+            await gondola.checkEqual(
+                await this.getTextBoxValue(this.scheduleStartDate),
+                projectOverview.$scheduleStartDate,
+            );
         } else {
-            await gondola.checkEqual(await this.getTextBoxValue(this.scheduleStartDate), "");
+            await gondola.checkEqual(await this.getTextBoxValue(this.scheduleStartDate), '');
         }
 
         if (projectOverview.$scheduleEndDate !== null && projectOverview.$scheduleEndDate !== undefined) {
-            await gondola.checkEqual(await this.getTextBoxValue(this.scheduleEndDate), projectOverview.$scheduleEndDate);
+            await gondola.checkEqual(
+                await this.getTextBoxValue(this.scheduleEndDate),
+                projectOverview.$scheduleEndDate,
+            );
         } else {
-            await gondola.checkEqual(await this.getTextBoxValue(this.scheduleEndDate), "");
+            await gondola.checkEqual(await this.getTextBoxValue(this.scheduleEndDate), '');
         }
 
         var accuracy = await this.getSelectedOption(this.accuracy);
@@ -739,141 +748,282 @@ export class AddProjectPage extends GeneralPage {
         if (projectOverview.$tag !== null && projectOverview.$tag !== undefined) {
             await gondola.checkEqual(await this.getTextBoxValue(this.tagContent), projectOverview.$tag);
         } else {
-            await gondola.checkEqual(await this.getTextBoxValue(this.tagContent), "");
+            await gondola.checkEqual(await this.getTextBoxValue(this.tagContent), '');
         }
 
         if (projectOverview.$description !== null && projectOverview.$description !== undefined) {
             await gondola.checkEqual(await this.getTextBoxValue(this.description), projectOverview.$description);
         } else {
-            await gondola.checkEqual(await this.getTextBoxValue(this.description), "");
+            await gondola.checkEqual(await this.getTextBoxValue(this.description), '');
         }
     }
 
-    @action("verifyContentOfProjectResultBases")
+    @action('verifyContentOfProjectResultBases')
     public async verifyContentOfProjectResultBases(projectResultBases: any[]) {
         for (let i = 0; i <= projectResultBases.length - 1; i++) {
             var projectResultBaseRow = new ProjectResultBaseInfo(projectResultBases[i]);
-            gondola.report("Verify content of project result base, role: " + projectResultBaseRow.$role);
-            var item = await this.getTextBoxValue(Utilities.formatString(this.searchItemByRoleStr, projectResultBaseRow.$role));
+            gondola.report('Verify content of project result base, role: ' + projectResultBaseRow.$role);
+            var item = await this.getTextBoxValue(
+                Utilities.formatString(this.searchItemByRoleStr, projectResultBaseRow.$role),
+            );
             await gondola.checkEqual(item.includes(projectResultBaseRow.$item), true);
 
-            var debitCredit = await this.getSelectedOption(Utilities.formatString(this.debitCreditByRoleStr, projectResultBaseRow.$role));
+            var debitCredit = await this.getSelectedOption(
+                Utilities.formatString(this.debitCreditByRoleStr, projectResultBaseRow.$role),
+            );
             await gondola.checkEqual(debitCredit, projectResultBaseRow.$debitCredit);
 
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.planPeopleByRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$planPeople + "");
+            await gondola.checkEqual(
+                await this.getTextBoxValue(
+                    Utilities.formatString(this.planPeopleByRoleStr, projectResultBaseRow.$role),
+                ),
+                projectResultBaseRow.$planPeople + '',
+            );
 
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.planTimeByRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$planTime + "");
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.planTimeByRoleStr, projectResultBaseRow.$role)),
+                projectResultBaseRow.$planTime + '',
+            );
 
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.planTotalTimeByRoleStr, projectResultBaseRow.$role)), (projectResultBaseRow.$planTime * projectResultBaseRow.$planPeople) + "");
+            await gondola.checkEqual(
+                await this.getTextBoxValue(
+                    Utilities.formatString(this.planTotalTimeByRoleStr, projectResultBaseRow.$role),
+                ),
+                projectResultBaseRow.$planTime * projectResultBaseRow.$planPeople + '',
+            );
 
-            gondola.report("Verify pricing");
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayByRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$unitPriceWeekday);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayOTByRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$unitPriceWeekdayOT);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$unitPriceWeekdayLateOT);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.unitPriceHolidayByRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$unitPriceHoliday);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayLateByRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$unitPriceWeekDayLate);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.unitPriceHolidayLateByRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$unitPriceHolidayLate);
+            gondola.report('Verify pricing');
+            await gondola.checkEqual(
+                await this.getTextBoxValue(
+                    Utilities.formatString(this.unitPriceWeekdayByRoleStr, projectResultBaseRow.$role),
+                ),
+                projectResultBaseRow.$unitPriceWeekday,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(
+                    Utilities.formatString(this.unitPriceWeekdayOTByRoleStr, projectResultBaseRow.$role),
+                ),
+                projectResultBaseRow.$unitPriceWeekdayOT,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(
+                    Utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, projectResultBaseRow.$role),
+                ),
+                projectResultBaseRow.$unitPriceWeekdayLateOT,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(
+                    Utilities.formatString(this.unitPriceHolidayByRoleStr, projectResultBaseRow.$role),
+                ),
+                projectResultBaseRow.$unitPriceHoliday,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(
+                    Utilities.formatString(this.unitPriceWeekdayLateByRoleStr, projectResultBaseRow.$role),
+                ),
+                projectResultBaseRow.$unitPriceWeekDayLate,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(
+                    Utilities.formatString(this.unitPriceHolidayLateByRoleStr, projectResultBaseRow.$role),
+                ),
+                projectResultBaseRow.$unitPriceHolidayLate,
+            );
 
-            var isTax = await this.getCheckboxValue(Utilities.formatString(this.isTaxableByRoleCheckbox, projectResultBaseRow.$role));
+            var isTax = await this.getCheckboxValue(
+                Utilities.formatString(this.isTaxableByRoleCheckbox, projectResultBaseRow.$role),
+            );
             await gondola.checkEqual(isTax, projectResultBaseRow.$isTaxable);
 
             if (isTax) {
-                var taxId = await this.getSelectedOption(Utilities.formatString(this.taxIdByRoleStr, projectResultBaseRow.$role));
+                var taxId = await this.getSelectedOption(
+                    Utilities.formatString(this.taxIdByRoleStr, projectResultBaseRow.$role),
+                );
                 await gondola.checkEqual(taxId, projectResultBaseRow.$taxId);
             }
 
             if (projectResultBaseRow.$note !== null && projectResultBaseRow.$note !== undefined) {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.notebyRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$note);
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.notebyRoleStr, projectResultBaseRow.$role)),
+                    projectResultBaseRow.$note,
+                );
             } else {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.notebyRoleStr, projectResultBaseRow.$role)), "");
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.notebyRoleStr, projectResultBaseRow.$role)),
+                    '',
+                );
             }
 
             if (projectResultBaseRow.$outputOrder !== null && projectResultBaseRow.$outputOrder !== undefined) {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.outputOrderbyRoleStr, projectResultBaseRow.$role)), projectResultBaseRow.$outputOrder);
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(
+                        Utilities.formatString(this.outputOrderbyRoleStr, projectResultBaseRow.$role),
+                    ),
+                    projectResultBaseRow.$outputOrder,
+                );
             } else {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.outputOrderbyRoleStr, projectResultBaseRow.$role)), "");
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(
+                        Utilities.formatString(this.outputOrderbyRoleStr, projectResultBaseRow.$role),
+                    ),
+                    '',
+                );
             }
         }
     }
 
-    @action("verifyContentOfProjectDetails")
+    @action('verifyContentOfProjectDetails')
     public async verifyContentOfProjectDetails(projectDetails: any[]) {
         for (let i = 1; i <= projectDetails.length; i++) {
             var projectDetailRow = new ProjectDetailInfo(projectDetails[i - 1]);
-            gondola.report("Verify content of project detail, row: " + i);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.detailNamebyRowStr, i + "")), projectDetailRow.$detailName);
+            gondola.report('Verify content of project detail, row: ' + i);
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.detailNamebyRowStr, i + '')),
+                projectDetailRow.$detailName,
+            );
 
-            var item = await this.getTextBoxValue(Utilities.formatString(this.searchItemByRowStr, i + ""));
+            var item = await this.getTextBoxValue(Utilities.formatString(this.searchItemByRowStr, i + ''));
             await gondola.checkEqual(item.includes(projectDetailRow.$item), true);
 
-            var debitCredit = await this.getSelectedOption(Utilities.formatString(this.debitCreditByRowStr, i + ""));
+            var debitCredit = await this.getSelectedOption(Utilities.formatString(this.debitCreditByRowStr, i + ''));
             await gondola.checkEqual(debitCredit, projectDetailRow.$debitCredit);
 
-            var isTax = await this.getCheckboxValue(Utilities.formatString(this.isTaxableByRowStr, i + ""));
+            var isTax = await this.getCheckboxValue(Utilities.formatString(this.isTaxableByRowStr, i + ''));
             await gondola.checkEqual(isTax, projectDetailRow.$isTaxable);
 
             if (isTax) {
-                var taxId = await this.getSelectedOption(Utilities.formatString(this.taxIdByRowStr, i + ""));
+                var taxId = await this.getSelectedOption(Utilities.formatString(this.taxIdByRowStr, i + ''));
                 await gondola.checkEqual(taxId, projectDetailRow.$taxId);
             }
 
-            gondola.report("verify quantity & pricing");
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.quantityByRowStr, i + "")), projectDetailRow.$quantity);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.unitByRowStr, i + "")), projectDetailRow.$unit);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.unitPriceByRowStr, i + "")), projectDetailRow.$unitPrice);
+            gondola.report('verify quantity & pricing');
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.quantityByRowStr, i + '')),
+                projectDetailRow.$quantity,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.unitByRowStr, i + '')),
+                projectDetailRow.$unit,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.unitPriceByRowStr, i + '')),
+                projectDetailRow.$unitPrice,
+            );
 
             if (projectDetailRow.$shipDate !== null && projectDetailRow.$shipDate !== undefined) {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.shipDateByRowStr, i + "")), projectDetailRow.$shipDate);
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.shipDateByRowStr, i + '')),
+                    projectDetailRow.$shipDate,
+                );
             } else {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.shipDateByRowStr, i + "")), "");
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.shipDateByRowStr, i + '')),
+                    '',
+                );
             }
 
             if (projectDetailRow.$deliveryDate !== null && projectDetailRow.$deliveryDate !== undefined) {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.deliveryDateByRowStr, i + "")), projectDetailRow.$deliveryDate);
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.deliveryDateByRowStr, i + '')),
+                    projectDetailRow.$deliveryDate,
+                );
             } else {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.deliveryDateByRowStr, i + "")), "");
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.deliveryDateByRowStr, i + '')),
+                    '',
+                );
             }
 
             if (projectDetailRow.$acceptedDate !== null && projectDetailRow.$acceptedDate !== undefined) {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.acceptedDateByRowStr, i + "")), projectDetailRow.$acceptedDate);
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.acceptedDateByRowStr, i + '')),
+                    projectDetailRow.$acceptedDate,
+                );
             } else {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.acceptedDateByRowStr, i + "")), "");
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.acceptedDateByRowStr, i + '')),
+                    '',
+                );
             }
 
             if (projectDetailRow.$billingDate !== null && projectDetailRow.$billingDate !== undefined) {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.billingDateByRowStr, i + "")), projectDetailRow.$billingDate);
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.billingDateByRowStr, i + '')),
+                    projectDetailRow.$billingDate,
+                );
             } else {
-                await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.billingDateByRowStr, i + "")), "");
+                await gondola.checkEqual(
+                    await this.getTextBoxValue(Utilities.formatString(this.billingDateByRowStr, i + '')),
+                    '',
+                );
             }
         }
     }
 
-    @action("verifyContentOfProjectResources")
-    public async verifyContentOfProjectResources(labName: string, workStartTime: string, workEndTime: string, projectResources: any[]) {
-        gondola.report("verify lab name");
+    @action('verifyContentOfProjectResources')
+    public async verifyContentOfProjectResources(
+        labName: string,
+        workStartTime: string,
+        workEndTime: string,
+        projectResources: any[],
+    ) {
+        gondola.report('verify lab name');
         var lab = await this.getTextBoxValue(this.searchLabField);
         await gondola.checkEqual(lab.includes(labName), true);
 
-        gondola.report("verify working time");
+        gondola.report('verify working time');
         await gondola.checkEqual(await this.getTextBoxValue(this.workStartTime), workStartTime);
         await gondola.checkEqual(await this.getTextBoxValue(this.workEndTime), workEndTime);
 
         for (let i = 1; i <= projectResources.length; i++) {
             var projectResourceRow = new ProjectResourceInfo(projectResources[i - 1]);
-            gondola.report("Verify content of resource, row: " + i);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.resourceDateByRowStr, i + "")), projectResourceRow.$resourceDate);
+            gondola.report('Verify content of resource, row: ' + i);
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.resourceDateByRowStr, i + '')),
+                projectResourceRow.$resourceDate,
+            );
 
-            gondola.report("verify number of each roles: PM, leader, designer, expert, tester, reserve");
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countPMByRowStr, i + "")), projectResourceRow.$countPM);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countLeaderByRowStr, i + "")), projectResourceRow.$countLeader);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countTesterByRowStr, i + "")), projectResourceRow.$countTester);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countDesignerByRowStr, i + "")), projectResourceRow.$countDesigner);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countExpertByRowStr, i + "")), projectResourceRow.$countExpert);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countReserve1ByRowStr, i + "")), projectResourceRow.$countReserve1);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countReserve2ByRowStr, i + "")), projectResourceRow.$countReserve2);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countReserve3ByRowStr, i + "")), projectResourceRow.$countReserve3);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countReserve4ByRowStr, i + "")), projectResourceRow.$countReserve4);
-            await gondola.checkEqual(await this.getTextBoxValue(Utilities.formatString(this.countReserve5ByRowStr, i + "")), projectResourceRow.$countReserve5);
+            gondola.report('verify number of each roles: PM, leader, designer, expert, tester, reserve');
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countPMByRowStr, i + '')),
+                projectResourceRow.$countPM,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countLeaderByRowStr, i + '')),
+                projectResourceRow.$countLeader,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countTesterByRowStr, i + '')),
+                projectResourceRow.$countTester,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countDesignerByRowStr, i + '')),
+                projectResourceRow.$countDesigner,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countExpertByRowStr, i + '')),
+                projectResourceRow.$countExpert,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve1ByRowStr, i + '')),
+                projectResourceRow.$countReserve1,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve2ByRowStr, i + '')),
+                projectResourceRow.$countReserve2,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve3ByRowStr, i + '')),
+                projectResourceRow.$countReserve3,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve4ByRowStr, i + '')),
+                projectResourceRow.$countReserve4,
+            );
+            await gondola.checkEqual(
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve5ByRowStr, i + '')),
+                projectResourceRow.$countReserve5,
+            );
         }
     }
 }

@@ -116,20 +116,20 @@ export class GeneralPage {
         gondola.click(locator);
     }
 
-    @action("getSelectedOption")
+    @action('getSelectedOption')
     public async getSelectedOption(selectControl: any): Promise<string> {
-        return await gondola.getControlProperty(selectControl + "/option[@selected='selected']", "text");
+        return await gondola.getControlProperty(selectControl + "/option[@selected='selected']", 'text');
     }
 
-    @action("getTextBoxValue")
+    @action('getTextBoxValue')
     public async getTextBoxValue(inputControl: any): Promise<string> {
-        return await gondola.getControlProperty(inputControl, "value");
+        return await gondola.getControlProperty(inputControl, 'value');
     }
 
-    @action("getCheckboxValue")
+    @action('getCheckboxValue')
     public async getCheckboxValue(checkboxControl: any): Promise<boolean> {
-        let value = await gondola.getControlProperty(checkboxControl, "value");
-        if (value === "1") {
+        let value = await gondola.getControlProperty(checkboxControl, 'value');
+        if (value === '1') {
             return true;
         } else {
             return false;
