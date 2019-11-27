@@ -12,8 +12,9 @@
             "args": [
                 "run",
                 "--steps",
-                "--reporter",
-                "mochawesome"
+                "--grep",
+                "Debug",
+                "--verbose"
             ],
             "outFiles": [
                 "${workspaceFolder}/**/*.js"

@@ -1,7 +1,7 @@
-import { action, gondola, locator, page } from "gondolajs";
-import { generalPage } from "./general-page";
+import { action, gondola, locator, page } from 'gondolajs';
+import { GeneralPage } from './general-page';
 @page
-export class businessSystemPage extends generalPage{
+export class BusinessSystemPage extends GeneralPage {
     // Project
     @locator
     protected projectLink = "//span[.='案件']";
@@ -40,7 +40,7 @@ export class businessSystemPage extends generalPage{
     @locator
     protected addSegmentLink = "//a[@href='/segments/add']";
 
-    public async gotoAddProjectPage(){
+    public async gotoAddProjectPage(): Promise<void> {
         await this.waitControlExist(this.projectLink, 30);
         await gondola.click(this.projectLink);
         await gondola.waitForElement(this.addProjectLink);
@@ -48,8 +48,8 @@ export class businessSystemPage extends generalPage{
         await gondola.click(this.addProjectLink);
     }
 
-    @action("gotoListProject")
-    public async gotoListProject(){
+    @action('gotoListProject')
+    public async gotoListProject(): Promise<void> {
         await this.waitControlExist(this.projectLink, 30);
         await gondola.click(this.projectLink);
         await gondola.waitForElement(this.listProjectLink);
@@ -57,4 +57,4 @@ export class businessSystemPage extends generalPage{
         await gondola.click(this.listProjectLink);
     }
 }
-export default new businessSystemPage();
+export default new BusinessSystemPage();

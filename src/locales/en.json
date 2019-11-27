@@ -1,4 +1,10 @@
 {
+    "modalWindows": {
+        "customerSearchTitle": "取引先選択",
+        "departmentSearchTitle": "部門選択",
+        "workerSearchTitle": "従業員選択",
+        "segmentSearchTitle": "セグメント選択"
+    },
     "sectionName": {
         "volumeDetail": "出来高明細"
     },
