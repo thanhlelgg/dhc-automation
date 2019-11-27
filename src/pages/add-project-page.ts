@@ -1,6 +1,6 @@
 import { action, gondola, locator, page } from 'gondolajs';
 import { GeneralPage } from './general-page';
-import { Utilities } from '../common/Utilities';
+import { Utilities } from '../common/utilities';
 import { Constants } from '../common/constants';
 import { ProjectOverviewInfo } from '../models/project-overview-info';
 import { ProjectResultBaseInfo } from '../models/project-result-base-info';
