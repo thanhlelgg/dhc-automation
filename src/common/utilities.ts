@@ -80,5 +80,18 @@ export class Utilities {
         });
         return isSubset;
     }
+
+    /**
+     * check if text is equal to expected value
+     * @param checkValue 
+     * @param expectValue 
+     */
+    public static isTextEqual(checkValue: string, expectValue: string): boolean {
+        if (checkValue === expectValue) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 export default new Utilities();

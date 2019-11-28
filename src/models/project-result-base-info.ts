@@ -7,7 +7,7 @@ interface IProjectResultBaseInfo {
     unitPriceWeekday: string;
     unitPriceWeekdayOT: string;
     unitPriceHoliday: string;
-    unitPriceWeekDayLate: string;
+    unitPriceWeekdayLate: string;
     unitPriceWeekdayLateOT: string;
     unitPriceHolidayLate: string;
     isTaxable: boolean;
@@ -88,11 +88,11 @@ export class ProjectResultBaseInfo {
     }
 
     /**
-     * Getter $unitPriceWeekDayLate
+     * Getter $unitPriceWeekdayLate
      * @return {string}
      */
-    public get $unitPriceWeekDayLate(): string {
-        return this.projectResultBase.unitPriceWeekDayLate;
+    public get $unitPriceWeekdayLate(): string {
+        return this.projectResultBase.unitPriceWeekdayLate;
     }
 
     /**
@@ -208,11 +208,11 @@ export class ProjectResultBaseInfo {
     }
 
     /**
-     * Setter $unitPriceWeekDayLate
+     * Setter $unitPriceWeekdayLate
      * @param {string} value
      */
-    public set $unitPriceWeekDayLate(value: string) {
-        this.projectResultBase.unitPriceWeekDayLate = value;
+    public set $unitPriceWeekdayLate(value: string) {
+        this.projectResultBase.unitPriceWeekdayLate = value;
     }
 
     /**
@@ -261,5 +261,12 @@ export class ProjectResultBaseInfo {
      */
     public set $outputOrder(value: string | undefined) {
         this.projectResultBase.outputOrder = value;
+    }
+
+    /**
+     * Get total plan time
+     */
+    public getTotalPlanTime(): number {
+        return this.projectResultBase.planTime * this.projectResultBase.planPeople;
     }
 }
