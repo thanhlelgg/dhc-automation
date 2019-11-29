@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export class Utilities {
     public static formatString(str: string, ...val: string[]): string {
         for (let index = 0; index < val.length; index++) {
@@ -83,8 +85,8 @@ export class Utilities {
 
     /**
      * check if text is equal to expected value
-     * @param checkValue 
-     * @param expectValue 
+     * @param checkValue
+     * @param expectValue
      */
     public static isTextEqual(checkValue: string, expectValue: string): boolean {
         if (checkValue === expectValue) {
@@ -92,6 +94,28 @@ export class Utilities {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Verify if date is in correct format
+     * @param date
+     * @param format
+     */
+    public static isDateFormatCorrect(date: string, format: string): boolean {
+        return moment(date, format, true).isValid();
+    }
+
+    /**
+     * Get date string with inputted format
+     * @param day
+     * @param month
+     * @param year
+     * @param dateFormat
+     */
+    public static getDateString(day: string, month: string, year: string, dateFormat: string): string {
+        const dateString = `${day}-${month}-${year}'`;
+        const momentObj = moment(dateString, 'DD-MM-YYYY');
+        return momentObj.format(dateFormat);
     }
 }
 export default new Utilities();

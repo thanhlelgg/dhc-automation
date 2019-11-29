@@ -2,11 +2,13 @@ import { action } from 'gondolajs/built/deco';
 import { ProtractorBrowser } from 'protractor';
 import * as dotenv from 'dotenv';
 import * as protractor from 'protractor';
+import { ILocation } from 'selenium-webdriver';
 
 // this helper always run before executing testcase, we will preload environment variable in here
 // if we need to use environment variable before this, we should find another place for it
 dotenv.config();
 declare let browser: ProtractorBrowser;
+const DEFAULT_TIMEOUT = 5;
 
 class HelperExt extends Helper {
     @action('does popup exist', 'test if a popup exist')
@@ -64,15 +66,24 @@ class HelperExt extends Helper {
      * Find elements using protractor directly
      * @param locator
      */
-    public async performClick(locator: any): Promise<void> {
+    public async performClick(locator: any, offset?: ILocation): Promise<void> {
         if (typeof locator === 'string') {
             locator = { xpath: locator };
         }
-        await browser
-            .actions()
-            .mouseMove(await this.getElement(locator))
-            .click()
-            .perform();
+        if (offset) {
+            await browser
+                .actions()
+                .mouseMove(await this.getElement(locator))
+                .mouseMove(offset)
+                .click()
+                .perform();
+        } else {
+            await browser
+                .actions()
+                .mouseMove(await this.getElement(locator))
+                .click()
+                .perform();
+        }
     }
 
     /**
@@ -123,12 +134,70 @@ class HelperExt extends Helper {
     }
 
     /**
+     * Check if an element is enabled
+     * @param control
+     */
+    public async isControlEnabled(control: any): Promise<boolean> {
+        return await (await this.getElement(control)).isEnabled();
+    }
+
+    /**
      * Get attribute from an element
      * @param control
      * @param attribute
      */
     public async getElementAttribute(control: any, attribute: string): Promise<string> {
         return await (await this.getElement(control)).getAttribute(attribute);
+    }
+
+    /**
+     * Wait until element not visible
+     * @param control
+     */
+    public async waitUntilElementNotVisible(control: any, timeOut = DEFAULT_TIMEOUT): Promise<void> {
+        timeOut = timeOut * 1000; //convert to milliseconds
+        const element = await this.getElement(control);
+        await browser.wait(protractor.until.elementIsNotVisible(element), timeOut);
+    }
+
+    /**
+     * Wait until element exist
+     * @param control
+     */
+    public async waitUntilElementExist(control: any, timeOut = DEFAULT_TIMEOUT): Promise<void> {
+        timeOut = timeOut * 1000; //convert to milliseconds
+        const element = await this.getElement(control);
+        await browser.wait(protractor.until.elementLocated(element), timeOut);
+    }
+
+    /**
+     * Wait for staleness of element
+     * @param control
+     */
+    public async waitUntilStalenessOfElement(control: any, timeOut = DEFAULT_TIMEOUT): Promise<void> {
+        timeOut = timeOut * 1000; //convert to milliseconds
+        const element = await this.getElement(control);
+        await browser.wait(protractor.until.stalenessOf(element), timeOut);
+    }
+
+    /**
+     * Wait until element visible
+     * @param control
+     * @param attribute
+     */
+    public async waitUntilElementVisible(control: any, timeOut = DEFAULT_TIMEOUT): Promise<void> {
+        timeOut = timeOut * 1000; //convert to milliseconds
+        const element = await this.getElement(control);
+        await browser.wait(protractor.until.elementIsVisible(element), timeOut);
+    }
+
+    /**
+     * Wait for alert present
+     * @param timeOut
+     */
+    public async waitForAlert(timeOut = DEFAULT_TIMEOUT): Promise<void> {
+        timeOut = timeOut * 1000; //convert to milliseconds
+        await browser.wait(protractor.until.alertIsPresent(), timeOut);
     }
 }
 module.exports = HelperExt;
