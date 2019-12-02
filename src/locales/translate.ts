@@ -1,17 +1,17 @@
-import {I18nResolver} from "i18n-ts";
-import english from "./en.json";
-import japanese from "./jp.json";
+import { I18nResolver } from 'i18n-ts';
+import english from './en.json';
+import japanese from './jp.json';
 
-export class translate {
+export class Translate {
     private static i18n = {
-        en: english,
-        jp: japanese,
-        default: japanese
+        EN: english,
+        JA: japanese,
+        default: japanese,
     };
 
-    private static translator = new I18nResolver(translate.i18n, process.env.LANGUAGE).translation;
+    private static translator = new I18nResolver(Translate.i18n, process.env.LANGUAGE).translation;
 
-    public static getTranslator () {
-        return translate.translator;
+    public static getTranslator() {
+        return Translate.translator;
     }
 }

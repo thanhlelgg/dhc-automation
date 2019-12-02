@@ -3,6 +3,7 @@ import { createConnection, Connection } from 'typeorm';
 import { BusinessCustomers } from '../entity/BusinessCustomers';
 import { Departments } from '../entity/Departments';
 import { Workers } from '../entity/Workers';
+import { Labs } from '../entity/Labs';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -73,5 +74,20 @@ export class DatabaseHelper {
             .getMany();
         await connection.close();
         return workers;
+    }
+
+    /**
+     * Get active Labs from the database
+     */
+    public static async getLabs(inHouseOnly = false): Promise<Labs[]> {
+        const category = inHouseOnly ? 'labs.category = 0 AND' : '';
+        const connection = await DatabaseHelper.getConnection('talent');
+        const labsRepository = connection.getRepository(Labs);
+        const labs = await labsRepository
+            .createQueryBuilder('labs')
+            .where(`${category} labs.is_deleted IS NOT NULL`)
+            .getMany();
+        await connection.close();
+        return labs;
     }
 }

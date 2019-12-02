@@ -18,12 +18,20 @@
         "accuracy": "確度",
         "status": "ステータス",
         "place": "場所",
-        "currencyId": "取引通貨"
+        "currencyId": "取引通貨",
+        "startDate": "案件開始日",
+        "endDate": "案件終了日",
+        "scheduledStartDate": "案件開始予定日",
+        "scheduledEndDate": "案件終了予定日",
+        "labName": "拠点"
     },
     "invalidFeedback": {
         "fieldRequired": "このフィールドは入力必須です",
         "exceededNOC": "255文字以内で入力してください",
         "characterTypeError": "。。。"
+    },
+    "alertMessage": {
+        "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]"
     },
     "verticalMenuBMS": {
         "project": {

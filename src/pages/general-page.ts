@@ -1,12 +1,13 @@
 import { action, gondola, locator, page } from 'gondolajs';
 import { Constants } from '../common/constants';
-import { translate } from '../locales/translate';
+import { Translate } from '../locales/translate';
 import { ProtractorBrowser } from 'protractor';
 import { Utilities } from '../common/utilities';
+import { Language } from '../models/enum-class/language';
 
 @page
 export class GeneralPage {
-    protected translator = translate.getTranslator();
+    protected translator = Translate.getTranslator();
     @locator
     protected pageTitle = { css: '.page-title' };
     @locator
@@ -22,9 +23,19 @@ export class GeneralPage {
     @locator
     protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text']";
     @locator
+    protected selectorByLabel = "//div[label[text()='{0}']]//select";
+    @locator
     protected moduleTitle = "//h5[@class='modal-title' and text()='{0}']";
     @locator
     protected closeModuleButtonByName = "//div[h5[text()='{0}']]//span[text()='×']";
+    @locator
+    protected savedMessage = "//div[@role='alert'  and text()='saved']";
+    @locator
+    protected currentLanguage = { css: '.langname' };
+    @locator
+    protected languageOption = "//a[@class='changeFlag' and contains(@href, '{0}')]";
+    @locator
+    protected labelByName = "//div[label[text()='{0}']]";
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
@@ -64,13 +75,15 @@ export class GeneralPage {
 
     @action('waitControlExist')
     public async waitControlExist(control: any, seconds = Constants.MEDIUM_TIMEOUT): Promise<void> {
-        let controlExist = await gondola.doesControlExist(control);
-        let timeCount = 0;
-        while (!controlExist && timeCount < seconds) {
-            await gondola.wait(1);
-            timeCount++;
-            controlExist = await gondola.doesControlExist(control);
-        }
+        // let controlExist = await gondola.doesControlExist(control);
+        // let timeCount = 0;
+        // while (!controlExist && timeCount < seconds) {
+        //     console.log(`Waiting for control ${timeCount} seconds`);
+        //     await gondola.wait(1);
+        //     timeCount++;
+        //     controlExist = await gondola.doesControlExist(control);
+        // }
+        await (gondola as any).waitUntilElementVisible(control, seconds);
     }
 
     @action('getCurrentBrowser')
@@ -134,12 +147,52 @@ export class GeneralPage {
 
     @action('getCheckboxValue')
     public async getCheckboxValue(checkboxControl: any): Promise<boolean> {
-        let value = await gondola.getControlProperty(checkboxControl, 'value');
+        const value = await gondola.getControlProperty(checkboxControl, 'value');
         if (value === '1') {
             return true;
         } else {
             return false;
         }
+    }
+
+    @action('doesSavedMessageDisplay')
+    public async doesSavedMessageDisplay(): Promise<boolean> {
+        return await (gondola as any).doesControlDisplay(this.savedMessage);
+    }
+
+    @action('chooseLanguage')
+    public async chooseLanguage(language: Language | string | undefined): Promise<void> {
+        if (!language) {
+            throw new Error('Language is not selected. Please try again.');
+        }
+        if (typeof language === 'string') {
+            language = Language.getLanguage(language);
+        }
+        const currentLanguage = (await gondola.getText(this.currentLanguage)).trim();
+        if (currentLanguage === language.toString()) {
+            return;
+        }
+        await gondola.click(this.currentLanguage);
+        const languageOption = Utilities.formatString(this.languageOption, language.href);
+        await gondola.click(languageOption);
+    }
+
+    @action('doesLabelRequired')
+    public async doesFieldRequired(name: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.labelByName, name);
+        return (await gondola.getControlProperty(locator, 'class')).indexOf('required') < 0;
+    }
+
+    @action('doesSelectorByLabelOptionsExist')
+    public async doesSelectorByLabelOptionsExist(label: string, options: string[]): Promise<boolean> {
+        const locator = Utilities.formatString(this.selectorByLabel, label);
+        return await (gondola as any).areOptionsExists(locator, options);
+    }
+
+    @action('selectSelectorByLabel')
+    public async selectSelectorByLabel(label: string, option: string): Promise<void> {
+        const locator = Utilities.formatString(this.selectorByLabel, label);
+        await gondola.select(locator, option);
     }
 }
 export default new GeneralPage();

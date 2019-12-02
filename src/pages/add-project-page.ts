@@ -1,7 +1,7 @@
 import { action, gondola, locator, page } from 'gondolajs';
 import { GeneralPage } from './general-page';
 import { Utilities } from '../common/utilities';
-import { Constants } from '../common/constants';
+import { Constants, ProjectOverviewData } from '../common/constants';
 import { ProjectOverviewInfo } from '../models/project-overview-info';
 import { ProjectResultBaseInfo } from '../models/project-result-base-info';
 import { ProjectDetailInfo } from '../models/project-detail-info';
@@ -15,7 +15,7 @@ export class AddProjectPage extends GeneralPage {
     protected searchResult = "(//div[@role='row']//div[contains(.,'{0}')])[1]";
     protected searchResultByTabulatorField = "//div[@class='tabulator-table']//div[@tabulator-field='{0}']";
     protected searchResultByTabulatorFieldAndText =
-        "//div[@class='tabulator-table']//div[@tabulator-field='{0}' and .='{1}']";
+        "//div[@class='tabulator-table']//div[@tabulator-field='{0}' and contains(text(),'{1}')]";
     protected searchResultRow = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div";
     protected searchResultRowByIndex = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]";
     protected searchResultColumnsByRowIndex =
@@ -83,6 +83,18 @@ export class AddProjectPage extends GeneralPage {
     //#endregion
 
     //#region dates
+    @locator
+    protected datePicker = { id: 'ui-datepicker-div' };
+    @locator
+    protected datePickerDay = "//td[@data-handler='selectDay' and contains(@class,'current-day')]/a";
+    @locator
+    protected datePickerSelectedDay = "//td[@data-handler='selectDay']";
+    @locator
+    protected datePickerMonth = { css: '.ui-datepicker-month' };
+    @locator
+    protected datePickerYear = { css: '.ui-datepicker-year' };
+    @locator
+    protected datePickerDayByIndex = "(//td[@data-handler='selectDay'])[{0}]";
     @locator
     protected startDate = { name: 'start_date' };
     @locator
@@ -399,7 +411,7 @@ export class AddProjectPage extends GeneralPage {
     public async searchSegment(segment: string): Promise<void> {
         await gondola.click(this.searchSegmentField);
         await this.filterResult(segment, FilterType.SEGMENTS);
-        await this.selectSearchResult(segment, SearchResultColumn.SEGMENTS_CODE);
+        await this.selectSearchResult(segment, SearchResultColumn.BREADCRUMBS_TEXT);
     }
 
     @action('searchItem')
@@ -422,7 +434,7 @@ export class AddProjectPage extends GeneralPage {
         await this.selectSearchResult(lab);
     }
 
-    @action('checkProjectForm')
+    @action('checkProjectFormOptions')
     public async checkProjectFormOptions(options: string[]): Promise<boolean> {
         return await (gondola as any).areOptionsExists(this.projectForm, options);
     }
@@ -435,6 +447,40 @@ export class AddProjectPage extends GeneralPage {
     @action('isProjectResultSectionDisplayed')
     public async isProjectResultSectionDisplayed(): Promise<boolean> {
         return await (gondola as any).doesControlDisplay(this.projectResultSection);
+    }
+
+    @action('inputProjectOverviewInfo')
+    public async inputProjectOverviewInfo(projectOverview: ProjectOverviewData): Promise<void> {
+        await gondola.enter(this.projectName, projectOverview.projectName);
+        await gondola.select(this.projectForm, projectOverview.projectForm);
+        await this.searchCustomerByName(projectOverview.customerName);
+        await this.searchDepartment(projectOverview.department);
+        await this.searchWorker(projectOverview.workerName);
+        if (projectOverview.startDate) {
+            await this.enterText(this.startDate, projectOverview.startDate);
+        }
+        if (projectOverview.endDate) {
+            await this.enterText(this.endDate, projectOverview.endDate);
+        }
+        if (projectOverview.scheduleStartDate) {
+            await this.enterText(this.scheduleStartDate, projectOverview.scheduleStartDate);
+        }
+        if (projectOverview.scheduleEndDate) {
+            await this.enterText(this.scheduleEndDate, projectOverview.scheduleEndDate);
+        }
+        await gondola.select(this.accuracy, projectOverview.accuracy);
+        await gondola.select(this.status, projectOverview.status);
+        await gondola.select(this.workingPlace, projectOverview.workingPlace);
+        await gondola.select(this.currencyId, projectOverview.currencyId);
+        await gondola.select(this.billingType, projectOverview.billingType);
+        await gondola.select(this.closingDate, projectOverview.closingDate);
+        await this.searchSegment(projectOverview.segment);
+        if (projectOverview.tag) {
+            await this.enterText(this.tag, projectOverview.tag);
+        }
+        if (projectOverview.description) {
+            await this.enterText(this.description, projectOverview.description);
+        }
     }
 
     @action('inputProjectOverview')
@@ -476,7 +522,7 @@ export class AddProjectPage extends GeneralPage {
         const formExist = await gondola.doesControlExist(this.subTitleProjectResult);
         if (formExist) {
             for (let i = 0; i <= projectResultBases.length - 1; i++) {
-                var projectResultBase = new ProjectResultBaseInfo(projectResultBases[i]);
+                const projectResultBase = new ProjectResultBaseInfo(projectResultBases[i]);
                 const checkBoxXpath = Utilities.formatString(this.roleCheckboxStr, projectResultBase.$role);
                 await gondola.click(checkBoxXpath);
                 await this.searchItem(projectResultBase.$item, projectResultBase.$role, 'result bases');
@@ -551,7 +597,7 @@ export class AddProjectPage extends GeneralPage {
     @action('addProjectDetails')
     public async addProjectDetails(projectDetails: any[]): Promise<void> {
         for (let i = 1; i <= projectDetails.length; i++) {
-            var projectDetail = new ProjectDetailInfo(projectDetails[i - 1]);
+            const projectDetail = new ProjectDetailInfo(projectDetails[i - 1]);
             await gondola.click(this.addProjectDetailBtn);
             await gondola.enter(Utilities.formatString(this.detailNamebyRowStr, i + ''), projectDetail.$detailName);
             await this.searchItem(projectDetail.$item, i + '', 'detail');
@@ -595,7 +641,7 @@ export class AddProjectPage extends GeneralPage {
     @action('addResourceRows')
     public async addResourceRows(projectResources: any[]): Promise<void> {
         for (let i = 1; i <= projectResources.length; i++) {
-            var projectResource = new ProjectResourceInfo(projectResources[i - 1]);
+            const projectResource = new ProjectResourceInfo(projectResources[i - 1]);
             await gondola.click(this.addResourceButton);
             await gondola.enter(
                 Utilities.formatString(this.resourceDateByRowStr, i + ''),
@@ -656,6 +702,20 @@ export class AddProjectPage extends GeneralPage {
         await gondola.checkEqual(totalTime, expectedTotalTime + '');
     }
 
+    @action('doesLabsDisplayCorrect')
+    public async doesLabsDisplayCorrect(inHouse = false): Promise<boolean> {
+        const expectedLabs = await DatabaseHelper.getLabs(inHouse);
+        const expectedLabCodes: string[] = [];
+        expectedLabs.forEach(lab => {
+            if (lab.code) {
+                expectedLabCodes.push(lab.code);
+            }
+        });
+        await this.scrollToRandomResult(expectedLabs.length);
+        const actualDisplayingLabCodes = await this.getAllItemsOneColumn(SearchResultColumn.FULL_CODE);
+        return Utilities.isSubset(expectedLabCodes, actualDisplayingLabCodes);
+    }
+
     @action('doesBusinessCustomerDisplayCorrect')
     public async doesBusinessCustomerDisplayCorrect(): Promise<boolean> {
         const expectedActiveBusinessCustomers = await DatabaseHelper.getActiveBusinessCustomers();
@@ -698,6 +758,11 @@ export class AddProjectPage extends GeneralPage {
         return Utilities.isSubset(expectedWorkerCodes, actualDisplayingWorkerCodes);
     }
 
+    @action('waitForTableUpdated')
+    public async waitForTableUpdated(): Promise<void> {
+        await (gondola as any).waitUntilStalenessOfElement(this.searchResultRow);
+    }
+
     @action('scrollToRandomResult')
     public async scrollToRandomResult(numberOfDatabaseRecords: number): Promise<void> {
         const numberOfDisplayingResults = await gondola.getElementCount(this.searchResultRow);
@@ -716,19 +781,19 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesProjectNameDisplayCorrect')
     public async doesProjectNameDisplayCorrect(projectName: string): Promise<boolean> {
-        let currentName = await this.getTextBoxValue(this.projectName);
+        const currentName = await this.getTextBoxValue(this.projectName);
         return Utilities.isTextEqual(currentName, projectName);
     }
 
     @action('doesProjectFormDisplayCorrect')
     public async doesProjectFormDisplayCorrect(projectForm: string): Promise<boolean> {
-        let currentProjectForm = await this.getSelectedOption(this.projectForm);
+        const currentProjectForm = await this.getSelectedOption(this.projectForm);
         return Utilities.isTextEqual(currentProjectForm, projectForm);
     }
 
     @action('doesProjectCustomerDisplayCorrect')
     public async doesProjectCustomerDisplayCorrect(customerStr: string, isMatchEntire: boolean): Promise<boolean> {
-        let currentCustomer = await this.getTextBoxValue(this.searchCustomerField);
+        const currentCustomer = await this.getTextBoxValue(this.searchCustomerField);
         if (isMatchEntire) {
             return Utilities.isTextEqual(currentCustomer, customerStr);
         } else {
@@ -738,7 +803,7 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesProjectDepartmentDisplayCorrect')
     public async doesProjectDepartmentDisplayCorrect(departmentStr: string, isMatchEntire: boolean): Promise<boolean> {
-        let currentDepartment = await this.getTextBoxValue(this.searchDepartmentField);
+        const currentDepartment = await this.getTextBoxValue(this.searchDepartmentField);
         if (isMatchEntire) {
             return Utilities.isTextEqual(currentDepartment, departmentStr);
         } else {
@@ -748,7 +813,7 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesProjectWorkerDisplayCorrect')
     public async doesProjectWorkerDisplayCorrect(workerStr: string, isMatchEntire: boolean): Promise<boolean> {
-        let currentWorker = await this.getTextBoxValue(this.searchWorkerField);
+        const currentWorker = await this.getTextBoxValue(this.searchWorkerField);
         if (isMatchEntire) {
             return Utilities.isTextEqual(currentWorker, workerStr);
         } else {
@@ -758,7 +823,7 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesProjectSegmentDisplayCorrect')
     public async doesProjectSegmentDisplayCorrect(segmentStr: string, isMatchEntire: boolean): Promise<boolean> {
-        let currentSegment = await this.getTextBoxValue(this.searchSegmentField);
+        const currentSegment = await this.getTextBoxValue(this.searchSegmentField);
         if (isMatchEntire) {
             return Utilities.isTextEqual(currentSegment, segmentStr);
         } else {
@@ -775,7 +840,7 @@ export class AddProjectPage extends GeneralPage {
     ): Promise<boolean> {
         gondola.report('verify date: start date, end date, schedule start date, schedule end date');
         let doesStartDateDisplayCorrect = true;
-        let currentStartDate = await this.getTextBoxValue(this.startDate);
+        const currentStartDate = await this.getTextBoxValue(this.startDate);
         if (startDate !== null && startDate !== undefined) {
             doesStartDateDisplayCorrect = Utilities.isTextEqual(currentStartDate, startDate);
         } else {
@@ -783,7 +848,7 @@ export class AddProjectPage extends GeneralPage {
         }
 
         let doesEndDateDisplayCorrect = true;
-        let currentEndDate = await this.getTextBoxValue(this.endDate);
+        const currentEndDate = await this.getTextBoxValue(this.endDate);
         if (endDate !== null && endDate !== undefined) {
             doesEndDateDisplayCorrect = Utilities.isTextEqual(currentEndDate, endDate);
         } else {
@@ -791,7 +856,7 @@ export class AddProjectPage extends GeneralPage {
         }
 
         let doesScheduleStartDateDisplayCorrect = true;
-        let currentScheduleStartDate = await this.getTextBoxValue(this.scheduleStartDate);
+        const currentScheduleStartDate = await this.getTextBoxValue(this.scheduleStartDate);
         if (scheduleStartDate !== null && scheduleStartDate !== undefined) {
             doesScheduleStartDateDisplayCorrect = Utilities.isTextEqual(currentScheduleStartDate, scheduleStartDate);
         } else {
@@ -799,7 +864,7 @@ export class AddProjectPage extends GeneralPage {
         }
 
         let doesScheduleEndDateDisplayCorrect = true;
-        let currentScheduleEndDate = await this.getTextBoxValue(this.scheduleEndDate);
+        const currentScheduleEndDate = await this.getTextBoxValue(this.scheduleEndDate);
         if (scheduleEndDate !== null && scheduleEndDate !== undefined) {
             doesScheduleEndDateDisplayCorrect = Utilities.isTextEqual(currentScheduleEndDate, scheduleEndDate);
         } else {
@@ -815,45 +880,45 @@ export class AddProjectPage extends GeneralPage {
     }
 
     @action('doesProjectAccuracyDisplayCorrect')
-    public async doesProjectAccuracyDisplayCorrect(accuracy: string) {
-        let currentAccuracy = await this.getSelectedOption(this.accuracy);
+    public async doesProjectAccuracyDisplayCorrect(accuracy: string): Promise<boolean> {
+        const currentAccuracy = await this.getSelectedOption(this.accuracy);
         return Utilities.isTextEqual(currentAccuracy, accuracy);
     }
 
     @action('doesProjectStatusDisplayCorrect')
-    public async doesProjectStatusDisplayCorrect(status: string) {
-        let currentStatus = await this.getSelectedOption(this.status);
+    public async doesProjectStatusDisplayCorrect(status: string): Promise<boolean> {
+        const currentStatus = await this.getSelectedOption(this.status);
         return Utilities.isTextEqual(currentStatus, status);
     }
 
     @action('doesProjectWorkingPlaceDisplayCorrect')
-    public async doesProjectWorkingPlaceDisplayCorrect(workingPlace: string) {
-        let currentWorkingPlace = await this.getSelectedOption(this.workingPlace);
+    public async doesProjectWorkingPlaceDisplayCorrect(workingPlace: string): Promise<boolean> {
+        const currentWorkingPlace = await this.getSelectedOption(this.workingPlace);
         return Utilities.isTextEqual(currentWorkingPlace, workingPlace);
     }
 
     @action('doesCurrencyIdDisplayCorrect')
     public async doesCurrencyIdDisplayCorrect(currencyId: string): Promise<boolean> {
-        let currentCurrencyId = await this.getSelectedOption(this.currencyId);
+        const currentCurrencyId = await this.getSelectedOption(this.currencyId);
         return Utilities.isTextEqual(currentCurrencyId, currencyId);
     }
 
     @action('doesBillingTypeDisplayCorrect')
     public async doesBillingTypeDisplayCorrect(billingType: string): Promise<boolean> {
-        let currentBillingType = await this.getSelectedOption(this.billingType);
+        const currentBillingType = await this.getSelectedOption(this.billingType);
         return Utilities.isTextEqual(currentBillingType, billingType);
     }
 
     @action('doesClosingDateDisplayCorrect')
     public async doesClosingDateDisplayCorrect(closingDate: string): Promise<boolean> {
-        let currentClosingDate = await this.getSelectedOption(this.closingDate);
+        const currentClosingDate = await this.getSelectedOption(this.closingDate);
         return Utilities.isTextEqual(currentClosingDate, closingDate);
     }
 
     @action('doesProjectTagsDisplayCorrect')
     public async doesProjectTagsDisplayCorrect(tag?: string): Promise<boolean> {
         let doesTagDisplayCorrect = true;
-        let currentTag = await this.getTextBoxValue(this.tagContent);
+        const currentTag = await this.getTextBoxValue(this.tagContent);
         if (tag !== null && tag !== undefined) {
             doesTagDisplayCorrect = Utilities.isTextEqual(currentTag, tag);
         } else {
@@ -865,7 +930,7 @@ export class AddProjectPage extends GeneralPage {
     @action('doesProjectDescriptionDisplayCorrect')
     public async doesProjectDescriptionDisplayCorrect(description?: string): Promise<boolean> {
         let doesDescriptionDisplayCorrect = true;
-        let currentTag = await this.getTextBoxValue(this.description);
+        const currentTag = await this.getTextBoxValue(this.description);
         if (description !== null && description !== undefined) {
             doesDescriptionDisplayCorrect = Utilities.isTextEqual(currentTag, description);
         } else {
@@ -949,17 +1014,17 @@ export class AddProjectPage extends GeneralPage {
         planPeople: number,
         totalTime: number,
     ): Promise<boolean> {
-        var doesPeopleDisplayCorrect = Utilities.isTextEqual(
+        const doesPeopleDisplayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.planPeopleByRoleStr, role)),
             planPeople + '',
         );
 
-        var doesTimeDisplayCorrect = Utilities.isTextEqual(
+        const doesTimeDisplayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.planTimeByRoleStr, role)),
             planTime + '',
         );
 
-        var doesTotalTimeDisplayCorrect = Utilities.isTextEqual(
+        const doesTotalTimeDisplayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.planTotalTimeByRoleStr, role)),
             totalTime + '',
         );
@@ -976,27 +1041,27 @@ export class AddProjectPage extends GeneralPage {
         priceHoliday: string,
         priceHolidayLate: string,
     ): Promise<boolean> {
-        var isPriceWeekdayCorrect = Utilities.isTextEqual(
+        const isPriceWeekdayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayByRoleStr, role)),
             priceWeekday,
         );
-        var isPriceWeekdayOTCorrect = Utilities.isTextEqual(
+        const isPriceWeekdayOTCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayOTByRoleStr, role)),
             priceWeekdayOT,
         );
-        var isPriceWeekdayLateOTCorrect = Utilities.isTextEqual(
+        const isPriceWeekdayLateOTCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, role)),
             priceWeekdayLateOT,
         );
-        var isPriceHolidayCorrect = Utilities.isTextEqual(
+        const isPriceHolidayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.unitPriceHolidayByRoleStr, role)),
             priceHoliday,
         );
-        var isPriceWeekdayLateCorrect = Utilities.isTextEqual(
+        const isPriceWeekdayLateCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayLateByRoleStr, role)),
             priceWeekdayLate,
         );
-        var isPriceHolidayLateCorrect = Utilities.isTextEqual(
+        const isPriceHolidayLateCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.unitPriceHolidayLateByRoleStr, role)),
             priceHolidayLate,
         );
@@ -1017,9 +1082,9 @@ export class AddProjectPage extends GeneralPage {
         role?: string,
         index?: string,
     ): Promise<boolean> {
-        var doesTaxDisplayCorrect = true;
-        var isChecked = false;
-        var currentTaxId = '';
+        let doesTaxDisplayCorrect = true;
+        let isChecked = false;
+        let currentTaxId = '';
         if (role !== undefined) {
             isChecked = await this.getCheckboxValue(Utilities.formatString(this.isTaxableByRoleCheckbox, role));
             currentTaxId = await this.getSelectedOption(Utilities.formatString(this.taxIdByRoleStr, role));
@@ -1042,9 +1107,9 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesContentOfProjectResultBasesDisplayCorrect')
     public async doesContentOfProjectResultBasesDisplayCorrect(projectResultBases: any[]): Promise<boolean> {
-        var doesContentDisplayCorrect = true;
+        let doesContentDisplayCorrect = true;
         for (let i = 0; i <= projectResultBases.length - 1; i++) {
-            var projectResultBaseRow = new ProjectResultBaseInfo(projectResultBases[i]);
+            const projectResultBaseRow = new ProjectResultBaseInfo(projectResultBases[i]);
             gondola.report('Verify content of project result base, role: ' + projectResultBaseRow.$role);
             if (doesContentDisplayCorrect) {
                 doesContentDisplayCorrect = (
@@ -1093,7 +1158,7 @@ export class AddProjectPage extends GeneralPage {
             }
 
             if (doesContentDisplayCorrect) {
-                let currentNote = await this.getTextBoxValue(
+                const currentNote = await this.getTextBoxValue(
                     Utilities.formatString(this.notebyRoleStr, projectResultBaseRow.$role),
                 );
                 if (projectResultBaseRow.$note !== null && projectResultBaseRow.$note !== undefined) {
@@ -1104,7 +1169,7 @@ export class AddProjectPage extends GeneralPage {
             }
 
             if (doesContentDisplayCorrect) {
-                let currentOutputOrder = await this.getTextBoxValue(
+                const currentOutputOrder = await this.getTextBoxValue(
                     Utilities.formatString(this.outputOrderbyRoleStr, projectResultBaseRow.$role),
                 );
                 if (projectResultBaseRow.$outputOrder !== null && projectResultBaseRow.$outputOrder !== undefined) {
@@ -1129,7 +1194,7 @@ export class AddProjectPage extends GeneralPage {
         billingDate?: string,
     ): Promise<boolean> {
         let doesShipDateDisplayCorrect = true;
-        let currentShipDate = await this.getTextBoxValue(Utilities.formatString(this.shipDateByRowStr, rowIndex));
+        const currentShipDate = await this.getTextBoxValue(Utilities.formatString(this.shipDateByRowStr, rowIndex));
         if (shipDate !== null && shipDate !== undefined) {
             doesShipDateDisplayCorrect = Utilities.isTextEqual(currentShipDate, shipDate);
         } else {
@@ -1137,7 +1202,7 @@ export class AddProjectPage extends GeneralPage {
         }
 
         let doesDeliveryDateDisplayCorrect = true;
-        let currentDeliveryDate = await this.getTextBoxValue(
+        const currentDeliveryDate = await this.getTextBoxValue(
             Utilities.formatString(this.deliveryDateByRowStr, rowIndex),
         );
         if (deliveryDate !== null && deliveryDate !== undefined) {
@@ -1147,7 +1212,7 @@ export class AddProjectPage extends GeneralPage {
         }
 
         let doesAcceptedDateDisplayCorrect = true;
-        let currentAcceptedDate = await this.getTextBoxValue(
+        const currentAcceptedDate = await this.getTextBoxValue(
             Utilities.formatString(this.acceptedDateByRowStr, rowIndex),
         );
         if (acceptedDate !== null && acceptedDate !== undefined) {
@@ -1157,7 +1222,9 @@ export class AddProjectPage extends GeneralPage {
         }
 
         let doesBillingDateDisplayCorrect = true;
-        let currentBillingDate = await this.getTextBoxValue(Utilities.formatString(this.billingDateByRowStr, rowIndex));
+        const currentBillingDate = await this.getTextBoxValue(
+            Utilities.formatString(this.billingDateByRowStr, rowIndex),
+        );
         if (billingDate !== null && billingDate !== undefined) {
             doesBillingDateDisplayCorrect = Utilities.isTextEqual(currentBillingDate, billingDate);
         } else {
@@ -1173,9 +1240,9 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesContentOfProjectDetailsDisplayCorrect')
     public async doesContentOfProjectDetailsDisplayCorrect(projectDetails: any[]): Promise<boolean> {
-        var doesContentDisplayCorrect = true;
+        let doesContentDisplayCorrect = true;
         for (let i = 1; i <= projectDetails.length; i++) {
-            var projectDetailRow = new ProjectDetailInfo(projectDetails[i - 1]);
+            const projectDetailRow = new ProjectDetailInfo(projectDetails[i - 1]);
             gondola.report('Verify content of project detail, row: ' + i);
             if (doesContentDisplayCorrect) {
                 doesContentDisplayCorrect = Utilities.isTextEqual(
@@ -1242,7 +1309,7 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesProjectLabDisplayCorrect')
     public async doesProjectLabDisplayCorrect(labStr: string, isMatchEntire: boolean): Promise<boolean> {
-        let currentLab = await this.getTextBoxValue(this.searchLabField);
+        const currentLab = await this.getTextBoxValue(this.searchLabField);
         if (isMatchEntire) {
             return Utilities.isTextEqual(currentLab, labStr);
         } else {
@@ -1251,12 +1318,12 @@ export class AddProjectPage extends GeneralPage {
     }
 
     @action('doesProjectWorkingTimeDisplayCorrect')
-    public async doesProjectWorkingTimeDisplayCorrect(startTime: string, endTime: string) {
-        let doesStartTimeDisplayCorrect = Utilities.isTextEqual(
+    public async doesProjectWorkingTimeDisplayCorrect(startTime: string, endTime: string): Promise<boolean> {
+        const doesStartTimeDisplayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(this.workStartTime),
             startTime,
         );
-        let doesEndTimeDisplayCorrect = Utilities.isTextEqual(await this.getTextBoxValue(this.workEndTime), endTime);
+        const doesEndTimeDisplayCorrect = Utilities.isTextEqual(await this.getTextBoxValue(this.workEndTime), endTime);
         return doesStartTimeDisplayCorrect && doesEndTimeDisplayCorrect;
     }
 
@@ -1267,7 +1334,7 @@ export class AddProjectPage extends GeneralPage {
         workEndTime: string,
         projectResources: any[],
     ): Promise<boolean> {
-        var doesContentDisplayCorrect = true;
+        let doesContentDisplayCorrect = true;
         gondola.report('verify lab name');
         if (doesContentDisplayCorrect) {
             doesContentDisplayCorrect = await this.doesProjectLabDisplayCorrect(labName, false);
@@ -1279,7 +1346,7 @@ export class AddProjectPage extends GeneralPage {
         }
 
         for (let i = 1; i <= projectResources.length; i++) {
-            var projectResourceRow = new ProjectResourceInfo(projectResources[i - 1]);
+            const projectResourceRow = new ProjectResourceInfo(projectResources[i - 1]);
             gondola.report('Verify content of resource, row: ' + i);
             if (doesContentDisplayCorrect) {
                 doesContentDisplayCorrect = Utilities.isTextEqual(
@@ -1352,6 +1419,35 @@ export class AddProjectPage extends GeneralPage {
             }
         }
         return doesContentDisplayCorrect;
+    }
+
+    public async clickOutsideDatePicker(): Promise<void> {
+        await (gondola as any).performClick(this.datePicker, Constants.SLIGHTLY_RIGHT_OFFSET);
+    }
+
+    public async doesDatePickerDisplay(positive = true): Promise<boolean> {
+        if (!positive) {
+            await (gondola as any).waitUntilElementNotVisible(this.datePicker, Constants.SHORT_TIMEOUT);
+        }
+        return await (gondola as any).doesControlDisplay(this.datePicker);
+    }
+
+    public async selectRandomDate(): Promise<string> {
+        const numberOfDays = await gondola.getElementCount(this.datePickerDay);
+        const randomDay = Utilities.getRandomNumber(1, numberOfDays);
+        const locator = Utilities.formatString(this.datePickerDayByIndex, randomDay.toString());
+        const selectedDate = await this.getSelectedDate(randomDay.toString());
+        await gondola.click(locator);
+        return selectedDate;
+    }
+
+    public async getSelectedDate(day?: string): Promise<string> {
+        const month = (await gondola.getText(this.datePickerMonth)).replace(/^\D+/g, '');
+        const year = await gondola.getText(this.datePickerYear);
+        if (!day) {
+            day = await gondola.getText(this.datePickerSelectedDay);
+        }
+        return Utilities.getDateString(day, month, year, Constants.NORMAL_DATE_FORMAT);
     }
 }
 export default new AddProjectPage();
