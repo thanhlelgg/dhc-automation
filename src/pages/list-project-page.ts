@@ -36,7 +36,10 @@ export class ListProjectPage {
     protected scheduleEndDateEnd = { id: 'scheduled-end-date-end' };
     @locator
     protected searchButton = "//button[@class='btn btn-info px-5 mr-2']";
-
+    @locator
+    protected ttsLinkByProjectId =
+        "//div[div[@tabulator-field='案件番号']/a[text()='{0}']]/div[@tabulator-field='tts連携']//a";
+    @locator
     protected editProjectLinkStr = "//a[.='{0}']";
 
     @action('searchProject')
@@ -109,6 +112,18 @@ export class ListProjectPage {
     @action('getProjectLink')
     public getProjectLink(projectCode: string): string {
         return Utilities.formatString(this.editProjectLinkStr, projectCode);
+    }
+
+    @action('isTTSLinkEnabled')
+    public async isTTSLinkDisabled(projectId: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.ttsLinkByProjectId, projectId);
+        return (await gondola.getControlProperty(locator, 'class')).indexOf('disabled') >= 0;
+    }
+
+    @action('clickOnTTSLinkButton')
+    public async clickOnTTSLinkButton(projectId: string): Promise<void> {
+        const locator = Utilities.formatString(this.ttsLinkByProjectId, projectId);
+        await gondola.click(locator);
     }
 }
 export default new ListProjectPage();

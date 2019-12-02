@@ -1,13 +1,43 @@
-import { translate } from '../locales/translate';
+import { Translate } from '../locales/translate';
+import inputData from '../data/input-data.json';
+
+export interface ProjectOverviewData {
+    projectName: string;
+    projectForm: string;
+    customerName: string;
+    department: string;
+    workerName: string;
+    startDate: string | null;
+    endDate: string | null;
+    scheduleStartDate: string | null;
+    scheduleEndDate: string | null;
+    accuracy: string;
+    status: string;
+    workingPlace: string;
+    currencyId: string;
+    billingType: string;
+    closingDate: string;
+    segment: string;
+    tag: string | null;
+    description?: string | null;
+}
 
 export class Constants {
-    public static translator = translate.getTranslator();
-    public static readonly url = 'https://dhcdms.digitalhearts.com/login';
+    public static translator = Translate.getTranslator();
+    public static readonly url = 'https://dhcdms.digitalhearts.com/language/ja_JP';
     public static readonly SHORT_TIMEOUT = 5;
     public static readonly MEDIUM_TIMEOUT = 30;
     public static readonly LONG_TIMEOUT = 90;
     // incase we have too many elements, scroll to the last of it will take really long time, so we should limit it a little
     public static readonly LIMIT_SCROLL_TIMES = 10;
+    public static readonly SLIGHTLY_RIGHT_OFFSET = { x: 50, y: 0 };
+    public static readonly NORMAL_DATE_FORMAT = 'YYYY-MM-DD';
+    public static readonly EXAMPLE_DEFAULT_DATE = '2019-01-01';
+    public static readonly EXAMPLE_DEFAULT_DATE_SHORT = '2019-1-1';
+    public static readonly EXAMPLE_DATE_DIVIDED_BY_DOT = '2019.1.1';
+    public static readonly EXAMPLE_DATE_DIVIDED_BY_SLASH = '2019/1/1';
+    public static readonly PROJECT_OVERVIEW_REQUIRED_ONLY: ProjectOverviewData =
+        inputData.projectDetailOverview.requiredOnly;
 
     //#region Input data
     public static adminUserName = 'logigear_admin';
@@ -21,7 +51,8 @@ export class Constants {
 
     //#region invalid feedback message
     public static fieldRequiredErrorMessage = Constants.translator.invalidFeedback.fieldRequired;
-    public static exceededNOCErrorMessage = Constants.translator.invalidFeedback.exceededNOC;
+    public static exceededNOCErrorMessage255 = '255' + Constants.translator.invalidFeedback.exceededNOC;
+    public static exceededNOCErrorMessage50 = '50' + Constants.translator.invalidFeedback.exceededNOC;
     //#endregion
 
     //#region Project attributes
