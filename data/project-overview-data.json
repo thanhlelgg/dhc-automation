@@ -13,8 +13,8 @@
     "workingPlace": "社内",
     "currencyId": "JPY",
     "billingType": "案件個別",
-    "closingDate": "未",
-    "segment": "Test",
+    "closingDate": "末",
+    "segment": "TEST_初台_0031",
     "tag": "4月,test",
     "description": null
 }

@@ -20,7 +20,6 @@ export interface IProjectOverviewInfo {
 }
 
 export class ProjectOverviewInfo {
-
     private projectOverview: IProjectOverviewInfo;
 
     constructor($projectOverview: IProjectOverviewInfo) {
@@ -28,9 +27,9 @@ export class ProjectOverviewInfo {
     }
 
     /**
-    * Getter $projectName
-    * @return {string}
-    */
+     * Getter $projectName
+     * @return {string}
+     */
     public get $projectName(): string {
         return this.projectOverview.projectName;
     }
@@ -314,5 +313,4 @@ export class ProjectOverviewInfo {
     public set $description(value: string | undefined) {
         this.projectOverview.description = value;
     }
-
 }
