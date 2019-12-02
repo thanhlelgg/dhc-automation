@@ -4,57 +4,72 @@ import { GeneralPage } from './general-page';
 export class BusinessSystemPage extends GeneralPage {
     // Project
     @locator
-    protected projectLink = "//span[.='案件']";
+    protected projectLink = `//span[.='${this.translator.verticalMenuBMS.project.title}']`;
     @locator
-    protected listProjectLink = "//a[@href='/projects']//span[contains(text(), '一覧')]";
+    protected listProjectLink = `//a[@href='/projects']//span[contains(., '${this.translator.verticalMenuBMS.project.listLink}')]`;
     @locator
     protected addProjectLink = "//a[@href='/projects/add']";
 
     // Master
     @locator
-    protected masterLink = "//span[.='マスタ']";
+    protected masterLink = `//span[.='${this.translator.verticalMenuBMS.master.title}']`;
     @locator
-    protected customerLink = "//a[contains(.,'顧客')]";
+    protected customerLink = `//a[contains(.,'${this.translator.verticalMenuBMS.master.customer.title}')]`;
     @locator
-    protected listBusinessCustomerLink = "//a[contains(.,'得意先一覧')]";
+    protected listBusinessCustomerLink = `//a[@href='/customers/business-customer']//span[contains(., '${this.translator.verticalMenuBMS.master.customer.listCustomerLink}')]`;
     @locator
-    protected listBusinessSupplierLink = "//span[.='仕入先一覧']";
+    protected listBusinessSupplierLink = `//a[@href='/customers/business-supplier']//span[contains(., '${this.translator.verticalMenuBMS.master.customer.listSupplierLink}')]`;
     @locator
     protected addCustomerLink = "//a[@href='/customers/add']";
     @locator
-    protected itemLink = "//span[.='品目']";
+    protected itemLink = `//span[.='${this.translator.verticalMenuBMS.master.item.title}']`;
     @locator
-    protected listItemsLink = "//a[@href='/items']//span[contains(text(), '一覧')]";
+    protected listItemsLink = `//a[@href='/items']//span[contains(., '${this.translator.verticalMenuBMS.master.item.listLink}')]`;
     @locator
     protected addItemLink = "//a[@href='/items/add']";
     @locator
-    protected departmentLink = "//span[.='部門']";
+    protected departmentLink = `//span[.='${this.translator.verticalMenuBMS.master.department.title}']`;
     @locator
-    protected listDepartmentLink = "//a[@href='/departments']//span[contains(text(), '一覧')]";
+    protected listDepartmentLink = `//a[@href='/departments']//span[contains(., '${this.translator.verticalMenuBMS.master.department.listLink}')]`;
     @locator
     protected addDepartmentLink = "//a[@href='/departments/add']";
     @locator
-    protected segmentLink = "//span[.='セグメント']";
+    protected segmentLink = `//span[.='${this.translator.verticalMenuBMS.master.segment.title}']`;
     @locator
-    protected listSegmentLink = "//a[@href='/segments']//span[contains(text(), '一覧')]";
+    protected listSegmentLink = `//a[@href='/segments']//span[contains(., '${this.translator.verticalMenuBMS.master.segment.listLink}')]`;
     @locator
     protected addSegmentLink = "//a[@href='/segments/add']";
+    @locator
+    protected workerLink = `//span[.='${this.translator.verticalMenuBMS.master.worker.title}']`;
+    @locator
+    protected listWorkerLink = `//a[@href='/workers']//span[contains(., '${this.translator.verticalMenuBMS.master.worker.listLink}')]`;
+    @locator
+    protected addWorkerLink = "//a[@href='/workers/add']";
 
+    @action('gotoAddProjectPage')
     public async gotoAddProjectPage(): Promise<void> {
-        await this.waitControlExist(this.projectLink, 30);
+        await this.waitControlExist(this.projectLink);
         await gondola.click(this.projectLink);
-        await gondola.waitForElement(this.addProjectLink);
-        await this.waitControlExist(this.addProjectLink, 10);
+        await this.waitControlExist(this.addProjectLink);
         await gondola.click(this.addProjectLink);
     }
 
     @action('gotoListProject')
     public async gotoListProject(): Promise<void> {
-        await this.waitControlExist(this.projectLink, 30);
+        await this.waitControlExist(this.projectLink);
         await gondola.click(this.projectLink);
-        await gondola.waitForElement(this.listProjectLink);
-        await this.waitControlExist(this.listProjectLink, 10);
+        await this.waitControlExist(this.listProjectLink);
         await gondola.click(this.listProjectLink);
+    }
+
+    @action('gotoAddWorkerPage')
+    public async gotoAddWorkerPage(): Promise<void> {
+        await this.waitControlExist(this.masterLink);
+        await gondola.click(this.masterLink);
+        await this.waitControlExist(this.workerLink);
+        await gondola.click(this.workerLink);
+        await this.waitControlExist(this.addWorkerLink);
+        await gondola.click(this.addWorkerLink);
     }
 }
 export default new BusinessSystemPage();

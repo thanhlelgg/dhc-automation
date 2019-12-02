@@ -22,6 +22,61 @@
     },
     "invalidFeedback": {
         "fieldRequired": "このフィールドは入力必須です",
-        "exceededNOC": "255文字以内で入力してください"
+        "exceededNOC": "255文字以内で入力してください",
+        "characterTypeError": "。。。"
+    },
+    "verticalMenuBMS": {
+        "project": {
+            "title": "案件",
+            "listLink": "一覧",
+            "addLink": "登録"
+        },
+        "master": {
+            "title": "マスタ",
+            "customer": {
+                "title": "顧客",
+                "listCustomerLink": "",
+                "listSupplierLink": "",
+                "addLink": "登録"
+            },
+            "worker": {
+                "title": "従業員",
+                "listLink": "一覧",
+                "addLink": "登録"
+            },
+            "department": {
+                "title": "部門",
+                "listLink": "一覧",
+                "addLink": "登録"
+            },
+            "item": {
+                "title": "品目",
+                "listLink": "一覧",
+                "addLink": "登録"
+            },
+            "segment": {
+                "title": "セグメント",
+                "listLink": "一覧",
+                "addLink": "登録"
+            },
+            "taxes": {
+                "title": "税",
+                "listLink": "一覧",
+                "addLink": "登録"
+            },
+            "template": {
+                "title": "テンプレート",
+                "estimateTemplateLink": "見積書",
+                "deliveryTemplateLink": "納品書",
+                "billingTemplateLink": "請求書"
+            }
+        }
+    },
+    "backButton": "戻る",
+    "workerFieldName": {
+        "code": "従業員コード",
+        "name": "従業員名",
+        "department": "所属部門",
+        "note": "備考"
     }
 }

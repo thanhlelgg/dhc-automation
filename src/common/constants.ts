@@ -22,6 +22,8 @@ export class Constants {
     //#region invalid feedback message
     public static fieldRequiredErrorMessage = Constants.translator.invalidFeedback.fieldRequired;
     public static exceededNOCErrorMessage = Constants.translator.invalidFeedback.exceededNOC;
+    // this message content has been not decided yet
+    public static characterTypeErrorMessage = Constants.translator.invalidFeedback.characterTypeError;
     //#endregion
 
     //#region Project attributes
