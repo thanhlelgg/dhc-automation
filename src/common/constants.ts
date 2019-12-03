@@ -1,27 +1,6 @@
 import { Translate } from '../locales/translate';
 import inputData from '../data/input-data.json';
 
-export interface ProjectOverviewData {
-    projectName: string;
-    projectForm: string;
-    customerName: string;
-    department: string;
-    workerName: string;
-    startDate: string | null;
-    endDate: string | null;
-    scheduleStartDate: string | null;
-    scheduleEndDate: string | null;
-    accuracy: string;
-    status: string;
-    workingPlace: string;
-    currencyId: string;
-    billingType: string;
-    closingDate: string;
-    segment: string;
-    tag: string | null;
-    description?: string | null;
-}
-
 export class Constants {
     public static translator = Translate.getTranslator();
     public static readonly url = 'https://dhcdms.digitalhearts.com/language/ja_JP';
@@ -36,8 +15,6 @@ export class Constants {
     public static readonly EXAMPLE_DEFAULT_DATE_SHORT = '2019-1-1';
     public static readonly EXAMPLE_DATE_DIVIDED_BY_DOT = '2019.1.1';
     public static readonly EXAMPLE_DATE_DIVIDED_BY_SLASH = '2019/1/1';
-    public static readonly PROJECT_OVERVIEW_REQUIRED_ONLY: ProjectOverviewData =
-        inputData.projectDetailOverview.requiredOnly;
 
     //#region Input data
     public static adminUserName = 'logigear_admin';

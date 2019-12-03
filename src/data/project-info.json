@@ -1,0 +1,150 @@
+{
+    "projectOverview": {
+        "requiredOnly": {
+            "projectName": "【4月案件】テスト",
+            "projectForm": "出来高案件",
+            "customerName": "移行ﾃｽﾄ グリー株式会社",
+            "department": "エンターテイメント事業本部__",
+            "workerName": "桃澤秀行",
+            "startDate": null,
+            "endDate": null,
+            "scheduleStartDate": null,
+            "scheduleEndDate": null,
+            "accuracy": "普通",
+            "status": "仮受注",
+            "workingPlace": "社内",
+            "currencyId": "JPY",
+            "billingType": "案件個別",
+            "closingDate": "未",
+            "segment": "Test",
+            "tag": null,
+            "description": null
+        },
+        "fullData": {
+            "projectName": "【4月案件】テスト",
+            "projectForm": "出来高案件",
+            "customerName": "移行ﾃｽﾄ グリー株式会社",
+            "department": "エンターテイメント事業本部__",
+            "workerName": "桃澤秀行",
+            "startDate": "2019-04-18",
+            "endDate": "2019-04-19",
+            "scheduleStartDate": null,
+            "scheduleEndDate": null,
+            "accuracy": "普通",
+            "status": "受注済",
+            "workingPlace": "社内",
+            "currencyId": "JPY",
+            "billingType": "案件個別",
+            "closingDate": "末",
+            "segment": "TEST_初台_0031",
+            "tag": "4月,test",
+            "description": null
+        }
+    },
+    "projectDetail": {
+        "twoRecords": [
+            {
+                "detailName": "機器使用料金",
+                "item": "システムテスト",
+                "debitCredit": "売掛",
+                "isTaxable": true,
+                "taxId": "８％",
+                "quantity": "3",
+                "unit": "台",
+                "unitPrice": "1000",
+                "shipDate": "2019-04-18",
+                "deliveryDate": null,
+                "acceptedDate": null,
+                "billingDate": null
+            },
+            {
+                "detailName": "機器使用料金2",
+                "item": "システムテスト",
+                "debitCredit": "売掛",
+                "isTaxable": true,
+                "taxId": "８％",
+                "quantity": "1",
+                "unit": "台",
+                "unitPrice": "2000",
+                "shipDate": "2019-05-13",
+                "deliveryDate": null,
+                "acceptedDate": null,
+                "billingDate": null
+            }
+        ]
+    },
+    "projectResource": {
+        "fullData": {
+            "labName": "札幌第3Lab.(並行稼働用)",
+            "workingStartTime": "10:00",
+            "workingEndTime": "19:00",
+            "resources": [
+                {
+                    "resourceDate": "2019-04-18",
+                    "countPM": "0",
+                    "countLeader": "1",
+                    "countTester": "2",
+                    "countDesigner": "0",
+                    "countExpert": "0",
+                    "countReserve1": "0",
+                    "countReserve2": "0",
+                    "countReserve3": "0",
+                    "countReserve4": "0",
+                    "countReserve5": "0"
+                },
+                {
+                    "resourceDate": "2019-04-19",
+                    "countPM": "0",
+                    "countLeader": "1",
+                    "countTester": "1",
+                    "countDesigner": "0",
+                    "countExpert": "0",
+                    "countReserve1": "0",
+                    "countReserve2": "0",
+                    "countReserve3": "0",
+                    "countReserve4": "0",
+                    "countReserve5": "0"
+                }
+            ]
+        }
+    },
+    "projectResultBase": {
+        "twoRecords": [
+            {
+                "role": "リーダ",
+                "item": "システムテスト",
+                "debitCredit": "売掛",
+                "planPeople": 1,
+                "planTime": 16,
+                "unitPriceWeekday": "2000",
+                "unitPriceWeekdayOT": "2400",
+                "unitPriceHoliday": "2400",
+                "unitPriceWeekdayLate": "2800",
+                "unitPriceWeekdayLateOT": "2000",
+                "unitPriceHolidayLate": "2400",
+                "isTaxable": true,
+                "taxId": "８％",
+                "note": null,
+                "outputOrder": null
+            },
+            {
+                "role": "テスター",
+                "item": "システムテスト",
+                "debitCredit": "売掛",
+                "planPeople": 2,
+                "planTime": 16,
+                "unitPriceWeekday": "2000",
+                "unitPriceWeekdayOT": "2400",
+                "unitPriceHoliday": "2400",
+                "unitPriceWeekdayLate": "2800",
+                "unitPriceWeekdayLateOT": "2000",
+                "unitPriceHolidayLate": "2400",
+                "isTaxable": true,
+                "taxId": "８％",
+                "note": null,
+                "outputOrder": null
+            }
+        ]         
+    }
+
+}
