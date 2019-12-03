@@ -1,8 +1,7 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Before from './setup-and-teardown';
+import setup from './setup-and-teardown';
 import { ProjectInfoData } from '../../models/project-info';
 import businessSystemPage from '../../pages/business-system-page';
 import listProjectPage from '../../pages/list-project-page';
@@ -12,7 +11,9 @@ const START_DATE_FIELD_NAME = Constants.translator.fieldName.startDate;
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
 const END_DATE_FIELD_NAME = Constants.translator.fieldName.endDate;
 
-TestModule('Add Project Overview validation');
+TestModule('Add Project - End Date field validation');
+
+Before(setup);
 
 TestCase('BMS-17. 案件:案件作成:案件終了日:未入力 ', async () => {
     gondola.report(`Step 2. 案件終了日を入力しなくて、他の情報を入力し、保存する`);

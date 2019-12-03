@@ -1,14 +1,15 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Before from './setup-and-teardown';
+import setup from './setup-and-teardown';
 import { ProjectInfoData } from '../../models/project-info';
 
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
 const SCHEDULED_END_DATE_FIELD_NAME = Constants.translator.fieldName.scheduledEndDate;
 
-TestModule('Add Project Overview validation');
+TestModule('Add Project - Scheduled end date field validation');
+
+Before(setup);
 
 TestCase('BMS-27. 案件:案件作成:案件終了予定日:「yyyy-mm-dd」形式で入力', async () => {
     gondola.report(`Step 2. 「案件終了予定日」の枠内をクリックする。`);

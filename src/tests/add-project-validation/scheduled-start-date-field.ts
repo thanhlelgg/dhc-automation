@@ -2,12 +2,15 @@ import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Before from './setup-and-teardown';
+import setup from './setup-and-teardown';
 import { ProjectInfoData } from '../../models/project-info';
 
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
 const SCHEDULED_START_DATE_FIELD_NAME = Constants.translator.fieldName.scheduledStartDate;
-TestModule('Add Project Overview validation');
+
+TestModule('Add Project - Scheduled start date validation');
+
+Before(setup);
 
 TestCase('BMS-23. 案件:案件作成:案件開始予定日:「yyyy-mm-dd」形式で入力', async () => {
     gondola.report(`Step 2. 「案件開始予定日」の枠内をクリックする。`);
