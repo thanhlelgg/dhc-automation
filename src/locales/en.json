@@ -24,7 +24,8 @@
         "scheduledStartDate": "案件開始予定日",
         "scheduledEndDate": "案件終了予定日",
         "labName": "拠点",
-        "closingDate": "締日"
+        "closingDate": "締日",
+        "segment": "セグメント"
     },
     "invalidFeedback": {
         "fieldRequired": "このフィールドは入力必須です",

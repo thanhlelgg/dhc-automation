@@ -177,7 +177,11 @@ class HelperExt extends Helper {
     public async waitUntilStalenessOfElement(control: any, timeOut = DEFAULT_TIMEOUT): Promise<void> {
         timeOut = timeOut * 1000; //convert to milliseconds
         const element = await this.getElement(control);
-        await browser.wait(protractor.until.stalenessOf(element), timeOut);
+        try {
+            await browser.wait(protractor.until.stalenessOf(element), timeOut);
+        } catch (error) {
+            console.log(`Element is not staleness after ${timeOut} ms`);
+        }
     }
 
     /**

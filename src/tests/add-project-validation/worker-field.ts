@@ -71,7 +71,7 @@ TestCase('BMS-11. 案件:案件作成:担当者:担当者の検索および結�
 
     gondola.report(`Step 6. 任意の検索結果を選択する。`);
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
+    await addProjectPage.selectSearchResult(randomResultName);
     gondola.report(`VP. 案件登録画面に戻り、選択した従業員名が表示されること。`);
     const inputtedText = await addProjectPage.getTextFieldValueByLabel(WORKER_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Worker should be selected');

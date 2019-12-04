@@ -2,6 +2,7 @@ import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
 import setup from './setup-and-teardown';
+import { DatabaseHelper } from '../../helper/database-helpers';
 
 TestModule('Add Project - Project Currency field validation');
 
@@ -20,4 +21,11 @@ TestCase('BMS-44. 案件:案件作成:締日:選択肢', async () => {
         true,
         'Closing date options should be displayed correctly',
     );
+
+    gondola.report(`Step 3. 取引先で得意先を選択し、「締日」の値を確認する。`);
+    const customerCode = await addProjectPage.selectRandomCustomer();
+    gondola.report(`VP. 取引先で選択した得意先で設定した締日が転記されること。`);
+    const expectedClosingDate = await DatabaseHelper.getClosingDateByBusinessCustomerCode(customerCode);
+    const actualClosingDate = await addProjectPage.getSelectedOptionByLabel(CLOSING_DATE_FIELD_NAME);
+    gondola.checkEqual(expectedClosingDate.toString(), actualClosingDate);
 });

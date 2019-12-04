@@ -48,7 +48,7 @@ TestCase('BMS-7. 案件:案件作成:部門:部門の検索および結果表示
 
     gondola.report(`Step 6. 任意の検索結果を選択する。`);
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
+    await addProjectPage.selectSearchResult(randomResultName);
     gondola.report(`VP. 案件登録画面に戻り、選択した部門名が表示されること。`);
     const inputtedText = await addProjectPage.getTextFieldValueByLabel(DEPARTMENT_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Department should be selected');

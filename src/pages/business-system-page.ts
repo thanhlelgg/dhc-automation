@@ -41,19 +41,19 @@ export class BusinessSystemPage extends GeneralPage {
     protected addSegmentLink = "//a[@href='/segments/add']";
 
     public async gotoAddProjectPage(): Promise<void> {
-        await this.waitControlExist(this.projectLink, 30);
+        await this.waitForControlVisible(this.projectLink, 30);
         await gondola.click(this.projectLink);
         await gondola.waitForElement(this.addProjectLink);
-        await this.waitControlExist(this.addProjectLink, 10);
+        await this.waitForControlVisible(this.addProjectLink, 10);
         await gondola.click(this.addProjectLink);
     }
 
     @action('gotoListProject')
     public async gotoListProject(): Promise<void> {
-        await this.waitControlExist(this.projectLink, 30);
+        await this.waitForControlVisible(this.projectLink, 30);
         await gondola.click(this.projectLink);
         await gondola.waitForElement(this.listProjectLink);
-        await this.waitControlExist(this.listProjectLink, 10);
+        await this.waitForControlVisible(this.listProjectLink, 10);
         await gondola.click(this.listProjectLink);
     }
 }
