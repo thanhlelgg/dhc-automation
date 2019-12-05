@@ -1,9 +1,8 @@
 import { action, gondola, locator, page } from 'gondolajs';
 import { GeneralPage } from './general-page';
-import { SearchResultColumn } from '../models/enum-class/search-result-column';
 import { Utilities } from '../common/utilities';
-import { FilterType } from '../models/enum-class/filter-field-type';
 import { Constants } from '../common/constants';
+import { WorkerInfo } from '../models/worker-info';
 @page
 export class AddWorkerPage extends GeneralPage {
     @locator
@@ -29,51 +28,53 @@ export class AddWorkerPage extends GeneralPage {
     protected closeButton = "//button[@class='close']";
     //#endregion
 
-    @action('selectSearchResult')
-    public async selectSearchResult(itemName: string | undefined): Promise<string> {
+    @action('select search result')
+    public async selectSearchResult(searchStr: string | undefined): Promise<string> {
         let resultRowLocator;
         let departmentNameLocator;
         // we handle undefined in here so we won't have to handle it on the test case level
-        if (itemName === undefined) {
-            throw new Error('Item name is not valid');
+        if (searchStr === undefined) {
+            throw new Error('Department name is not valid');
         } else {
-            resultRowLocator = Utilities.formatString(this.searchResultRow, itemName);
-            departmentNameLocator = Utilities.formatString(this.resultNameColumn, itemName);
+            resultRowLocator = Utilities.formatString(this.searchResultRow, searchStr);
+            departmentNameLocator = Utilities.formatString(this.resultNameColumn, searchStr);
         }
 
-        gondola.report("Department locator: " + departmentNameLocator);
-        let departmentName = await gondola.getText(departmentNameLocator);
-        gondola.report("Department name: " + departmentName);
-        await this.waitControlExist(resultRowLocator);
+        const departmentName = await gondola.getText(departmentNameLocator);
+        await this.waitForControlVisible(resultRowLocator);
         await gondola.click(resultRowLocator);
         return departmentName.trim();
     }
 
-    @action('filterResult')
+    @action('filter result')
     public async filterResult(value: string): Promise<void> {
-        await this.waitControlExist(this.searchKeyInputField, Constants.LONG_TIMEOUT);
+        await this.waitForControlVisible(this.searchKeyInputField, Constants.LONG_TIMEOUT);
         await gondola.enter(this.searchKeyInputField, value);
     }
 
-    @action('searchDepartment')
+    @action('search department')
     public async searchDepartment(searchKey: string): Promise<string> {
         await gondola.click(this.departmentName);
         await this.filterResult(searchKey);
         return await this.selectSearchResult(searchKey);
     }
 
-    @action('inputWorkerInformation')
-    public async inputWorkerInformation(): Promise<void> {
-        await this.waitControlExist(this.workerCode);
-        await gondola.enter(this.workerCode, "123");
-        await gondola.enter(this.workerName, "123");
-        await this.searchDepartment("E001");
-        await gondola.setState(this.isRetired, true);
-        await gondola.enter(this.note, "");
+    @action('input worker information')
+    public async inputWorkerInformation(workerInfo: WorkerInfo): Promise<void> {
+        await this.waitForControlVisible(this.workerCode);
+        await gondola.enter(this.workerCode, workerInfo.workerCode);
+        await gondola.enter(this.workerName, workerInfo.workerName);
+        if (workerInfo.department) {
+            await this.searchDepartment(workerInfo.department);
+        }
+        await gondola.setState(this.isRetired, workerInfo.isRetired);
+        if (workerInfo.note) {
+            await gondola.enter(this.note, workerInfo.note);
+        }
     }
 
-    @action('saveNewWorker')
-    public async saveNewWorker() {
+    @action('save new worker')
+    public async saveNewWorker(): Promise<void> {
         await gondola.click(this.saveButton);
     }
 }
