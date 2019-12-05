@@ -2,11 +2,13 @@ import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Before from './setup-and-teardown';
+import setup from './setup-and-teardown';
 
-TestModule('Add Project Overview validation');
+TestModule('Add Project - Project name validation');
 
 const PROJECT_NAME_FIELD_NAME = Constants.translator.fieldName.name;
+
+Before(setup);
 
 TestCase('BMS-1. 案件:案件作成:案件形態', async () => {
     gondola.report(`Step 2.「案件形態」プルダウンで選択肢を確認する`);

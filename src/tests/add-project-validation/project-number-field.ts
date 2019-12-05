@@ -2,12 +2,14 @@ import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Before from './setup-and-teardown';
+import setup from './setup-and-teardown';
 
-TestModule('Add Project Overview validation');
+TestModule('Add Project - Project number validation');
 
 const PROJECT_NAME_FIELD_NAME = Constants.translator.fieldName.name;
 const PROJECT_NUMBER_FIELD_NAME = Constants.translator.fieldName.number;
+
+Before(setup);
 
 TestCase('BMS-31. 「案件番号」テキストボックスで何も入力しなくて、「保存」ボタンをクリックする。', async () => {
     gondola.report(`Step 2.「案件名」テキストボックスで何も入力しなくて、「保存」ボタンをクリックする。`);

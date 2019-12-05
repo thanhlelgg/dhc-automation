@@ -1,15 +1,16 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Before from './setup-and-teardown';
+import setup from './setup-and-teardown';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 import { Utilities } from '../../common/utilities';
 
-TestModule('Add Project Overview validation');
+TestModule('Add Project - Department field validation');
 
 const DEPARTMENT_FIELD_NAME = Constants.translator.fieldName.department;
 const SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE = Constants.translator.modalWindows.departmentSearchTitle;
+
+Before(setup);
 
 TestCase('BMS-6. 案件:案件作成:部門:未入力', async () => {
     gondola.report(`Step 2. 部門を入力しなくて、保存する`);
@@ -47,7 +48,7 @@ TestCase('BMS-7. 案件:案件作成:部門:部門の検索および結果表示
 
     gondola.report(`Step 6. 任意の検索結果を選択する。`);
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
+    await addProjectPage.selectSearchResult(randomResultName);
     gondola.report(`VP. 案件登録画面に戻り、選択した部門名が表示されること。`);
     const inputtedText = await addProjectPage.getTextFieldValueByLabel(DEPARTMENT_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Department should be selected');

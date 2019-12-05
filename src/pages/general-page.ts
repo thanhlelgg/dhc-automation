@@ -39,19 +39,19 @@ export class GeneralPage {
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
-        await this.waitControlExist(this.homeLink, 10);
+        await this.waitForControlVisible(this.homeLink, 10);
         await gondola.click(this.homeLink);
     }
 
     @action('gotoBusinessSystem')
     public async gotoBusinessSystem(): Promise<void> {
-        await this.waitControlExist(this.businessSystemLink, 10);
+        await this.waitForControlVisible(this.businessSystemLink, 10);
         await gondola.click(this.businessSystemLink);
     }
 
     @action('gotoTaskSystem')
     public async gotoTaskSystem(): Promise<void> {
-        await this.waitControlExist(this.taskSystemLink, 10);
+        await this.waitForControlVisible(this.taskSystemLink, 10);
         await gondola.click(this.taskSystemLink);
     }
 
@@ -74,7 +74,7 @@ export class GeneralPage {
     }
 
     @action('waitControlExist')
-    public async waitControlExist(control: any, seconds = Constants.MEDIUM_TIMEOUT): Promise<void> {
+    public async waitForControlVisible(control: any, seconds = Constants.MEDIUM_TIMEOUT): Promise<void> {
         // let controlExist = await gondola.doesControlExist(control);
         // let timeCount = 0;
         // while (!controlExist && timeCount < seconds) {
@@ -83,7 +83,13 @@ export class GeneralPage {
         //     timeCount++;
         //     controlExist = await gondola.doesControlExist(control);
         // }
-        await (gondola as any).waitUntilElementVisible(control, seconds);
+        //We should wait until element exist first, before waiting for it to be displayed
+        const currentTime = Utilities.currentTimeInSeconds();
+        await gondola.waitForElement(control, seconds);
+        seconds = seconds - (Utilities.currentTimeInSeconds() - currentTime);
+        if (seconds > 0) {
+            await (gondola as any).waitUntilElementVisible(control, seconds);
+        }
     }
 
     @action('getCurrentBrowser')
@@ -124,14 +130,14 @@ export class GeneralPage {
     @action('doesModalTitleDisplay')
     public async doesModalTitleDisplay(name: string, timeOut = Constants.LONG_TIMEOUT): Promise<boolean> {
         const locator = Utilities.formatString(this.moduleTitle, name);
-        this.waitControlExist(locator, timeOut);
+        this.waitForControlVisible(locator, timeOut);
         return await (gondola as any).doesControlDisplay(locator);
     }
 
     @action('closeModalWindowByName')
     public async closeModalWindowByName(name: string): Promise<void> {
         const locator = Utilities.formatString(this.closeModuleButtonByName, name);
-        this.waitControlExist(locator, Constants.LONG_TIMEOUT);
+        this.waitForControlVisible(locator, Constants.LONG_TIMEOUT);
         gondola.click(locator);
     }
 
@@ -193,6 +199,12 @@ export class GeneralPage {
     public async selectSelectorByLabel(label: string, option: string): Promise<void> {
         const locator = Utilities.formatString(this.selectorByLabel, label);
         await gondola.select(locator, option);
+    }
+
+    @action('selectSelectorByLabel')
+    public async getSelectedOptionByLabel(label: string): Promise<string> {
+        const locator = Utilities.formatString(this.selectorByLabel, label);
+        return (await gondola.getSelectedItems(locator))[0];
     }
 }
 export default new GeneralPage();

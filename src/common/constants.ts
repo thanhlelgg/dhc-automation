@@ -4,6 +4,7 @@ import inputData from '../data/input-data.json';
 export class Constants {
     public static translator = Translate.getTranslator();
     public static readonly url = 'https://dhcdms.digitalhearts.com/language/ja_JP';
+    public static readonly VERY_SHORT_TIMEOUT = 2;
     public static readonly SHORT_TIMEOUT = 5;
     public static readonly MEDIUM_TIMEOUT = 30;
     public static readonly LONG_TIMEOUT = 90;
@@ -106,6 +107,8 @@ export class Constants {
         30: '30',
         31: '末',
     };
+
+    public static japaneseEndDate = '末';
 
     public static debitCreditGroupIds = {
         receivable: '売掛',

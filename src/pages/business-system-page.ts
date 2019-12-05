@@ -48,27 +48,27 @@ export class BusinessSystemPage extends GeneralPage {
 
     @action('gotoAddProjectPage')
     public async gotoAddProjectPage(): Promise<void> {
-        await this.waitControlExist(this.projectLink);
+        await this.waitForControlVisible(this.projectLink);
         await gondola.click(this.projectLink);
-        await this.waitControlExist(this.addProjectLink);
+        await this.waitForControlVisible(this.addProjectLink);
         await gondola.click(this.addProjectLink);
     }
 
     @action('gotoListProject')
     public async gotoListProject(): Promise<void> {
-        await this.waitControlExist(this.projectLink);
+        await this.waitForControlVisible(this.projectLink);
         await gondola.click(this.projectLink);
-        await this.waitControlExist(this.listProjectLink);
+        await this.waitForControlVisible(this.listProjectLink);
         await gondola.click(this.listProjectLink);
     }
 
     @action('gotoAddWorkerPage')
     public async gotoAddWorkerPage(): Promise<void> {
-        await this.waitControlExist(this.masterLink);
+        await this.waitForControlVisible(this.masterLink);
         await gondola.click(this.masterLink);
-        await this.waitControlExist(this.workerLink);
+        await this.waitForControlVisible(this.workerLink);
         await gondola.click(this.workerLink);
-        await this.waitControlExist(this.addWorkerLink);
+        await this.waitForControlVisible(this.addWorkerLink);
         await gondola.click(this.addWorkerLink);
     }
 }

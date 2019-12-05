@@ -2,12 +2,14 @@ import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Before from './setup-and-teardown';
+import setup from './setup-and-teardown';
 
-TestModule('Add Project Overview validation');
+TestModule('Add Project - Labs field validation');
 
 const PROJECT_PLACE_FIELD_NAME = Constants.translator.fieldName.place;
 const LAB_NAME_FIELD_NAME = Constants.translator.fieldName.labName;
+
+Before(setup);
 
 TestCase('BMS-42. 案件:案件作成:場所:選択肢', async () => {
     gondola.report(`Step 2.「場所」プルダウンで選択肢を確認する。`);

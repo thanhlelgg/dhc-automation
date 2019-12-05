@@ -1,17 +1,18 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Before from './setup-and-teardown';
+import setup from './setup-and-teardown';
 import { ProjectInfoData } from '../../models/project-info';
 import businessSystemPage from '../../pages/business-system-page';
 import listProjectPage from '../../pages/list-project-page';
 
-TestModule('Add Project Overview validation');
+TestModule('Add Project - Status field validation');
 
 const PROJECT_NUMBER_FIELD_NAME = Constants.translator.fieldName.number;
 const PROJECT_STATUS_FIELD_NAME = Constants.translator.fieldName.status;
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
+
+Before(setup);
 
 TestCase('BMS-33. 案件:案件作成:ステータス:選択肢 ', async () => {
     gondola.report(`Step 2.「ステータス」プルダウンで選択肢を確認する。`);

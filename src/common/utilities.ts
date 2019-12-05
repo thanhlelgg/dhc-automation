@@ -27,12 +27,49 @@ export class Utilities {
      * @param keyword
      * @param result
      */
-    public static isFilterCorrect(keyword: string, result: string[]): boolean {
+    public static isFilterCorrect(keyword: string, result: string[], isCaseSensitive = false): boolean {
         if (keyword === '') {
             return true;
         }
-        for (const item of result) {
+        if (!isCaseSensitive) {
+            keyword = keyword.toLowerCase();
+        }
+        for (let item of result) {
+            if (!isCaseSensitive) {
+                item = item.toLowerCase();
+            }
             if (!item.includes(keyword)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if keyword is filtered correctly
+     * @param keyword
+     * @param result
+     */
+    public static isFilterMultipleColumnCorrect(keyword: string, result: string[][], isCaseSensitive = false): boolean {
+        if (keyword === '') {
+            return true;
+        }
+        if (!isCaseSensitive) {
+            keyword = keyword.toLowerCase();
+        }
+        for (const row of result) {
+            let isMatched = false;
+            for (let item of row) {
+                if (!isCaseSensitive) {
+                    item = item.toLowerCase();
+                }
+                if (item.includes(keyword)) {
+                    isMatched = true;
+                    break;
+                }
+            }
+            if (!isMatched) {
+                console.log(`Filter for ${keyword} got incorrect row ${row}`);
                 return false;
             }
         }
@@ -116,6 +153,10 @@ export class Utilities {
         const dateString = `${day}-${month}-${year}'`;
         const momentObj = moment(dateString, 'DD-MM-YYYY');
         return momentObj.format(dateFormat);
+    }
+
+    public static currentTimeInSeconds(): number {
+        return new Date().getTime() / 1000;
     }
 }
 export default new Utilities();

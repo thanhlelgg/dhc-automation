@@ -1,15 +1,16 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Before from './setup-and-teardown';
+import setup from './setup-and-teardown';
 import { Utilities } from '../../common/utilities';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 
-TestModule('Add Project Overview validation');
+TestModule('Add Project - Worker field validation');
 
 const WORKER_FIELD_NAME = Constants.translator.fieldName.worker;
 const SEARCH_WORKER_MODAL_WINDOW_TITLE = Constants.translator.modalWindows.workerSearchTitle;
+
+Before(setup);
 
 TestCase('BMS-9. 案件:案件作成:担当者:未入力', async () => {
     gondola.report(`Step 2. 「担当者」テキストボックスで何も入力しなくて、「保存」ボタンをクリックする。`);
@@ -70,7 +71,7 @@ TestCase('BMS-11. 案件:案件作成:担当者:担当者の検索および結�
 
     gondola.report(`Step 6. 任意の検索結果を選択する。`);
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
+    await addProjectPage.selectSearchResult(randomResultName);
     gondola.report(`VP. 案件登録画面に戻り、選択した従業員名が表示されること。`);
     const inputtedText = await addProjectPage.getTextFieldValueByLabel(WORKER_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Worker should be selected');

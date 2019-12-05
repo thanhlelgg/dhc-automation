@@ -11,6 +11,8 @@ import { DatabaseHelper } from '../helper/database-helpers';
 export class AddProjectPage extends GeneralPage {
     protected searchResult = "(//div[@role='row']//div[contains(.,'{0}')])[1]";
     protected searchResultByTabulatorField = "//div[@class='tabulator-table']//div[@tabulator-field='{0}']";
+    protected searchResultByTabulatorFieldAndIndex =
+        "(//div[@class='tabulator-table']//div[@tabulator-field='{0}'])[{1}]";
     protected searchResultByTabulatorFieldAndText =
         "//div[@class='tabulator-table']//div[@tabulator-field='{0}' and contains(text(),'{1}')]";
     protected searchResultRow = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div";
@@ -238,6 +240,21 @@ export class AddProjectPage extends GeneralPage {
         return Utilities.isFilterCorrect(keyword, results);
     }
 
+    @action('selectRandomSearchResult')
+    public async selectRandomSearchResult(type: SearchResultColumn): Promise<string> {
+        await gondola.waitForElement(this.searchResultRow, Constants.LONG_TIMEOUT);
+        const numberOfResult = await gondola.getElementCount(this.searchResultRow);
+        const randomIdx = Utilities.getRandomNumber(1, numberOfResult);
+        const locator = Utilities.formatString(
+            this.searchResultByTabulatorFieldAndIndex,
+            type.tabulatorField,
+            randomIdx.toString(),
+        );
+        const selectedResult = await gondola.getText(locator);
+        await gondola.click(locator);
+        return selectedResult;
+    }
+
     @action('selectSearchResult')
     public async selectSearchResult(itemName: string | undefined, type?: SearchResultColumn): Promise<void> {
         let locator;
@@ -250,14 +267,14 @@ export class AddProjectPage extends GeneralPage {
         } else {
             locator = Utilities.formatString(this.searchResultByTabulatorFieldAndText, type.tabulatorField, itemName);
         }
-        await this.waitControlExist(locator);
+        await this.waitForControlVisible(locator);
         await gondola.click(locator);
     }
 
     @action('filterResult')
     public async filterResult(value: string, type: FilterType): Promise<void> {
         const itemXpath = { id: type.searchFieldId };
-        await this.waitControlExist(itemXpath, Constants.LONG_TIMEOUT);
+        await this.waitForControlVisible(itemXpath, Constants.LONG_TIMEOUT);
         await gondola.enter(itemXpath, value);
     }
 
@@ -267,7 +284,7 @@ export class AddProjectPage extends GeneralPage {
      */
     public async getAllItemsOneColumn(resultColumn: SearchResultColumn): Promise<string[]> {
         const resultLocator = Utilities.formatString(this.searchResultByTabulatorField, resultColumn.tabulatorField);
-        await this.waitControlExist(resultLocator, Constants.LONG_TIMEOUT);
+        await this.waitForControlVisible(resultLocator, Constants.LONG_TIMEOUT);
         return await (gondola as any).getElementsAttributes(resultLocator, 'innerText');
     }
 
@@ -279,7 +296,7 @@ export class AddProjectPage extends GeneralPage {
     public async getOneResultItemAllColumns(index?: number): Promise<Map<string, string>> {
         const map = new Map<string, string>();
         if (index === undefined) {
-            await this.waitControlExist(this.searchResultRow, Constants.LONG_TIMEOUT);
+            await this.waitForControlVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
             const numberOfItems = await gondola.getElementCount(this.searchResultRow);
             index = Utilities.getRandomNumber(1, numberOfItems);
         }
@@ -292,6 +309,28 @@ export class AddProjectPage extends GeneralPage {
             map.set(key, value);
         }
         return map;
+    }
+
+    /**
+     * Get a result from search page, if not index provided, select a random one
+     * @param index
+     * @returns a Map<string, string> that contains `tabulator-field` attribute as key and it's text as value
+     */
+    public async getAllResultsAllColumns(): Promise<string[][]> {
+        const result: string[][] = [];
+        await this.waitForControlVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
+        const numberOfItems = await gondola.getElementCount(this.searchResultRow);
+        for (let index = 1; index <= numberOfItems; index++) {
+            const allColumns: string[] = [];
+            const itemRowLocator = Utilities.formatString(this.searchResultColumnsByRowIndex, index.toString());
+            const numberOfAttributes = await gondola.getElementCount(itemRowLocator);
+            for (let i = 1; i <= numberOfAttributes; i++) {
+                const attributesLocator = itemRowLocator + `[${i}]`;
+                allColumns.push(await gondola.getText(attributesLocator));
+            }
+            result.push(allColumns);
+        }
+        return result;
     }
 
     @action('filterCustomerAndVerifyResult')
@@ -337,17 +376,23 @@ export class AddProjectPage extends GeneralPage {
             departmentName = Utilities.getRandomPartialCharacters(departmentName);
         }
 
-        // Filter with department code and verify result
-        await this.filterResult(departmentCode, FilterType.DEPARTMENT);
-        const departmentCodeResults = await this.getAllItemsOneColumn(SearchResultColumn.CODE);
-        const isDepartmentCodeFiltered = Utilities.isFilterCorrect(departmentCode, departmentCodeResults);
+        //Filter with data from all columns, checking if at least one column matches inputted data
+        for (const input of [departmentCode, departmentName]) {
+            let isMatched = false;
+            await this.filterResult(input, FilterType.DEPARTMENT);
+            const allResults = await this.getAllResultsAllColumns();
 
-        // Filter with department name and verify result
-        await this.filterResult(departmentName, FilterType.DEPARTMENT);
-        const departmentNameResults = await this.getAllItemsOneColumn(SearchResultColumn.NAME);
-        const isDepartmentNameFiltered = Utilities.isFilterCorrect(departmentName, departmentNameResults);
+            if (Utilities.isFilterMultipleColumnCorrect(input, allResults)) {
+                isMatched = true;
+                break;
+            }
 
-        return isDepartmentCodeFiltered && isDepartmentNameFiltered;
+            if (!isMatched) {
+                console.log(`Filtering for ${input} is not working correctly`);
+                return false;
+            }
+        }
+        return true;
     }
 
     @action('filterWorkersAndVerifyResult')
@@ -363,17 +408,66 @@ export class AddProjectPage extends GeneralPage {
             workerName = Utilities.getRandomPartialCharacters(workerName);
         }
 
-        // Filter with worker code and verify result
-        await this.filterResult(workerCode, FilterType.WORKER);
-        const workerCodeResults = await this.getAllItemsOneColumn(SearchResultColumn.CODE);
-        const isWorkerCodeFiltered = Utilities.isFilterCorrect(workerCode, workerCodeResults);
+        //Filter with data from all columns, checking if at least one column matches inputted data
+        for (const input of [workerCode, workerName]) {
+            let isMatched = false;
+            await this.filterResult(input, FilterType.WORKER);
+            const allResults = await this.getAllResultsAllColumns();
 
-        // Filter with worker name and verify result
-        await this.filterResult(workerName, FilterType.WORKER);
-        const workerNameResults = await this.getAllItemsOneColumn(SearchResultColumn.NAME);
-        const isWorkerNameFiltered = Utilities.isFilterCorrect(workerName, workerNameResults);
+            if (Utilities.isFilterMultipleColumnCorrect(input, allResults)) {
+                isMatched = true;
+                break;
+            }
 
-        return isWorkerCodeFiltered && isWorkerNameFiltered;
+            if (!isMatched) {
+                console.log(`Filtering for ${input} is not working correctly`);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @action('filterSegmentsAndVerifyResult')
+    public async filterSegmentsAndVerifyResult(
+        customerInfo: Map<string, string>,
+        partialSearch = false,
+    ): Promise<boolean> {
+        //Get and process input data
+        let segmentBreadcrumbs = Utilities.getMapValue(
+            customerInfo,
+            SearchResultColumn.BREADCRUMBS_TEXT.tabulatorField,
+        );
+        let segmentName = Utilities.getMapValue(customerInfo, SearchResultColumn.NAME.tabulatorField);
+        let segmentCode = Utilities.getMapValue(customerInfo, SearchResultColumn.FULL_CODE.tabulatorField);
+
+        if (partialSearch) {
+            segmentBreadcrumbs = Utilities.getRandomPartialCharacters(segmentBreadcrumbs);
+            segmentCode = Utilities.getRandomPartialCharacters(segmentCode);
+            segmentName = Utilities.getRandomPartialCharacters(segmentName);
+        }
+
+        //Filter with data from all columns, checking if at least one column matches inputted data
+        for (const input of [segmentBreadcrumbs, segmentCode, segmentName]) {
+            let isMatched = false;
+            await this.filterResult(input, FilterType.SEGMENTS);
+            const allResults = await this.getAllResultsAllColumns();
+
+            if (Utilities.isFilterMultipleColumnCorrect(input, allResults)) {
+                isMatched = true;
+                break;
+            }
+
+            if (!isMatched) {
+                console.log(`Filtering for ${input} is not working correctly`);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public async selectRandomCustomer(): Promise<string> {
+        await gondola.click(this.searchCustomerField);
+        return await this.selectRandomSearchResult(SearchResultColumn.CODE);
     }
 
     @action('searchCustomerByName')
@@ -419,7 +513,7 @@ export class AddProjectPage extends GeneralPage {
         }
 
         await gondola.click(searchItemXpath);
-        await this.waitControlExist(this.itemFilter, Constants.LONG_TIMEOUT);
+        await this.waitForControlVisible(this.itemFilter, Constants.LONG_TIMEOUT);
         await gondola.enter(this.itemFilter, item);
         await this.selectSearchResult(item);
     }
@@ -721,6 +815,20 @@ export class AddProjectPage extends GeneralPage {
         return Utilities.isSubset(expectedWorkerCodes, actualDisplayingWorkerCodes);
     }
 
+    @action('doesSegmentsDisplayCorrect')
+    public async doesSegmentsDisplayCorrect(): Promise<boolean> {
+        const expectedActiveSegments = await DatabaseHelper.getActiveSegments();
+        const expectedSegmentCodes: string[] = [];
+        expectedActiveSegments.forEach(segment => {
+            if (segment.code) {
+                expectedSegmentCodes.push(segment.code);
+            }
+        });
+        await this.scrollToRandomResult(expectedActiveSegments.length);
+        const actualDisplayingSegmentCodes = await this.getAllItemsOneColumn(SearchResultColumn.FULL_CODE);
+        return Utilities.isSubset(expectedSegmentCodes, actualDisplayingSegmentCodes);
+    }
+
     @action('waitForTableUpdated')
     public async waitForTableUpdated(): Promise<void> {
         await (gondola as any).waitUntilStalenessOfElement(this.searchResultRow);
@@ -728,6 +836,8 @@ export class AddProjectPage extends GeneralPage {
 
     @action('scrollToRandomResult')
     public async scrollToRandomResult(numberOfDatabaseRecords: number): Promise<void> {
+        await gondola.waitForElement(this.searchResultRow, Constants.LONG_TIMEOUT);
+        await (gondola as any).waitUntilStalenessOfElement(this.searchResultRow, Constants.VERY_SHORT_TIMEOUT);
         const numberOfDisplayingResults = await gondola.getElementCount(this.searchResultRow);
         if (numberOfDatabaseRecords === 0 || numberOfDisplayingResults === 0) {
             return;
@@ -1412,6 +1522,14 @@ export class AddProjectPage extends GeneralPage {
             day = await gondola.getText(this.datePickerSelectedDay);
         }
         return Utilities.getDateString(day, month, year, Constants.NORMAL_DATE_FORMAT);
+    }
+
+    public async getClosingDateAsNumber(): Promise<string> {
+        let selectedDate = await this.getSelectedOptionByLabel(Constants.translator.fieldName.closingDate);
+        if (selectedDate === Constants.japaneseEndDate) {
+            selectedDate = '31';
+        }
+        return selectedDate;
     }
 }
 export default new AddProjectPage();

@@ -1,16 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class BusinessCustomers {
+export class Segments {
     @PrimaryGeneratedColumn()
     id: number | undefined;
 
     @Column('text')
-    cd: string | undefined;
+    code: string | undefined;
 
     @Column('tinyint')
-    is_disable: string | undefined;
-
-    @Column('int')
-    closing_date_group: number | undefined;
+    is_deleted: string | undefined;
 }
