@@ -94,8 +94,8 @@ export class GeneralPage {
     @action('getInvalidFeedBack')
     public async getInvalidFeedBack(fieldName: string): Promise<string> {
         const locator = Utilities.formatString(this.invalidFeedBackByFieldLabel, fieldName);
-        let doesExist = await gondola.doesControlExist(locator);
-        if (!doesExist){
+        const doesExist = await gondola.doesControlExist(locator);
+        if (!doesExist) {
             gondola.report('Invalid feedback of field ' + fieldName + ' does not exist!');
             return '';
         } else {

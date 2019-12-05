@@ -85,6 +85,7 @@
         "code": "従業員コード",
         "name": "従業員名",
         "department": "所属部門",
-        "note": "備考"
+        "note": "備考",
+        "searchDepartmentModalTitle": "部門検索"
     }
 }
