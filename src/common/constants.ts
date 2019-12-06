@@ -25,12 +25,18 @@ export class Constants {
     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut \
     aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat \
     nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
+    public static fullSizeAlphaNumericString = 'ａｂｃｄ１２３４';
+    public static halfSizeAlphaNumericString = 'abcd1234';
+    public static symbolString = `!"#$%&'()`;
+    public static hiraganaKatakanaString = 'あああｱｱｱハハハ';
     //#endregion
 
     //#region invalid feedback message
     public static fieldRequiredErrorMessage = Constants.translator.invalidFeedback.fieldRequired;
     public static exceededNOCErrorMessage255 = '255' + Constants.translator.invalidFeedback.exceededNOC;
     public static exceededNOCErrorMessage50 = '50' + Constants.translator.invalidFeedback.exceededNOC;
+    // this message content has been not decided yet
+    public static characterTypeErrorMessage = Constants.translator.invalidFeedback.characterTypeError;
     //#endregion
 
     //#region Project attributes

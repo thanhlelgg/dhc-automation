@@ -1,0 +1,16 @@
+{
+    "requiredOnly": {
+        "workerCode": "1234",
+        "workerName": "島村",
+        "department": null,
+        "isRetired": false,
+        "note": null
+    },
+    "fullData": {
+        "workerCode": "12345",
+        "workerName": "加藤",
+        "department": "エンターテイメント事業本部__",
+        "isRetired": false,
+        "note": "ノート"
+    }
+}
