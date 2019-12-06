@@ -203,6 +203,16 @@ export class GeneralPage {
         return (await gondola.getControlProperty(locator, 'class')).indexOf('required') < 0;
     }
 
+    @action('doesControlRequired')
+    public async doesControlRequired(control: any): Promise<boolean> {
+        return (await gondola.getControlProperty(control, 'class')).indexOf('required') < 0;
+    }
+
+    @action('doesSelectorOptionsExist')
+    public async doesSelectorOptionsExist(control: any, options: string[]): Promise<boolean> {
+        return await (gondola as any).areOptionsExists(control, options);
+    }
+
     @action('doesSelectorByLabelOptionsExist')
     public async doesSelectorByLabelOptionsExist(label: string, options: string[]): Promise<boolean> {
         const locator = Utilities.formatString(this.selectorByLabel, label);

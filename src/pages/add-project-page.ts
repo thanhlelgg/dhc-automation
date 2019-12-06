@@ -7,6 +7,7 @@ import { FilterType } from '../models/enum-class/filter-field-type';
 import { SearchResultColumn } from '../models/enum-class/search-result-column';
 import { DatabaseHelper } from '../helper/database-helpers';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
+import { ResultsBaseTextfield } from '../models/enum-class/project-results-base-textfield';
 
 @page
 export class AddProjectPage extends GeneralPage {
@@ -53,6 +54,14 @@ export class AddProjectPage extends GeneralPage {
     protected taxIdByRoleStr = "//tr[contains(.,'{0}')]//select[contains(@id, 'tax-id')]";
     protected noteByRoleStr = "//tr[contains(.,'{0}')]//textarea[contains(@id, 'note')]";
     protected outputOrderbyRoleStr = "//tr[contains(.,'{0}')]//input[contains(@id, 'output-order')]";
+    protected resultsBaseColumnName = "//div[@id='project-result-bases']//th[@scope='col' and text()='{0}']";
+    @locator
+    protected projectResultSection = { id: 'project-result-bases' };
+    @locator
+    protected invalidFeedbackProjectResultsBase =
+        "//tr[td[text()='{0}']]//input[contains(@name, '{1}')]/following-sibling::div";
+    @locator
+    protected textFieldProjectResultsBase = "//tr[td[text()='{0}']]//input[contains(@name, '{1}')]";
     //#endregion
 
     //#region Search
@@ -225,11 +234,6 @@ export class AddProjectPage extends GeneralPage {
         "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[record_date]')]";
     protected projectOrderedBillingDateStr =
         "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[billing_date]')]";
-    //#endregion
-
-    //#region project result bases
-    @locator
-    protected projectResultSection = { id: 'project-result-bases' };
     //#endregion
 
     @action('doesSearchResultDisplay')
@@ -434,6 +438,42 @@ export class AddProjectPage extends GeneralPage {
         return true;
     }
 
+    @action('filterItemsAndVerifyResult')
+    public async filterItemsAndVerifyResult(
+        customerInfo: Map<string, string>,
+        partialSearch = false,
+    ): Promise<boolean> {
+        //Get and process input data
+        let itemCode = Utilities.getMapValue(customerInfo, SearchResultColumn.CODE.tabulatorField);
+        let itemName = Utilities.getMapValue(customerInfo, SearchResultColumn.NAME.tabulatorField);
+        let itemUnitPrice = Utilities.getMapValue(customerInfo, SearchResultColumn.UNIT_PRICE.tabulatorField);
+        let itemIsTaxable = Utilities.getMapValue(customerInfo, SearchResultColumn.IS_TAXABLE.tabulatorField);
+        if (partialSearch) {
+            itemCode = Utilities.getRandomPartialCharacters(itemCode);
+            itemName = Utilities.getRandomPartialCharacters(itemName);
+            itemUnitPrice = Utilities.getRandomPartialCharacters(itemUnitPrice);
+            itemIsTaxable = Utilities.getRandomPartialCharacters(itemIsTaxable);
+        }
+
+        //Filter with data from all columns, checking if at least one column matches inputted data
+        for (const input of [itemCode, itemName, itemUnitPrice, itemIsTaxable]) {
+            let isMatched = false;
+            await this.filterResult(input, FilterType.ITEMS);
+            const allResults = await this.getAllResultsAllColumns();
+
+            if (Utilities.isFilterMultipleColumnCorrect(input, allResults)) {
+                isMatched = true;
+                break;
+            }
+
+            if (!isMatched) {
+                gondola.report(`Filtering for ${input} is not working correctly`);
+                return false;
+            }
+        }
+        return true;
+    }
+
     @action('filterSegmentsAndVerifyResult')
     public async filterSegmentsAndVerifyResult(
         customerInfo: Map<string, string>,
@@ -510,6 +550,18 @@ export class AddProjectPage extends GeneralPage {
         await gondola.click(this.searchSegmentField);
         await this.filterResult(segment, FilterType.SEGMENTS);
         await this.selectSearchResult(segment, byColumn);
+    }
+
+    @action('clickResultsBaseItemTextfield')
+    public async clickResultsBaseItemTextfield(role: string): Promise<void> {
+        const searchItemXpath = Utilities.formatString(this.searchItemByRoleStr, role);
+        await gondola.click(searchItemXpath);
+    }
+
+    @action('getResultsBaseItemTextfieldValue')
+    public async getResultsBaseItemTextfieldValue(role: string): Promise<string> {
+        const searchItemXpath = Utilities.formatString(this.searchItemByRoleStr, role);
+        return await gondola.getControlProperty(searchItemXpath, 'value');
     }
 
     @action('searchItem')
@@ -596,6 +648,12 @@ export class AddProjectPage extends GeneralPage {
         }
         const checkBoxXpath = Utilities.formatString(this.roleCheckboxStr, role);
         await gondola.click(checkBoxXpath);
+    }
+
+    @action('does debit credits options exists')
+    public async doesDebitCreditsOptionsExist(role: string, options: string[]): Promise<boolean> {
+        const locator = Utilities.formatString(this.debitCreditByRoleStr, role);
+        return await this.doesSelectorOptionsExist(locator, options);
     }
 
     @action('inputProjectResultBases')
@@ -840,6 +898,20 @@ export class AddProjectPage extends GeneralPage {
         await this.scrollToRandomResult(expectedActiveWorkers.length);
         const actualDisplayingWorkerCodes = await this.getAllItemsOneColumn(SearchResultColumn.CODE);
         return Utilities.isSubset(expectedWorkerCodes, actualDisplayingWorkerCodes);
+    }
+
+    @action('doesItemsDisplayCorrect')
+    public async doesItemsDisplayCorrect(): Promise<boolean> {
+        const expectedActiveItems = await DatabaseHelper.getActiveItems();
+        const expectedItemCodes: string[] = [];
+        expectedActiveItems.forEach(item => {
+            if (item.cd) {
+                expectedItemCodes.push(item.cd);
+            }
+        });
+        await this.scrollToRandomResult(expectedActiveItems.length);
+        const actualDisplayingItemCodes = await this.getAllItemsOneColumn(SearchResultColumn.CODE);
+        return Utilities.isSubset(expectedItemCodes, actualDisplayingItemCodes);
     }
 
     @action('doesSegmentsDisplayCorrect')
@@ -1590,6 +1662,56 @@ export class AddProjectPage extends GeneralPage {
             (gondola as any).waitUntilElementNotVisible(locator, Constants.SHORT_TIMEOUT);
         }
         return await (gondola as any).doesControlDisplay(locator);
+    }
+
+    @action('get invalid feedback from project result base')
+    public async getInvalidFeedBackProjectResultsBase(
+        role: string,
+        nameAttribute: ResultsBaseTextfield,
+    ): Promise<string> {
+        const locator = Utilities.formatString(
+            this.invalidFeedbackProjectResultsBase,
+            role,
+            nameAttribute.nameAttribute,
+        );
+        return await gondola.getText(locator);
+    }
+
+    @action('does result base column required')
+    public async doesResultsBaseColumnRequired(columnName: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.resultsBaseColumnName, columnName);
+        return await this.doesControlRequired(locator);
+    }
+
+    @action('enter project result base text field')
+    public async enterProjectResultBaseTextfield(
+        role: string,
+        attrName: ResultsBaseTextfield,
+        text: string,
+    ): Promise<void> {
+        const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
+        await gondola.enter(locator, text);
+    }
+
+    @action('get project result base text field')
+    public async getProjectResultBaseTextfield(role: string, attrName: ResultsBaseTextfield): Promise<string> {
+        const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
+        return await gondola.getControlProperty(locator, 'value');
+    }
+
+    // @action('hover project result base text field')
+    // public async hoverOnProjectResultBaseTextfield(role: string, attrName: ResultsBaseTextfield): Promise<void> {
+    //     const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
+    //     await (gondola as any).moveToElement(locator);
+    // }
+
+    @action('get project result base validation')
+    public async getProjectResultBaseTextfieldValidationMessage(
+        role: string,
+        attrName: ResultsBaseTextfield,
+    ): Promise<string> {
+        const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
+        return await (gondola as any).getValidationMessage(locator);
     }
 }
 export default new AddProjectPage();

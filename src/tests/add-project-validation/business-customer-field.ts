@@ -80,7 +80,7 @@ TestCase('BMS-3. 案件:案件作成:取引先:得意先の検索および結果
     );
 
     gondola.report(`Step 4. 取引先コード、取引先名、取引先担当名について、文字入力する。`);
-    const randomResult = await addProjectPage.getOneResultItemAllColumns();
+    let randomResult = await addProjectPage.getOneResultItemAllColumns();
     gondola.report(`Step 5. 検索結果を確認する。`);
     const doesFilteringWorkCorrectly = await addProjectPage.filterCustomerAndVerifyResult(randomResult, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに検索(部分一致)できること。`);
@@ -91,6 +91,7 @@ TestCase('BMS-3. 案件:案件作成:取引先:得意先の検索および結果
     await gondola.checkEqual(doesFilteringWorkCorrectly, true, 'Filtering should be working correctly');
 
     gondola.report(`Step 6. 検索結果を確認する。`);
+    randomResult = await addProjectPage.getOneResultItemAllColumns();
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
     await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
     gondola.report(`VP. 案件登録画面に戻り、選択した社名と担当名が表示されること。`);

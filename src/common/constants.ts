@@ -29,6 +29,13 @@ export class Constants {
     public static halfSizeAlphaNumericString = 'abcd1234';
     public static symbolString = `!"#$%&'()`;
     public static hiraganaKatakanaString = 'あああｱｱｱハハハ';
+    public static oneBillion = '1000000000';
+    public static decimal = '1.5';
+    public static validationMessageForDecimal = 'Please enter a valid value. The two nearest valid values are 1 and 2.';
+    public static lessThanOneBillion = '999999999';
+    public static morethanOneBillion = '1000000001';
+    public static negativeNumber = '-1';
+    public static onlyWord = 'only text';
     //#endregion
 
     //#region invalid feedback message

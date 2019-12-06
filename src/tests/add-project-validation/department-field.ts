@@ -39,7 +39,7 @@ TestCase('BMS-7. 案件:案件作成:部門:部門の検索および結果表示
     );
 
     gondola.report(`Step 4. 検索条件欄にはコード又は部門名の一部を入力する。`);
-    const randomResult = await addProjectPage.getOneResultItemAllColumns();
+    let randomResult = await addProjectPage.getOneResultItemAllColumns();
     gondola.report(`Step 5. 検索結果を確認する。`);
     const doesFilteringWorkCorrectly = await addProjectPage.filterDepartmentsAndVerifyResult(randomResult, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに検索(部分一致)できること。`);
@@ -47,8 +47,9 @@ TestCase('BMS-7. 案件:案件作成:部門:部門の検索および結果表示
     await gondola.checkEqual(doesFilteringWorkCorrectly, true, 'Filtering should be working correctly');
 
     gondola.report(`Step 6. 任意の検索結果を選択する。`);
+    randomResult = await addProjectPage.getOneResultItemAllColumns();
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addProjectPage.selectSearchResult(randomResultName);
+    await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
     gondola.report(`VP. 案件登録画面に戻り、選択した部門名が表示されること。`);
     const inputtedText = await addProjectPage.getTextFieldValueByLabel(DEPARTMENT_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Department should be selected');

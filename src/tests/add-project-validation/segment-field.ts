@@ -66,16 +66,18 @@ TestCase('BMS-47. 案件:案件作成:セグメント:セグメントの検索�
     );
 
     gondola.report(`Step 4. 検索条件欄にはコード、セグメント名、または階層の一部を入力する。`);
-    const randomResult = await addProjectPage.getOneResultItemAllColumns();
+    let randomResult = await addProjectPage.getOneResultItemAllColumns();
     gondola.report(`Step 5. 検索結果を確認する。`);
     const doesFilteringWorkCorrectly = await addProjectPage.filterSegmentsAndVerifyResult(randomResult, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに検索(部分一致)できること。`);
     gondola.report(`VP. 各結果行でコード、セグメント名、階層は入力したフィールドと一致すること。`);
+    //Bug: currently filtering is not working correctly for some keyword
     await gondola.checkEqual(doesFilteringWorkCorrectly, true, 'Filtering should be working correctly');
 
     gondola.report(`Step 6. 任意の検索結果を選択する。`);
+    randomResult = await addProjectPage.getOneResultItemAllColumns();
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addProjectPage.selectSearchResult(randomResultName);
+    await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
     gondola.report(`VP. 案件登録画面に戻り、選択したセグメント名が表示されること。`);
     const inputtedText = await addProjectPage.getTextFieldValueByLabel(SEGMENT_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Segment should be selected');
