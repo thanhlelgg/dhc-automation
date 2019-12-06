@@ -18,7 +18,7 @@ export class AddWorkerPage extends GeneralPage {
     @locator
     protected saveButton = "//button[@class='btn btn-info']";
     @locator
-    protected backButton = "//a[contains(.,'戻る')]";
+    protected backButton = `//a[contains(.,'${this.translator.backButton}')]`;
 
     //#region Search department modal
     @locator

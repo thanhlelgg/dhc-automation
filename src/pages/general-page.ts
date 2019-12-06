@@ -39,6 +39,8 @@ export class GeneralPage {
     @locator
     protected labelByName = "//div[label[text()='{0}']]";
 
+    protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
+
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
         await this.waitForControlVisible(this.homeLink, 10);
@@ -219,6 +221,12 @@ export class GeneralPage {
     public async getSelectedOptionByLabel(label: string): Promise<string> {
         const locator = Utilities.formatString(this.selectorByLabel, label);
         return (await gondola.getSelectedItems(locator))[0];
+    }
+
+    @action('does checkbox label exist')
+    public async doesCheckboxLabelExist(label: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.labelCheckBox, label);
+        return await gondola.doesControlExist(locator);
     }
 }
 export default new GeneralPage();
