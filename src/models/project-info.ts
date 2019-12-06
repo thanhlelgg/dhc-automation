@@ -61,8 +61,8 @@ export interface ProjectResultBaseInfo {
     role: string;
     item: string;
     debitCredit: string;
-    planPeople: number;
-    planTime: number;
+    planPeople: number | null;
+    planTime: number | null;
     unitPriceWeekday: string;
     unitPriceWeekdayOT: string;
     unitPriceHoliday: string;
@@ -81,4 +81,6 @@ export class ProjectInfoData {
     public static DETAIL_TWO_RECORDS: ProjectDetailInfo[] = projectInfo.projectDetail.twoRecords;
     public static RESOURCE_FULL_DATA: ProjectResourceInfo = projectInfo.projectResource.fullData;
     public static RESULT_BASE_TWO_RECORDS: ProjectResultBaseInfo[] = projectInfo.projectResultBase.twoRecords;
+    public static RESULT_BASE_ONE_RECORD: ProjectResultBaseInfo[] = projectInfo.projectResultBase.oneRecord;
+    public static RESULT_BASE_ONE_EMPTY_RECORD: ProjectResultBaseInfo[] = projectInfo.projectResultBase.oneEmptyRecord;
 }

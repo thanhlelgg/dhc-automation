@@ -134,6 +134,14 @@ class HelperExt extends Helper {
     }
 
     /**
+     * Check if an element is checked
+     * @param control
+     */
+    public async doesCheckboxChecked(control: any): Promise<boolean> {
+        return await (await this.getElement(control)).isSelected();
+    }
+
+    /**
      * Check if an element is enabled
      * @param control
      */
@@ -206,6 +214,17 @@ class HelperExt extends Helper {
     public async waitForAlert(timeOut = DEFAULT_TIMEOUT): Promise<void> {
         timeOut = timeOut * 1000; //convert to milliseconds
         await browser.wait(protractor.until.alertIsPresent(), timeOut);
+    }
+
+    /**
+     * Press a key
+     * @param key
+     */
+    public async pressKey(key: string): Promise<void> {
+        browser
+            .actions()
+            .sendKeys(key)
+            .perform();
     }
 }
 module.exports = HelperExt;

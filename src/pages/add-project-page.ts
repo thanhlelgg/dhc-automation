@@ -6,6 +6,7 @@ import { ProjectDetailInfo, ProjectOverviewInfo, ProjectResultBaseInfo, SingleRe
 import { FilterType } from '../models/enum-class/filter-field-type';
 import { SearchResultColumn } from '../models/enum-class/search-result-column';
 import { DatabaseHelper } from '../helper/database-helpers';
+import { FlagsCollector, LoggingType } from '../helper/flags-collector';
 
 @page
 export class AddProjectPage extends GeneralPage {
@@ -19,12 +20,18 @@ export class AddProjectPage extends GeneralPage {
     protected searchResultRowByIndex = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]";
     protected searchResultColumnsByRowIndex =
         "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]/div";
+    protected tagItem = "//span[contains(@class,'badge-secondary') and text()='{0}']";
+    protected removeTag = "//span[contains(@class,'badge-secondary') and text()='{0}']/span[@data-role='remove']";
     //#region project result
     @locator
     protected subTitleProjectResult = `//div[.='${this.translator.sectionName.volumeDetail}']`;
     //protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]//input[@type='checkbox']/preceding-sibling::input";
-    protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]";
+    protected roleCheckboxStr = "//div[contains(@class, 'custom-checkbox') and label[text()='{0}']]";
+    protected roleCheckboxInput = "//div[label[text()='{0}']]//input[@type='checkbox']";
+    protected roleLabels = "//div[@id='project-result-bases']/div/label";
+    protected roleLabelByIndex = "(//div[@id='project-result-bases']/div/label)[{0}]";
     protected roleRowStr = "//tr[contains(.,'{0}')]";
+    protected roleBillingDetailsLine = "//tbody[@id='result-base-details']/tr[td[text()='{0}']]";
     protected searchItemByRoleStr = "//tr[contains(.,'{0}')]//input[@class='search-items  form-control']";
     protected debitCreditByRoleStr = "//tr[contains(.,'{0}')]//select[contains(@id, 'debit-credit-group-id')]";
     protected planPeopleByRoleStr = "//tr[contains(.,'{0}')]//input[contains(@id, 'plan-people')]";
@@ -574,13 +581,29 @@ export class AddProjectPage extends GeneralPage {
         }
     }
 
+    public async uncheckResultBasesRoleCheckbox(role: string): Promise<void> {
+        const checkBoxInputXpath = Utilities.formatString(this.roleCheckboxInput, role);
+        if (await (gondola as any).doesCheckboxChecked(checkBoxInputXpath)) {
+            const checkBoxXpath = Utilities.formatString(this.roleCheckboxStr, role);
+            await gondola.click(checkBoxXpath);
+        }
+    }
+
+    public async checkResultBasesRoleCheckbox(role: string): Promise<void> {
+        const checkBoxInputXpath = Utilities.formatString(this.roleCheckboxInput, role);
+        if (await (gondola as any).doesCheckboxChecked(checkBoxInputXpath)) {
+            return;
+        }
+        const checkBoxXpath = Utilities.formatString(this.roleCheckboxStr, role);
+        await gondola.click(checkBoxXpath);
+    }
+
     @action('inputProjectResultBases')
     public async inputProjectResultBases(projectResultBases: ProjectResultBaseInfo[]): Promise<void> {
         const formExist = await gondola.doesControlExist(this.subTitleProjectResult);
         if (formExist) {
             for (const projectResultBase of projectResultBases) {
-                const checkBoxXpath = Utilities.formatString(this.roleCheckboxStr, projectResultBase.role);
-                await gondola.click(checkBoxXpath);
+                await this.checkResultBasesRoleCheckbox(projectResultBase.role);
                 await this.searchItem(projectResultBase.item, projectResultBase.role, 'result bases');
                 await gondola.select(
                     Utilities.formatString(this.debitCreditByRoleStr, projectResultBase.role),
@@ -595,8 +618,12 @@ export class AddProjectPage extends GeneralPage {
                     projectResultBase.planTime + '',
                 );
                 // check plan total time
+                const totalTime =
+                    projectResultBase.planTime && projectResultBase.planPeople
+                        ? projectResultBase.planTime * projectResultBase.planPeople
+                        : null;
                 await this.checkPlanTotalTime(
-                    projectResultBase.planTime * projectResultBase.planPeople,
+                    totalTime,
                     Utilities.formatString(this.planTotalTimeByRoleStr, projectResultBase.role),
                 );
                 await this.enterText(
@@ -753,7 +780,7 @@ export class AddProjectPage extends GeneralPage {
     }
 
     @action('checkPlanTotalTime')
-    public async checkPlanTotalTime(expectedTotalTime: number, locator: any): Promise<void> {
+    public async checkPlanTotalTime(expectedTotalTime: number | null, locator: any): Promise<void> {
         await gondola.click(locator);
         const totalTime = await gondola.getControlProperty(locator, 'value');
         await gondola.checkEqual(totalTime, expectedTotalTime + '');
@@ -1015,91 +1042,99 @@ export class AddProjectPage extends GeneralPage {
     @action('doesProjectOverviewDisplayCorrect')
     public async doesProjectOverviewDisplayCorrect(projectOverview: ProjectOverviewInfo): Promise<boolean> {
         gondola.report('Verify content of project overview');
-        let doesContentDisplayCorrect = true;
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectNameDisplayCorrect(projectOverview.projectName);
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectFormDisplayCorrect(projectOverview.projectForm);
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectCustomerDisplayCorrect(
-                projectOverview.customerName,
-                false,
-            );
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectDepartmentDisplayCorrect(
-                projectOverview.department,
-                false,
-            );
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectWorkerDisplayCorrect(projectOverview.workerName, false);
-        }
+        FlagsCollector.collectTruth(
+            'Project name should be correct',
+            await this.doesProjectNameDisplayCorrect(projectOverview.projectName),
+        );
+        FlagsCollector.collectTruth(
+            'Project form should be correct',
+            await this.doesProjectFormDisplayCorrect(projectOverview.projectForm),
+        );
+        FlagsCollector.collectTruth(
+            'Project customer name should be correct',
+            await this.doesProjectCustomerDisplayCorrect(projectOverview.customerName, false),
+        );
+        FlagsCollector.collectTruth(
+            'Project department should be correct',
+            await this.doesProjectDepartmentDisplayCorrect(projectOverview.department, false),
+        );
+        FlagsCollector.collectTruth(
+            'Project worker name should be correct',
+            await this.doesProjectWorkerDisplayCorrect(projectOverview.workerName, false),
+        );
 
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectDatesDisplayCorrect(
+        FlagsCollector.collectTruth(
+            'Project dates should be correct',
+            await this.doesProjectDatesDisplayCorrect(
                 projectOverview.startDate,
                 projectOverview.endDate,
                 projectOverview.scheduleStartDate,
                 projectOverview.scheduleEndDate,
-            );
-        }
+            ),
+        );
 
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectAccuracyDisplayCorrect(projectOverview.accuracy);
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectStatusDisplayCorrect(projectOverview.status);
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectWorkingPlaceDisplayCorrect(projectOverview.workingPlace);
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesCurrencyIdDisplayCorrect(projectOverview.currencyId);
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesBillingTypeDisplayCorrect(projectOverview.billingType);
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesClosingDateDisplayCorrect(projectOverview.closingDate);
-        }
+        FlagsCollector.collectTruth(
+            'Project Accuracy should be correct',
+            await this.doesProjectAccuracyDisplayCorrect(projectOverview.accuracy),
+        );
+        FlagsCollector.collectTruth(
+            'Project Status should be correct',
+            await this.doesProjectStatusDisplayCorrect(projectOverview.status),
+        );
+        FlagsCollector.collectTruth(
+            'Project Working place should be correct',
+            await this.doesProjectWorkingPlaceDisplayCorrect(projectOverview.workingPlace),
+        );
+        FlagsCollector.collectTruth(
+            'Project Currency id should be correct',
+            await this.doesCurrencyIdDisplayCorrect(projectOverview.currencyId),
+        );
+        FlagsCollector.collectTruth(
+            'Project Billing type should be correct',
+            await this.doesBillingTypeDisplayCorrect(projectOverview.billingType),
+        );
+        FlagsCollector.collectTruth(
+            'Project Closing date should be correct',
+            await this.doesClosingDateDisplayCorrect(projectOverview.closingDate),
+        );
 
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectSegmentDisplayCorrect(projectOverview.segment, false);
-        }
+        FlagsCollector.collectTruth(
+            'Project Segment should be correct',
+            await this.doesProjectSegmentDisplayCorrect(projectOverview.segment, false),
+        );
 
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectTagsDisplayCorrect(projectOverview.tag);
-        }
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectDescriptionDisplayCorrect(projectOverview.description);
-        }
-
-        return doesContentDisplayCorrect;
+        FlagsCollector.collectTruth(
+            'Project Tags should be correct',
+            await this.doesProjectTagsDisplayCorrect(projectOverview.tag),
+        );
+        FlagsCollector.collectTruth(
+            'Project Description should be correct',
+            await this.doesProjectDescriptionDisplayCorrect(projectOverview.description),
+        );
+        return FlagsCollector.verifyFlags();
     }
 
     @action('doesTimeOfProjectResultBaseDisplayCorrect')
     public async doesTimeOfProjectResultBaseDisplayCorrect(
         role: string,
-        planTime: number,
-        planPeople: number,
-        totalTime: number,
+        planTime: number | null,
+        planPeople: number | null,
+        totalTime: number | null,
     ): Promise<boolean> {
+        const expectedPlanPeople = planPeople ? planPeople.toString() : '';
         const doesPeopleDisplayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.planPeopleByRoleStr, role)),
-            planPeople + '',
+            expectedPlanPeople,
         );
-
+        const expectedPlanTime = planTime ? planTime.toString() : '';
         const doesTimeDisplayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.planTimeByRoleStr, role)),
-            planTime + '',
+            expectedPlanTime,
         );
-
+        const expectedTotalTime = totalTime ? totalTime.toString() : '';
         const doesTotalTimeDisplayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.planTotalTimeByRoleStr, role)),
-            totalTime + '',
+            expectedTotalTime,
         );
         return doesPeopleDisplayCorrect && doesTimeDisplayCorrect && doesTotalTimeDisplayCorrect;
     }
@@ -1160,11 +1195,11 @@ export class AddProjectPage extends GeneralPage {
         let currentTaxId = '';
         if (role !== undefined) {
             isChecked = await this.getCheckboxValue(Utilities.formatString(this.isTaxableByRoleCheckbox, role));
-            currentTaxId = await this.getSelectedOption(Utilities.formatString(this.taxIdByRoleStr, role));
+            currentTaxId = (await gondola.getSelectedItems(Utilities.formatString(this.taxIdByRoleStr, role)))[0];
         }
         if (index !== undefined) {
             isChecked = await this.getCheckboxValue(Utilities.formatString(this.isTaxableByRowStr, index + ''));
-            currentTaxId = await this.getSelectedOption(Utilities.formatString(this.taxIdByRowStr, index + ''));
+            currentTaxId = (await gondola.getSelectedItems(Utilities.formatString(this.taxIdByRowStr, index + '')))[0];
         }
 
         if (isChecked !== isTaxable) {
@@ -1182,37 +1217,43 @@ export class AddProjectPage extends GeneralPage {
     public async doesContentOfProjectResultBasesDisplayCorrect(
         projectResultBases: ProjectResultBaseInfo[],
     ): Promise<boolean> {
-        let doesContentDisplayCorrect = true;
+        let index = 0;
         for (const projectResultBaseRow of projectResultBases) {
             gondola.report('Verify content of project result base, role: ' + projectResultBaseRow.role);
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = (
+            FlagsCollector.collectTruth(
+                `Record ${index}: Role should be selected`,
+                (
                     await this.getTextBoxValue(
                         Utilities.formatString(this.searchItemByRoleStr, projectResultBaseRow.role),
                     )
-                ).includes(projectResultBaseRow.item);
-            }
+                ).includes(projectResultBaseRow.item),
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getSelectedOption(
-                        Utilities.formatString(this.debitCreditByRoleStr, projectResultBaseRow.role),
-                    ),
-                    projectResultBaseRow.debitCredit,
-                );
-            }
-
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = await this.doesTimeOfProjectResultBaseDisplayCorrect(
+            const selectedOptions = await gondola.getSelectedItems(
+                Utilities.formatString(this.debitCreditByRoleStr, projectResultBaseRow.role),
+            );
+            FlagsCollector.collectEqual(
+                `Record ${index}: Debit credit should be selected`,
+                selectedOptions[0],
+                projectResultBaseRow.debitCredit,
+            );
+            const totalTime =
+                projectResultBaseRow.planTime && projectResultBaseRow.planPeople
+                    ? projectResultBaseRow.planTime * projectResultBaseRow.planPeople
+                    : 0;
+            FlagsCollector.collectTruth(
+                `Record ${index}: Time should be correct`,
+                await this.doesTimeOfProjectResultBaseDisplayCorrect(
                     projectResultBaseRow.role,
                     projectResultBaseRow.planTime,
                     projectResultBaseRow.planPeople,
-                    projectResultBaseRow.planTime * projectResultBaseRow.planPeople,
-                );
-            }
+                    totalTime,
+                ),
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = await this.doesUnitPricesOfProjectResultBaseDisplayCorrect(
+            FlagsCollector.collectTruth(
+                `Record ${index}: Unit price should be correct`,
+                await this.doesUnitPricesOfProjectResultBaseDisplayCorrect(
                     projectResultBaseRow.role,
                     projectResultBaseRow.unitPriceWeekday,
                     projectResultBaseRow.unitPriceWeekdayOT,
@@ -1220,43 +1261,36 @@ export class AddProjectPage extends GeneralPage {
                     projectResultBaseRow.unitPriceWeekdayLateOT,
                     projectResultBaseRow.unitPriceHoliday,
                     projectResultBaseRow.unitPriceHolidayLate,
-                );
-            }
+                ),
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = await this.doesTaxComponentDisplayCorrect(
+            FlagsCollector.collectTruth(
+                `Record ${index}: Tax should be correct`,
+                await this.doesTaxComponentDisplayCorrect(
                     projectResultBaseRow.isTaxable,
                     projectResultBaseRow.taxId,
                     projectResultBaseRow.role,
-                );
-            }
+                ),
+            );
 
-            if (doesContentDisplayCorrect) {
-                const currentNote = await this.getTextBoxValue(
-                    Utilities.formatString(this.noteByRoleStr, projectResultBaseRow.role),
-                );
-                if (projectResultBaseRow.note) {
-                    doesContentDisplayCorrect = Utilities.isTextEqual(currentNote, projectResultBaseRow.note);
-                } else {
-                    doesContentDisplayCorrect = Utilities.isTextEqual(currentNote, '');
-                }
-            }
+            const currentNote = await this.getTextBoxValue(
+                Utilities.formatString(this.noteByRoleStr, projectResultBaseRow.role),
+            );
+            const expectedNote = projectResultBaseRow.note ? projectResultBaseRow.note : '';
+            FlagsCollector.collectEqual(`Record ${index}: Note should be correct`, currentNote, expectedNote);
 
-            if (doesContentDisplayCorrect) {
-                const currentOutputOrder = await this.getTextBoxValue(
-                    Utilities.formatString(this.outputOrderbyRoleStr, projectResultBaseRow.role),
-                );
-                if (projectResultBaseRow.outputOrder) {
-                    doesContentDisplayCorrect = Utilities.isTextEqual(
-                        currentOutputOrder,
-                        projectResultBaseRow.outputOrder,
-                    );
-                } else {
-                    doesContentDisplayCorrect = Utilities.isTextEqual(currentOutputOrder, '');
-                }
-            }
+            const currentOutputOrder = await this.getTextBoxValue(
+                Utilities.formatString(this.outputOrderbyRoleStr, projectResultBaseRow.role),
+            );
+            const expectedOutputOrder = projectResultBaseRow.outputOrder ? projectResultBaseRow.outputOrder : '';
+            FlagsCollector.collectEqual(
+                `Record ${index}: Output order should be correct`,
+                currentOutputOrder,
+                expectedOutputOrder,
+            );
+            index++;
         }
-        return doesContentDisplayCorrect;
+        return FlagsCollector.verifyFlags(LoggingType.REPORT);
     }
 
     @action('doesProjectDetailDatesDisplayCorrect')
@@ -1267,118 +1301,103 @@ export class AddProjectPage extends GeneralPage {
         acceptedDate: string | null,
         billingDate: string | null,
     ): Promise<boolean> {
-        let doesShipDateDisplayCorrect = true;
         const currentShipDate = await this.getTextBoxValue(Utilities.formatString(this.shipDateByRowStr, rowIndex));
-        if (shipDate) {
-            doesShipDateDisplayCorrect = Utilities.isTextEqual(currentShipDate, shipDate);
-        } else {
-            doesShipDateDisplayCorrect = Utilities.isTextEqual(currentShipDate, '');
+        if (!shipDate) {
+            shipDate = '';
         }
+        FlagsCollector.collectEqual('Ship date should be correct', shipDate, currentShipDate);
 
-        let doesDeliveryDateDisplayCorrect = true;
         const currentDeliveryDate = await this.getTextBoxValue(
             Utilities.formatString(this.deliveryDateByRowStr, rowIndex),
         );
-        if (deliveryDate) {
-            doesDeliveryDateDisplayCorrect = Utilities.isTextEqual(currentDeliveryDate, deliveryDate);
-        } else {
-            doesDeliveryDateDisplayCorrect = Utilities.isTextEqual(currentDeliveryDate, '');
+        if (!deliveryDate) {
+            deliveryDate = '';
         }
+        FlagsCollector.collectEqual('Delivery date should be correct', deliveryDate, currentDeliveryDate);
 
-        let doesAcceptedDateDisplayCorrect = true;
         const currentAcceptedDate = await this.getTextBoxValue(
             Utilities.formatString(this.acceptedDateByRowStr, rowIndex),
         );
-        if (acceptedDate) {
-            doesAcceptedDateDisplayCorrect = Utilities.isTextEqual(currentAcceptedDate, acceptedDate);
-        } else {
-            doesAcceptedDateDisplayCorrect = Utilities.isTextEqual(currentAcceptedDate, '');
+        if (!acceptedDate) {
+            acceptedDate = '';
         }
+        FlagsCollector.collectEqual('Delivery date should be correct', acceptedDate, currentAcceptedDate);
 
-        let doesBillingDateDisplayCorrect = true;
         const currentBillingDate = await this.getTextBoxValue(
             Utilities.formatString(this.billingDateByRowStr, rowIndex),
         );
-        if (billingDate) {
-            doesBillingDateDisplayCorrect = Utilities.isTextEqual(currentBillingDate, billingDate);
-        } else {
-            doesBillingDateDisplayCorrect = Utilities.isTextEqual(currentBillingDate, '');
+        if (!billingDate) {
+            billingDate = '';
         }
-        return (
-            doesShipDateDisplayCorrect &&
-            doesDeliveryDateDisplayCorrect &&
-            doesAcceptedDateDisplayCorrect &&
-            doesBillingDateDisplayCorrect
-        );
+        FlagsCollector.collectEqual('Delivery date should be correct', billingDate, currentBillingDate);
+
+        return FlagsCollector.verifyFlags();
     }
 
     @action('doesContentOfProjectDetailsDisplayCorrect')
     public async doesContentOfProjectDetailsDisplayCorrect(projectDetails: ProjectDetailInfo[]): Promise<boolean> {
-        let doesContentDisplayCorrect = true;
         for (let i = 1; i <= projectDetails.length; i++) {
             const projectDetailRow = projectDetails[i - 1];
             gondola.report('Verify content of project detail, row: ' + i);
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.detailNameByRowStr, i + '')),
-                    projectDetailRow.detailName,
-                );
-            }
+            FlagsCollector.collectEqual(
+                `Record ${i}. Detail name should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.detailNameByRowStr, i + '')),
+                projectDetailRow.detailName,
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = (
-                    await this.getTextBoxValue(Utilities.formatString(this.searchItemByRowStr, i + ''))
-                ).includes(projectDetailRow.item);
-            }
+            FlagsCollector.collectTruth(
+                `Record ${i}. Search item should be correct`,
+                (await this.getTextBoxValue(Utilities.formatString(this.searchItemByRowStr, i + ''))).includes(
+                    projectDetailRow.item,
+                ),
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getSelectedOption(Utilities.formatString(this.debitCreditByRowStr, i + '')),
-                    projectDetailRow.debitCredit,
-                );
-            }
+            FlagsCollector.collectEqual(
+                `Record ${i}. Debit credit should be selected`,
+                await this.getSelectedOption(Utilities.formatString(this.debitCreditByRowStr, i + '')),
+                projectDetailRow.debitCredit,
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = await this.doesTaxComponentDisplayCorrect(
+            FlagsCollector.collectTruth(
+                `Record ${i}. Tax Component should be correct`,
+                await this.doesTaxComponentDisplayCorrect(
                     projectDetailRow.isTaxable,
                     projectDetailRow.taxId,
                     undefined,
                     i + '',
-                );
-            }
+                ),
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.quantityByRowStr, i + '')),
-                    projectDetailRow.quantity,
-                );
-            }
+            FlagsCollector.collectEqual(
+                `Record ${i}. Quantity should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.quantityByRowStr, i + '')),
+                projectDetailRow.quantity,
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.unitByRowStr, i + '')),
-                    projectDetailRow.unit,
-                );
-            }
+            FlagsCollector.collectEqual(
+                `Record ${i}. Unit should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.unitByRowStr, i + '')),
+                projectDetailRow.unit,
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.unitPriceByRowStr, i + '')),
-                    projectDetailRow.unitPrice,
-                );
-            }
+            FlagsCollector.collectEqual(
+                `Record ${i}. Unit price should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.unitPriceByRowStr, i + '')),
+                projectDetailRow.unitPrice,
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = await this.doesProjectDetailDatesDisplayCorrect(
+            FlagsCollector.collectTruth(
+                `Record ${i}. Project detail date should be correct`,
+                await this.doesProjectDetailDatesDisplayCorrect(
                     i + '',
                     projectDetailRow.shipDate,
                     projectDetailRow.deliveryDate,
                     projectDetailRow.acceptedDate,
                     projectDetailRow.billingDate,
-                );
-            }
+                ),
+            );
         }
-        return doesContentDisplayCorrect;
+        return FlagsCollector.verifyFlags();
     }
 
     @action('doesProjectLabDisplayCorrect')
@@ -1408,97 +1427,89 @@ export class AddProjectPage extends GeneralPage {
         workEndTime: string,
         projectResources: SingleResource[],
     ): Promise<boolean> {
-        let doesContentDisplayCorrect = true;
         gondola.report('verify lab name');
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectLabDisplayCorrect(labName, false);
-        }
+        FlagsCollector.collectTruth(
+            'Project lab should be correct',
+            await this.doesProjectLabDisplayCorrect(labName, false),
+        );
 
         gondola.report('verify working time');
-        if (doesContentDisplayCorrect) {
-            doesContentDisplayCorrect = await this.doesProjectWorkingTimeDisplayCorrect(workStartTime, workEndTime);
-        }
+        FlagsCollector.collectTruth(
+            'Working time should be correct',
+            await this.doesProjectWorkingTimeDisplayCorrect(workStartTime, workEndTime),
+        );
 
         for (let i = 1; i <= projectResources.length; i++) {
             const projectResourceRow = projectResources[i - 1];
             gondola.report('Verify content of resource, row: ' + i);
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.resourceDateByRowStr, i + '')),
-                    projectResourceRow.resourceDate,
-                );
-            }
+            FlagsCollector.collectEqual(
+                `Record ${i}. Resource date should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.resourceDateByRowStr, i + '')),
+                projectResourceRow.resourceDate,
+            );
 
             gondola.report('verify number of each roles: PM, leader, designer, expert, tester, reserve');
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countPMByRowStr, i + '')),
-                    projectResourceRow.countPM,
-                );
-            }
+            FlagsCollector.collectEqual(
+                `Record ${i}. PM count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countPMByRowStr, i + '')),
+                projectResourceRow.countPM,
+            );
 
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countLeaderByRowStr, i + '')),
-                    projectResourceRow.countLeader,
-                );
-            }
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countTesterByRowStr, i + '')),
-                    projectResourceRow.countTester,
-                );
-            }
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countDesignerByRowStr, i + '')),
-                    projectResourceRow.countDesigner,
-                );
-            }
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countExpertByRowStr, i + '')),
-                    projectResourceRow.countExpert,
-                );
-            }
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countReserve1ByRowStr, i + '')),
-                    projectResourceRow.countReserve1,
-                );
-            }
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countReserve2ByRowStr, i + '')),
-                    projectResourceRow.countReserve2,
-                );
-            }
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countReserve3ByRowStr, i + '')),
-                    projectResourceRow.countReserve3,
-                );
-            }
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countReserve4ByRowStr, i + '')),
-                    projectResourceRow.countReserve4,
-                );
-            }
-            if (doesContentDisplayCorrect) {
-                doesContentDisplayCorrect = Utilities.isTextEqual(
-                    await this.getTextBoxValue(Utilities.formatString(this.countReserve5ByRowStr, i + '')),
-                    projectResourceRow.countReserve5,
-                );
-            }
+            FlagsCollector.collectEqual(
+                `Record ${i}. Leader count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countLeaderByRowStr, i + '')),
+                projectResourceRow.countLeader,
+            );
+            FlagsCollector.collectEqual(
+                `Record ${i}. Tester count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countTesterByRowStr, i + '')),
+                projectResourceRow.countTester,
+            );
+            FlagsCollector.collectEqual(
+                `Record ${i}. Designer count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countDesignerByRowStr, i + '')),
+                projectResourceRow.countDesigner,
+            );
+            FlagsCollector.collectEqual(
+                `Record ${i}. Expert count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countExpertByRowStr, i + '')),
+                projectResourceRow.countExpert,
+            );
+            FlagsCollector.collectEqual(
+                `Record ${i}. Reserver 1 count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve1ByRowStr, i + '')),
+                projectResourceRow.countReserve1,
+            );
+            FlagsCollector.collectEqual(
+                `Record ${i}. Reserver 2 count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve2ByRowStr, i + '')),
+                projectResourceRow.countReserve2,
+            );
+            FlagsCollector.collectEqual(
+                `Record ${i}. Reserver 3 count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve3ByRowStr, i + '')),
+                projectResourceRow.countReserve3,
+            );
+            FlagsCollector.collectEqual(
+                `Record ${i}. Reserver 4 count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve4ByRowStr, i + '')),
+                projectResourceRow.countReserve4,
+            );
+            FlagsCollector.collectEqual(
+                `Record ${i}. Reserver 5 count should be correct`,
+                await this.getTextBoxValue(Utilities.formatString(this.countReserve5ByRowStr, i + '')),
+                projectResourceRow.countReserve5,
+            );
         }
-        return doesContentDisplayCorrect;
+        return FlagsCollector.verifyFlags();
     }
 
+    @action('click outside date picker')
     public async clickOutsideDatePicker(): Promise<void> {
         await (gondola as any).performClick(this.datePicker, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 
+    @action('does date picker display')
     public async doesDatePickerDisplay(positive = true): Promise<boolean> {
         if (!positive) {
             await (gondola as any).waitUntilElementNotVisible(this.datePicker, Constants.SHORT_TIMEOUT);
@@ -1506,6 +1517,7 @@ export class AddProjectPage extends GeneralPage {
         return await (gondola as any).doesControlDisplay(this.datePicker);
     }
 
+    @action('select random date')
     public async selectRandomDate(): Promise<string> {
         const numberOfDays = await gondola.getElementCount(this.datePickerDay);
         const randomDay = Utilities.getRandomNumber(1, numberOfDays);
@@ -1515,6 +1527,7 @@ export class AddProjectPage extends GeneralPage {
         return selectedDate;
     }
 
+    @action('get selected date')
     public async getSelectedDate(day?: string): Promise<string> {
         const month = (await gondola.getText(this.datePickerMonth)).replace(/^\D+/g, '');
         const year = await gondola.getText(this.datePickerYear);
@@ -1524,12 +1537,59 @@ export class AddProjectPage extends GeneralPage {
         return Utilities.getDateString(day, month, year, Constants.NORMAL_DATE_FORMAT);
     }
 
+    @action('get closing date as number')
     public async getClosingDateAsNumber(): Promise<string> {
         let selectedDate = await this.getSelectedOptionByLabel(Constants.translator.fieldName.closingDate);
         if (selectedDate === Constants.japaneseEndDate) {
             selectedDate = '31';
         }
         return selectedDate;
+    }
+
+    @action('does tag display')
+    public async doesTagDisplay(tagName: string, expecting = true): Promise<boolean> {
+        const locator = Utilities.formatString(this.tagItem, tagName);
+        if (expecting) {
+            await gondola.waitForElement(locator, Constants.VERY_SHORT_TIMEOUT);
+        } else {
+            await gondola.waitForDisappear(locator, Constants.VERY_SHORT_TIMEOUT);
+        }
+        return await gondola.doesControlExist(locator);
+    }
+
+    @action('remove tag item')
+    public async removeTagItem(tagName: string): Promise<void> {
+        const locator = Utilities.formatString(this.removeTag, tagName);
+        await gondola.waitForElement(locator, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.click(locator);
+    }
+
+    @action('does tag unique')
+    public async doesTagUnique(tagName: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.tagItem, tagName);
+        const numberOfTags = await gondola.getElementCount(locator);
+        return numberOfTags === 1;
+    }
+
+    @action('get random role label')
+    public async getRandomRoleLabel(): Promise<string> {
+        const numberOfRoles = await gondola.getElementCount(this.roleLabels);
+        const locator = Utilities.formatString(
+            this.roleLabelByIndex,
+            Utilities.getRandomNumber(1, numberOfRoles).toString(),
+        );
+        return await gondola.getText(locator);
+    }
+
+    @action('does billing details line display')
+    public async doesRoleBillingDetailsLineDisplay(roleName: string, expected = true): Promise<boolean> {
+        const locator = Utilities.formatString(this.roleBillingDetailsLine, roleName);
+        if (expected) {
+            (gondola as any).waitUntilElementVisible(locator, Constants.SHORT_TIMEOUT);
+        } else {
+            (gondola as any).waitUntilElementNotVisible(locator, Constants.SHORT_TIMEOUT);
+        }
+        return await (gondola as any).doesControlDisplay(locator);
     }
 }
 export default new AddProjectPage();

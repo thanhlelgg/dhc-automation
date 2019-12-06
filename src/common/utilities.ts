@@ -158,5 +158,11 @@ export class Utilities {
     public static currentTimeInSeconds(): number {
         return new Date().getTime() / 1000;
     }
+
+    public static getRandomText(numberOfCharacters: number): string {
+        return Array(numberOfCharacters + 1)
+            .join((Math.random().toString(36) + '00000000000000000').slice(2, 18))
+            .slice(0, numberOfCharacters);
+    }
 }
 export default new Utilities();

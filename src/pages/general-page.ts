@@ -23,6 +23,8 @@ export class GeneralPage {
     @locator
     protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text']";
     @locator
+    protected textAreaByLabel = "//div[label[text()='{0}']]//textarea";
+    @locator
     protected selectorByLabel = "//div[label[text()='{0}']]//select";
     @locator
     protected moduleTitle = "//h5[@class='modal-title' and text()='{0}']";
@@ -109,9 +111,21 @@ export class GeneralPage {
         await gondola.enter(locator, text);
     }
 
-    @action('enterTextFieldByLabel')
+    @action('getTextFieldValueByLabel')
     public async getTextFieldValueByLabel(label: string): Promise<string> {
         const locator = Utilities.formatString(this.textFieldByLabel, label);
+        return await (gondola as any).getElementAttribute(locator, 'value');
+    }
+
+    @action('enterTextAreaByLabel')
+    public async enterTextAreaByLabel(label: string, text: string): Promise<void> {
+        const locator = Utilities.formatString(this.textAreaByLabel, label);
+        await gondola.enter(locator, text);
+    }
+
+    @action('getTextAreaValueByLabel')
+    public async getTextAreaValueByLabel(label: string): Promise<string> {
+        const locator = Utilities.formatString(this.textAreaByLabel, label);
         return await (gondola as any).getElementAttribute(locator, 'value');
     }
 

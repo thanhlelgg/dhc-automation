@@ -109,6 +109,44 @@
         }
     },
     "projectResultBase": {
+        "oneEmptyRecord": [
+            {
+                "role": "",
+                "item": "",
+                "debitCredit": "売掛",
+                "planPeople": null,
+                "planTime": null,
+                "unitPriceWeekday": "",
+                "unitPriceWeekdayOT": "",
+                "unitPriceHoliday": "",
+                "unitPriceWeekdayLate": "",
+                "unitPriceWeekdayLateOT": "",
+                "unitPriceHolidayLate": "",
+                "isTaxable": false,
+                "taxId": "",
+                "note": null,
+                "outputOrder": null
+            }
+        ],
+        "oneRecord": [
+            {
+                "role": "リーダ",
+                "item": "システムテスト",
+                "debitCredit": "売掛",
+                "planPeople": 1,
+                "planTime": 16,
+                "unitPriceWeekday": "2000",
+                "unitPriceWeekdayOT": "2400",
+                "unitPriceHoliday": "2400",
+                "unitPriceWeekdayLate": "2800",
+                "unitPriceWeekdayLateOT": "2000",
+                "unitPriceHolidayLate": "2400",
+                "isTaxable": true,
+                "taxId": "８％",
+                "note": "validation",
+                "outputOrder": "1"
+            }
+        ],
         "twoRecords": [
             {
                 "role": "リーダ",
