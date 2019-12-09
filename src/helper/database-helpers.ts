@@ -6,6 +6,7 @@ import { Workers } from '../entity/Workers';
 import { Labs } from '../entity/Labs';
 import { Segments } from '../entity/Segments';
 import { DatabaseSchema } from '../models/enum-class/database-schema';
+import { Items } from '../entity/Items';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -177,5 +178,15 @@ export class DatabaseHelper {
         } else {
             throw new Error('Worker is not available');
         }
+    }
+
+    /**
+     * Get active Items from the database
+     */
+    public static async getActiveItems(): Promise<Items[]> {
+        const alias = 'items';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
+        const items = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Items, alias, query);
+        return items;
     }
 }

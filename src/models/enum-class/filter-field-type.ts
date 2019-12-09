@@ -6,6 +6,7 @@ export class FilterType {
     static readonly WORKER = new FilterType('WORKER', 'modal-workers-filter');
     static readonly SEGMENTS = new FilterType('SEGMENTS', 'modal-segments-filter');
     static readonly LAB = new FilterType('LAB', 'modal-labs-filter');
+    static readonly ITEMS = new FilterType('ITEMS', 'modal-items-filter');
     // private to disallow creating other instances of this type
     private constructor(private readonly name: string, public readonly searchFieldId: string) {}
 

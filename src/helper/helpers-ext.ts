@@ -226,5 +226,22 @@ class HelperExt extends Helper {
             .sendKeys(key)
             .perform();
     }
+
+    /**
+     * Move to an element
+     * @param key
+     */
+    public async moveToElement(control: any): Promise<void> {
+        const element = await this.getElement(control);
+        browser
+            .actions()
+            .mouseMove(element)
+            .perform();
+    }
+
+    public async getValidationMessage(control: any): Promise<string> {
+        const element = await this.getElement(control);
+        return await browser.executeScript('return arguments[0].validationMessage;', element);
+    }
 }
 module.exports = HelperExt;

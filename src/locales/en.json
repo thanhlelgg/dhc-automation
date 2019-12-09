@@ -3,7 +3,8 @@
         "customerSearchTitle": "取引先選択",
         "departmentSearchTitle": "部門選択",
         "workerSearchTitle": "従業員選択",
-        "segmentSearchTitle": "セグメント選択"
+        "segmentSearchTitle": "セグメント選択",
+        "searchItemTitle": "品目選択"
     },
     "sectionName": {
         "volumeDetail": "出来高明細"
@@ -31,9 +32,10 @@
     },
     "invalidFeedback": {
         "fieldRequired": "このフィールドは入力必須です",
-        "exceededNOC": "255文字以内で入力してください",
+        "exceededNOC": "文字以内で入力してください",
         "inputHalfSizeAlphaNumericTypeError": "半角英数で入力してください",
-        "duplicatedTypeError": "既に使われている値のため異なる値を入力してください"
+        "duplicatedTypeError": "既に使われている値のため異なる値を入力してください",
+        "invalidInputValue": "入力値が不正です"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]"
@@ -92,5 +94,19 @@
         "department": "所属部門",
         "note": "備考",
         "searchDepartmentModalTitle": "部門検索"
+    },
+    "resultBases": {
+        "columnName": {
+            "item": "品目",
+            "debitCredit": "計上区分",
+            "planPeople": "予定人数",
+            "planTime": "予定時間",
+            "planTotalTime": "予定総合時間",
+            "unitPrice": "請求単価",
+            "isTaxable": "課税",
+            "taxId": "税率",
+            "description": "備考",
+            "outOrder": "備考"
+        }
     }
 }
