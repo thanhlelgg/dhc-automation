@@ -1,7 +1,7 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
-import setup from './setup-and-teardown';
+import setup from './add-project-setup';
 import { Utilities } from '../../common/utilities';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 
@@ -72,6 +72,7 @@ TestCase('BMS-3. 案件:案件作成:取引先:得意先の検索および結果
     const isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
     await gondola.checkEqual(isModuleDisplayed, true, 'Search customer modal title should be displayed');
     gondola.report(`Step 3. 取引先のデータ表示を確認する`);
+    // BUG: disabled item is till displayed
     gondola.report(`VP. 得意先マスタで有効としたものは表示され、無効としたものは表示されないこと。`);
     gondola.checkEqual(
         await addProjectPage.doesBusinessCustomerDisplayCorrect(),

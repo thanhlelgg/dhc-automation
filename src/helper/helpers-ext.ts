@@ -1,8 +1,9 @@
 import { action } from 'gondolajs/built/deco';
-import { ProtractorBrowser } from 'protractor';
+import { ProtractorBrowser, element } from 'protractor';
 import * as dotenv from 'dotenv';
 import * as protractor from 'protractor';
 import { ILocation } from 'selenium-webdriver';
+import { async } from 'q';
 
 // this helper always run before executing testcase, we will preload environment variable in here
 // if we need to use environment variable before this, we should find another place for it
@@ -49,6 +50,15 @@ class HelperExt extends Helper {
     public async scrollToElement(control: any): Promise<void> {
         const element = await this.getElement(control);
         await browser.executeScript('arguments[0].scrollIntoView(true)', element);
+    }
+
+    /**
+     * Execute a javascript click
+     * @param locator
+     */
+    public async executeClick(control: any): Promise<void> {
+        const element = await this.getElement(control);
+        await browser.executeScript('arguments[0].click();', element);
     }
 
     /**
@@ -209,6 +219,21 @@ class HelperExt extends Helper {
     }
 
     /**
+     * Wait until text visible in textfield
+     * @param control
+     * @param attribute
+     */
+    public async waitUntilTextAvailable(control: any, timeOut = DEFAULT_TIMEOUT): Promise<void> {
+        timeOut = timeOut * 1000; //convert to milliseconds
+        const element = await this.getElement(control);
+        const condition = async function(): Promise<boolean> {
+            const text = await element.getAttribute('value');
+            return text.length > 0;
+        };
+        await browser.wait(condition, timeOut, 'Text is still not present');
+    }
+
+    /**
      * Wait for alert present
      * @param timeOut
      */
@@ -243,6 +268,16 @@ class HelperExt extends Helper {
     public async getValidationMessage(control: any): Promise<string> {
         const element = await this.getElement(control);
         return await browser.executeScript('return arguments[0].validationMessage;', element);
+    }
+
+    public async awaitClick(control: any): Promise<boolean> {
+        const element = await this.getElement(control);
+        try {
+            await element.click();
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 }
 module.exports = HelperExt;

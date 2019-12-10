@@ -147,6 +147,12 @@ export class GeneralPage {
         await gondola.click(locator);
     }
 
+    @action('click outside textfield')
+    public async clickOutsideTextFieldByLabel(label: string): Promise<void> {
+        const locator = Utilities.formatString(this.textFieldByLabel, label);
+        await (gondola as any).performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
+    }
+
     @action('doesModalTitleDisplay')
     public async doesModalTitleDisplay(name: string, timeOut = Constants.LONG_TIMEOUT): Promise<boolean> {
         const locator = Utilities.formatString(this.moduleTitle, name);

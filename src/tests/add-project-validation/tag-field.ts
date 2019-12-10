@@ -1,7 +1,7 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
-import setup from './setup-and-teardown';
+import setup from './add-project-setup';
 import { protractor } from 'protractor/built/ptor';
 
 TestModule('Add Project - Project Tags field validation');
