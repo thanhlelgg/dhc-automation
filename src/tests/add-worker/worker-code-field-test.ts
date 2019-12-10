@@ -7,17 +7,11 @@ import { DatabaseHelper } from '../../helper/database-helpers';
 import { WorkerInfoData } from '../../models/worker-info';
 import { Utilities } from '../../common/utilities';
 
-TestModule('Add Worker validation');
+TestModule('Add Worker - Worker code field validation');
 
 const WORKER_CODE_FIELD_NAME = Constants.translator.workerFieldName.code;
-const WORKER_NAME_FIELD_NAME = Constants.translator.workerFieldName.name;
-const WORKER_NOTE_FIELD_NAME = Constants.translator.workerFieldName.note;
-const TEXT_16_CHARACTERS = Constants.exceededNOCMessage.substr(0, 16);
-const TEXT_17_CHARACTERS = Constants.exceededNOCMessage.substr(0, 17);
-const TEXT_64_CHARACTERS = Constants.exceededNOCMessage.substr(0, 64);
-const TEXT_65_CHARACTERS = Constants.exceededNOCMessage.substr(0, 65);
-const TEXT_1024_CHARACTERS = Utilities.getRandomText(1024);
-const TEXT_1025_CHARACTERS = Utilities.getRandomText(1025);
+const TEXT_16_CHARACTERS = Utilities.getRandomText(16);
+const TEXT_17_CHARACTERS = Utilities.getRandomText(17);
 const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.fullSizeAlphaNumericString;
 const TEXT_HIRAGANA_KATAKANA = Constants.hiraganaKatakanaString;
 const TEXT_SYMBOL = Constants.symbolString;
@@ -117,64 +111,6 @@ TestCase('BMS-175. BMS:案件:従業員マスタ作成:従業員コード:重複
     await gondola.checkEqual(
         actualFeedback,
         Constants.duplicatedTypeErrorMessage,
-        'Invalid feedback message should be correct',
-    );
-});
-
-TestCase('BMS-103. BMS:案件:従業員マスタ作成:従業員名:入力確認', async () => {
-    gondola.report(`Step 2.「従業員名」で入力しなくて、保存する`);
-    await addWorkerPage.saveNewWorker();
-    gondola.report(`VP. 入力フィールドの下にエラー「入力必須です」が表示されること。`);
-    const actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_NAME_FIELD_NAME);
-    await gondola.checkEqual(
-        actualFeedback,
-        Constants.fieldRequiredErrorMessage,
-        'Invalid feedback message should be correct',
-    );
-    gondola.report(`Step 3.「従業員名」で64文字を入力し、保存する`);
-    await addWorkerPage.enterTextFieldByLabel(WORKER_NAME_FIELD_NAME, TEXT_64_CHARACTERS);
-    await addWorkerPage.saveNewWorker();
-    gondola.report(`VP. 入力フィールドの下にエラー「64文字以内で入力してください」が表示されないこと。`);
-    await gondola.checkEqual(
-        await addWorkerPage.getTextFieldValueByLabel(WORKER_NAME_FIELD_NAME),
-        TEXT_64_CHARACTERS,
-        'Invalid feedback message should be not displayed.',
-    );
-
-    gondola.report(`Step 4. 「従業員名」で65文字以上を入力し、保存する`);
-    await addWorkerPage.enterTextFieldByLabel(WORKER_NAME_FIELD_NAME, TEXT_65_CHARACTERS);
-    await addWorkerPage.saveNewWorker();
-    gondola.report(`VP. 入力フィールドの下にエラー「64文字以内で入力してください」が表示されること。`);
-    await gondola.checkNotEqual(
-        await addWorkerPage.getTextFieldValueByLabel(WORKER_NAME_FIELD_NAME),
-        TEXT_65_CHARACTERS,
-        'Invalid feedback message should be correct.',
-    );
-});
-
-TestCase('BMS-106. BMS:案件:従業員マスタ作成:在籍状況:選択肢', async () => {
-    gondola.report(`Step 2. 「在籍状況」チェックボックスで選択肢を確認する`);
-    gondola.report(`VP. 「在籍状況」の選択肢が一つあり、「退職済」を含めていること。`);
-    const actualResult = await addWorkerPage.doesCheckboxLabelExist('退職済');
-    await gondola.checkEqual(actualResult, true, 'Checkbox label does not exist');
-});
-
-TestCase('BMS-107. BMS:案件:従業員マスタ作成:備考:文字数', async () => {
-    gondola.report(`Step 2.「備考」で1024文字を入力し、保存する`);
-    await addWorkerPage.enterTextAreaByLabel(WORKER_NOTE_FIELD_NAME, TEXT_1024_CHARACTERS);
-    await addWorkerPage.saveNewWorker();
-    gondola.report(`VP. 入力フィールドの下にエラー「1024文字以内で入力してください」が表示されないこと。`);
-    let actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_NOTE_FIELD_NAME);
-    await gondola.checkEqual(actualFeedback, '', 'Invalid feedback message should be not displayed');
-
-    gondola.report(`Step 3.「備考」で1025文字以上を入力し、保存する`);
-    await addWorkerPage.enterTextAreaByLabel(WORKER_NOTE_FIELD_NAME, TEXT_1025_CHARACTERS);
-    await addWorkerPage.saveNewWorker();
-    gondola.report(`VP.入力フィールドの下にエラー「1024文字以内で入力してください」が表示されること。`);
-    actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_NOTE_FIELD_NAME);
-    await gondola.checkEqual(
-        actualFeedback,
-        Constants.exceededNOCErrorMessage1024,
         'Invalid feedback message should be correct',
     );
 });

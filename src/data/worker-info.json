@@ -1,6 +1,6 @@
 {
     "requiredOnly": {
-        "workerCode": "1234",
+        "workerCode": "1234567",
         "workerName": "島村",
         "department": null,
         "isRetired": false,
