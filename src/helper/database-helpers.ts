@@ -52,15 +52,17 @@ export class DatabaseHelper {
         object: new () => T,
         alias: string,
         query: string,
+        orderBy?: string,
     ): Promise<T[]> {
         const connection = await DatabaseHelper.getConnection(database.schema);
         let data;
         try {
             const repository = connection.getRepository(object);
-            data = await repository
-                .createQueryBuilder(alias)
-                .where(query)
-                .getMany();
+            let queryBuilder = repository.createQueryBuilder(alias).where(query);
+            if (orderBy) {
+                queryBuilder = queryBuilder.orderBy(orderBy);
+            }
+            data = await queryBuilder.getMany();
         } catch (error) {
             throw error;
         } finally {

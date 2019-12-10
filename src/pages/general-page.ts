@@ -13,11 +13,11 @@ export class GeneralPage {
     @locator
     protected captionSubject = { css: '.page-title-text' };
     @locator
-    protected homeLink = "//a[.='ホーム']";
+    protected homeLink = `//a[.='${this.translator.headerMenu.home}']"`;
     @locator
-    protected businessSystemLink = "//a[.='営業管理']";
+    protected businessSystemLink = `//a[.='${this.translator.headerMenu.businessSystem}']`;
     @locator
-    protected taskSystemLink = "//a[.='業務管理']";
+    protected taskSystemLink = `//a[.='${this.translator.headerMenu.businessSystem}']`;
     @locator
     protected invalidFeedBackByFieldLabel = "//div[label[text()='{0}']]//div[@class='invalid-feedback']";
     @locator
@@ -148,17 +148,21 @@ export class GeneralPage {
     }
 
     @action('doesModalTitleDisplay')
-    public async doesModalTitleDisplay(name: string, timeOut = Constants.LONG_TIMEOUT): Promise<boolean> {
+    public async doesModalTitleDisplay(name: string, expected = true): Promise<boolean> {
         const locator = Utilities.formatString(this.moduleTitle, name);
-        this.waitForControlVisible(locator, timeOut);
+        if (expected) {
+            await this.waitForControlVisible(locator, Constants.MEDIUM_TIMEOUT);
+        } else {
+            await (gondola as any).waitUntilElementNotVisible(locator, Constants.SHORT_TIMEOUT);
+        }
         return await (gondola as any).doesControlDisplay(locator);
     }
 
     @action('closeModalWindowByName')
     public async closeModalWindowByName(name: string): Promise<void> {
         const locator = Utilities.formatString(this.closeModuleButtonByName, name);
-        this.waitForControlVisible(locator, Constants.LONG_TIMEOUT);
-        gondola.click(locator);
+        await this.waitForControlVisible(locator, Constants.LONG_TIMEOUT);
+        await gondola.click(locator);
     }
 
     @action('getSelectedOption')

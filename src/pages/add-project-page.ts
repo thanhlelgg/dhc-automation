@@ -70,6 +70,11 @@ export class AddProjectPage extends GeneralPage {
     protected itemFilter = "//input[@id='modal-items-filter']";
     @locator
     protected itemTable = { id: 'modal-items-table' };
+    @locator
+    protected modalWindowByName = "//div[@class='modal-content' and .//h5[text()='{0}']]";
+    @locator
+    protected modalWindowLoading =
+        "//div[@class='modal-content' and .//h5[text()='{0}']]//div[contains(@id, 'loading')]";
     //#endregion
 
     @locator
@@ -211,7 +216,6 @@ export class AddProjectPage extends GeneralPage {
     protected saveButton = { css: '.btn-info' };
 
     //#region project ordered detail
-    protected subTitleProjectOrderedDetail = "//div[.='非稼働明細']";
     protected addProjectOrderedDetailBtn = "//div[@id='project-ordered-detail']/button";
     protected projectOrderedNameStr =
         "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[name]') and not(contains(@name, 'item'))]";
@@ -829,10 +833,17 @@ export class AddProjectPage extends GeneralPage {
         }
     }
 
+    @action('wait for search window fully loaded')
+    public async waitForLoadingIconDisappear(modalName: string): Promise<void> {
+        const locator = Utilities.formatString(this.modalWindowLoading, modalName);
+        await (gondola as any).waitUntilElementNotVisible(locator, Constants.LONG_TIMEOUT);
+    }
+
     @action('clickOutsideOfWindowModal')
-    public async clickOutsideOfWindowModal(): Promise<void> {
-        // await gondola.click(this.saveButton);
-        await (gondola as any).performClick(this.saveButton);
+    public async clickOutsideOfWindowModal(modalName: string): Promise<void> {
+        const locator = Utilities.formatString(this.modalWindowByName, modalName);
+        await this.waitForLoadingIconDisappear(modalName);
+        await (gondola as any).performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 
     @action('saveNewProject')
