@@ -38,6 +38,10 @@ export class GeneralPage {
     protected languageOption = "//a[@class='changeFlag' and contains(@href, '{0}')]";
     @locator
     protected labelByName = "//div[label[text()='{0}']]";
+    @locator
+    protected saveButton = "//button[@class='btn btn-info']";
+    @locator
+    protected backButton = `//a[contains(.,'${this.translator.backButton}')]`;
 
     protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
 
@@ -79,15 +83,15 @@ export class GeneralPage {
 
     @action('waitControlExist')
     public async waitForControlVisible(control: any, seconds = Constants.MEDIUM_TIMEOUT): Promise<void> {
-        // let controlExist = await gondola.doesControlExist(control);
-        // let timeCount = 0;
-        // while (!controlExist && timeCount < seconds) {
-        //     console.log(`Waiting for control ${timeCount} seconds`);
-        //     await gondola.wait(1);
-        //     timeCount++;
-        //     controlExist = await gondola.doesControlExist(control);
-        // }
-        //We should wait until element exist first, before waiting for it to be displayed
+        let controlExist = await gondola.doesControlExist(control);
+        let timeCount = 0;
+        while (!controlExist && timeCount < seconds) {
+            console.log(`Waiting for control ${timeCount} seconds`);
+            await gondola.wait(1);
+            timeCount++;
+            controlExist = await gondola.doesControlExist(control);
+        }
+        // We should wait until element exist first, before waiting for it to be displayed
         const currentTime = Utilities.currentTimeInSeconds();
         await gondola.waitForElement(control, seconds);
         seconds = seconds - (Utilities.currentTimeInSeconds() - currentTime);
@@ -146,6 +150,7 @@ export class GeneralPage {
     @action('doesModalTitleDisplay')
     public async doesModalTitleDisplay(name: string, timeOut = Constants.LONG_TIMEOUT): Promise<boolean> {
         const locator = Utilities.formatString(this.moduleTitle, name);
+        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
         this.waitForControlVisible(locator, timeOut);
         return await (gondola as any).doesControlDisplay(locator);
     }
@@ -168,12 +173,21 @@ export class GeneralPage {
     }
 
     @action('getCheckboxValue')
-    public async getCheckboxValue(checkboxControl: any): Promise<boolean> {
-        const value = await gondola.getControlProperty(checkboxControl, 'value');
-        if (value === '1') {
-            return true;
+    public async getCheckboxValue(checkboxControl: any, checkByValue = true): Promise<boolean> {
+        if (checkByValue) {
+            const value = await gondola.getControlProperty(checkboxControl, 'value');
+            if (value === '1') {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            const isChecked = await gondola.getControlProperty(checkboxControl, 'checked');
+            if (isChecked === 'true') {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -237,6 +251,12 @@ export class GeneralPage {
     public async doesCheckboxLabelExist(label: string): Promise<boolean> {
         const locator = Utilities.formatString(this.labelCheckBox, label);
         return await gondola.doesControlExist(locator);
+    }
+
+    @action('clickOutsideOfWindowModal')
+    public async clickOutsideOfWindowModal(): Promise<void> {
+        //await gondola.click(this.saveButton);
+        await (gondola as any).performClick(this.saveButton);
     }
 }
 export default new GeneralPage();

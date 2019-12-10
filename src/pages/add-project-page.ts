@@ -204,9 +204,6 @@ export class AddProjectPage extends GeneralPage {
         "//div[@id='project-resources']//div[@class='tabulator-table']/div[{0}]//input[contains(@id,'project-resource-headcounts-9-count')]";
     //#endregion
 
-    @locator
-    protected saveButton = { css: '.btn-info' };
-
     //#region project ordered detail
     protected subTitleProjectOrderedDetail = "//div[.='非稼働明細']";
     protected addProjectOrderedDetailBtn = "//div[@id='project-ordered-detail']/button";
@@ -818,12 +815,6 @@ export class AddProjectPage extends GeneralPage {
                 projectResource.countReserve5,
             );
         }
-    }
-
-    @action('clickOutsideOfWindowModal')
-    public async clickOutsideOfWindowModal(): Promise<void> {
-        // await gondola.click(this.saveButton);
-        await (gondola as any).performClick(this.saveButton);
     }
 
     @action('saveNewProject')
