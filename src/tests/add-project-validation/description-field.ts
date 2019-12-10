@@ -1,7 +1,7 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
-import setup from './setup-and-teardown';
+import setup from './add-project-setup';
 import { Utilities } from '../../common/utilities';
 
 TestModule('Add Project - Project Description field validation');

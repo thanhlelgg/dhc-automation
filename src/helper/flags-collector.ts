@@ -32,9 +32,9 @@ export class FlagsCollector {
         let result = true;
         if (this.failedFlags.length > 0) {
             if (loggingType === LoggingType.REPORT) {
-                gondola.report(`Failed flag(s): \n${this.failedFlags}`);
+                gondola.report(`Failed flag(s): \n${this.failedFlags.join('.\n')}`);
             } else if (loggingType === LoggingType.CONSOLE) {
-                console.log(`Failed flag(s): \n${this.failedFlags}`);
+                console.log(`Failed flag(s): \n${this.failedFlags.join('.\n')}`);
             }
             result = false;
         }

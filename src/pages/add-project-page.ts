@@ -8,6 +8,7 @@ import { SearchResultColumn } from '../models/enum-class/search-result-column';
 import { DatabaseHelper } from '../helper/database-helpers';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
 import { ResultsBaseTextfield } from '../models/enum-class/project-results-base-textfield';
+import { CustomerMagnifications } from '../entity/CustomerMagnifications';
 
 @page
 export class AddProjectPage extends GeneralPage {
@@ -27,7 +28,7 @@ export class AddProjectPage extends GeneralPage {
     @locator
     protected subTitleProjectResult = `//div[.='${this.translator.sectionName.volumeDetail}']`;
     //protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]//input[@type='checkbox']/preceding-sibling::input";
-    protected roleCheckboxStr = "//div[contains(@class, 'custom-checkbox') and label[text()='{0}']]";
+    protected roleCheckboxStr = "//div[contains(@class, 'custom-checkbox')]/label[text()='{0}']";
     protected roleCheckboxInput = "//div[label[text()='{0}']]//input[@type='checkbox']";
     protected roleLabels = "//div[@id='project-result-bases']/div/label";
     protected roleLabelByIndex = "(//div[@id='project-result-bases']/div/label)[{0}]";
@@ -81,6 +82,8 @@ export class AddProjectPage extends GeneralPage {
     //#region Search customer
     @locator
     protected searchCustomerField = { id: 'search-business-customers' };
+    @locator
+    protected searchCustomerButton = { id: 'search-business-customers-button' };
     @locator
     protected customerTable = { id: 'modal-business-customers-table' };
     //#endregion
@@ -518,35 +521,41 @@ export class AddProjectPage extends GeneralPage {
     }
 
     @action('searchCustomerByName')
-    public async searchCustomerByName(customerName: string): Promise<void> {
+    public async selectCustomerByName(customerName: string): Promise<void> {
         await gondola.click(this.searchCustomerField);
         await this.filterResult(customerName, FilterType.CUSTOMER_NAME);
         await this.selectSearchResult(customerName, SearchResultColumn.NAME);
     }
 
     @action('searchCustomerByCode')
-    public async searchCustomerByCode(customerCode: string): Promise<void> {
-        await gondola.click(this.searchCustomerField);
+    public async selectCustomerByCode(customerCode: string | undefined): Promise<void> {
+        if (!customerCode) {
+            throw new Error('Customer code is not available');
+        }
+        if (!(await (gondola as any).awaitClick(this.searchCustomerField))) {
+            await (gondola as any).executeClick(this.searchCustomerField);
+        }
+
         await this.filterResult(customerCode, FilterType.CUSTOMER_CODE);
         await this.selectSearchResult(customerCode, SearchResultColumn.CODE);
     }
 
     @action('searchDepartment')
-    public async searchDepartment(department: string, byColumn?: SearchResultColumn): Promise<void> {
+    public async selectDepartment(department: string, byColumn?: SearchResultColumn): Promise<void> {
         await gondola.click(this.searchDepartmentField);
         await this.filterResult(department, FilterType.DEPARTMENT);
         await this.selectSearchResult(department, byColumn);
     }
 
     @action('searchWorker')
-    public async searchWorker(worker: string, byColumn?: SearchResultColumn): Promise<void> {
+    public async selectWorker(worker: string, byColumn?: SearchResultColumn): Promise<void> {
         await gondola.click(this.searchWorkerField);
         await this.filterResult(worker, FilterType.WORKER);
         await this.selectSearchResult(worker, byColumn);
     }
 
     @action('searchSegment')
-    public async searchSegment(segment: string, byColumn?: SearchResultColumn): Promise<void> {
+    public async selectSegment(segment: string, byColumn?: SearchResultColumn): Promise<void> {
         await gondola.click(this.searchSegmentField);
         await this.filterResult(segment, FilterType.SEGMENTS);
         await this.selectSearchResult(segment, byColumn);
@@ -603,9 +612,9 @@ export class AddProjectPage extends GeneralPage {
     public async inputProjectOverviewInfo(projectOverview: ProjectOverviewInfo): Promise<void> {
         await gondola.enter(this.projectName, projectOverview.projectName);
         await gondola.select(this.projectForm, projectOverview.projectForm);
-        await this.searchCustomerByName(projectOverview.customerName);
-        await this.searchDepartment(projectOverview.department);
-        await this.searchWorker(projectOverview.workerName);
+        await this.selectCustomerByName(projectOverview.customerName);
+        await this.selectDepartment(projectOverview.department);
+        await this.selectWorker(projectOverview.workerName);
         if (projectOverview.startDate) {
             await this.enterText(this.startDate, projectOverview.startDate);
         }
@@ -624,7 +633,7 @@ export class AddProjectPage extends GeneralPage {
         await gondola.select(this.currencyId, projectOverview.currencyId);
         await gondola.select(this.billingType, projectOverview.billingType);
         await gondola.select(this.closingDate, projectOverview.closingDate);
-        await this.searchSegment(projectOverview.segment);
+        await this.selectSegment(projectOverview.segment);
         if (projectOverview.tag) {
             await this.enterText(this.tag, projectOverview.tag);
         }
@@ -1674,6 +1683,9 @@ export class AddProjectPage extends GeneralPage {
             role,
             nameAttribute.nameAttribute,
         );
+        if (!(await gondola.doesControlExist(locator))) {
+            return '';
+        }
         return await gondola.getText(locator);
     }
 
@@ -1693,17 +1705,25 @@ export class AddProjectPage extends GeneralPage {
         await gondola.enter(locator, text);
     }
 
-    @action('get project result base text field')
-    public async getProjectResultBaseTextfield(role: string, attrName: ResultsBaseTextfield): Promise<string> {
+    @action('enter project result base text field')
+    public async isProjectResultBaseTextFieldReadOnly(role: string, attrName: ResultsBaseTextfield): Promise<boolean> {
         const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
-        return await gondola.getControlProperty(locator, 'value');
+        const isReadonly = await gondola.getControlProperty(locator, 'readonly');
+        return isReadonly === 'true';
     }
 
-    // @action('hover project result base text field')
-    // public async hoverOnProjectResultBaseTextfield(role: string, attrName: ResultsBaseTextfield): Promise<void> {
-    //     const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
-    //     await (gondola as any).moveToElement(locator);
-    // }
+    @action('get project result base text field')
+    public async getProjectResultBaseTextfield(
+        role: string,
+        attrName: ResultsBaseTextfield,
+        waitForTextTimeout?: number,
+    ): Promise<string> {
+        const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
+        if (waitForTextTimeout) {
+            await (gondola as any).waitUntilTextAvailable(locator, waitForTextTimeout);
+        }
+        return await gondola.getControlProperty(locator, 'value');
+    }
 
     @action('get project result base validation')
     public async getProjectResultBaseTextfieldValidationMessage(
@@ -1712,6 +1732,34 @@ export class AddProjectPage extends GeneralPage {
     ): Promise<string> {
         const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
         return await (gondola as any).getValidationMessage(locator);
+    }
+
+    public async isUnitPriceCalculatedCorrectly(
+        role: string,
+        unitPrice: CustomerMagnifications,
+        basePrice: number,
+    ): Promise<boolean> {
+        const dataMapping = new Map<ResultsBaseTextfield, number>();
+        dataMapping.set(ResultsBaseTextfield.UNIT_PRICE_WEEKDAY, basePrice);
+        dataMapping.set(ResultsBaseTextfield.UNIT_PRICE_WEEKDAY_OVERTIME, Math.floor(basePrice * unitPrice.overtime));
+        dataMapping.set(ResultsBaseTextfield.UNIT_PRICE_HOLIDAY, Math.floor(basePrice * unitPrice.holiday));
+        dataMapping.set(ResultsBaseTextfield.UNIT_PRICE_WEEKDAY_LATE, Math.floor(basePrice * unitPrice.late_night));
+        dataMapping.set(
+            ResultsBaseTextfield.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
+            Math.floor(basePrice * unitPrice.late_night_overtime),
+        );
+        dataMapping.set(
+            ResultsBaseTextfield.UNIT_PRICE_HOLIDAY_LATE,
+            Math.floor(basePrice * unitPrice.holiday_late_night),
+        );
+        for (const [key, value] of dataMapping) {
+            FlagsCollector.collectEqual(
+                `Unit price ${key.toString()} should be displayed correctly`,
+                value.toString(),
+                await this.getProjectResultBaseTextfield(role, key, Constants.SHORT_TIMEOUT),
+            );
+        }
+        return FlagsCollector.verifyFlags(LoggingType.REPORT);
     }
 }
 export default new AddProjectPage();

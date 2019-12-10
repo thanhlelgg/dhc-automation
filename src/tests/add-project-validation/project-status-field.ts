@@ -1,7 +1,7 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
-import setup from './setup-and-teardown';
+import setup from './add-project-setup';
 import { ProjectInfoData } from '../../models/project-info';
 import businessSystemPage from '../../pages/business-system-page';
 import listProjectPage from '../../pages/list-project-page';

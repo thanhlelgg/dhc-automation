@@ -7,6 +7,8 @@ import { Labs } from '../entity/Labs';
 import { Segments } from '../entity/Segments';
 import { DatabaseSchema } from '../models/enum-class/database-schema';
 import { Items } from '../entity/Items';
+import { CustomerMagnifications } from '../entity/CustomerMagnifications';
+import { CustomerUnitPrices } from '../entity/CustomerUnitPrices';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -83,19 +85,21 @@ export class DatabaseHelper {
         object: new () => T,
         alias: string,
         query: string,
+        orderBy?: string,
     ): Promise<T> {
         const connection = await DatabaseHelper.getConnection(database.schema);
         let data;
         try {
             const repository = connection.getRepository(object);
-            data = await repository
-                .createQueryBuilder(alias)
-                .where(query)
-                .getOne();
+            let queryBuilder = repository.createQueryBuilder(alias).where(query);
+            if (orderBy) {
+                queryBuilder = queryBuilder.orderBy(orderBy);
+            }
+            data = await queryBuilder.getOne();
         } catch (error) {
             throw error;
         } finally {
-            connection.close();
+            await connection.close();
         }
         if (data) {
             return data;
@@ -123,6 +127,19 @@ export class DatabaseHelper {
         const query = `${alias}.is_disable = 0 AND ${alias}.cd IS NOT NULL`;
         const businessCustomers = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, BusinessCustomers, alias, query);
         return businessCustomers;
+    }
+
+    /**
+     * Get active Business Customers from the database by id
+     */
+    public static async getActiveBusinessCustomerById(id: string | undefined): Promise<BusinessCustomers> {
+        if (!id) {
+            throw new Error('Business customer is not valid');
+        }
+        const alias = 'businessCustomers';
+        const query = `${alias}.is_disable = 0 AND ${alias}.cd IS NOT NULL AND ${alias}.id = ${id}`;
+        const businessCustomer = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, BusinessCustomers, alias, query);
+        return businessCustomer;
     }
 
     /**
@@ -174,5 +191,41 @@ export class DatabaseHelper {
         const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
         const items = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Items, alias, query);
         return items;
+    }
+
+    /**
+     * Get a random Magnification from the database
+     */
+    public static async getRandomMagnification(): Promise<CustomerMagnifications> {
+        const alias = 'customer_magnifications';
+        const query = `${alias}.is_deleted = 0`;
+        const orderBy = 'RAND()';
+        const magnification = await DatabaseHelper.getOne(
+            DatabaseSchema.BUSINESS,
+            CustomerMagnifications,
+            alias,
+            query,
+            orderBy,
+        );
+        return magnification;
+    }
+
+    /**
+     * Get a unit price
+     * @param businessCustomerId
+     * @param startDate
+     * @param endDate
+     */
+    public static async getCustomerUnitPrice(
+        businessCustomerId: string,
+        startDate: string,
+        endDate: string,
+    ): Promise<CustomerUnitPrices> {
+        const alias = 'customer_unit_prices';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.business_customer_id = ${businessCustomerId} 
+            AND ${alias}.start_date = '${startDate}' 
+            AND ${alias}.end_date = '${endDate}'`;
+        const unitPrice = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, CustomerUnitPrices, alias, query);
+        return unitPrice;
     }
 }
