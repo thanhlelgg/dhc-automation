@@ -9,7 +9,7 @@ export class Constants {
     public static readonly LONG_TIMEOUT = 90;
     // incase we have too many elements, scroll to the last of it will take really long time, so we should limit it a little
     public static readonly LIMIT_SCROLL_TIMES = 10;
-    public static readonly SLIGHTLY_RIGHT_OFFSET = { x: 50, y: 0 };
+    public static readonly SLIGHTLY_RIGHT_OFFSET = { x: -50, y: 0 };
     public static readonly NORMAL_DATE_FORMAT = 'YYYY-MM-DD';
     public static readonly EXAMPLE_DEFAULT_DATE = '2019-01-01';
     public static readonly EXAMPLE_DEFAULT_DATE_SHORT = '2019-1-1';

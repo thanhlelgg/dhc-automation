@@ -4,7 +4,7 @@ import { Constants } from '../../common/constants';
 import setup from './add-project-setup';
 import { DatabaseHelper } from '../../helper/database-helpers';
 
-TestModule('Add Project - Project Currency field validation');
+TestModule('Add Project - Project Closing date field validation');
 
 const CLOSING_DATE_FIELD_NAME = Constants.translator.fieldName.closingDate;
 
@@ -26,6 +26,6 @@ TestCase('BMS-44. 案件:案件作成:締日:選択肢', async () => {
     const customerCode = await addProjectPage.selectRandomCustomer();
     gondola.report(`VP. 取引先で選択した得意先で設定した締日が転記されること。`);
     const expectedClosingDate = await DatabaseHelper.getClosingDateByBusinessCustomerCode(customerCode);
-    const actualClosingDate = await addProjectPage.getSelectedOptionByLabel(CLOSING_DATE_FIELD_NAME);
+    const actualClosingDate = await addProjectPage.getClosingDateAsNumber();
     gondola.checkEqual(expectedClosingDate.toString(), actualClosingDate);
 });

@@ -83,8 +83,7 @@ class HelperExt extends Helper {
         if (offset) {
             await browser
                 .actions()
-                .mouseMove(await this.getElement(locator))
-                .mouseMove(offset)
+                .mouseMove(await this.getElement(locator), offset)
                 .click()
                 .perform();
         } else {
@@ -246,7 +245,7 @@ class HelperExt extends Helper {
      * @param key
      */
     public async pressKey(key: string): Promise<void> {
-        browser
+        await browser
             .actions()
             .sendKeys(key)
             .perform();
