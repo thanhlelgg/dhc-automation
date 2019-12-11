@@ -46,10 +46,12 @@
     },
     "invalidFeedback": {
         "fieldRequired": "このフィールドは入力必須です",
-        "exceededNOC": "255文字以内で入力してください",
         "characterTypeError": "。。。",
-        "invalidInputValue": "入力値が不正です",
-        "taxFieldRequired": "課税の場合、このフィールドは入力必須です"
+        "taxFieldRequired": "課税の場合、このフィールドは入力必須です",
+        "exceededNOC": "文字以内で入力してください",
+        "inputHalfSizeAlphaNumericTypeError": "半角英数で入力してください",
+        "duplicatedTypeError": "既に使われている値のため異なる値を入力してください",
+        "invalidInputValue": "入力値が不正です"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]"

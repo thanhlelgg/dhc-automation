@@ -41,8 +41,11 @@ export class Constants {
     public static fieldRequiredErrorMessage = Constants.translator.invalidFeedback.fieldRequired;
     public static exceededNOCErrorMessage255 = '255' + Constants.translator.invalidFeedback.exceededNOC;
     public static exceededNOCErrorMessage50 = '50' + Constants.translator.invalidFeedback.exceededNOC;
+    public static exceededNOCErrorMessage1024 = '1024' + Constants.translator.invalidFeedback.exceededNOC;
     // this message content has been not decided yet
-    public static characterTypeErrorMessage = Constants.translator.invalidFeedback.characterTypeError;
+    public static inputHalfSizeAlphaNumericTypeErrorMessage =
+        Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
+    public static duplicatedTypeErrorMessage = Constants.translator.invalidFeedback.duplicatedTypeError;
     //#endregion
 
     //#region Project attributes

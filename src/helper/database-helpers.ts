@@ -186,6 +186,20 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get existed code of worker from the database
+     */
+    public static async getExistedWorkerCode(): Promise<string> {
+        const alias = 'workers';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
+        const worker = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, Workers, alias, query);
+        if (worker && worker.cd) {
+            return worker.cd;
+        } else {
+            throw new Error('Worker is not available');
+        }
+    }
+
+    /**
      * Get active Items from the database
      */
     public static async getActiveItems(): Promise<Items[]> {

@@ -53,6 +53,11 @@ export class GeneralPage {
     ): string {
         return this.recordField.format(fieldType.type, tableName.nameAttr, index.toString(), tableFieldName.nameAttr);
     }
+    protected saveButton = "//button[@class='btn btn-info']";
+    @locator
+    protected backButton = `//a[contains(.,'${this.translator.backButton}')]`;
+
+    protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
@@ -100,7 +105,7 @@ export class GeneralPage {
         //     timeCount++;
         //     controlExist = await gondola.doesControlExist(control);
         // }
-        //We should wait until element exist first, before waiting for it to be displayed
+        // We should wait until element exist first, before waiting for it to be displayed
         const currentTime = Utilities.currentTimeInSeconds();
         await gondola.waitForElement(control, seconds);
         seconds = seconds - (Utilities.currentTimeInSeconds() - currentTime);
@@ -153,6 +158,7 @@ export class GeneralPage {
     @action('clickTextFieldByLabel')
     public async clickTextFieldByLabel(label: string): Promise<void> {
         const locator = Utilities.formatString(this.textFieldByLabel, label);
+        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
         await gondola.click(locator);
     }
 
@@ -177,6 +183,7 @@ export class GeneralPage {
     public async closeModalWindowByName(name: string): Promise<void> {
         const locator = Utilities.formatString(this.closeModuleButtonByName, name);
         await this.waitForControlVisible(locator, Constants.LONG_TIMEOUT);
+        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
         await gondola.click(locator);
     }
 
@@ -191,12 +198,21 @@ export class GeneralPage {
     }
 
     @action('getCheckboxValue')
-    public async getCheckboxValue(checkboxControl: any): Promise<boolean> {
-        const value = await gondola.getControlProperty(checkboxControl, 'value');
-        if (value === '1') {
-            return true;
+    public async getCheckboxValue(checkboxControl: any, checkByValue = true): Promise<boolean> {
+        if (checkByValue) {
+            const value = await gondola.getControlProperty(checkboxControl, 'value');
+            if (value === '1') {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            const isChecked = await gondola.getControlProperty(checkboxControl, 'checked');
+            if (isChecked === 'true') {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -263,6 +279,12 @@ export class GeneralPage {
         if (check != checkboxStatus) {
             await gondola.click(control);
         }
+    }
+
+    @action('does checkbox label exist')
+    public async doesCheckboxLabelExist(label: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.labelCheckBox, label);
+        return await gondola.doesControlExist(locator);
     }
 }
 export default new GeneralPage();

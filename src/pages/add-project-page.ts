@@ -214,9 +214,6 @@ export class AddProjectPage extends GeneralPage {
         "//div[@id='project-resources']//div[@class='tabulator-table']/div[{0}]//input[contains(@id,'project-resource-headcounts-9-count')]";
     //#endregion
 
-    @locator
-    protected saveButton = { css: '.btn-info' };
-
     //#region project ordered detail
     protected addProjectOrderedDetailBtn = "//div[@id='project-ordered-detail']/button";
     protected projectOrderedNameStr =

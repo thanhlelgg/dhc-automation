@@ -57,7 +57,7 @@ TestCase("BMS-108. Verify add project with form '出来高案件' successfully",
     await gondola.checkEqual(
         await addProjectPage.doesProjectOverviewDisplayCorrect(projectOverview),
         true,
-        'One of content of project overview display displays incorrectly.',
+        'One of content of project overview displays incorrectly.',
     );
     await gondola.checkEqual(
         await addProjectPage.doesContentOfProjectResultBasesDisplayCorrect(PROJECT_RESULT_BASE_DATA),
@@ -111,7 +111,7 @@ TestCase("BMS-109. Verify add project with form '継続案件' successfully", as
     await gondola.checkEqual(
         await addProjectPage.doesProjectOverviewDisplayCorrect(projectOverview),
         true,
-        'One of content of project overview display displays incorrectly.',
+        'One of content of project overview displays incorrectly.',
     );
     await gondola.checkEqual(
         await addProjectPage.doesContentOfProjectDetailsDisplayCorrect(PROJECT_DETAIL_DATA),
@@ -160,7 +160,7 @@ TestCase("BMS-110. Verify add project with form 'ショット案件' successfull
     await gondola.checkEqual(
         await addProjectPage.doesProjectOverviewDisplayCorrect(projectOverview),
         true,
-        'One of content of project overview display displays incorrectly.',
+        'One of content of project overview displays incorrectly.',
     );
     await gondola.checkEqual(
         await addProjectPage.doesContentOfProjectDetailsDisplayCorrect(PROJECT_DETAIL_DATA),
