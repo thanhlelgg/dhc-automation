@@ -7,13 +7,11 @@ import setup from './add-project-setup';
 TestModule('Add Project - Project number validation');
 
 const PROJECT_NAME_FIELD_NAME = Constants.translator.fieldName.name;
-const PROJECT_NUMBER_FIELD_NAME = Constants.translator.fieldName.number;
 
 Before(setup);
 
 TestCase('BMS-31. 「案件番号」テキストボックスで何も入力しなくて、「保存」ボタンをクリックする。', async () => {
     gondola.report(`Step 2.「案件名」テキストボックスで何も入力しなくて、「保存」ボタンをクリックする。`);
-    await addProjectPage.enterTextFieldByLabel(PROJECT_NUMBER_FIELD_NAME, Constants.exceededNOCMessage);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「このフィールドは入力必須です」が表示されること。`);
     let actualFeedback = await addProjectPage.getInvalidFeedBack(PROJECT_NAME_FIELD_NAME);
