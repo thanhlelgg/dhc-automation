@@ -1,5 +1,4 @@
 import { Translate } from '../locales/translate';
-import inputData from '../data/input-data.json';
 
 export class Constants {
     public static translator = Translate.getTranslator();
@@ -10,7 +9,7 @@ export class Constants {
     public static readonly LONG_TIMEOUT = 90;
     // incase we have too many elements, scroll to the last of it will take really long time, so we should limit it a little
     public static readonly LIMIT_SCROLL_TIMES = 10;
-    public static readonly SLIGHTLY_RIGHT_OFFSET = { x: 50, y: 0 };
+    public static readonly SLIGHTLY_RIGHT_OFFSET = { x: -50, y: 0 };
     public static readonly NORMAL_DATE_FORMAT = 'YYYY-MM-DD';
     public static readonly EXAMPLE_DEFAULT_DATE = '2019-01-01';
     public static readonly EXAMPLE_DEFAULT_DATE_SHORT = '2019-1-1';
@@ -50,43 +49,12 @@ export class Constants {
     //#endregion
 
     //#region Project attributes
-    public static projectForms = {
-        result: '出来高案件',
-        continue: '継続案件',
-        shot: 'ショット案件',
-    };
-
-    public static accuracyTypes = {
-        high: '高',
-        middle: '普通',
-        low: '低',
-    };
-
-    public static projectStatuses = {
-        prospecting: '見込',
-        estimated: '見積済',
-        temporaryOrdering: '仮受注',
-        ordered: '受注済',
-        delivered: '納品済',
-        done: '完了',
-        postponed: '延期',
-        lost: '失注',
-    };
-
-    public static projectPlace = {
-        house: '社内',
-        secondment: '出向',
-        dispatch: '派遣',
-    };
-
-    public static currencyIds = {
-        jpy: 'JPY',
-    };
-
-    public static billingTypes = {
-        eachTime: '案件個別',
-        consolidate: '得意先合算',
-    };
+    public static projectForms = Constants.translator.dropdownOptions.projectForms;
+    public static accuracyTypes = Constants.translator.dropdownOptions.accuracyTypes;
+    public static projectStatuses = Constants.translator.dropdownOptions.projectStatuses;
+    public static projectPlace = Constants.translator.dropdownOptions.projectPlace;
+    public static currencyIds = Constants.translator.dropdownOptions.currencyIds;
+    public static billingTypes = Constants.translator.dropdownOptions.billingTypes;
 
     public static closingDates = {
         1: '1',
@@ -119,36 +87,13 @@ export class Constants {
         28: '28',
         29: '29',
         30: '30',
-        31: '末',
+        31: Constants.translator.dropdownOptions.date.endDate,
     };
 
-    public static japaneseEndDate = '末';
-
-    public static debitCreditGroupIds = {
-        receivable: '売掛',
-        advance: '前受',
-        advanceConsumables: '立替(消耗品)',
-        advanceTravelExpenses: '立替(旅費交通費)',
-        advanceSystemRelatedExpenses: '立替(システム関係費)',
-    };
-
-    public static taxIds = {
-        8: '８％',
-        10: '10%',
-    };
-
-    public static projectRole = {
-        PM: 'PM',
-        leader: 'リーダ',
-        tester: 'テスター',
-        designer: '設計者',
-        expert: 'EXDB',
-        reserve1: '予備1',
-        reserve2: '予備2',
-        reserve3: '予備3',
-        reserve4: '予備4',
-        reserve5: '予備5',
-    };
+    public static japaneseEndDate = Constants.translator.dropdownOptions.date.endDate;
+    public static debitCreditGroupIds = Constants.translator.dropdownOptions.debitCreditGroupIds;
+    public static taxIds = Constants.translator.dropdownOptions.taxIds;
+    public static projectRole = Constants.translator.dropdownOptions.projectRole;
     //#endregion
 }
 

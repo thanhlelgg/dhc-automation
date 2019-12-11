@@ -59,21 +59,15 @@ TestCase('BMS-105. BMS:案件:従業員マスタ作成:所属部門:モーダル
     await gondola.checkEqual(isModuleDisplayed, true, 'Search departments modal title should be displayed');
 
     gondola.report(`Step 3. 「×」をクリックする。`);
-    addWorkerPage.closeModalWindowByName(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE);
+    await addWorkerPage.closeModalWindowByName(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addWorkerPage.doesModalTitleDisplay(
-        SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE,
-        Constants.SHORT_TIMEOUT,
-    );
+    isModuleDisplayed = await addWorkerPage.doesModalTitleDisplay(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search Departments modal title should not be displayed');
 
     gondola.report(`Step 4. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
     await addWorkerPage.clickTextFieldByLabel(WORKER_DEPARTMENT_FIELD_NAME);
-    await addWorkerPage.clickOutsideOfWindowModal();
+    await addWorkerPage.clickOutsideOfWindowModal(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addWorkerPage.doesModalTitleDisplay(
-        SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE,
-        Constants.SHORT_TIMEOUT,
-    );
+    isModuleDisplayed = await addWorkerPage.doesModalTitleDisplay(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search Departments modal title should not be displayed');
 });

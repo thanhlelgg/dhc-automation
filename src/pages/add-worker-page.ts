@@ -35,6 +35,7 @@ export class AddWorkerPage extends GeneralPage {
         "//a[@class='list-group-item list-group-item-action' and not(contains(@hidden, 'hidden'))][{0}]";
     protected searchResultColumnsByRowIndex =
         "//a[@class='list-group-item list-group-item-action' and not(contains(@hidden, 'hidden'))][{0}]//div[@class='row']/div";
+    protected modalWindowByName = "//div[@class='modal-content' and .//h5[text()='{0}']]";
     //#endregion
 
     @action('select random search result')
@@ -277,6 +278,13 @@ export class AddWorkerPage extends GeneralPage {
         FlagsCollector.collectTruth('Worker note should be correct', await this.doesNoteDisplayCorrect(worker.note));
 
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
+    }
+
+    @action('click outside of window modal')
+    public async clickOutsideOfWindowModal(modalName: string): Promise<void> {
+        const locator = Utilities.formatString(this.modalWindowByName, modalName);
+        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
+        await (gondola as any).performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 }
 export default new AddWorkerPage();

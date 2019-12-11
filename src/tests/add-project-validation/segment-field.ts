@@ -32,22 +32,16 @@ TestCase('BMS-46. 案件:案件作成:セグメント:モーダルウィンド�
     await gondola.checkEqual(isModuleDisplayed, true, 'Search segments modal title should be displayed');
 
     gondola.report(`Step 3. 「×」をクリックする。`);
-    addProjectPage.closeModalWindowByName(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE);
+    await addProjectPage.closeModalWindowByName(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(
-        SEARCH_SEGMENTS_MODAL_WINDOW_TITLE,
-        Constants.SHORT_TIMEOUT,
-    );
+    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search segments modal title should not be displayed');
 
     gondola.report(`Step 4. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
     await addProjectPage.clickTextFieldByLabel(SEGMENT_FIELD_NAME);
-    await addProjectPage.clickOutsideOfWindowModal();
+    await addProjectPage.clickOutsideOfWindowModal(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(
-        SEARCH_SEGMENTS_MODAL_WINDOW_TITLE,
-        Constants.SHORT_TIMEOUT,
-    );
+    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search segments modal title should not be displayed');
 });
 

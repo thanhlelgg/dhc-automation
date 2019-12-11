@@ -211,8 +211,7 @@ class HelperExt extends Helper {
         timeOut = timeOut * 1000; //convert to milliseconds
         const element = await this.getElement(control);
         try {
-            //await browser.wait(protractor.until.elementIsVisible(element), timeOut);
-            await browser.wait(protractor.ExpectedConditions.visibilityOf(protractor.element(element)), timeOut);
+            await browser.wait(protractor.until.elementIsVisible(element), timeOut);
         } catch (TimeoutError) {
             console.log(`Can not find element with locator ${control} after ${timeOut} ms`);
         }

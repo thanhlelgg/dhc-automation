@@ -1,10 +1,16 @@
 {
+    "headerMenu": {
+        "home": "ホーム",
+        "taskSystem": "業務管理",
+        "businessSystem" : "営業管理"
+    },
     "modalWindows": {
         "customerSearchTitle": "取引先選択",
         "departmentSearchTitle": "部門選択",
         "workerSearchTitle": "従業員選択",
         "segmentSearchTitle": "セグメント選択",
-        "searchItemTitle": "品目選択"
+        "searchItemTitle": "品目選択",
+        "searchLabsTitle": "ラボ選択"
     },
     "sectionName": {
         "volumeDetail": "出来高明細"
@@ -107,6 +113,67 @@
             "taxId": "税率",
             "description": "備考",
             "outOrder": "備考"
+        }
+    },
+    "dropdownOptions": {
+        "projectForms": {
+            "result": "出来高案件",
+            "continue": "継続案件",
+            "shot": "ショット案件"
+        },
+        "accuracyTypes": {
+            "high": "高",
+            "middle": "普通",
+            "low": "低"
+        },
+        "projectStatuses": {
+            "prospecting": "見込",
+            "estimated": "見積済",
+            "temporaryOrdering": "仮受注",
+            "ordered": "受注済",
+            "delivered": "納品済",
+            "done": "完了",
+            "postponed": "延期",
+            "lost": "失注"
+        },
+        "projectPlace" : {
+            "house": "社内",
+            "secondment": "出向",
+            "dispatch": "派遣"
+        },
+    
+        "currencyIds" : {
+            "jpy": "JPY"
+        },
+        "billingTypes" : {
+            "eachTime": "案件個別",
+            "consolidate": "得意先合算"
+        },
+        "debitCreditGroupIds" : {
+            "receivable": "売掛",
+            "advance": "前受",
+            "advanceConsumables": "立替(消耗品)",
+            "advanceTravelExpenses": "立替(旅費交通費)",
+            "advanceSystemRelatedExpenses": "立替(システム関係費)"
+        },
+        "taxIds" : {
+            "8": "８％",
+            "10": "10%"
+        },
+        "projectRole" : {
+            "PM": "PM",
+            "leader": "リーダ",
+            "tester": "テスター",
+            "designer": "設計者",
+            "expert": "EXDB",
+            "reserve1": "予備1",
+            "reserve2": "予備2",
+            "reserve3": "予備3",
+            "reserve4": "予備4",
+            "reserve5": "予備5"
+        },
+        "date": {
+            "endDate": "末"
         }
     }
 }

@@ -6,6 +6,7 @@ import setup from './add-project-setup';
 
 TestModule('Add Project - Labs field validation');
 
+const SEARCH_LABS_MODULE_TITLE = Constants.translator.modalWindows.searchLabsTitle;
 const PROJECT_PLACE_FIELD_NAME = Constants.translator.fieldName.place;
 const LAB_NAME_FIELD_NAME = Constants.translator.fieldName.labName;
 
@@ -39,7 +40,7 @@ TestCase('BMS-42. 案件:案件作成:場所:選択肢', async () => {
         true,
         'Labs should be displayed correctly',
     );
-    await addProjectPage.clickOutsideOfWindowModal();
+    await addProjectPage.clickOutsideOfWindowModal(SEARCH_LABS_MODULE_TITLE);
 
     gondola.report(
         `Step 4.「場所」プルダウンで「出向」を選択し、選択画面を起動するにはリソースの拠点欄で枠内をクリックし、選択画面で表示一覧を確認する。`,
@@ -53,7 +54,7 @@ TestCase('BMS-42. 案件:案件作成:場所:選択肢', async () => {
         true,
         'Labs should be displayed correctly',
     );
-    await addProjectPage.clickOutsideOfWindowModal();
+    await addProjectPage.clickOutsideOfWindowModal(SEARCH_LABS_MODULE_TITLE);
 
     gondola.report(
         `Step 5.「場所」プルダウンで「派遣」を選択し、選択画面を起動するにはリソースの拠点欄で枠内をクリックし、選択画面で表示一覧を確認する。`,

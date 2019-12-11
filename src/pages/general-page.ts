@@ -13,11 +13,11 @@ export class GeneralPage {
     @locator
     protected captionSubject = { css: '.page-title-text' };
     @locator
-    protected homeLink = "//a[.='ホーム']";
+    protected homeLink = `//a[.='${this.translator.headerMenu.home}']"`;
     @locator
-    protected businessSystemLink = "//a[.='営業管理']";
+    protected businessSystemLink = `//a[.='${this.translator.headerMenu.businessSystem}']`;
     @locator
-    protected taskSystemLink = "//a[.='業務管理']";
+    protected taskSystemLink = `//a[.='${this.translator.headerMenu.businessSystem}']`;
     @locator
     protected invalidFeedBackByFieldLabel = "//div[label[text()='{0}']]//div[@class='invalid-feedback']";
     @locator
@@ -83,14 +83,14 @@ export class GeneralPage {
 
     @action('waitControlExist')
     public async waitForControlVisible(control: any, seconds = Constants.MEDIUM_TIMEOUT): Promise<void> {
-        let controlExist = await gondola.doesControlExist(control);
-        let timeCount = 0;
-        while (!controlExist && timeCount < seconds) {
-            console.log(`Waiting for control ${timeCount} seconds`);
-            await gondola.wait(1);
-            timeCount++;
-            controlExist = await gondola.doesControlExist(control);
-        }
+        // let controlExist = await gondola.doesControlExist(control);
+        // let timeCount = 0;
+        // while (!controlExist && timeCount < seconds) {
+        //     console.log(`Waiting for control ${timeCount} seconds`);
+        //     await gondola.wait(1);
+        //     timeCount++;
+        //     controlExist = await gondola.doesControlExist(control);
+        // }
         // We should wait until element exist first, before waiting for it to be displayed
         const currentTime = Utilities.currentTimeInSeconds();
         await gondola.waitForElement(control, seconds);
@@ -144,6 +144,7 @@ export class GeneralPage {
     @action('clickTextFieldByLabel')
     public async clickTextFieldByLabel(label: string): Promise<void> {
         const locator = Utilities.formatString(this.textFieldByLabel, label);
+        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
         await gondola.click(locator);
     }
 
@@ -154,18 +155,22 @@ export class GeneralPage {
     }
 
     @action('doesModalTitleDisplay')
-    public async doesModalTitleDisplay(name: string, timeOut = Constants.LONG_TIMEOUT): Promise<boolean> {
+    public async doesModalTitleDisplay(name: string, expected = true): Promise<boolean> {
         const locator = Utilities.formatString(this.moduleTitle, name);
-        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
-        this.waitForControlVisible(locator, timeOut);
+        if (expected) {
+            await this.waitForControlVisible(locator, Constants.MEDIUM_TIMEOUT);
+        } else {
+            await (gondola as any).waitUntilElementNotVisible(locator, Constants.SHORT_TIMEOUT);
+        }
         return await (gondola as any).doesControlDisplay(locator);
     }
 
     @action('closeModalWindowByName')
     public async closeModalWindowByName(name: string): Promise<void> {
         const locator = Utilities.formatString(this.closeModuleButtonByName, name);
-        this.waitForControlVisible(locator, Constants.LONG_TIMEOUT);
-        gondola.click(locator);
+        await this.waitForControlVisible(locator, Constants.LONG_TIMEOUT);
+        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.click(locator);
     }
 
     @action('getSelectedOption')
@@ -257,12 +262,6 @@ export class GeneralPage {
     public async doesCheckboxLabelExist(label: string): Promise<boolean> {
         const locator = Utilities.formatString(this.labelCheckBox, label);
         return await gondola.doesControlExist(locator);
-    }
-
-    @action('clickOutsideOfWindowModal')
-    public async clickOutsideOfWindowModal(): Promise<void> {
-        //await gondola.click(this.saveButton);
-        await (gondola as any).performClick(this.saveButton);
     }
 }
 export default new GeneralPage();
