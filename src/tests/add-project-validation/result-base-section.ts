@@ -6,7 +6,7 @@ import { ProjectInfoData } from '../../models/project-info';
 
 TestModule('Add Project - Results base section validation');
 
-const PROJECT_FORM_FIELD_NAME = Constants.translator.fieldName.projectForm;
+const PROJECT_FORM_FIELD_NAME = Constants.translator.fieldName.addProject.projectForm;
 const PROJECT_RESULT_BASE_DATA = ProjectInfoData.RESULT_BASE_ONE_RECORD;
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
 const PROJECT_RESULT_BASE_EMPTY_RECORD = ProjectInfoData.RESULT_BASE_ONE_EMPTY_RECORD;

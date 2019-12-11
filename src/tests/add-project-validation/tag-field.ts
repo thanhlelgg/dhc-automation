@@ -6,7 +6,7 @@ import { protractor } from 'protractor/built/ptor';
 
 TestModule('Add Project - Project Tags field validation');
 
-const TAG_FIELD_NAME = Constants.translator.fieldName.tag;
+const TAG_FIELD_NAME = Constants.translator.fieldName.addProject.tag;
 const TAG_1 = 'TAG_1';
 const TAG_2 = 'TAG_2';
 const TAG_3 = 'TAG_3';

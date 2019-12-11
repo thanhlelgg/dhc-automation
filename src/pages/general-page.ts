@@ -4,6 +4,10 @@ import { Translate } from '../locales/translate';
 import { ProtractorBrowser } from 'protractor';
 import { Utilities } from '../common/utilities';
 import { Language } from '../models/enum-class/language';
+import { ElementType } from '../models/enum-class/element-type';
+import { RecordTable } from '../models/enum-class/recordTable';
+import { RecordFieldName } from '../models/enum-class/recordFieldName';
+import '../string.extensions';
 
 @page
 export class GeneralPage {
@@ -38,6 +42,17 @@ export class GeneralPage {
     protected languageOption = "//a[@class='changeFlag' and contains(@href, '{0}')]";
     @locator
     protected labelByName = "//div[label[text()='{0}']]";
+    @locator
+    protected recordField = "//{0}[@name='{1}[{2}][{3}]']";
+
+    public buildRecordFieldXpath(
+        fieldType: ElementType,
+        tableName: RecordTable,
+        index: number,
+        tableFieldName: RecordFieldName,
+    ): string {
+        return this.recordField.format(fieldType.type, tableName.nameAttr, index.toString(), tableFieldName.nameAttr);
+    }
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
@@ -239,6 +254,15 @@ export class GeneralPage {
     public async getSelectedOptionByLabel(label: string): Promise<string> {
         const locator = Utilities.formatString(this.selectorByLabel, label);
         return (await gondola.getSelectedItems(locator))[0];
+    }
+
+    @action('set state customized checkbox')
+    public async setStateCustomizeCheckbox(control: string, check: boolean): Promise<void> {
+        const checkboxStatusLocator = control + "//input[@type='checkbox']";
+        const checkboxStatus = (gondola as any).doesCheckboxChecked(checkboxStatusLocator);
+        if (check != checkboxStatus) {
+            await gondola.click(control);
+        }
     }
 }
 export default new GeneralPage();

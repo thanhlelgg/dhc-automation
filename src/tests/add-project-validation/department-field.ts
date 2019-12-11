@@ -7,7 +7,7 @@ import { Utilities } from '../../common/utilities';
 
 TestModule('Add Project - Department field validation');
 
-const DEPARTMENT_FIELD_NAME = Constants.translator.fieldName.department;
+const DEPARTMENT_FIELD_NAME = Constants.translator.fieldName.addProject.department;
 const SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE = Constants.translator.modalWindows.departmentSearchTitle;
 
 Before(setup);

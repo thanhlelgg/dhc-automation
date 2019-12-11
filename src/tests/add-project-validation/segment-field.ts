@@ -7,7 +7,7 @@ import { SearchResultColumn } from '../../models/enum-class/search-result-column
 
 TestModule('Add Project - Worker field validation');
 
-const SEGMENT_FIELD_NAME = Constants.translator.fieldName.segment;
+const SEGMENT_FIELD_NAME = Constants.translator.fieldName.addProject.segment;
 const SEARCH_SEGMENTS_MODAL_WINDOW_TITLE = Constants.translator.modalWindows.segmentSearchTitle;
 
 Before(setup);

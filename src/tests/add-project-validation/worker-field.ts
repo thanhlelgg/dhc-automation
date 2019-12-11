@@ -7,7 +7,7 @@ import { SearchResultColumn } from '../../models/enum-class/search-result-column
 
 TestModule('Add Project - Worker field validation');
 
-const WORKER_FIELD_NAME = Constants.translator.fieldName.worker;
+const WORKER_FIELD_NAME = Constants.translator.fieldName.addProject.worker;
 const SEARCH_WORKER_MODAL_WINDOW_TITLE = Constants.translator.modalWindows.workerSearchTitle;
 
 Before(setup);

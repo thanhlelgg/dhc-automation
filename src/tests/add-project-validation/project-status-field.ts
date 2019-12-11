@@ -8,8 +8,8 @@ import listProjectPage from '../../pages/list-project-page';
 
 TestModule('Add Project - Status field validation');
 
-const PROJECT_NUMBER_FIELD_NAME = Constants.translator.fieldName.number;
-const PROJECT_STATUS_FIELD_NAME = Constants.translator.fieldName.status;
+const PROJECT_NUMBER_FIELD_NAME = Constants.translator.fieldName.addProject.number;
+const PROJECT_STATUS_FIELD_NAME = Constants.translator.fieldName.addProject.status;
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
 
 Before(setup);

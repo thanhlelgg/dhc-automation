@@ -6,7 +6,7 @@ import { DatabaseHelper } from '../../helper/database-helpers';
 
 TestModule('Add Project - Project Closing date field validation');
 
-const CLOSING_DATE_FIELD_NAME = Constants.translator.fieldName.closingDate;
+const CLOSING_DATE_FIELD_NAME = Constants.translator.fieldName.addProject.closingDate;
 
 Before(setup);
 

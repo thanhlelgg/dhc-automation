@@ -16,31 +16,40 @@
         "volumeDetail": "出来高明細"
     },
     "fieldName": {
-        "number": "案件番号",
-        "name": "案件名",
-        "projectForm": "案件形態",
-        "businessCustomer": "取引先",
-        "department": "部門",
-        "worker": "担当者",
-        "accuracy": "確度",
-        "status": "ステータス",
-        "place": "場所",
-        "currencyId": "取引通貨",
-        "startDate": "案件開始日",
-        "endDate": "案件終了日",
-        "scheduledStartDate": "案件開始予定日",
-        "scheduledEndDate": "案件終了予定日",
-        "labName": "拠点",
-        "closingDate": "締日",
-        "segment": "セグメント",
-        "tag": "タグ",
-        "description": "説明"
+        "addProject": {
+            "number": "案件番号",
+            "name": "案件名",
+            "projectForm": "案件形態",
+            "businessCustomer": "取引先",
+            "department": "部門",
+            "worker": "担当者",
+            "accuracy": "確度",
+            "status": "ステータス",
+            "place": "場所",
+            "currencyId": "取引通貨",
+            "startDate": "案件開始日",
+            "endDate": "案件終了日",
+            "scheduledStartDate": "案件開始予定日",
+            "scheduledEndDate": "案件終了予定日",
+            "labName": "拠点",
+            "closingDate": "締日",
+            "segment": "セグメント",
+            "tag": "タグ",
+            "description": "説明"
+        },
+        "addCustomer": {
+            "classify": "区分",
+            "code": "取引先コード",
+            "name": "取引先名",
+            "billingBankAccountNumber": "個別請求口座番号"
+        }
     },
     "invalidFeedback": {
         "fieldRequired": "このフィールドは入力必須です",
         "exceededNOC": "255文字以内で入力してください",
         "characterTypeError": "。。。",
-        "invalidInputValue": "入力値が不正です"
+        "invalidInputValue": "入力値が不正です",
+        "taxFieldRequired": "課税の場合、このフィールドは入力必須です"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]"
@@ -156,6 +165,7 @@
             "advanceSystemRelatedExpenses": "立替(システム関係費)"
         },
         "taxIds" : {
+            "": "",
             "8": "８％",
             "10": "10%"
         },
@@ -173,6 +183,12 @@
         },
         "date": {
             "endDate": "末"
+        },
+        "customer": {
+            "classify": {
+                "client": "顧客",
+                "supplier": "仕入先"
+            }
         }
     }
 }

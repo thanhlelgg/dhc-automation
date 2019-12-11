@@ -1,9 +1,8 @@
 import { action } from 'gondolajs/built/deco';
-import { ProtractorBrowser, element } from 'protractor';
+import { ProtractorBrowser } from 'protractor';
 import * as dotenv from 'dotenv';
 import * as protractor from 'protractor';
 import { ILocation } from 'selenium-webdriver';
-import { async } from 'q';
 
 // this helper always run before executing testcase, we will preload environment variable in here
 // if we need to use environment variable before this, we should find another place for it

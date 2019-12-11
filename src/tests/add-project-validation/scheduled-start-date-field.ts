@@ -6,7 +6,7 @@ import setup from './add-project-setup';
 import { ProjectInfoData } from '../../models/project-info';
 
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
-const SCHEDULED_START_DATE_FIELD_NAME = Constants.translator.fieldName.scheduledStartDate;
+const SCHEDULED_START_DATE_FIELD_NAME = Constants.translator.fieldName.addProject.scheduledStartDate;
 
 TestModule('Add Project - Scheduled start date validation');
 

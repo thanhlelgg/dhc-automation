@@ -8,7 +8,7 @@ export default async function setup(): Promise<string> {
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の請求用役職別のチェックボックスでチェックを行う。`,
     );
-    const PROJECT_FORM_FIELD_NAME = Constants.translator.fieldName.projectForm;
+    const PROJECT_FORM_FIELD_NAME = Constants.translator.fieldName.addProject.projectForm;
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
     const randomRole = await addProjectPage.getRandomRoleLabel();
     await addProjectPage.checkResultBasesRoleCheckbox(randomRole);

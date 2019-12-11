@@ -5,7 +5,7 @@ import setup from './add-project-setup';
 import { ProjectInfoData } from '../../models/project-info';
 
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
-const SCHEDULED_END_DATE_FIELD_NAME = Constants.translator.fieldName.scheduledEndDate;
+const SCHEDULED_END_DATE_FIELD_NAME = Constants.translator.fieldName.addProject.scheduledEndDate;
 
 TestModule('Add Project - Scheduled end date field validation');
 

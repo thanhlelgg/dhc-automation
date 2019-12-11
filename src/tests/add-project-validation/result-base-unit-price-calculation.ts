@@ -6,8 +6,8 @@ import { DatabaseHelper } from '../../helper/database-helpers';
 
 TestModule('Add Project - Results base - Debit credit field validation');
 
-const PROJECT_FORM_FIELD_NAME = Constants.translator.fieldName.projectForm;
-const START_DATE_FIELD_NAME = Constants.translator.fieldName.startDate;
+const PROJECT_FORM_FIELD_NAME = Constants.translator.fieldName.addProject.projectForm;
+const START_DATE_FIELD_NAME = Constants.translator.fieldName.addProject.startDate;
 
 Before(setup);
 

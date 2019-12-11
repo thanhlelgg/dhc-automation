@@ -2,7 +2,7 @@ import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
 import setup from './results-base-setup';
-import { ResultsBaseTextfield } from '../../models/enum-class/project-results-base-textfield';
+import { ResultsBaseField } from '../../models/enum-class/project-results-base-field';
 import { Utilities } from '../../common/utilities';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 
@@ -20,7 +20,7 @@ TestCase('BMS-52. 案件:案件作成:出来高明細:品目:未入力', async (
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「このフィールドは入力必須です」が表示されること。`);
     await gondola.checkEqual(
-        await addProjectPage.getInvalidFeedBackProjectResultsBase(randomRole, ResultsBaseTextfield.ITEM_ID),
+        await addProjectPage.getInvalidFeedBackProjectResultsBase(randomRole, ResultsBaseField.ITEM_ID),
         Constants.translator.invalidFeedback.fieldRequired,
         'Field is required message should be displayed',
     );

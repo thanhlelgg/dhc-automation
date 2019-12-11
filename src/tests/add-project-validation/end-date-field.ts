@@ -6,10 +6,10 @@ import { ProjectInfoData } from '../../models/project-info';
 import businessSystemPage from '../../pages/business-system-page';
 import listProjectPage from '../../pages/list-project-page';
 
-const PROJECT_NUMBER_FIELD_NAME = Constants.translator.fieldName.number;
-const START_DATE_FIELD_NAME = Constants.translator.fieldName.startDate;
+const PROJECT_NUMBER_FIELD_NAME = Constants.translator.fieldName.addProject.number;
+const START_DATE_FIELD_NAME = Constants.translator.fieldName.addProject.startDate;
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
-const END_DATE_FIELD_NAME = Constants.translator.fieldName.endDate;
+const END_DATE_FIELD_NAME = Constants.translator.fieldName.addProject.endDate;
 
 TestModule('Add Project - End Date field validation');
 

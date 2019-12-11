@@ -7,8 +7,10 @@ import { FilterType } from '../models/enum-class/filter-field-type';
 import { SearchResultColumn } from '../models/enum-class/search-result-column';
 import { DatabaseHelper } from '../helper/database-helpers';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
-import { ResultsBaseTextfield } from '../models/enum-class/project-results-base-textfield';
+import { ResultsBaseField } from '../models/enum-class/project-results-base-field';
 import { CustomerMagnifications } from '../entity/CustomerMagnifications';
+import { ElementType } from '../models/enum-class/element-type';
+import '../string.extensions';
 
 @page
 export class AddProjectPage extends GeneralPage {
@@ -60,9 +62,9 @@ export class AddProjectPage extends GeneralPage {
     protected projectResultSection = { id: 'project-result-bases' };
     @locator
     protected invalidFeedbackProjectResultsBase =
-        "//tr[td[text()='{0}']]//input[contains(@name, '{1}')]/following-sibling::div";
+        "//tr[td[text()='{0}']]//{1}[contains(@name, '{2}')]/following-sibling::div";
     @locator
-    protected textFieldProjectResultsBase = "//tr[td[text()='{0}']]//input[contains(@name, '{1}')]";
+    protected textFieldProjectResultsBase = "//tr[td[text()='{0}']]//{1}[contains(@name, '{2}')]";
     //#endregion
 
     //#region Search
@@ -602,6 +604,12 @@ export class AddProjectPage extends GeneralPage {
         return await (gondola as any).areOptionsExists(this.projectForm, options);
     }
 
+    @action('checkProjectFormOptions')
+    public async checkResultsBaseTaxOptions(role: string, options: string[]): Promise<boolean> {
+        // const locator = Utilities.formatString(this.taxIdByRoleStr, role);
+        return await (gondola as any).areOptionsExists(this.taxIdByRoleStr.format(role), options);
+    }
+
     @action('selectProjectForm')
     public async selectProjectForm(option: string): Promise<void> {
         await gondola.select(this.projectForm, option);
@@ -669,6 +677,21 @@ export class AddProjectPage extends GeneralPage {
         return await this.doesSelectorOptionsExist(locator, options);
     }
 
+    @action('set taxable checkbox state')
+    public async setTaxableState(role: string, check: boolean): Promise<void> {
+        const checkBoxInputXpath = Utilities.formatString(this.isTaxableByRoleStr, role);
+        await this.setStateCustomizeCheckbox(checkBoxInputXpath, check);
+    }
+
+    @action('is tax dropdown enabled')
+    public async isTaxDropdownEnabled(role: string): Promise<boolean> {
+        const isDisabled = await gondola.getControlProperty(
+            Utilities.formatString(this.taxIdByRoleStr, role),
+            'disabled',
+        );
+        return !(isDisabled === 'true');
+    }
+
     @action('inputProjectResultBases')
     public async inputProjectResultBases(projectResultBases: ProjectResultBaseInfo[]): Promise<void> {
         const formExist = await gondola.doesControlExist(this.subTitleProjectResult);
@@ -721,10 +744,7 @@ export class AddProjectPage extends GeneralPage {
                     Utilities.formatString(this.unitPriceHolidayLateByRoleStr, projectResultBase.role),
                     projectResultBase.unitPriceHolidayLate,
                 );
-                await gondola.setState(
-                    Utilities.formatString(this.isTaxableByRoleStr, projectResultBase.role),
-                    projectResultBase.isTaxable,
-                );
+                await this.setTaxableState(projectResultBase.role, projectResultBase.isTaxable);
                 if (projectResultBase.isTaxable) {
                     await gondola.select(
                         Utilities.formatString(this.taxIdByRoleStr, projectResultBase.role),
@@ -1631,7 +1651,7 @@ export class AddProjectPage extends GeneralPage {
 
     @action('get closing date as number')
     public async getClosingDateAsNumber(): Promise<string> {
-        let selectedDate = await this.getSelectedOptionByLabel(Constants.translator.fieldName.closingDate);
+        let selectedDate = await this.getSelectedOptionByLabel(Constants.translator.fieldName.addProject.closingDate);
         if (selectedDate === Constants.japaneseEndDate) {
             selectedDate = '31';
         }
@@ -1670,6 +1690,7 @@ export class AddProjectPage extends GeneralPage {
             this.roleLabelByIndex,
             Utilities.getRandomNumber(1, numberOfRoles).toString(),
         );
+
         return await gondola.getText(locator);
     }
 
@@ -1687,11 +1708,13 @@ export class AddProjectPage extends GeneralPage {
     @action('get invalid feedback from project result base')
     public async getInvalidFeedBackProjectResultsBase(
         role: string,
-        nameAttribute: ResultsBaseTextfield,
+        nameAttribute: ResultsBaseField,
+        elementType = ElementType.TEXTFIELD,
     ): Promise<string> {
         const locator = Utilities.formatString(
             this.invalidFeedbackProjectResultsBase,
             role,
+            elementType.type,
             nameAttribute.nameAttribute,
         );
         if (!(await gondola.doesControlExist(locator))) {
@@ -1709,16 +1732,21 @@ export class AddProjectPage extends GeneralPage {
     @action('enter project result base text field')
     public async enterProjectResultBaseTextfield(
         role: string,
-        attrName: ResultsBaseTextfield,
+        attrName: ResultsBaseField,
         text: string,
+        type = ElementType.TEXTFIELD,
     ): Promise<void> {
-        const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
+        const locator = this.textFieldProjectResultsBase.format(role, type.type, attrName.nameAttribute);
         await gondola.enter(locator, text);
     }
 
     @action('enter project result base text field')
-    public async isProjectResultBaseTextFieldReadOnly(role: string, attrName: ResultsBaseTextfield): Promise<boolean> {
-        const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
+    public async isProjectResultBaseTextFieldReadOnly(
+        role: string,
+        attrName: ResultsBaseField,
+        type = ElementType.TEXTFIELD,
+    ): Promise<boolean> {
+        const locator = this.textFieldProjectResultsBase.format(role, type.type, attrName.nameAttribute);
         const isReadonly = await gondola.getControlProperty(locator, 'readonly');
         return isReadonly === 'true';
     }
@@ -1726,10 +1754,11 @@ export class AddProjectPage extends GeneralPage {
     @action('get project result base text field')
     public async getProjectResultBaseTextfield(
         role: string,
-        attrName: ResultsBaseTextfield,
+        attrName: ResultsBaseField,
         waitForTextTimeout?: number,
+        type = ElementType.TEXTFIELD,
     ): Promise<string> {
-        const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
+        const locator = this.textFieldProjectResultsBase.format(role, type.type, attrName.nameAttribute);
         if (waitForTextTimeout) {
             await (gondola as any).waitUntilTextAvailable(locator, waitForTextTimeout);
         }
@@ -1739,9 +1768,10 @@ export class AddProjectPage extends GeneralPage {
     @action('get project result base validation')
     public async getProjectResultBaseTextfieldValidationMessage(
         role: string,
-        attrName: ResultsBaseTextfield,
+        attrName: ResultsBaseField,
+        type = ElementType.TEXTFIELD,
     ): Promise<string> {
-        const locator = Utilities.formatString(this.textFieldProjectResultsBase, role, attrName.nameAttribute);
+        const locator = this.textFieldProjectResultsBase.format(role, type.type, attrName.nameAttribute);
         return await (gondola as any).getValidationMessage(locator);
     }
 
@@ -1750,19 +1780,16 @@ export class AddProjectPage extends GeneralPage {
         unitPrice: CustomerMagnifications,
         basePrice: number,
     ): Promise<boolean> {
-        const dataMapping = new Map<ResultsBaseTextfield, number>();
-        dataMapping.set(ResultsBaseTextfield.UNIT_PRICE_WEEKDAY, basePrice);
-        dataMapping.set(ResultsBaseTextfield.UNIT_PRICE_WEEKDAY_OVERTIME, Math.floor(basePrice * unitPrice.overtime));
-        dataMapping.set(ResultsBaseTextfield.UNIT_PRICE_HOLIDAY, Math.floor(basePrice * unitPrice.holiday));
-        dataMapping.set(ResultsBaseTextfield.UNIT_PRICE_WEEKDAY_LATE, Math.floor(basePrice * unitPrice.late_night));
+        const dataMapping = new Map<ResultsBaseField, number>();
+        dataMapping.set(ResultsBaseField.UNIT_PRICE_WEEKDAY, basePrice);
+        dataMapping.set(ResultsBaseField.UNIT_PRICE_WEEKDAY_OVERTIME, Math.floor(basePrice * unitPrice.overtime));
+        dataMapping.set(ResultsBaseField.UNIT_PRICE_HOLIDAY, Math.floor(basePrice * unitPrice.holiday));
+        dataMapping.set(ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE, Math.floor(basePrice * unitPrice.late_night));
         dataMapping.set(
-            ResultsBaseTextfield.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
+            ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
             Math.floor(basePrice * unitPrice.late_night_overtime),
         );
-        dataMapping.set(
-            ResultsBaseTextfield.UNIT_PRICE_HOLIDAY_LATE,
-            Math.floor(basePrice * unitPrice.holiday_late_night),
-        );
+        dataMapping.set(ResultsBaseField.UNIT_PRICE_HOLIDAY_LATE, Math.floor(basePrice * unitPrice.holiday_late_night));
         for (const [key, value] of dataMapping) {
             FlagsCollector.collectEqual(
                 `Unit price ${key.toString()} should be displayed correctly`,

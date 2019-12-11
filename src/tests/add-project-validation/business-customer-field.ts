@@ -7,8 +7,8 @@ import { SearchResultColumn } from '../../models/enum-class/search-result-column
 
 TestModule('Add Project - Business Customer validation');
 
-const PROJECT_NAME_FIELD_NAME = Constants.translator.fieldName.name;
-const BUSINESS_CUSTOMER_FIELD_NAME = Constants.translator.fieldName.businessCustomer;
+const PROJECT_NAME_FIELD_NAME = Constants.translator.fieldName.addProject.name;
+const BUSINESS_CUSTOMER_FIELD_NAME = Constants.translator.fieldName.addProject.businessCustomer;
 const SEARCH_CUSTOMER_MODAL_WINDOW_TITLE = Constants.translator.modalWindows.customerSearchTitle;
 
 Before(setup);

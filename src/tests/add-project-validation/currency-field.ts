@@ -5,7 +5,7 @@ import setup from './add-project-setup';
 
 TestModule('Add Project - Project Currency field validation');
 
-const CURRENCY_ID_FIELD_NAME = Constants.translator.fieldName.currencyId;
+const CURRENCY_ID_FIELD_NAME = Constants.translator.fieldName.addProject.currencyId;
 
 Before(setup);
 

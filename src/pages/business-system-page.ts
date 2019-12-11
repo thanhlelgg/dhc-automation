@@ -71,5 +71,15 @@ export class BusinessSystemPage extends GeneralPage {
         await this.waitForControlVisible(this.addWorkerLink);
         await gondola.click(this.addWorkerLink);
     }
+
+    @action('gotoAddCustomerPage')
+    public async gotoAddCustomerPage(): Promise<void> {
+        await this.waitForControlVisible(this.masterLink);
+        await gondola.click(this.masterLink);
+        await this.waitForControlVisible(this.customerLink);
+        await gondola.click(this.customerLink);
+        await this.waitForControlVisible(this.addCustomerLink);
+        await gondola.click(this.addCustomerLink);
+    }
 }
 export default new BusinessSystemPage();

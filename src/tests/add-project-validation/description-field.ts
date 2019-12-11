@@ -6,7 +6,7 @@ import { Utilities } from '../../common/utilities';
 
 TestModule('Add Project - Project Description field validation');
 
-const DESCRIPTION_FIELD_NAME = Constants.translator.fieldName.description;
+const DESCRIPTION_FIELD_NAME = Constants.translator.fieldName.addProject.description;
 
 Before(setup);
 

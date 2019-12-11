@@ -7,8 +7,8 @@ import setup from './add-project-setup';
 TestModule('Add Project - Labs field validation');
 
 const SEARCH_LABS_MODULE_TITLE = Constants.translator.modalWindows.searchLabsTitle;
-const PROJECT_PLACE_FIELD_NAME = Constants.translator.fieldName.place;
-const LAB_NAME_FIELD_NAME = Constants.translator.fieldName.labName;
+const PROJECT_PLACE_FIELD_NAME = Constants.translator.fieldName.addProject.place;
+const LAB_NAME_FIELD_NAME = Constants.translator.fieldName.addProject.labName;
 
 Before(setup);
 

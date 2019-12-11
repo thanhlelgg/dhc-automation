@@ -6,7 +6,7 @@ import setup from './add-project-setup';
 
 TestModule('Add Project - Project number validation');
 
-const PROJECT_NAME_FIELD_NAME = Constants.translator.fieldName.name;
+const PROJECT_NAME_FIELD_NAME = Constants.translator.fieldName.addProject.name;
 
 Before(setup);
 

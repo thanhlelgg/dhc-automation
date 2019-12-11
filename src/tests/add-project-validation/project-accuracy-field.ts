@@ -5,7 +5,7 @@ import setup from './add-project-setup';
 
 TestModule('Add Project - Project accuracy field validation');
 
-const ACCURACY_FIELD_NAME = Constants.translator.fieldName.accuracy;
+const ACCURACY_FIELD_NAME = Constants.translator.fieldName.addProject.accuracy;
 
 Before(setup);
 
