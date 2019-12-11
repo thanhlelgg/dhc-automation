@@ -5,7 +5,7 @@ import businessSystemPage from '../../pages/business-system-page';
 import { Constants } from '../../common/constants';
 import { Utilities } from '../../common/utilities';
 
-TestModule('Add Worker validation');
+TestModule('Add Worker - Worker note field validation');
 
 const WORKER_NOTE_FIELD_NAME = Constants.translator.workerFieldName.note;
 const TEXT_1024_CHARACTERS = Utilities.getRandomText(1024);
