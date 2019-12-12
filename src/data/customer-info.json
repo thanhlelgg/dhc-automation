@@ -10,7 +10,6 @@
     "unitPrices": {
         "record1": {
             "startDate": "12-12-2019",
-            "endDate": "12-31-9999",
             "leader": 1,
             "tester": 1,
             "dispatch": 1
@@ -19,7 +18,6 @@
     "customerMagnifications": {
         "record1": {
             "startDate": "12-12-2019",
-            "endDate": "12-31-9999",
             "overtime": 1,
             "lateNight": 1,
             "lateNightOvertime": 1,

@@ -10,7 +10,7 @@ import { FlagsCollector, LoggingType } from '../helper/flags-collector';
 import { ResultsBaseField } from '../models/enum-class/project-results-base-field';
 import { CustomerMagnifications } from '../entity/CustomerMagnifications';
 import { ElementType } from '../models/enum-class/element-type';
-import '../string.extensions';
+import '@src/string.extensions';
 
 @page
 export class AddProjectPage extends GeneralPage {
@@ -245,7 +245,7 @@ export class AddProjectPage extends GeneralPage {
     @action('doesSearchResultDisplay')
     public async doesSearchResultDisplay(itemName: string, type: SearchResultColumn): Promise<boolean> {
         const locator = Utilities.formatString(this.searchResultByTabulatorFieldAndText, type.tabulatorField, itemName);
-        return await (gondola as any).isDisplayed(locator);
+        return await gondola.doesControlDisplay(locator);
     }
 
     @action('doesPartialSearchResultDisplayCorrectly')
@@ -284,14 +284,14 @@ export class AddProjectPage extends GeneralPage {
         } else {
             locator = Utilities.formatString(this.searchResultByTabulatorFieldAndText, type.tabulatorField, itemName);
         }
-        await this.waitForControlVisible(locator);
+        await gondola.waitUntilElementVisible(locator);
         await gondola.click(locator);
     }
 
     @action('filterResult')
     public async filterResult(value: string, type: FilterType): Promise<void> {
         const itemXpath = { id: type.searchFieldId };
-        await this.waitForControlVisible(itemXpath, Constants.LONG_TIMEOUT);
+        await gondola.waitUntilElementVisible(itemXpath, Constants.LONG_TIMEOUT);
         await gondola.enter(itemXpath, value);
     }
 
@@ -301,8 +301,8 @@ export class AddProjectPage extends GeneralPage {
      */
     public async getAllItemsOneColumn(resultColumn: SearchResultColumn): Promise<string[]> {
         const resultLocator = Utilities.formatString(this.searchResultByTabulatorField, resultColumn.tabulatorField);
-        await this.waitForControlVisible(resultLocator, Constants.LONG_TIMEOUT);
-        return await (gondola as any).getElementsAttributes(resultLocator, 'innerText');
+        await gondola.waitUntilElementVisible(resultLocator, Constants.LONG_TIMEOUT);
+        return await gondola.getElementsAttributes(resultLocator, 'innerText');
     }
 
     /**
@@ -313,7 +313,7 @@ export class AddProjectPage extends GeneralPage {
     public async getOneResultItemAllColumns(index?: number): Promise<Map<string, string>> {
         const map = new Map<string, string>();
         if (index === undefined) {
-            await this.waitForControlVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
+            await gondola.waitUntilElementVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
             const numberOfItems = await gondola.getElementCount(this.searchResultRow);
             index = Utilities.getRandomNumber(1, numberOfItems);
         }
@@ -321,7 +321,7 @@ export class AddProjectPage extends GeneralPage {
         const numberOfAttributes = await gondola.getElementCount(itemRowLocator);
         for (let i = 1; i <= numberOfAttributes; i++) {
             const attributesLocator = itemRowLocator + `[${i}]`;
-            const key = await (gondola as any).getElementAttribute(attributesLocator, 'tabulator-field');
+            const key = await gondola.getElementAttribute(attributesLocator, 'tabulator-field');
             const value = await gondola.getText(attributesLocator);
             map.set(key, value);
         }
@@ -335,7 +335,7 @@ export class AddProjectPage extends GeneralPage {
      */
     public async getAllResultsAllColumns(): Promise<string[][]> {
         const result: string[][] = [];
-        await this.waitForControlVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
+        await gondola.waitUntilElementVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
         const numberOfItems = await gondola.getElementCount(this.searchResultRow);
         for (let index = 1; index <= numberOfItems; index++) {
             const allColumns: string[] = [];
@@ -535,8 +535,8 @@ export class AddProjectPage extends GeneralPage {
         if (!customerCode) {
             throw new Error('Customer code is not available');
         }
-        if (!(await (gondola as any).awaitClick(this.searchCustomerField))) {
-            await (gondola as any).executeClick(this.searchCustomerField);
+        if (!(await gondola.awaitClick(this.searchCustomerField))) {
+            await gondola.executeClick(this.searchCustomerField);
         }
 
         await this.filterResult(customerCode, FilterType.CUSTOMER_CODE);
@@ -584,7 +584,7 @@ export class AddProjectPage extends GeneralPage {
         }
 
         await gondola.click(searchItemXpath);
-        await this.waitForControlVisible(this.itemFilter, Constants.LONG_TIMEOUT);
+        await gondola.waitUntilElementVisible(this.itemFilter, Constants.LONG_TIMEOUT);
         await gondola.enter(this.itemFilter, item);
         await this.selectSearchResult(item);
     }
@@ -598,13 +598,13 @@ export class AddProjectPage extends GeneralPage {
 
     @action('checkProjectFormOptions')
     public async checkProjectFormOptions(options: string[]): Promise<boolean> {
-        return await (gondola as any).areOptionsExists(this.projectForm, options);
+        return await gondola.areOptionsExists(this.projectForm, options);
     }
 
     @action('checkProjectFormOptions')
     public async checkResultsBaseTaxOptions(role: string, options: string[]): Promise<boolean> {
         // const locator = Utilities.formatString(this.taxIdByRoleStr, role);
-        return await (gondola as any).areOptionsExists(this.taxIdByRoleStr.format(role), options);
+        return await gondola.areOptionsExists(this.taxIdByRoleStr.format(role), options);
     }
 
     @action('selectProjectForm')
@@ -614,7 +614,7 @@ export class AddProjectPage extends GeneralPage {
 
     @action('isProjectResultSectionDisplayed')
     public async isProjectResultSectionDisplayed(): Promise<boolean> {
-        return await (gondola as any).doesControlDisplay(this.projectResultSection);
+        return await gondola.doesControlDisplay(this.projectResultSection);
     }
 
     @action('inputProjectOverviewInfo')
@@ -625,16 +625,16 @@ export class AddProjectPage extends GeneralPage {
         await this.selectDepartment(projectOverview.department);
         await this.selectWorker(projectOverview.workerName);
         if (projectOverview.startDate) {
-            await this.enterText(this.startDate, projectOverview.startDate);
+            await gondola.controlPopupAndEnterText(this.startDate, projectOverview.startDate);
         }
         if (projectOverview.endDate) {
-            await this.enterText(this.endDate, projectOverview.endDate);
+            await gondola.controlPopupAndEnterText(this.endDate, projectOverview.endDate);
         }
         if (projectOverview.scheduleStartDate) {
-            await this.enterText(this.scheduleStartDate, projectOverview.scheduleStartDate);
+            await gondola.controlPopupAndEnterText(this.scheduleStartDate, projectOverview.scheduleStartDate);
         }
         if (projectOverview.scheduleEndDate) {
-            await this.enterText(this.scheduleEndDate, projectOverview.scheduleEndDate);
+            await gondola.controlPopupAndEnterText(this.scheduleEndDate, projectOverview.scheduleEndDate);
         }
         await gondola.select(this.accuracy, projectOverview.accuracy);
         await gondola.select(this.status, projectOverview.status);
@@ -644,16 +644,16 @@ export class AddProjectPage extends GeneralPage {
         await gondola.select(this.closingDate, projectOverview.closingDate);
         await this.selectSegment(projectOverview.segment);
         if (projectOverview.tag) {
-            await this.enterText(this.tag, projectOverview.tag);
+            await gondola.controlPopupAndEnterText(this.tag, projectOverview.tag);
         }
         if (projectOverview.description) {
-            await this.enterText(this.description, projectOverview.description);
+            await gondola.controlPopupAndEnterText(this.description, projectOverview.description);
         }
     }
 
     public async uncheckResultBasesRoleCheckbox(role: string): Promise<void> {
         const checkBoxInputXpath = Utilities.formatString(this.roleCheckboxInput, role);
-        if (await (gondola as any).doesCheckboxChecked(checkBoxInputXpath)) {
+        if (await gondola.doesCheckboxChecked(checkBoxInputXpath)) {
             const checkBoxXpath = Utilities.formatString(this.roleCheckboxStr, role);
             await gondola.click(checkBoxXpath);
         }
@@ -661,7 +661,7 @@ export class AddProjectPage extends GeneralPage {
 
     public async checkResultBasesRoleCheckbox(role: string): Promise<void> {
         const checkBoxInputXpath = Utilities.formatString(this.roleCheckboxInput, role);
-        if (await (gondola as any).doesCheckboxChecked(checkBoxInputXpath)) {
+        if (await gondola.doesCheckboxChecked(checkBoxInputXpath)) {
             return;
         }
         const checkBoxXpath = Utilities.formatString(this.roleCheckboxStr, role);
@@ -717,7 +717,7 @@ export class AddProjectPage extends GeneralPage {
                     totalTime,
                     Utilities.formatString(this.planTotalTimeByRoleStr, projectResultBase.role),
                 );
-                await this.enterText(
+                await gondola.controlPopupAndEnterText(
                     Utilities.formatString(this.unitPriceWeekdayByRoleStr, projectResultBase.role),
                     projectResultBase.unitPriceWeekday,
                 );
@@ -853,14 +853,14 @@ export class AddProjectPage extends GeneralPage {
     @action('wait for search window fully loaded')
     public async waitForLoadingIconDisappear(modalName: string): Promise<void> {
         const locator = Utilities.formatString(this.modalWindowLoading, modalName);
-        await (gondola as any).waitUntilElementNotVisible(locator, Constants.LONG_TIMEOUT);
+        await gondola.waitUntilElementNotVisible(locator, Constants.LONG_TIMEOUT);
     }
 
     @action('clickOutsideOfWindowModal')
     public async clickOutsideOfWindowModal(modalName: string): Promise<void> {
         const locator = Utilities.formatString(this.modalWindowByName, modalName);
         await this.waitForLoadingIconDisappear(modalName);
-        await (gondola as any).performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
+        await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 
     @action('saveNewProject')
@@ -967,13 +967,13 @@ export class AddProjectPage extends GeneralPage {
 
     @action('waitForTableUpdated')
     public async waitForTableUpdated(): Promise<void> {
-        await (gondola as any).waitUntilStalenessOfElement(this.searchResultRow);
+        await gondola.waitUntilStalenessOfElement(this.searchResultRow);
     }
 
     @action('scrollToRandomResult')
     public async scrollToRandomResult(numberOfDatabaseRecords: number): Promise<void> {
         await gondola.waitForElement(this.searchResultRow, Constants.LONG_TIMEOUT);
-        await (gondola as any).waitUntilStalenessOfElement(this.searchResultRow, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.waitUntilStalenessOfElement(this.searchResultRow, Constants.VERY_SHORT_TIMEOUT);
         const numberOfDisplayingResults = await gondola.getElementCount(this.searchResultRow);
         if (numberOfDatabaseRecords === 0 || numberOfDisplayingResults === 0) {
             return;
@@ -984,7 +984,7 @@ export class AddProjectPage extends GeneralPage {
         for (let i = 1; i <= scrollTime; i++) {
             const lastIndex = await gondola.getElementCount(this.searchResultRow);
             const locator = Utilities.formatString(this.searchResultRowByIndex, lastIndex.toString());
-            await (gondola as any).scrollToElement(locator);
+            await gondola.scrollToElement(locator);
         }
     }
 
@@ -996,7 +996,7 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesProjectFormDisplayCorrect')
     public async doesProjectFormDisplayCorrect(projectForm: string): Promise<boolean> {
-        const currentProjectForm = await this.getSelectedOption(this.projectForm);
+        const currentProjectForm = await gondola.getSelectedOption(this.projectForm);
         return Utilities.isTextEqual(currentProjectForm, projectForm);
     }
 
@@ -1090,37 +1090,37 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesProjectAccuracyDisplayCorrect')
     public async doesProjectAccuracyDisplayCorrect(accuracy: string): Promise<boolean> {
-        const currentAccuracy = await this.getSelectedOption(this.accuracy);
+        const currentAccuracy = await gondola.getSelectedOption(this.accuracy);
         return Utilities.isTextEqual(currentAccuracy, accuracy);
     }
 
     @action('doesProjectStatusDisplayCorrect')
     public async doesProjectStatusDisplayCorrect(status: string): Promise<boolean> {
-        const currentStatus = await this.getSelectedOption(this.status);
+        const currentStatus = await gondola.getSelectedOption(this.status);
         return Utilities.isTextEqual(currentStatus, status);
     }
 
     @action('doesProjectWorkingPlaceDisplayCorrect')
     public async doesProjectWorkingPlaceDisplayCorrect(workingPlace: string): Promise<boolean> {
-        const currentWorkingPlace = await this.getSelectedOption(this.workingPlace);
+        const currentWorkingPlace = await gondola.getSelectedOption(this.workingPlace);
         return Utilities.isTextEqual(currentWorkingPlace, workingPlace);
     }
 
     @action('doesCurrencyIdDisplayCorrect')
     public async doesCurrencyIdDisplayCorrect(currencyId: string): Promise<boolean> {
-        const currentCurrencyId = await this.getSelectedOption(this.currencyId);
+        const currentCurrencyId = await gondola.getSelectedOption(this.currencyId);
         return Utilities.isTextEqual(currentCurrencyId, currencyId);
     }
 
     @action('doesBillingTypeDisplayCorrect')
     public async doesBillingTypeDisplayCorrect(billingType: string): Promise<boolean> {
-        const currentBillingType = await this.getSelectedOption(this.billingType);
+        const currentBillingType = await gondola.getSelectedOption(this.billingType);
         return Utilities.isTextEqual(currentBillingType, billingType);
     }
 
     @action('doesClosingDateDisplayCorrect')
     public async doesClosingDateDisplayCorrect(closingDate: string): Promise<boolean> {
-        const currentClosingDate = await this.getSelectedOption(this.closingDate);
+        const currentClosingDate = await gondola.getSelectedOption(this.closingDate);
         return Utilities.isTextEqual(currentClosingDate, closingDate);
     }
 
@@ -1304,11 +1304,11 @@ export class AddProjectPage extends GeneralPage {
         let currentTaxId = '';
         if (role !== undefined) {
             isChecked = await this.getCheckboxValue(Utilities.formatString(this.isTaxableByRoleCheckbox, role));
-            currentTaxId = (await gondola.getSelectedItems(Utilities.formatString(this.taxIdByRoleStr, role)))[0];
+            currentTaxId = await gondola.getSelectedOption(Utilities.formatString(this.taxIdByRoleStr, role));
         }
         if (index !== undefined) {
             isChecked = await this.getCheckboxValue(Utilities.formatString(this.isTaxableByRowStr, index + ''));
-            currentTaxId = (await gondola.getSelectedItems(Utilities.formatString(this.taxIdByRowStr, index + '')))[0];
+            currentTaxId = await gondola.getSelectedOption(Utilities.formatString(this.taxIdByRowStr, index + ''));
         }
 
         if (isChecked !== isTaxable) {
@@ -1337,13 +1337,11 @@ export class AddProjectPage extends GeneralPage {
                     )
                 ).includes(projectResultBaseRow.item),
             );
-
-            const selectedOptions = await gondola.getSelectedItems(
-                Utilities.formatString(this.debitCreditByRoleStr, projectResultBaseRow.role),
-            );
             FlagsCollector.collectEqual(
                 `Record ${index}: Debit credit should be selected`,
-                selectedOptions[0],
+                await gondola.getSelectedOption(
+                    Utilities.formatString(this.debitCreditByRoleStr, projectResultBaseRow.role),
+                ),
                 projectResultBaseRow.debitCredit,
             );
             const totalTime =
@@ -1463,7 +1461,7 @@ export class AddProjectPage extends GeneralPage {
 
             FlagsCollector.collectEqual(
                 `Record ${i}. Debit credit should be selected`,
-                await this.getSelectedOption(Utilities.formatString(this.debitCreditByRowStr, i + '')),
+                await gondola.getSelectedOption(Utilities.formatString(this.debitCreditByRowStr, i + '')),
                 projectDetailRow.debitCredit,
             );
 
@@ -1615,15 +1613,15 @@ export class AddProjectPage extends GeneralPage {
 
     @action('click outside date picker')
     public async clickOutsideDatePicker(): Promise<void> {
-        await (gondola as any).performClick(this.datePicker, Constants.SLIGHTLY_RIGHT_OFFSET);
+        await gondola.performClick(this.datePicker, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 
     @action('does date picker display')
     public async doesDatePickerDisplay(positive = true): Promise<boolean> {
         if (!positive) {
-            await (gondola as any).waitUntilElementNotVisible(this.datePicker, Constants.SHORT_TIMEOUT);
+            await gondola.waitUntilElementNotVisible(this.datePicker, Constants.SHORT_TIMEOUT);
         }
-        return await (gondola as any).doesControlDisplay(this.datePicker);
+        return await gondola.doesControlDisplay(this.datePicker);
     }
 
     @action('select random date')
@@ -1695,11 +1693,11 @@ export class AddProjectPage extends GeneralPage {
     public async doesRoleBillingDetailsLineDisplay(roleName: string, expected = true): Promise<boolean> {
         const locator = Utilities.formatString(this.roleBillingDetailsLine, roleName);
         if (expected) {
-            (gondola as any).waitUntilElementVisible(locator, Constants.SHORT_TIMEOUT);
+            gondola.waitUntilElementVisible(locator, Constants.SHORT_TIMEOUT);
         } else {
-            (gondola as any).waitUntilElementNotVisible(locator, Constants.SHORT_TIMEOUT);
+            gondola.waitUntilElementNotVisible(locator, Constants.SHORT_TIMEOUT);
         }
-        return await (gondola as any).doesControlDisplay(locator);
+        return await gondola.doesControlDisplay(locator);
     }
 
     @action('get invalid feedback from project result base')
@@ -1757,7 +1755,7 @@ export class AddProjectPage extends GeneralPage {
     ): Promise<string> {
         const locator = this.textFieldProjectResultsBase.format(role, type.type, attrName.nameAttribute);
         if (waitForTextTimeout) {
-            await (gondola as any).waitUntilTextAvailable(locator, waitForTextTimeout);
+            await gondola.waitUntilTextAvailable(locator, waitForTextTimeout);
         }
         return await gondola.getControlProperty(locator, 'value');
     }
@@ -1769,7 +1767,7 @@ export class AddProjectPage extends GeneralPage {
         type = ElementType.TEXTFIELD,
     ): Promise<string> {
         const locator = this.textFieldProjectResultsBase.format(role, type.type, attrName.nameAttribute);
-        return await (gondola as any).getValidationMessage(locator);
+        return await gondola.getValidationMessage(locator);
     }
 
     public async isUnitPriceCalculatedCorrectly(

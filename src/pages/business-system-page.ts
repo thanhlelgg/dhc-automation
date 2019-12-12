@@ -48,47 +48,47 @@ export class BusinessSystemPage extends GeneralPage {
 
     @action('gotoAddProjectPage')
     public async gotoAddProjectPage(): Promise<void> {
-        await this.waitForControlVisible(this.projectLink);
+        await gondola.waitUntilElementVisible(this.projectLink);
         await gondola.click(this.projectLink);
-        await this.waitForControlVisible(this.addProjectLink);
+        await gondola.waitUntilElementVisible(this.addProjectLink);
         await gondola.click(this.addProjectLink);
     }
 
     @action('gotoListProject')
     public async gotoListProject(): Promise<void> {
-        await this.waitForControlVisible(this.projectLink);
+        await gondola.waitUntilElementVisible(this.projectLink);
         await gondola.click(this.projectLink);
-        await this.waitForControlVisible(this.listProjectLink);
+        await gondola.waitUntilElementVisible(this.listProjectLink);
         await gondola.click(this.listProjectLink);
     }
 
     @action('gotoAddWorkerPage')
     public async gotoAddWorkerPage(): Promise<void> {
-        await this.waitForControlVisible(this.masterLink);
+        await gondola.waitUntilElementVisible(this.masterLink);
         await gondola.click(this.masterLink);
-        await this.waitForControlVisible(this.workerLink);
+        await gondola.waitUntilElementVisible(this.workerLink);
         await gondola.click(this.workerLink);
-        await this.waitForControlVisible(this.addWorkerLink);
+        await gondola.waitUntilElementVisible(this.addWorkerLink);
         await gondola.click(this.addWorkerLink);
     }
 
     @action('gotoAddCustomerPage')
     public async gotoAddCustomerPage(): Promise<void> {
-        await this.waitForControlVisible(this.masterLink);
+        await gondola.waitUntilElementVisible(this.masterLink);
         await gondola.click(this.masterLink);
-        await this.waitForControlVisible(this.customerLink);
+        await gondola.waitUntilElementVisible(this.customerLink);
         await gondola.click(this.customerLink);
-        await this.waitForControlVisible(this.addCustomerLink);
+        await gondola.waitUntilElementVisible(this.addCustomerLink);
         await gondola.click(this.addCustomerLink);
     }
 
     @action('go to list worker')
     public async gotoListWorker(): Promise<void> {
-        await this.waitForControlVisible(this.masterLink);
+        await gondola.waitUntilElementVisible(this.masterLink);
         await gondola.click(this.masterLink);
-        await this.waitForControlVisible(this.workerLink);
+        await gondola.waitUntilElementVisible(this.workerLink);
         await gondola.click(this.workerLink);
-        await this.waitForControlVisible(this.listWorkerLink);
+        await gondola.waitUntilElementVisible(this.listWorkerLink);
         await gondola.click(this.listWorkerLink);
     }
 }

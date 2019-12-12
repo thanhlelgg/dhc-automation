@@ -68,13 +68,13 @@ TestCase('BMS-49. 案件:案件作成:タグ:タグ削除', async () => {
 
     gondola.report(`Step 3. タグを登録し、「BackSpace」キーを押下する。`);
     await addProjectPage.enterTextFieldByLabel(TAG_FIELD_NAME, TAG_1 + '\n');
-    await (gondola as any).pressKey(protractor.Key.BACK_SPACE);
+    await gondola.pressKey(protractor.Key.BACK_SPACE);
     gondola.report(`VP. 登録したタグが削除されこと。`);
     await gondola.checkEqual(await addProjectPage.doesTagDisplay(TAG_1, false), false, 'Tag should not be displayed');
 
     gondola.report(`Step 4. タグを登録し、「Delete」キーを押下する。`);
     await addProjectPage.enterTextFieldByLabel(TAG_FIELD_NAME, TAG_1 + '\n');
-    await (gondola as any).pressKey(protractor.Key.DELETE);
+    await gondola.pressKey(protractor.Key.DELETE);
     gondola.report(`VP. 登録したタグが削除されこと。`);
     //BUG: delete key doesn't remove tag
     await gondola.checkEqual(await addProjectPage.doesTagDisplay(TAG_1, false), false, 'Tag should not be displayed');

@@ -7,7 +7,7 @@ import { Language } from '../models/enum-class/language';
 import { ElementType } from '../models/enum-class/element-type';
 import { RecordTable } from '../models/enum-class/recordTable';
 import { RecordFieldName } from '../models/enum-class/recordFieldName';
-import '../string.extensions';
+import '@src/string.extensions';
 
 @page
 export class GeneralPage {
@@ -44,36 +44,28 @@ export class GeneralPage {
     protected labelByName = "//div[label[text()='{0}']]";
     @locator
     protected recordField = "//{0}[@name='{1}[{2}][{3}]']";
-
-    public buildRecordFieldXpath(
-        fieldType: ElementType,
-        tableName: RecordTable,
-        index: number,
-        tableFieldName: RecordFieldName,
-    ): string {
-        return this.recordField.format(fieldType.type, tableName.nameAttr, index.toString(), tableFieldName.nameAttr);
-    }
+    @locator
     protected saveButton = "//button[@class='btn btn-info']";
     @locator
     protected backButton = `//a[contains(.,'${this.translator.backButton}')]`;
-
+    @locator
     protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
-        await this.waitForControlVisible(this.homeLink, 10);
+        await gondola.waitUntilElementVisible(this.homeLink, 10);
         await gondola.click(this.homeLink);
     }
 
     @action('gotoBusinessSystem')
     public async gotoBusinessSystem(): Promise<void> {
-        await this.waitForControlVisible(this.businessSystemLink, 10);
+        await gondola.waitUntilElementVisible(this.businessSystemLink, 10);
         await gondola.click(this.businessSystemLink);
     }
 
     @action('gotoTaskSystem')
     public async gotoTaskSystem(): Promise<void> {
-        await this.waitForControlVisible(this.taskSystemLink, 10);
+        await gondola.waitUntilElementVisible(this.taskSystemLink, 10);
         await gondola.click(this.taskSystemLink);
     }
 
@@ -81,42 +73,6 @@ export class GeneralPage {
     public async openWebsite(): Promise<void> {
         await gondola.navigate(Constants.url);
         await gondola.maximize();
-    }
-
-    @action('enterText')
-    public async enterText(inputControl: any, text: string): Promise<void> {
-        /* await gondola.enter(inputControl, text);
-        let popupExist = await (gondola as any).doesPopupExist();
-        if (popupExist){
-            await gondola.clickPopup("ok");
-            await gondola.enter(inputControl, text);
-        }    */
-
-        await (gondola as any).controlPopupAndEnterText(inputControl, text);
-    }
-
-    @action('waitControlExist')
-    public async waitForControlVisible(control: any, seconds = Constants.MEDIUM_TIMEOUT): Promise<void> {
-        // let controlExist = await gondola.doesControlExist(control);
-        // let timeCount = 0;
-        // while (!controlExist && timeCount < seconds) {
-        //     console.log(`Waiting for control ${timeCount} seconds`);
-        //     await gondola.wait(1);
-        //     timeCount++;
-        //     controlExist = await gondola.doesControlExist(control);
-        // }
-        // We should wait until element exist first, before waiting for it to be displayed
-        const currentTime = Utilities.currentTimeInSeconds();
-        await gondola.waitForElement(control, seconds);
-        seconds = seconds - (Utilities.currentTimeInSeconds() - currentTime);
-        if (seconds > 0) {
-            await (gondola as any).waitUntilElementVisible(control, seconds);
-        }
-    }
-
-    @action('getCurrentBrowser')
-    public async getCurrentBrowser(): Promise<ProtractorBrowser> {
-        return await (gondola as any).getCurrentBrowser();
     }
 
     @action('getInvalidFeedBack')
@@ -140,7 +96,7 @@ export class GeneralPage {
     @action('getTextFieldValueByLabel')
     public async getTextFieldValueByLabel(label: string): Promise<string> {
         const locator = Utilities.formatString(this.textFieldByLabel, label);
-        return await (gondola as any).getElementAttribute(locator, 'value');
+        return await gondola.getElementAttribute(locator, 'value');
     }
 
     @action('enterTextAreaByLabel')
@@ -152,44 +108,39 @@ export class GeneralPage {
     @action('getTextAreaValueByLabel')
     public async getTextAreaValueByLabel(label: string): Promise<string> {
         const locator = Utilities.formatString(this.textAreaByLabel, label);
-        return await (gondola as any).getElementAttribute(locator, 'value');
+        return await gondola.getElementAttribute(locator, 'value');
     }
 
     @action('clickTextFieldByLabel')
     public async clickTextFieldByLabel(label: string): Promise<void> {
         const locator = Utilities.formatString(this.textFieldByLabel, label);
-        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
         await gondola.click(locator);
     }
 
     @action('click outside textfield')
     public async clickOutsideTextFieldByLabel(label: string): Promise<void> {
         const locator = Utilities.formatString(this.textFieldByLabel, label);
-        await (gondola as any).performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
+        await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 
     @action('doesModalTitleDisplay')
     public async doesModalTitleDisplay(name: string, expected = true): Promise<boolean> {
         const locator = Utilities.formatString(this.moduleTitle, name);
         if (expected) {
-            await this.waitForControlVisible(locator, Constants.MEDIUM_TIMEOUT);
+            await gondola.waitUntilElementVisible(locator, Constants.MEDIUM_TIMEOUT);
         } else {
-            await (gondola as any).waitUntilElementNotVisible(locator, Constants.SHORT_TIMEOUT);
+            await gondola.waitUntilElementNotVisible(locator, Constants.SHORT_TIMEOUT);
         }
-        return await (gondola as any).doesControlDisplay(locator);
+        return await gondola.doesControlDisplay(locator);
     }
 
     @action('closeModalWindowByName')
     public async closeModalWindowByName(name: string): Promise<void> {
         const locator = Utilities.formatString(this.closeModuleButtonByName, name);
-        await this.waitForControlVisible(locator, Constants.LONG_TIMEOUT);
-        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.waitUntilElementVisible(locator, Constants.LONG_TIMEOUT);
+        await gondola.waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
         await gondola.click(locator);
-    }
-
-    @action('getSelectedOption')
-    public async getSelectedOption(selectControl: any): Promise<string> {
-        return await gondola.getControlProperty(selectControl + "/option[@selected='selected']", 'text');
     }
 
     @action('getTextBoxValue')
@@ -218,7 +169,7 @@ export class GeneralPage {
 
     @action('doesSavedMessageDisplay')
     public async doesSavedMessageDisplay(): Promise<boolean> {
-        return await (gondola as any).doesControlDisplay(this.savedMessage);
+        return await gondola.doesControlDisplay(this.savedMessage);
     }
 
     @action('chooseLanguage')
@@ -241,7 +192,7 @@ export class GeneralPage {
     @action('doesLabelRequired')
     public async doesFieldRequired(name: string): Promise<boolean> {
         const locator = Utilities.formatString(this.labelByName, name);
-        return (await gondola.getControlProperty(locator, 'class')).indexOf('required') < 0;
+        return await this.doesControlRequired(locator);
     }
 
     @action('doesControlRequired')
@@ -251,13 +202,13 @@ export class GeneralPage {
 
     @action('doesSelectorOptionsExist')
     public async doesSelectorOptionsExist(control: any, options: string[]): Promise<boolean> {
-        return await (gondola as any).areOptionsExists(control, options);
+        return await gondola.areOptionsExists(control, options);
     }
 
     @action('doesSelectorByLabelOptionsExist')
     public async doesSelectorByLabelOptionsExist(label: string, options: string[]): Promise<boolean> {
         const locator = Utilities.formatString(this.selectorByLabel, label);
-        return await (gondola as any).areOptionsExists(locator, options);
+        return await gondola.areOptionsExists(locator, options);
     }
 
     @action('selectSelectorByLabel')
@@ -269,13 +220,13 @@ export class GeneralPage {
     @action('selectSelectorByLabel')
     public async getSelectedOptionByLabel(label: string): Promise<string> {
         const locator = Utilities.formatString(this.selectorByLabel, label);
-        return (await gondola.getSelectedItems(locator))[0];
+        return await gondola.getSelectedOption(locator);
     }
 
     @action('set state customized checkbox')
     public async setStateCustomizeCheckbox(control: string, check: boolean): Promise<void> {
         const checkboxStatusLocator = control + "//input[@type='checkbox']";
-        const checkboxStatus = (gondola as any).doesCheckboxChecked(checkboxStatusLocator);
+        const checkboxStatus = await gondola.doesCheckboxChecked(checkboxStatusLocator);
         if (check != checkboxStatus) {
             await gondola.click(control);
         }
@@ -285,6 +236,40 @@ export class GeneralPage {
     public async doesCheckboxLabelExist(label: string): Promise<boolean> {
         const locator = Utilities.formatString(this.labelCheckBox, label);
         return await gondola.doesControlExist(locator);
+    }
+
+    public buildRecordFieldXpath(
+        tableName: RecordTable,
+        index: number,
+        tableFieldName: RecordFieldName,
+        fieldType: ElementType,
+    ): string {
+        return this.recordField.format(fieldType.type, tableName.nameAttr, index.toString(), tableFieldName.nameAttr);
+    }
+
+    public async enterRecordField(
+        tableName: RecordTable,
+        index: number,
+        tableFieldName: RecordFieldName,
+        text: string,
+        fieldType = ElementType.TEXTFIELD,
+    ): Promise<void> {
+        const locator = this.buildRecordFieldXpath(tableName, index, tableFieldName, fieldType);
+        await gondola.enter(locator, text);
+    }
+
+    public async doesRecordFieldExist(
+        tableName: RecordTable,
+        index: number,
+        tableFieldName: RecordFieldName,
+        fieldType = ElementType.TEXTFIELD,
+    ): Promise<boolean> {
+        const locator = this.buildRecordFieldXpath(tableName, index, tableFieldName, fieldType);
+        return await gondola.doesControlExist(locator);
+    }
+
+    public async isSelectorByLabelEnabled(label: string): Promise<boolean> {
+        return await gondola.isControlEnabled(this.selectorByLabel.format(label));
     }
 }
 export default new GeneralPage();

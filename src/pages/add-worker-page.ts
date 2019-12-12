@@ -61,14 +61,14 @@ export class AddWorkerPage extends GeneralPage {
         }
 
         const departmentName = await gondola.getText(departmentNameLocator);
-        await this.waitForControlVisible(resultRowLocator);
+        await gondola.waitUntilElementVisible(resultRowLocator);
         await gondola.click(resultRowLocator);
         return departmentName.trim();
     }
 
     @action('filter result')
     public async filterResult(value: string): Promise<void> {
-        await this.waitForControlVisible(this.searchKeyInputField, Constants.LONG_TIMEOUT);
+        await gondola.waitUntilElementVisible(this.searchKeyInputField, Constants.LONG_TIMEOUT);
         await gondola.enter(this.searchKeyInputField, value);
     }
 
@@ -81,7 +81,7 @@ export class AddWorkerPage extends GeneralPage {
 
     @action('input worker information')
     public async inputWorkerInformation(workerInfo: WorkerInfo): Promise<void> {
-        await this.waitForControlVisible(this.workerCode);
+        await gondola.waitUntilElementVisible(this.workerCode);
         await gondola.enter(this.workerCode, workerInfo.workerCode);
         await gondola.enter(this.workerName, workerInfo.workerName);
         if (workerInfo.department) {
@@ -95,7 +95,7 @@ export class AddWorkerPage extends GeneralPage {
 
     @action('save new worker')
     public async saveNewWorker(): Promise<void> {
-        await (gondola as any).waitUntilStalenessOfElement(this.saveButton, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.waitUntilStalenessOfElement(this.saveButton, Constants.VERY_SHORT_TIMEOUT);
         await gondola.click(this.saveButton);
     }
 
@@ -149,7 +149,7 @@ export class AddWorkerPage extends GeneralPage {
     @action('get all columns of all result items')
     public async getAllResultsAllColumns(): Promise<string[][]> {
         const result: string[][] = [];
-        await this.waitForControlVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
+        await gondola.waitUntilElementVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
         const numberOfItems = await gondola.getElementCount(this.searchResultRow);
         gondola.report('!!!!!!Number of item: ' + numberOfItems);
         for (let index = 1; index <= numberOfItems; index++) {
@@ -174,14 +174,14 @@ export class AddWorkerPage extends GeneralPage {
         if (resultColumn === SearchResultColumn.NAME.tabulatorField) {
             resultLocator = this.searchResultByName;
         }
-        await this.waitForControlVisible(resultLocator, Constants.LONG_TIMEOUT);
-        return await (gondola as any).getElementsAttributes(resultLocator, 'innerText');
+        await gondola.waitUntilElementVisible(resultLocator, Constants.LONG_TIMEOUT);
+        return await gondola.getElementsAttributes(resultLocator, 'innerText');
     }
 
     @action('scroll to random result')
     public async scrollToRandomResult(numberOfDatabaseRecords: number): Promise<void> {
         await gondola.waitForElement(this.searchResultRow, Constants.LONG_TIMEOUT);
-        await (gondola as any).waitUntilStalenessOfElement(this.searchResultRow, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.waitUntilStalenessOfElement(this.searchResultRow, Constants.VERY_SHORT_TIMEOUT);
         const numberOfDisplayingResults = await gondola.getElementCount(this.searchResultRow);
         if (numberOfDatabaseRecords === 0 || numberOfDisplayingResults === 0) {
             return;
@@ -192,7 +192,7 @@ export class AddWorkerPage extends GeneralPage {
         for (let i = 1; i <= scrollTime; i++) {
             const lastIndex = await gondola.getElementCount(this.searchResultRow);
             const locator = Utilities.formatString(this.searchResultRowByIndex, lastIndex.toString());
-            await (gondola as any).scrollToElement(locator);
+            await gondola.scrollToElement(locator);
         }
     }
 
@@ -200,7 +200,7 @@ export class AddWorkerPage extends GeneralPage {
     public async getOneResultItemAllColumns(index?: number): Promise<Map<string, string>> {
         const map = new Map<string, string>();
         if (index === undefined) {
-            await this.waitForControlVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
+            await gondola.waitUntilElementVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
             const numberOfItems = await gondola.getElementCount(this.searchResultRow);
             index = Utilities.getRandomNumber(1, numberOfItems);
         }
@@ -208,7 +208,7 @@ export class AddWorkerPage extends GeneralPage {
         const numberOfAttributes = await gondola.getElementCount(itemRowLocator);
         for (let i = 1; i <= numberOfAttributes; i++) {
             const attributesLocator = itemRowLocator + `[${i}]`;
-            let key = await (gondola as any).getElementAttribute(attributesLocator, 'class');
+            let key = await gondola.getElementAttribute(attributesLocator, 'class');
             if (key === 'col-sm-4') {
                 key = SearchResultColumn.CODE.tabulatorField;
             } else if (key === 'col-sm-8') {
@@ -283,8 +283,8 @@ export class AddWorkerPage extends GeneralPage {
     @action('click outside of window modal')
     public async clickOutsideOfWindowModal(modalName: string): Promise<void> {
         const locator = Utilities.formatString(this.modalWindowByName, modalName);
-        await (gondola as any).waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
-        await (gondola as any).performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
+        await gondola.waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 }
 export default new AddWorkerPage();

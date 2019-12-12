@@ -55,7 +55,7 @@ export class ListWorkerPage {
 
         // click search
         await gondola.click(this.searchButton);
-        await (gondola as any).waitUntilStalenessOfElement(this.dataTable, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.waitUntilStalenessOfElement(this.dataTable, Constants.VERY_SHORT_TIMEOUT);
     }
 
     @action('get worker link')

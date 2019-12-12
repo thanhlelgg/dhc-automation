@@ -29,7 +29,7 @@ TestCase('BMS-17. 案件:案件作成:案件終了日:未入力 ', async () => {
     gondola.report(`Step 4. 上の登録した案件行で「TTS連携ボタン」(青い紙飛行機のアイコン)をクリックする。`);
     await listProjectPage.clickOnTTSLinkButton(projectNumber);
     gondola.report(`VP. エラーとなること。`);
-    await (gondola as any).waitForAlert();
+    await gondola.waitForAlert();
     await gondola.checkEqual(
         await gondola.getPopupText(),
         Constants.translator.alertMessage.couldNotSend,

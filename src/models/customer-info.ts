@@ -1,9 +1,9 @@
 import customerInfo from '../data/customer-info.json';
 
 export interface CustomerInfo {
-    overview?: Overview;
-    unitPrices?: UnitPrices;
-    customerMagnifications?: CustomerMagnifications;
+    overview: Overview;
+    unitPricesRecords: UnitPrices[];
+    customerMagnificationsRecords: CustomerMagnifications[];
 }
 
 export interface Overview {
@@ -15,7 +15,7 @@ export interface Overview {
 
 export interface UnitPrices {
     startDate: string;
-    endDate: string;
+    endDate?: string;
     leader: number;
     tester: number;
     dispatch: number;
@@ -23,7 +23,7 @@ export interface UnitPrices {
 
 export interface CustomerMagnifications {
     startDate: string;
-    endDate: string;
+    endDate?: string;
     overtime: number;
     lateNight: number;
     lateNightOvertime: number;
@@ -31,10 +31,10 @@ export interface CustomerMagnifications {
     holiday_late_night: number;
 }
 
-export class WorkerInfoData {
-    public static WORKER_REQUIRED_DATA: CustomerInfo = {
+export class CustomerInfoDate {
+    public static CUSTOMER_REQUIRED_DATA: CustomerInfo = {
         overview: customerInfo.overview.requiredOnly,
-        unitPrices: customerInfo.unitPrices.record1,
-        customerMagnifications: customerInfo.customerMagnifications.record1,
+        unitPricesRecords: [customerInfo.unitPrices.record1],
+        customerMagnificationsRecords: [customerInfo.customerMagnifications.record1],
     };
 }
