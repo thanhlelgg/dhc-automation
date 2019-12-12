@@ -151,7 +151,6 @@ export class AddWorkerPage extends GeneralPage {
         const result: string[][] = [];
         await this.waitForControlVisible(this.searchResultRow, Constants.LONG_TIMEOUT);
         const numberOfItems = await gondola.getElementCount(this.searchResultRow);
-        gondola.report('!!!!!!Number of item: ' + numberOfItems);
         for (let index = 1; index <= numberOfItems; index++) {
             const allColumns: string[] = [];
             const itemRowLocator = Utilities.formatString(this.searchResultColumnsByRowIndex, index.toString());

@@ -9,7 +9,7 @@ import { Utilities } from '../../common/utilities';
 
 TestModule('Add Worker - Worker code field validation');
 
-const WORKER_CODE_FIELD_NAME = Constants.translator.workerFieldName.code;
+const WORKER_CODE_FIELD_NAME = Constants.translator.fieldName.addWorker.code;
 const TEXT_16_CHARACTERS = Utilities.getRandomText(16);
 const TEXT_17_CHARACTERS = Utilities.getRandomText(17);
 const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.fullSizeAlphaNumericString;
