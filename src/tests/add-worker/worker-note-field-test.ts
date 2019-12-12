@@ -7,7 +7,7 @@ import { Utilities } from '../../common/utilities';
 
 TestModule('Add Worker - Worker note field validation');
 
-const WORKER_NOTE_FIELD_NAME = Constants.translator.workerFieldName.note;
+const WORKER_NOTE_FIELD_NAME = Constants.translator.fieldName.addWorker.note;
 const TEXT_1024_CHARACTERS = Utilities.getRandomText(1024);
 const TEXT_1025_CHARACTERS = Utilities.getRandomText(1025);
 

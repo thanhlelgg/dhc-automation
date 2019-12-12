@@ -2,7 +2,7 @@
     "headerMenu": {
         "home": "ホーム",
         "taskSystem": "業務管理",
-        "businessSystem" : "営業管理"
+        "businessSystem": "営業管理"
     },
     "modalWindows": {
         "customerSearchTitle": "取引先選択",
@@ -42,6 +42,13 @@
             "code": "取引先コード",
             "name": "取引先名",
             "billingBankAccountNumber": "個別請求口座番号"
+        },
+        "addWorker": {
+            "code": "従業員コード",
+            "name": "従業員名",
+            "department": "所属部門",
+            "note": "備考",
+            "searchDepartmentModalTitle": "部門検索"
         }
     },
     "invalidFeedback": {
@@ -104,13 +111,6 @@
         }
     },
     "backButton": "戻る",
-    "workerFieldName": {
-        "code": "従業員コード",
-        "name": "従業員名",
-        "department": "所属部門",
-        "note": "備考",
-        "searchDepartmentModalTitle": "部門検索"
-    },
     "resultBases": {
         "columnName": {
             "item": "品目",
@@ -146,32 +146,32 @@
             "postponed": "延期",
             "lost": "失注"
         },
-        "projectPlace" : {
+        "projectPlace": {
             "house": "社内",
             "secondment": "出向",
             "dispatch": "派遣"
         },
-    
-        "currencyIds" : {
+
+        "currencyIds": {
             "jpy": "JPY"
         },
-        "billingTypes" : {
+        "billingTypes": {
             "eachTime": "案件個別",
             "consolidate": "得意先合算"
         },
-        "debitCreditGroupIds" : {
+        "debitCreditGroupIds": {
             "receivable": "売掛",
             "advance": "前受",
             "advanceConsumables": "立替(消耗品)",
             "advanceTravelExpenses": "立替(旅費交通費)",
             "advanceSystemRelatedExpenses": "立替(システム関係費)"
         },
-        "taxIds" : {
+        "taxIds": {
             "": "",
             "8": "８％",
             "10": "10%"
         },
-        "projectRole" : {
+        "projectRole": {
             "PM": "PM",
             "leader": "リーダ",
             "tester": "テスター",

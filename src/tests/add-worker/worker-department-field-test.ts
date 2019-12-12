@@ -8,8 +8,8 @@ import { SearchResultColumn } from '../../models/enum-class/search-result-column
 
 TestModule('Add Worker - Department field validation');
 
-const WORKER_DEPARTMENT_FIELD_NAME = Constants.translator.workerFieldName.department;
-const SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE = Constants.translator.workerFieldName.searchDepartmentModalTitle;
+const WORKER_DEPARTMENT_FIELD_NAME = Constants.translator.fieldName.addWorker.department;
+const SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE = Constants.translator.fieldName.addWorker.searchDepartmentModalTitle;
 
 Before(async () => {
     gondola.report(`Precondition 1. 有効なユーザー名とパスワードでdh-connectシステムに正常にログインすること`);
@@ -45,9 +45,9 @@ TestCase('BMS-104. BMS:案件:従業員マスタ作成:所属部門:所属部門
 
     gondola.report(`Step 6. 任意の検索結果を選択する。`);
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    gondola.report('Random result name: ' + randomResultName);
-    const inputtedText = await addWorkerPage.selectSearchResult(randomResultName);
+    await addWorkerPage.selectSearchResult(randomResultName);
     gondola.report(`VP. 従業員登録画面に戻り、選択した部門名が表示されること。`);
+    const inputtedText = await addWorkerPage.getTextFieldValueByLabel(WORKER_DEPARTMENT_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Worker should be selected');
 });
 
