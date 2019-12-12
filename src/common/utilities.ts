@@ -126,11 +126,7 @@ export class Utilities {
      * @param expectValue
      */
     public static isTextEqual(checkValue: string, expectValue: string): boolean {
-        if (checkValue === expectValue) {
-            return true;
-        } else {
-            return false;
-        }
+        return checkValue === expectValue;
     }
 
     /**

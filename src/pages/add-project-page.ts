@@ -14,22 +14,9 @@ import '@src/string.extensions';
 
 @page
 export class AddProjectPage extends GeneralPage {
-    protected searchResult = "(//div[@role='row']//div[contains(.,'{0}')])[1]";
-    protected searchResultByTabulatorField = "//div[@class='tabulator-table']//div[@tabulator-field='{0}']";
-    protected searchResultByTabulatorFieldAndIndex =
-        "(//div[@class='tabulator-table']//div[@tabulator-field='{0}'])[{1}]";
-    protected searchResultByTabulatorFieldAndText =
-        "//div[@class='tabulator-table']//div[@tabulator-field='{0}' and contains(text(),'{1}')]";
-    protected searchResultRow = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div";
-    protected searchResultRowByIndex = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]";
-    protected searchResultColumnsByRowIndex =
-        "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]/div";
-    protected tagItem = "//span[contains(@class,'badge-secondary') and text()='{0}']";
-    protected removeTag = "//span[contains(@class,'badge-secondary') and text()='{0}']/span[@data-role='remove']";
     //#region project result
     @locator
     protected subTitleProjectResult = `//div[.='${this.translator.sectionName.volumeDetail}']`;
-    //protected roleCheckboxStr = "//div[@id='project-result-bases']/div[contains(.,'{0}')]//input[@type='checkbox']/preceding-sibling::input";
     protected roleCheckboxStr = "//div[contains(@class, 'custom-checkbox')]/label[text()='{0}']";
     protected roleCheckboxInput = "//div[label[text()='{0}']]//input[@type='checkbox']";
     protected roleLabels = "//div[@id='project-result-bases']/div/label";
@@ -68,6 +55,16 @@ export class AddProjectPage extends GeneralPage {
     //#endregion
 
     //#region Search
+    protected searchResult = "(//div[@role='row']//div[contains(.,'{0}')])[1]";
+    protected searchResultByTabulatorField = "//div[@class='tabulator-table']//div[@tabulator-field='{0}']";
+    protected searchResultByTabulatorFieldAndIndex =
+        "(//div[@class='tabulator-table']//div[@tabulator-field='{0}'])[{1}]";
+    protected searchResultByTabulatorFieldAndText =
+        "//div[@class='tabulator-table']//div[@tabulator-field='{0}' and contains(text(),'{1}')]";
+    protected searchResultRow = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div";
+    protected searchResultRowByIndex = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]";
+    protected searchResultColumnsByRowIndex =
+        "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]/div";
     @locator
     protected itemFilter = "//input[@id='modal-items-filter']";
     @locator
@@ -130,6 +127,7 @@ export class AddProjectPage extends GeneralPage {
     protected scheduleEndDate = { name: 'scheduled_end_date' };
     //#endregion
 
+    //#region Overview
     @locator
     protected accuracy = "//select[@name='accuracy']";
     @locator
@@ -142,6 +140,17 @@ export class AddProjectPage extends GeneralPage {
     protected billingType = "//select[@name='billing_type']";
     @locator
     protected closingDate = "//select[@name='closing_date']";
+    @locator
+    protected tagItem = "//span[contains(@class,'badge-secondary') and text()='{0}']";
+    @locator
+    protected removeTag = "//span[contains(@class,'badge-secondary') and text()='{0}']/span[@data-role='remove']";
+    @locator
+    protected tag = "//input[@id='tag']//preceding-sibling::div//input";
+    @locator
+    protected tagContent = "//input[@id='tag']";
+    @locator
+    protected description = { id: 'description' };
+    //#endregion
 
     //#region search Segment
     @locator
@@ -149,12 +158,6 @@ export class AddProjectPage extends GeneralPage {
     @locator
     protected segmentTable = { id: 'modal-segments-table' };
     //#endregion
-
-    @locator
-    protected tag = "//input[@id='tag']//preceding-sibling::div//input";
-    protected tagContent = "//input[@id='tag']";
-    @locator
-    protected description = { id: 'description' };
 
     //#region project detail
     @locator
@@ -273,12 +276,8 @@ export class AddProjectPage extends GeneralPage {
     }
 
     @action('selectSearchResult')
-    public async selectSearchResult(itemName: string | undefined, type?: SearchResultColumn): Promise<void> {
+    public async selectSearchResult(itemName: string, type?: SearchResultColumn): Promise<void> {
         let locator;
-        // we handle undefined in here so we won't have to handle it on the test case level
-        if (itemName === undefined) {
-            throw new Error('Item name is not valid');
-        }
         if (type === undefined) {
             locator = Utilities.formatString(this.searchResult, itemName);
         } else {
@@ -306,7 +305,7 @@ export class AddProjectPage extends GeneralPage {
     }
 
     /**
-     * Get a result from search page, if not index provided, select a random one
+     * Get a result from search page, if no index provided, select a random one
      * @param index
      * @returns a Map<string, string> that contains `tabulator-field` attribute as key and it's text as value
      */
@@ -329,9 +328,9 @@ export class AddProjectPage extends GeneralPage {
     }
 
     /**
-     * Get a result from search page, if not index provided, select a random one
+     * Get all result from all columns
      * @param index
-     * @returns a Map<string, string> that contains `tabulator-field` attribute as key and it's text as value
+     * @returns a two dimensions array which store all search results
      */
     public async getAllResultsAllColumns(): Promise<string[][]> {
         const result: string[][] = [];
@@ -603,7 +602,6 @@ export class AddProjectPage extends GeneralPage {
 
     @action('checkProjectFormOptions')
     public async checkResultsBaseTaxOptions(role: string, options: string[]): Promise<boolean> {
-        // const locator = Utilities.formatString(this.taxIdByRoleStr, role);
         return await gondola.areOptionsExists(this.taxIdByRoleStr.format(role), options);
     }
 
@@ -651,21 +649,9 @@ export class AddProjectPage extends GeneralPage {
         }
     }
 
-    public async uncheckResultBasesRoleCheckbox(role: string): Promise<void> {
-        const checkBoxInputXpath = Utilities.formatString(this.roleCheckboxInput, role);
-        if (await gondola.doesCheckboxChecked(checkBoxInputXpath)) {
-            const checkBoxXpath = Utilities.formatString(this.roleCheckboxStr, role);
-            await gondola.click(checkBoxXpath);
-        }
-    }
-
-    public async checkResultBasesRoleCheckbox(role: string): Promise<void> {
-        const checkBoxInputXpath = Utilities.formatString(this.roleCheckboxInput, role);
-        if (await gondola.doesCheckboxChecked(checkBoxInputXpath)) {
-            return;
-        }
-        const checkBoxXpath = Utilities.formatString(this.roleCheckboxStr, role);
-        await gondola.click(checkBoxXpath);
+    public async setStatusResultBasesRoleCheckbox(role: string, check: boolean): Promise<void> {
+        const checkBoxInputXpath = this.roleCheckboxInput.format(role);
+        await this.setStateCustomizeCheckbox(this.roleCheckboxStr.format(role), check, checkBoxInputXpath);
     }
 
     @action('does debit credits options exists')
@@ -694,7 +680,7 @@ export class AddProjectPage extends GeneralPage {
         const formExist = await gondola.doesControlExist(this.subTitleProjectResult);
         if (formExist) {
             for (const projectResultBase of projectResultBases) {
-                await this.checkResultBasesRoleCheckbox(projectResultBase.role);
+                await this.setStatusResultBasesRoleCheckbox(projectResultBase.role, true);
                 await this.searchItem(projectResultBase.item, projectResultBase.role, 'result bases');
                 await gondola.select(
                     Utilities.formatString(this.debitCreditByRoleStr, projectResultBase.role),
@@ -1048,37 +1034,29 @@ export class AddProjectPage extends GeneralPage {
         scheduleEndDate: string | null,
     ): Promise<boolean> {
         gondola.report('verify date: start date, end date, schedule start date, schedule end date');
-        let doesStartDateDisplayCorrect = true;
         const currentStartDate = await this.getTextBoxValue(this.startDate);
-        if (startDate) {
-            doesStartDateDisplayCorrect = Utilities.isTextEqual(currentStartDate, startDate);
-        } else {
-            doesStartDateDisplayCorrect = Utilities.isTextEqual(currentStartDate, '');
+        if (!startDate) {
+            startDate = '';
         }
+        const doesStartDateDisplayCorrect = Utilities.isTextEqual(currentStartDate, startDate);
 
-        let doesEndDateDisplayCorrect = true;
         const currentEndDate = await this.getTextBoxValue(this.endDate);
-        if (endDate) {
-            doesEndDateDisplayCorrect = Utilities.isTextEqual(currentEndDate, endDate);
-        } else {
-            doesEndDateDisplayCorrect = Utilities.isTextEqual(currentEndDate, '');
+        if (!endDate) {
+            endDate = '';
         }
+        const doesEndDateDisplayCorrect = Utilities.isTextEqual(currentEndDate, endDate);
 
-        let doesScheduleStartDateDisplayCorrect = true;
         const currentScheduleStartDate = await this.getTextBoxValue(this.scheduleStartDate);
-        if (scheduleStartDate) {
-            doesScheduleStartDateDisplayCorrect = Utilities.isTextEqual(currentScheduleStartDate, scheduleStartDate);
-        } else {
-            doesScheduleStartDateDisplayCorrect = Utilities.isTextEqual(currentScheduleStartDate, '');
+        if (!scheduleStartDate) {
+            scheduleStartDate = '';
         }
+        const doesScheduleStartDateDisplayCorrect = Utilities.isTextEqual(currentScheduleStartDate, scheduleStartDate);
 
-        let doesScheduleEndDateDisplayCorrect = true;
         const currentScheduleEndDate = await this.getTextBoxValue(this.scheduleEndDate);
-        if (scheduleEndDate) {
-            doesScheduleEndDateDisplayCorrect = Utilities.isTextEqual(currentScheduleEndDate, scheduleEndDate);
-        } else {
-            doesScheduleEndDateDisplayCorrect = Utilities.isTextEqual(currentScheduleEndDate, '');
+        if (!scheduleEndDate) {
+            scheduleEndDate = '';
         }
+        const doesScheduleEndDateDisplayCorrect = Utilities.isTextEqual(currentScheduleEndDate, scheduleEndDate);
 
         return (
             doesStartDateDisplayCorrect &&
@@ -1126,26 +1104,20 @@ export class AddProjectPage extends GeneralPage {
 
     @action('doesProjectTagsDisplayCorrect')
     public async doesProjectTagsDisplayCorrect(tag: string | null): Promise<boolean> {
-        let doesTagDisplayCorrect = true;
         const currentTag = await this.getTextBoxValue(this.tagContent);
-        if (tag) {
-            doesTagDisplayCorrect = Utilities.isTextEqual(currentTag, tag);
-        } else {
-            doesTagDisplayCorrect = Utilities.isTextEqual(currentTag, '');
+        if (!tag) {
+            tag = '';
         }
-        return doesTagDisplayCorrect;
+        return Utilities.isTextEqual(currentTag, tag);
     }
 
     @action('doesProjectDescriptionDisplayCorrect')
     public async doesProjectDescriptionDisplayCorrect(description: string | null): Promise<boolean> {
-        let doesDescriptionDisplayCorrect = true;
         const currentTag = await this.getTextBoxValue(this.description);
-        if (description) {
-            doesDescriptionDisplayCorrect = Utilities.isTextEqual(currentTag, description);
-        } else {
-            doesDescriptionDisplayCorrect = Utilities.isTextEqual(currentTag, '');
+        if (!description) {
+            description = '';
         }
-        return doesDescriptionDisplayCorrect;
+        return Utilities.isTextEqual(currentTag, description);
     }
 
     @action('doesProjectOverviewDisplayCorrect')
@@ -1646,11 +1618,8 @@ export class AddProjectPage extends GeneralPage {
 
     @action('get closing date as number')
     public async getClosingDateAsNumber(): Promise<string> {
-        let selectedDate = await this.getSelectedOptionByLabel(Constants.translator.fieldName.addProject.closingDate);
-        if (selectedDate === Constants.japaneseEndDate) {
-            selectedDate = '31';
-        }
-        return selectedDate;
+        const selectedDate = await this.getSelectedOptionByLabel(Constants.translator.fieldName.addProject.closingDate);
+        return selectedDate === Constants.japaneseEndDate ? '31' : selectedDate;
     }
 
     @action('does tag display')

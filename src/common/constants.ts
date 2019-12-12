@@ -30,7 +30,7 @@ export class Constants {
     public static hiraganaKatakanaString = 'あああｱｱｱハハハ';
     public static oneBillion = '1000000000';
     public static decimal = '1.5';
-    public static validationMessageForDecimal = 'Please enter a valid value. The two nearest valid values are 1 and 2.';
+    public static validationMessageForDecimal = '有効な値を入力してください。有効な値として最も近いのは 1 と 2 です。';
     public static lessThanOneBillion = '999999999';
     public static moreThanOneBillion = '1000000001';
     public static negativeNumber = '-1';

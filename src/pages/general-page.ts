@@ -1,7 +1,6 @@
 import { action, gondola, locator, page } from 'gondolajs';
 import { Constants } from '../common/constants';
 import { Translate } from '../locales/translate';
-import { ProtractorBrowser } from 'protractor';
 import { Utilities } from '../common/utilities';
 import { Language } from '../models/enum-class/language';
 import { ElementType } from '../models/enum-class/element-type';
@@ -53,19 +52,19 @@ export class GeneralPage {
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
-        await gondola.waitUntilElementVisible(this.homeLink, 10);
+        await gondola.waitUntilElementVisible(this.homeLink, Constants.MEDIUM_TIMEOUT);
         await gondola.click(this.homeLink);
     }
 
     @action('gotoBusinessSystem')
     public async gotoBusinessSystem(): Promise<void> {
-        await gondola.waitUntilElementVisible(this.businessSystemLink, 10);
+        await gondola.waitUntilElementVisible(this.businessSystemLink, Constants.MEDIUM_TIMEOUT);
         await gondola.click(this.businessSystemLink);
     }
 
     @action('gotoTaskSystem')
     public async gotoTaskSystem(): Promise<void> {
-        await gondola.waitUntilElementVisible(this.taskSystemLink, 10);
+        await gondola.waitUntilElementVisible(this.taskSystemLink, Constants.MEDIUM_TIMEOUT);
         await gondola.click(this.taskSystemLink);
     }
 
@@ -224,8 +223,14 @@ export class GeneralPage {
     }
 
     @action('set state customized checkbox')
-    public async setStateCustomizeCheckbox(control: string, check: boolean): Promise<void> {
-        const checkboxStatusLocator = control + "//input[@type='checkbox']";
+    public async setStateCustomizeCheckbox(
+        control: string,
+        check: boolean,
+        checkboxStatusLocator?: string,
+    ): Promise<void> {
+        if (!checkboxStatusLocator) {
+            checkboxStatusLocator = control + "//input[@type='checkbox']";
+        }
         const checkboxStatus = await gondola.doesCheckboxChecked(checkboxStatusLocator);
         if (check != checkboxStatus) {
             await gondola.click(control);

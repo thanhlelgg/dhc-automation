@@ -17,7 +17,7 @@ TestCase('BMS-73. 案件:案件作成:出来高明細:請求単価:自動計算:
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「リーダ」チェックボックスでチェックを行う。`,
     );
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
-    await addProjectPage.checkResultBasesRoleCheckbox(projectRole);
+    await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 該当する請求用役職の出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),

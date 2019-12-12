@@ -15,7 +15,7 @@
     "license": "ISC",
     "_moduleAliases": {
         "@src": "built"
-      },
+    },
     "dependencies": {
         "@types/node": "^12.12.12",
         "dotenv": "8.2.0",

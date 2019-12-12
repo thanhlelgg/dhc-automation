@@ -73,18 +73,21 @@ declare module 'gondolajs' {
         /**
          * Wait until element not visible
          * @param control
+         * @param timeOut
          */
         waitUntilElementNotVisible(control: any, timeOut?: number): Promise<void>;
 
         /**
          * Wait until element exist
          * @param control
+         * @param timeOut
          */
         waitUntilElementExist(control: any, timeOut?: number): Promise<void>;
 
         /**
          * Wait for staleness of element
          * @param control
+         * @param timeOut
          */
         waitUntilStalenessOfElement(control: any, timeOut?: number): Promise<void>;
 

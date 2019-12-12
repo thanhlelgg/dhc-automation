@@ -9,7 +9,12 @@
             "driver": "direct",
             "directConnect": true,
             "seleniumAddress": null,
-            "smartWait": 20000
+            "smartWait": 20000,
+            "capabilities": {
+                "chromeOptions": {
+                    "args": ["lang=ja"]
+                }
+            }
         },
         "GondolaHelper": {
             "require": "gondolajs/built/helper/gondolahelper"
