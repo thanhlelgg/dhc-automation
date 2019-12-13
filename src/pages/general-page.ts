@@ -151,18 +151,10 @@ export class GeneralPage {
     public async getCheckboxValue(checkboxControl: any, checkByValue = true): Promise<boolean> {
         if (checkByValue) {
             const value = await gondola.getControlProperty(checkboxControl, 'value');
-            if (value === '1') {
-                return true;
-            } else {
-                return false;
-            }
+            return value === '1';
         } else {
             const isChecked = await gondola.getControlProperty(checkboxControl, 'checked');
-            if (isChecked === 'true') {
-                return true;
-            } else {
-                return false;
-            }
+            return isChecked === 'true';
         }
     }
 
@@ -222,6 +214,12 @@ export class GeneralPage {
         return await gondola.getSelectedOption(locator);
     }
 
+    /**
+     * Set state of DH customized checkbox
+     * @param control
+     * @param check boolean, check or uncheck
+     * @param checkboxStatusLocator: locator of checkbox status, if not provided, assume it's the child checkbox input
+     */
     @action('set state customized checkbox')
     public async setStateCustomizeCheckbox(
         control: string,

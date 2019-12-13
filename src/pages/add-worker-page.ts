@@ -111,7 +111,6 @@ export class AddWorkerPage extends GeneralPage {
         await this.scrollToRandomResult(expectedActiveDepartments.length);
         const actualDisplayingDepartmentCodes = await this.getAllItemsOneColumn(SearchResultColumn.CODE.tabulatorField);
         return Utilities.isSubset(expectedDepartmentCodes, actualDisplayingDepartmentCodes);
-        return true;
     }
 
     @action('filter departments and verify result')
@@ -227,36 +226,20 @@ export class AddWorkerPage extends GeneralPage {
 
     @action('does department display correct')
     public async doesDepartmentDisplayCorrect(department: string | null): Promise<boolean> {
-        let doesDepartmentDisplayCorrect = true;
         const currentName = await this.getTextBoxValue(this.departmentName);
-        if (department) {
-            doesDepartmentDisplayCorrect = Utilities.isTextEqual(currentName, department);
-        } else {
-            doesDepartmentDisplayCorrect = Utilities.isTextEqual(currentName, '');
-        }
-        return doesDepartmentDisplayCorrect;
+        return Utilities.isTextEqual(currentName, department ? department : '');
     }
 
     @action('does enrollment status display correct')
     public async doesEnrollmentStatusDisplayCorrect(isRetired: boolean): Promise<boolean> {
         const isChecked = await this.getCheckboxValue(this.isRetired, false);
-        if (isChecked !== isRetired) {
-            return false;
-        } else {
-            return true;
-        }
+        return isChecked === isRetired;
     }
 
     @action('does note display correct')
     public async doesNoteDisplayCorrect(note: string | null): Promise<boolean> {
-        let doesNoteDisplayCorrect = true;
         const currentName = await this.getTextBoxValue(this.note);
-        if (note) {
-            doesNoteDisplayCorrect = Utilities.isTextEqual(currentName, note);
-        } else {
-            doesNoteDisplayCorrect = Utilities.isTextEqual(currentName, '');
-        }
-        return doesNoteDisplayCorrect;
+        return Utilities.isTextEqual(currentName, note ? note : '');
     }
 
     @action('does content of worker displays correct')

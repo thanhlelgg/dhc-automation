@@ -139,5 +139,33 @@ declare module 'gondolajs' {
          * @param control
          */
         getSelectedOption(control: any): Promise<string>;
+
+        /**
+         * Check if condition is true
+         * @param isTrue
+         * @param errorMessage
+         */
+        checkTrue(isTrue: boolean, errorMessage?: string): void;
+
+        /**
+         * Check if condition is false
+         * @param isTrue
+         * @param errorMessage
+         */
+        checkFalse(isTrue: boolean, errorMessage?: string): void;
+
+        /**
+         * Wait until element exists in DOM, don't throw exception if it's not
+         * @param control
+         * @param timeOut
+         */
+        waitForElementSoftly(control: any, timeOut: number): Promise<void>;
+
+        /**
+         * Wait until element removed from DOM, don't throw exception if it's not
+         * @param control
+         * @param timeOut
+         */
+        waitForElementDisappearSoftly(control: any, timeOut: number): Promise<void>;
     }
 }

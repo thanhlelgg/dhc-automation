@@ -25,12 +25,11 @@ TestCase('BMS-79. 案件:得意先マスタ作成:顧客情報:区分:選択肢'
     gondola.report(
         `VP. 「区分」は必須項目であり、「区分」プルダウンには選択肢が二つあり、「顧客」、「仕入先」を含んでいること。`,
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addCustomerPage.doesSelectorByLabelOptionsExist(
             CUSTOMER_CLASSIFY_TEXTFIELD_LABEL,
             Object.values(CUSTOMER_CLASSIFY_OPTIONS),
         ),
-        true,
         'Default option should be displayed correctly',
     );
 });
@@ -43,10 +42,11 @@ TestCase('BMS-80. 案件:得意先マスタ作成:顧客情報:区分:保存後�
     requiredInfo.overview.code += Utilities.getRandomText(10);
     await addCustomerPage.inputCustomerInfo(CustomerInfoData.CUSTOMER_REQUIRED_DATA);
     await addCustomerPage.saveCustomer();
+    // Currently there's a bug with start date that doesn't allow us to enter a valid date,
+    // therefore we can't save customer and failed the test
     gondola.report(`VP. 正常に保存した後、「区分」フィールドで変更できなくなること。`);
-    await gondola.checkEqual(
+    await gondola.checkFalse(
         await addCustomerPage.isSelectorByLabelEnabled(CUSTOMER_CLASSIFY_TEXTFIELD_LABEL),
-        false,
         'Classify dropdown should be disabled',
     );
 });

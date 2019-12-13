@@ -287,5 +287,29 @@ class HelperExt extends Helper {
     public async getSelectedOption(control: any): Promise<string> {
         return (await this.helpers['GondolaHelper'].getSelectedItems(control))[0];
     }
+
+    public checkTrue(isTrue: boolean, errorMessage?: string): void {
+        this.helpers['GondolaHelper'].checkEqual(isTrue, true, errorMessage);
+    }
+
+    public checkFalse(isTrue: boolean, errorMessage?: string): void {
+        this.helpers['GondolaHelper'].checkEqual(isTrue, false, errorMessage);
+    }
+
+    public async waitForElementSoftly(control: any, timeOut: number): Promise<void> {
+        try {
+            await this.helpers['GondolaHelper'].waitForElement(control, timeOut);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    public async waitForElementDisappearSoftly(control: any, timeOut: number): Promise<void> {
+        try {
+            await this.helpers['GondolaHelper'].waitForElementDisappear(control, timeOut);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 module.exports = HelperExt;

@@ -959,7 +959,6 @@ export class AddProjectPage extends GeneralPage {
     @action('scrollToRandomResult')
     public async scrollToRandomResult(numberOfDatabaseRecords: number): Promise<void> {
         await gondola.waitForElement(this.searchResultRow, Constants.LONG_TIMEOUT);
-        await gondola.waitUntilStalenessOfElement(this.searchResultRow, Constants.VERY_SHORT_TIMEOUT);
         const numberOfDisplayingResults = await gondola.getElementCount(this.searchResultRow);
         if (numberOfDatabaseRecords === 0 || numberOfDisplayingResults === 0) {
             return;
@@ -968,6 +967,7 @@ export class AddProjectPage extends GeneralPage {
         maximumScroll = maximumScroll > Constants.LIMIT_SCROLL_TIMES ? Constants.LIMIT_SCROLL_TIMES : maximumScroll;
         const scrollTime = Utilities.getRandomNumber(1, maximumScroll);
         for (let i = 1; i <= scrollTime; i++) {
+            await gondola.waitUntilStalenessOfElement(this.searchResultRow, Constants.VERY_SHORT_TIMEOUT);
             const lastIndex = await gondola.getElementCount(this.searchResultRow);
             const locator = Utilities.formatString(this.searchResultRowByIndex, lastIndex.toString());
             await gondola.scrollToElement(locator);
@@ -1626,9 +1626,9 @@ export class AddProjectPage extends GeneralPage {
     public async doesTagDisplay(tagName: string, expecting = true): Promise<boolean> {
         const locator = Utilities.formatString(this.tagItem, tagName);
         if (expecting) {
-            await gondola.waitForElement(locator, Constants.VERY_SHORT_TIMEOUT);
+            await gondola.waitForElementSoftly(locator, Constants.VERY_SHORT_TIMEOUT);
         } else {
-            await gondola.waitForDisappear(locator, Constants.VERY_SHORT_TIMEOUT);
+            await gondola.waitForElementDisappearSoftly(locator, Constants.VERY_SHORT_TIMEOUT);
         }
         return await gondola.doesControlExist(locator);
     }
