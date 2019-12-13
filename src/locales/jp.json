@@ -51,6 +51,15 @@
             "searchDepartmentModalTitle": "部門検索"
         }
     },
+    "fieldPlaceHolder": {
+        "addCustomer": {
+            "repName": "名前",
+            "repDepartment": "部署・役職名",
+            "zipcode": "郵便番号",
+            "address1": "住所１",
+            "address2": "住所２（建物名）"
+        }
+    },
     "invalidFeedback": {
         "fieldRequired": "このフィールドは入力必須です",
         "characterTypeError": "。。。",
@@ -58,7 +67,8 @@
         "exceededNOC": "文字以内で入力してください",
         "inputHalfSizeAlphaNumericTypeError": "半角英数で入力してください",
         "duplicatedTypeError": "既に使われている値のため異なる値を入力してください",
-        "invalidInputValue": "入力値が不正です"
+        "invalidInputValue": "入力値が不正です",
+        "invalidContactNumber": "電話(FAX)番号形式で入力してください"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]"

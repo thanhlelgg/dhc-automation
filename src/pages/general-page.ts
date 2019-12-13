@@ -26,6 +26,8 @@ export class GeneralPage {
     @locator
     protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text']";
     @locator
+    protected textFieldByPlaceHolder = "//input[@type='text' and @placeholder='{0}']";
+    @locator
     protected textAreaByLabel = "//div[label[text()='{0}']]//textarea";
     @locator
     protected selectorByLabel = "//div[label[text()='{0}']]//select";
@@ -273,6 +275,14 @@ export class GeneralPage {
 
     public async isSelectorByLabelEnabled(label: string): Promise<boolean> {
         return await gondola.isControlEnabled(this.selectorByLabel.format(label));
+    }
+
+    public async enterTextfieldByPlaceholder(placeholder: string, text: string): Promise<void> {
+        await gondola.enter(this.textFieldByPlaceHolder.format(placeholder), text);
+    }
+
+    public async getTextfieldValueByPlaceholder(placeholder: string): Promise<string> {
+        return await gondola.getControlProperty(this.textFieldByPlaceHolder.format(placeholder), 'value');
     }
 }
 export default new GeneralPage();

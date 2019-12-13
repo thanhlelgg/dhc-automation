@@ -24,10 +24,12 @@ export class Constants {
     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut \
     aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat \
     nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
+    public static singleByteAlphaNumericString = 'abcd';
     public static fullSizeAlphaNumericString = 'ａｂｃｄ１２３４';
     public static halfSizeAlphaNumericString = 'abcd1234';
     public static symbolString = `!"#$%&'()`;
     public static hiraganaKatakanaString = 'あああｱｱｱハハハ';
+    public static halfSizeNumberAndHyphen = '210-0021';
     public static oneBillion = '1000000000';
     public static decimal = '1.5';
     public static validationMessageForDecimal = '有効な値を入力してください。有効な値として最も近いのは 1 と 2 です。';
@@ -35,10 +37,13 @@ export class Constants {
     public static moreThanOneBillion = '1000000001';
     public static negativeNumber = '-1';
     public static onlyWord = 'only text';
+    public static validContactNumber = '+8190-000-0001';
     //#endregion
 
     //#region invalid feedback message
     public static fieldRequiredErrorMessage = Constants.translator.invalidFeedback.fieldRequired;
+    public static exceededNOCErrorMessage = Constants.translator.invalidFeedback.exceededNOC;
+    public static exceededNOCErrorMessage16 = '16' + Constants.translator.invalidFeedback.exceededNOC;
     public static exceededNOCErrorMessage255 = '255' + Constants.translator.invalidFeedback.exceededNOC;
     public static exceededNOCErrorMessage50 = '50' + Constants.translator.invalidFeedback.exceededNOC;
     public static exceededNOCErrorMessage1024 = '1024' + Constants.translator.invalidFeedback.exceededNOC;
