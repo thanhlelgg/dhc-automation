@@ -160,5 +160,9 @@ export class Utilities {
             .join((Math.random().toString(36) + '00000000000000000').slice(2, 18))
             .slice(0, numberOfCharacters);
     }
+
+    public static compareArrays(array1: any[], array2: any[]): boolean {
+        return array1.length === array2.length && array1.sort().every((value, index) => value === array2.sort()[index]);
+    }
 }
 export default new Utilities();

@@ -4,7 +4,7 @@ import setup from './add-customer-setup';
 import addCustomerPage from '../../pages/add-customer-page';
 import { Utilities } from '../../common/utilities';
 
-TestModule('Add Customer - Customer name field validation');
+TestModule('Add Customer - Customer Representative fields validation');
 
 const REPRESENTATIVE_NAME_TEXTFIELD_PLACEHOLDER = Constants.translator.fieldPlaceHolder.addCustomer.repName;
 const REPRESENTATIVE_DEPARTMENT_TEXTFIELD_PLACEHOLDER = Constants.translator.fieldPlaceHolder.addCustomer.repDepartment;

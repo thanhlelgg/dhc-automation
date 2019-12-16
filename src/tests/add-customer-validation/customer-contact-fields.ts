@@ -4,7 +4,7 @@ import setup from './add-customer-setup';
 import addCustomerPage from '../../pages/add-customer-page';
 import { Utilities } from '../../common/utilities';
 
-TestModule('Add Customer - Customer name field validation');
+TestModule('Add Customer - Customer contact fields validation');
 
 const ZIPCODE_TEXTFIELD_PLACEHOLDER = Constants.translator.fieldPlaceHolder.addCustomer.zipcode;
 const ADDRESS1_TEXTFIELD_PLACEHOLDER = Constants.translator.fieldPlaceHolder.addCustomer.address1;
@@ -41,7 +41,7 @@ TestCase('BMS-85. 案件:得意先マスタ作成:顧客情報:住所(郵便番�
     gondola.report(`Step 4. 「住所(郵便番号)」で半角英字を入力する。（例：「abcd」を入力）`);
     await addCustomerPage.enterTextfieldByPlaceholder(
         ZIPCODE_TEXTFIELD_PLACEHOLDER,
-        Constants.singleByteAlphaNumericString,
+        Constants.singleByteAlphabetString,
     );
     gondola.report(`VP. 半角英字を入力できないこと。`);
     //BUG: till can enter invalid value
@@ -54,7 +54,7 @@ TestCase('BMS-85. 案件:得意先マスタ作成:顧客情報:住所(郵便番�
     gondola.report(`Step 5. 「住所(郵便番号)」で全角英数字を入力する。（例：「ａｂｃｄ１２３４」を入力）`);
     await addCustomerPage.enterTextfieldByPlaceholder(
         ZIPCODE_TEXTFIELD_PLACEHOLDER,
-        Constants.singleByteAlphaNumericString,
+        Constants.singleByteAlphabetString,
     );
     gondola.report(`VP. 全角英数字を入力できないこと。`);
     //BUG: till can enter invalid value
@@ -157,7 +157,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
     );
 
     gondola.report(`Step 4. 「TEL」で半角英字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.singleByteAlphaNumericString);
+    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -167,7 +167,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
     );
 
     gondola.report(`Step 5. 「TEL」で全角英数字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.singleByteAlphaNumericString);
+    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -228,7 +228,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
     );
 
     gondola.report(`Step 4. 「FAX」で半角英字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.singleByteAlphaNumericString);
+    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -238,7 +238,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
     );
 
     gondola.report(`Step 5. 「FAX」で全角英数字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.singleByteAlphaNumericString);
+    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(

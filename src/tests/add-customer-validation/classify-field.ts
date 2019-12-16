@@ -2,7 +2,7 @@ import { gondola, TestCase, TestModule } from 'gondolajs';
 import { Constants } from '../../common/constants';
 import setup from './add-customer-setup';
 import addCustomerPage from '../../pages/add-customer-page';
-import { CustomerInfoDate as CustomerInfoData } from '../../models/customer-info';
+import { CustomerInfoData } from '../../models/customer-info';
 import { Utilities } from '../../common/utilities';
 
 TestModule('Add Customer - Classify field validation');

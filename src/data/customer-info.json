@@ -4,6 +4,11 @@
             "classify": "顧客",
             "code": "test code",
             "name": "test name",
+            "fee_payer": "取引先",
+            "roundCode": "四捨五入",
+            "currency": "¥",
+            "closingDateGroup": "1",
+            "taxCalculationMethod": "請求書単位",
             "billingBankAccountNumber": "test bank account number"
         }
     },
@@ -13,6 +18,12 @@
             "leader": 1,
             "tester": 1,
             "dispatch": 1
+        },
+        "record2": {
+            "startDate": "2019-10-10",
+            "leader": 1.5,
+            "tester": 2,
+            "dispatch": 1.25
         }
     },
     "customerMagnifications": {
@@ -23,6 +34,14 @@
             "lateNightOvertime": 1,
             "holiday": 1,
             "holiday_late_night": 1
+        },
+        "record2": {
+            "startDate": "2019-11-11",
+            "overtime": 1.25,
+            "lateNight": 1.5,
+            "lateNightOvertime": 2,
+            "holiday": 2.25,
+            "holiday_late_night": 2.5
         }
     }
 }
