@@ -51,6 +51,9 @@ export class GeneralPage {
     protected backButton = `//a[contains(.,'${this.translator.backButton}')]`;
     @locator
     protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
+    
+    @locator
+    protected searchResultText = `//div[@class='paginator']//p`;
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
@@ -283,6 +286,24 @@ export class GeneralPage {
 
     public async getTextfieldValueByPlaceholder(placeholder: string): Promise<string> {
         return await gondola.getControlProperty(this.textFieldByPlaceHolder.format(placeholder), 'value');
+    }
+
+    @action('verify page display by url')
+    public async verifyPageDisplayByUrl(pageUrl: string): Promise<boolean> {
+        let currentUrl = await gondola.getCurrentUrl();
+        return Utilities.isTextEqual(currentUrl, pageUrl);
+    }
+
+    @action('get number of search result resords')
+    public async getNumberOfSearchResultRecords(): Promise<number> {
+        const resultString = await gondola.getText(this.searchResultText);
+       return Utilities.getNumberOfSearchResultRecords(resultString);
+    }
+    
+    @action('get number of search result pages')
+    public async getNumberOfSearchResultPages(): Promise<number> {
+        const resultString = await gondola.getText(this.searchResultText);
+        return Utilities.getNumberOfSearchResultPages(resultString);
     }
 }
 export default new GeneralPage();

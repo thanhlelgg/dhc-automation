@@ -1,4 +1,8 @@
 import moment from 'moment';
+import Kuroshiro from 'kuroshiro';
+import AFHConvert from 'ascii-fullwidth-halfwidth-convert';
+import { convertCircleDigitsCharacterToNumber } from '../helper/unicode-search';
+const converter = new AFHConvert();
 
 export class Utilities {
     public static formatString(str: string, ...val: string[]): string {
@@ -159,6 +163,163 @@ export class Utilities {
         return Array(numberOfCharacters + 1)
             .join((Math.random().toString(36) + '00000000000000000').slice(2, 18))
             .slice(0, numberOfCharacters);
+    }
+
+    /**
+     * Check if all results of partial search or full search are correct
+     * @param keyword
+     * @param result
+     */
+    public static isSearchResultCorrect(
+        keyword: string,
+        result: string[],
+        isPartialSearch = true,
+        isCaseSensitive = false,
+        doesIgnoreSize = true,
+        doesIgnoreDakuten = true,
+        doesIgnoreHiraKata = true,
+    ): boolean {
+        if (keyword === '') {
+            return true;
+        }
+        if (!isCaseSensitive) {
+            keyword = keyword.toLowerCase();
+        }
+        if (doesIgnoreSize) {
+            keyword = Utilities.convertToHalfSize(keyword);
+        }
+        if (doesIgnoreDakuten) {
+            keyword = Utilities.removeDakutenHandakutenCharacter(keyword);
+        }
+        if (doesIgnoreHiraKata) {
+            keyword = Utilities.convertToRomaji(keyword);
+        }
+
+        let isMatched = true;
+        for (let item of result) {
+            if (!isCaseSensitive) {
+                item = item.toLowerCase();
+            }
+            if (doesIgnoreSize) {
+                item = Utilities.convertToHalfSize(item);
+            }
+            if (doesIgnoreDakuten) {
+                item = Utilities.removeDakutenHandakutenCharacter(item);
+            }
+            if (doesIgnoreHiraKata) {
+                item = Utilities.convertToRomaji(item);
+            }
+
+            // Convert Circle Digit Character to string
+            item = convertCircleDigitsCharacterToNumber(item);
+            item = Utilities.convertToLatinh(item);
+
+            if (isPartialSearch && !item.includes(keyword)) {
+                isMatched = false;
+                console.log(`Search for ${keyword} got incorrect at ${item}`);
+            }
+            if (!isPartialSearch && !this.isTextEqual(item, keyword)) {
+                isMatched = false;
+                console.log(`Search for ${keyword} got incorrect at ${item}`);
+            }
+        }
+
+        return isMatched;
+    }
+
+    public static convertToHalfSize(text: string): string {
+        // const halfwidthValue = text
+        //     .replace(/[\uff01-\uff5e]/g, (fullwidthChar: string) =>
+        //         String.fromCharCode(fullwidthChar.charCodeAt(0) - 0xfee0),
+        //     )
+        //     .replace(/\u3000/g, '\u0020');
+        // return halfwidthValue;
+        return converter.toHalfWidth(text);
+    }
+
+    public static removeDakutenHandakutenCharacter(rawTxt: string): string {
+        const arrReplaceData = [
+            ['ガ', 'カ'],
+            ['が', 'か'],
+            ['ギ', 'キ'],
+            ['ぎ', 'き'],
+            ['グ', 'ク'],
+            ['ぐ', 'く'],
+            ['ゲ', 'ケ'],
+            ['げ', 'け'],
+            ['ゴ', 'コ'],
+            ['ご', 'こ'],
+            ['ザ', 'サ'],
+            ['ざ', 'さ'],
+            ['ジ', 'シ'],
+            ['じ', 'し'],
+            ['ズ', 'ス'],
+            ['ず', 'す'],
+            ['ゼ', 'セ'],
+            ['ぜ', 'せ'],
+            ['ゾ', 'ソ'],
+            ['ぞ', 'そ'],
+            ['ダ', 'タ'],
+            ['だ', 'た'],
+            ['ヂ', 'チ'],
+            ['ぢ', 'ち'],
+            ['ヅ', 'ツ'],
+            ['づ', 'つ'],
+            ['デ', 'テ'],
+            ['で', 'て'],
+            ['ド', 'ト'],
+            ['ど', 'と'],
+            ['バ', 'ハ'],
+            ['ば', 'は'],
+            ['ビ', 'ヒ'],
+            ['び', 'ひ'],
+            ['ブ', 'フ'],
+            ['ぶ', 'ふ'],
+            ['ベ', 'ヘ'],
+            ['べ', 'へ'],
+            ['ボ', 'ホ'],
+            ['ぼ', 'ほ'],
+            ['パ', 'ハ'],
+            ['ぱ', 'は'],
+            ['ピ', 'ヒ'],
+            ['ぴ', 'ひ'],
+            ['プ', 'フ'],
+            ['ぷ', 'ふ'],
+            ['ペ', 'ヘ'],
+            ['ぺ', 'へ'],
+            ['ポ', 'ホ'],
+            ['ぽ', 'ほ'],
+        ];
+
+        if (rawTxt.length > 0) {
+            for (let i = 0; i < arrReplaceData.length; i++) {
+                const replaceData = arrReplaceData[i];
+                if (rawTxt.includes(replaceData[0])) {
+                    rawTxt = rawTxt.replace(new RegExp(replaceData[0], 'g'), replaceData[1]);
+                }
+            }
+        }
+        return rawTxt;
+    }
+
+    public static convertToRomaji(text: string) {
+        return Kuroshiro.Util.kanaToRomaji(text, 'nippon');
+    }
+
+    public static convertToLatinh(str: string): string {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    public static getNumberOfSearchResultRecords(pagingResultStr: string) : number{
+        const startPos = pagingResultStr.indexOf('表示(') + 3;
+        const endPos = pagingResultStr.indexOf(' 件中)');
+        return parseInt(pagingResultStr.substring(startPos, endPos));
+    }
+
+    public static getNumberOfSearchResultPages(pagingResultStr: string) : number{
+        const startPos = pagingResultStr.indexOf('目(') + 2;
+        const endPos = pagingResultStr.indexOf('ページ中)');
+        return parseInt(pagingResultStr.substring(startPos, endPos));
     }
 }
 export default new Utilities();

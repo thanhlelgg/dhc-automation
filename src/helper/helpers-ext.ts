@@ -311,5 +311,9 @@ class HelperExt extends Helper {
             console.log(error);
         }
     }
+
+    public async getCurrentUrl(): Promise<string>{
+        return await browser.getCurrentUrl();
+    }
 }
 module.exports = HelperExt;

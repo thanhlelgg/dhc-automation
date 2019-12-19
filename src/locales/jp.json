@@ -49,6 +49,34 @@
             "department": "所属部門",
             "note": "備考",
             "searchDepartmentModalTitle": "部門検索"
+        },
+        "listProject": {
+            "searchField": {
+                "code": "案件番号",
+                "name": "案件名",
+                "customer": "取引先",
+                "status": "ステータス",
+                "billingType": "請求タイプ",
+                "accuracy": "確度",
+                "tag": "タグ",
+                "startDate": "案件開始日",
+                "endDate": "案件終了日",
+                "scheduledStartDate": "案件開始予定日",
+                "scheduledEndDate": "案件終了予定日"
+            },
+            "tableColumns": {
+                "code": "案件番号",
+                "estimationDoc": "見積書",
+                "deliveryDoc": "納品書",
+                "ttsLink": "tts連携",
+                "name": "案件名",
+                "customer": "取引先",
+                "status": "ステータス",
+                "startDate": "案件開始日",
+                "endDate": "案件終了日",
+                "lab": "拠点"
+            },
+            "addNewButton": "新規登録"
         }
     },
     "fieldPlaceHolder": {
