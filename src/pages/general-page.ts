@@ -32,6 +32,10 @@ export class GeneralPage {
     @locator
     protected selectorByLabel = "//div[label[text()='{0}']]//select";
     @locator
+    protected radioButtonByLabel = "//div[label[text()='{0}']]//label[input[@type='radio']]";
+    @locator
+    protected radioButtonOptionByLabel = "//div[label[text()='{0}']]//label[input[@type='radio'] and text()='{1}']";
+    @locator
     protected moduleTitle = "//h5[@class='modal-title' and text()='{0}']";
     @locator
     protected closeModuleButtonByName = "//div[h5[text()='{0}']]//span[text()='×']";
@@ -54,6 +58,8 @@ export class GeneralPage {
     
     @locator
     protected searchResultText = `//div[@class='paginator']//p`;
+    @locator
+    protected inputGroupByName = "//div[div[@class='input-group-append']/span[normalize-space()='{0}']]/input";
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
@@ -304,6 +310,44 @@ export class GeneralPage {
     public async getNumberOfSearchResultPages(): Promise<number> {
         const resultString = await gondola.getText(this.searchResultText);
         return Utilities.getNumberOfSearchResultPages(resultString);
+
+    }
+
+    public async doesRadioButtonOptionsExist(label: string, options: string[]): Promise<boolean> {
+        const radioButtonNames = await gondola.getElementsAttributes(
+            this.radioButtonByLabel.format(label),
+            'innerText',
+        );
+        return Utilities.compareArrays(radioButtonNames, options);
+    }
+
+    public async selectRadioButtonByLabel(label: string, option: string): Promise<void> {
+        await gondola.click(this.radioButtonOptionByLabel.format(label, option));
+    }
+
+    public async isRadioButtonByLabelSelected(label: string, option: string): Promise<boolean> {
+        return await gondola.doesCheckboxChecked(this.radioButtonOptionByLabel.format(label, option) + '//input');
+    }
+
+    public async isTextFieldNumeric(control: any): Promise<boolean> {
+        return (await gondola.getControlProperty(control, 'type')) === 'number';
+    }
+
+    public async doesInputGroupByNameDisplay(name: string): Promise<boolean> {
+        return await gondola.doesControlDisplay(this.inputGroupByName.format(name));
+    }
+
+    public async isInputGroupByNameNumeric(name: string): Promise<boolean> {
+        return await this.isTextFieldNumeric(this.inputGroupByName.format(name));
+    }
+
+    public async enterInputGroupByName(name: string, text: string): Promise<void> {
+        await gondola.enter(this.inputGroupByName.format(name), text);
+    }
+
+    public async getTextInputGroupByName(name: string): Promise<string> {
+        return await gondola.getControlProperty(this.inputGroupByName.format(name), 'value');
+
     }
 }
 export default new GeneralPage();

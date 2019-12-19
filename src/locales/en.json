@@ -41,7 +41,17 @@
             "classify": "区分",
             "code": "取引先コード",
             "name": "取引先名",
-            "billingBankAccountNumber": "個別請求口座番号"
+            "billingBankAccountNumber": "個別請求口座番号",
+            "fee_payer": "振込手数料負担",
+            "roundCode": "端数処理",
+            "currency": "取引通貨",
+            "closingDateGroup": "締め日",
+            "taxCalcMethod": "税計算単位",
+            "advanceReceivedAuxCode": "前受金補助コード",
+            "accountReceivableAuxCode": "売掛金補助コード",
+            "salesAuxCode": "売上金補助コード",
+            "note": "備考",
+            "collectCircle": "回収サイクル"
         },
         "addWorker": {
             "code": "従業員コード",
@@ -86,6 +96,13 @@
             "zipcode": "郵便番号",
             "address1": "住所１",
             "address2": "住所２（建物名）"
+        }
+    },
+    "inputGroupName": {
+        "addCustomer": {
+            "collectCycleDay": "日後に回収",
+            "collectCycleMonth": "ヶ月後",
+            "collectCycleMonthlyDay": "日に回収"
         }
     },
     "invalidFeedback": {
@@ -163,6 +180,15 @@
             "outOrder": "備考"
         }
     },
+    "radioButtonOptions": {
+        "addCustomer": {
+            "collectCycle": {
+                "daily": "日ごと",
+                "monthly": "月ごと",
+                "none": "設定しない"
+            }
+        }
+    },
     "dropdownOptions": {
         "projectForms": {
             "result": "出来高案件",
@@ -228,6 +254,25 @@
             "classify": {
                 "client": "顧客",
                 "supplier": "仕入先"
+            },
+            "fee_payer": {
+                "other": "取引先",
+                "our": "当社"
+            },
+            "roundCode": {
+                "round": "四捨五入",
+                "floor": "切り捨て",
+                "ceil": "切り上げ"
+            },
+            "currency": {
+                "jpy": "¥",
+                "dollar": "$",
+                "vnd": "₫"
+            }, 
+            "taxCalcMethod": {
+                "billing": "請求書単位",
+                "project": "納品書単位",
+                "detail": "納品明細単位"
             }
         }
     }

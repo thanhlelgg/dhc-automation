@@ -307,19 +307,23 @@ export class Utilities {
     }
 
     public static convertToLatinh(str: string): string {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
-    public static getNumberOfSearchResultRecords(pagingResultStr: string) : number{
+    public static getNumberOfSearchResultRecords(pagingResultStr: string): number {
         const startPos = pagingResultStr.indexOf('表示(') + 3;
         const endPos = pagingResultStr.indexOf(' 件中)');
         return parseInt(pagingResultStr.substring(startPos, endPos));
     }
 
-    public static getNumberOfSearchResultPages(pagingResultStr: string) : number{
+    public static getNumberOfSearchResultPages(pagingResultStr: string): number {
         const startPos = pagingResultStr.indexOf('目(') + 2;
         const endPos = pagingResultStr.indexOf('ページ中)');
         return parseInt(pagingResultStr.substring(startPos, endPos));
+    }
+
+    public static compareArrays(array1: any[], array2: any[]): boolean {
+        return array1.length === array2.length && array1.sort().every((value, index) => value === array2.sort()[index]);
     }
 }
 export default new Utilities();
