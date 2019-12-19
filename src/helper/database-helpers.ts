@@ -145,6 +145,17 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get a random Business customer from the database
+     */
+    public static async getRandomBusinessCustomer(): Promise<BusinessCustomers> {
+        const alias = 'businessCustomers';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
+        const orderBy = 'RAND()';
+        const customer = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, BusinessCustomers, alias, query, orderBy);
+        return customer;
+    }
+
+    /**
      * Get active Departments from the database
      */
     public static async getActiveDepartments(): Promise<Departments[]> {

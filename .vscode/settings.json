@@ -8,5 +8,8 @@
     ],
     "terminal.integrated.env.windows": {
         "PATH": "${workspaceFolder}\\node_modules\\.bin\\;${env:PATH}"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
     }
 }

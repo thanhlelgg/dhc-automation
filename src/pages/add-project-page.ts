@@ -16,7 +16,7 @@ import '@src/string.extensions';
 export class AddProjectPage extends GeneralPage {
     //#region project result
     @locator
-    protected subTitleProjectResult = `//div[.='${this.translator.sectionName.volumeDetail}']`;
+    protected subTitleProjectResult = `//div[.='${this.translator.sectionName.addProject.volumeDetail}']`;
     protected roleCheckboxStr = "//div[contains(@class, 'custom-checkbox')]/label[text()='{0}']";
     protected roleCheckboxInput = "//div[label[text()='{0}']]//input[@type='checkbox']";
     protected roleLabels = "//div[@id='project-result-bases']/div/label";

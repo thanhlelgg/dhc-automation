@@ -45,6 +45,8 @@ export class BusinessSystemPage extends GeneralPage {
     protected listWorkerLink = `//a[@href='/workers']//span[contains(., '${this.translator.verticalMenuBMS.master.worker.listLink}')]`;
     @locator
     protected addWorkerLink = "//a[@href='/workers/add']";
+    @locator
+    protected listCustomerLink = "//a[@href='/customers/business-customer']";
 
     @action('gotoAddProjectPage')
     public async gotoAddProjectPage(): Promise<void> {
@@ -90,6 +92,16 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.click(this.workerLink);
         await gondola.waitUntilElementVisible(this.listWorkerLink);
         await gondola.click(this.listWorkerLink);
+    }
+
+    @action('go to list customer')
+    public async gotoListCustomer(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.masterLink);
+        await gondola.click(this.masterLink);
+        await gondola.waitUntilElementVisible(this.customerLink);
+        await gondola.click(this.workerLink);
+        await gondola.waitUntilElementVisible(this.listCustomerLink);
+        await gondola.click(this.listCustomerLink);
     }
 }
 export default new BusinessSystemPage();

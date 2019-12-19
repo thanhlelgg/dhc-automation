@@ -2,16 +2,16 @@ import customerInfo from '../data/customer-info.json';
 
 export interface CustomerInfo {
     overview: Overview;
-    unitPricesRecords: UnitPrices[];
-    customerMagnificationsRecords: CustomerMagnifications[];
+    unitPricesRecords?: UnitPrices[];
+    customerMagnificationsRecords?: CustomerMagnifications[];
 }
 
 export interface Overview {
-    classify: string;
     code: string;
     name: string;
     repDepartment?: string;
     repName?: string;
+    lastBusinessDate?: string;
     isDisable?: boolean;
     zipcode?: string;
     address1?: string;
@@ -23,13 +23,15 @@ export interface Overview {
     roundCode: string;
     currency: string;
     closingDateGroup: string;
-    taxCalculationMethod: string;
+    taxCalculationMethod?: string;
     advanceReceivedAuxCode?: string;
     accountReceivableAuxCode?: string;
     salesAuxCd?: string;
-    collectCircle?: string;
-    billingBankAccountNumber: string;
+    collectCycle?: string;
+    paymentCycle?: string;
+    billingBankAccountNumber?: string;
     note?: string;
+    deliveryPlace?: string;
 }
 
 export interface UnitPrices {
@@ -52,11 +54,25 @@ export interface CustomerMagnifications {
 
 export class CustomerInfoData {
     public static CUSTOMER_REQUIRED_DATA: CustomerInfo = {
-        overview: customerInfo.overview.requiredOnly,
+        overview: customerInfo.overview.customer.requiredOnly,
         unitPricesRecords: [customerInfo.unitPrices.record1, customerInfo.unitPrices.record2],
         customerMagnificationsRecords: [
             customerInfo.customerMagnifications.record1,
             customerInfo.customerMagnifications.record2,
         ],
+    };
+    public static CUSTOMER_ALL_DATA: CustomerInfo = {
+        overview: customerInfo.overview.customer.allFields,
+        unitPricesRecords: [customerInfo.unitPrices.record1, customerInfo.unitPrices.record2],
+        customerMagnificationsRecords: [
+            customerInfo.customerMagnifications.record1,
+            customerInfo.customerMagnifications.record2,
+        ],
+    };
+    public static SUPPLIER_REQUIRED_DATA: CustomerInfo = {
+        overview: customerInfo.overview.supplier.requiredOnly,
+    };
+    public static SUPPLIER_ALL_DATA: CustomerInfo = {
+        overview: customerInfo.overview.supplier.allFields,
     };
 }

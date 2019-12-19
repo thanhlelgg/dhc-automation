@@ -164,5 +164,10 @@ export class Utilities {
     public static compareArrays(array1: any[], array2: any[]): boolean {
         return array1.length === array2.length && array1.sort().every((value, index) => value === array2.sort()[index]);
     }
+
+    public static addDaysToDate(date: Date, days: number, returnFormat: string): string {
+        date.setDate(date.getDate() + days);
+        return moment(date).format(returnFormat);
+    }
 }
 export default new Utilities();

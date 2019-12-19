@@ -13,7 +13,13 @@
         "searchLabsTitle": "ラボ選択"
     },
     "sectionName": {
-        "volumeDetail": "出来高明細"
+        "addProject": {
+            "volumeDetail": "出来高明細"
+        },
+        "addCustomer": {
+            "customerUnitPrices": "顧客単価",
+            "customerMagnifications": "割増"
+        }
     },
     "fieldName": {
         "addProject": {
@@ -41,7 +47,12 @@
             "classify": "区分",
             "code": "取引先コード",
             "name": "取引先名",
+            "lastBusinessDate": "最終取引日",
             "billingBankAccountNumber": "個別請求口座番号",
+            "isDisabled": "無効フラグ",
+            "tel": "TEL",
+            "fax": "FAX",
+            "mail": "メールアドレス",
             "fee_payer": "振込手数料負担",
             "roundCode": "端数処理",
             "currency": "取引通貨",
@@ -50,8 +61,10 @@
             "advanceReceivedAuxCode": "前受金補助コード",
             "accountReceivableAuxCode": "売掛金補助コード",
             "salesAuxCode": "売上金補助コード",
+            "deliveryPlace": "納入場所",
             "note": "備考",
-            "collectCircle": "回収サイクル"
+            "collectCycle": "回収サイクル",
+            "paymentCycle": "支払サイクル"
         },
         "addWorker": {
             "code": "従業員コード",
@@ -59,6 +72,12 @@
             "department": "所属部門",
             "note": "備考",
             "searchDepartmentModalTitle": "部門検索"
+        },
+        "customerList": {
+            "customerCode": "顧客コード"
+        },
+        "supplierList": {
+            "supplierCode": "仕入先コード"
         }
     },
     "fieldPlaceHolder": {
@@ -85,7 +104,8 @@
         "inputHalfSizeAlphaNumericTypeError": "半角英数で入力してください",
         "duplicatedTypeError": "既に使われている値のため異なる値を入力してください",
         "invalidInputValue": "入力値が不正です",
-        "invalidContactNumber": "電話(FAX)番号形式で入力してください"
+        "invalidContactNumber": "電話(FAX)番号形式で入力してください",
+        "alreadyInUse": "既に使われている値のため異なる値を入力してください"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]"
@@ -155,6 +175,11 @@
     "radioButtonOptions": {
         "addCustomer": {
             "collectCycle": {
+                "daily": "日ごと",
+                "monthly": "月ごと",
+                "none": "設定しない"
+            },
+            "paymentCycle": {
                 "daily": "日ごと",
                 "monthly": "月ごと",
                 "none": "設定しない"
