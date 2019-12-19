@@ -9,6 +9,7 @@ import { DatabaseSchema } from '../models/enum-class/database-schema';
 import { Items } from '../entity/Items';
 import { CustomerMagnifications } from '../entity/CustomerMagnifications';
 import { CustomerUnitPrices } from '../entity/CustomerUnitPrices';
+import { Projects } from '../entity/Projects';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -254,5 +255,25 @@ export class DatabaseHelper {
             AND ${alias}.end_date = '${endDate}'`;
         const unitPrice = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, CustomerUnitPrices, alias, query);
         return unitPrice;
+    }
+
+    /**
+     * Get Projects by Accuracy, etc. (will add more)
+     * @param accuracy (hight, middle, low)
+     */
+    public static async getProjectsBy(filter: {
+        accuracy?: string,
+        tag?: string
+    }): Promise<Projects[]> {
+        const alias = 'projects';
+        let query = `${alias}.number IS NOT NULL`;
+
+        if (filter.accuracy)
+            query += ` AND ${alias}.accuracy = '${filter.accuracy.toLowerCase()}'`;
+        if (filter.tag)
+            query += ` AND ${alias}.tag LIKE '%${filter.tag.toLowerCase()}%'`;
+            
+        const projects = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Projects, alias, query);
+        return projects;
     }
 }
