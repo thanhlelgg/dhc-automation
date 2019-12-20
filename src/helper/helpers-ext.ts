@@ -234,7 +234,11 @@ class HelperExt extends Helper {
             const text = await element.getAttribute('value');
             return text.length > 0;
         };
-        await browser.wait(condition, timeOut, 'Text is still not present');
+        try {
+            await browser.wait(condition, timeOut, 'Text is still not present');
+        } catch (error) {
+            console.log('Text is not present on the field');
+        }
     }
 
     /**
@@ -312,7 +316,7 @@ class HelperExt extends Helper {
         }
     }
 
-    public async getCurrentUrl(): Promise<string>{
+    public async getCurrentUrl(): Promise<string> {
         return await browser.getCurrentUrl();
     }
 }

@@ -10,6 +10,7 @@ import { Items } from '../entity/Items';
 import { CustomerMagnifications } from '../entity/CustomerMagnifications';
 import { CustomerUnitPrices } from '../entity/CustomerUnitPrices';
 import { Projects } from '../entity/Projects';
+import { Constants } from '../common/constants';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -157,6 +158,17 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get a random Project from the database
+     */
+    public static async getRandomProject(): Promise<Projects> {
+        const alias = 'projects';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.number IS NOT NULL`;
+        const orderBy = 'RAND()';
+        const project = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, Projects, alias, query, orderBy);
+        return project;
+    }
+
+    /**
      * Get active Departments from the database
      */
     public static async getActiveDepartments(): Promise<Departments[]> {
@@ -239,6 +251,41 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get a customer Magnification
+     * @param businessCustomerId
+     * @param startDate
+     * @param endDate
+     */
+    public static async getCustomerMagnifications(
+        businessCustomerId: string,
+        endDate: string,
+    ): Promise<CustomerMagnifications> {
+        const alias = 'customer_magnifications';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.business_customer_id = ${businessCustomerId} 
+            AND ${alias}.end_date = '${endDate}'`;
+        const unitPrice = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, CustomerMagnifications, alias, query);
+        return unitPrice;
+    }
+
+    /**
+     * GET a random Unit prices with valid information
+     */
+    public static async getRandomCustomerUnitPrices(): Promise<CustomerUnitPrices> {
+        const alias = 'customer_unit_prices';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.leader > 0 
+                        AND ${alias}.tester > 0 AND ${alias}.end_date = '${Constants.DEFAULT_END_DATE}'`;
+        const orderBy = 'RAND()';
+        const unitPrices = await DatabaseHelper.getOne(
+            DatabaseSchema.BUSINESS,
+            CustomerUnitPrices,
+            alias,
+            query,
+            orderBy,
+        );
+        return unitPrices;
+    }
+
+    /**
      * Get a unit price
      * @param businessCustomerId
      * @param startDate
@@ -261,18 +308,13 @@ export class DatabaseHelper {
      * Get Projects by Accuracy, etc. (will add more)
      * @param accuracy (hight, middle, low)
      */
-    public static async getProjectsBy(filter: {
-        accuracy?: string,
-        tag?: string
-    }): Promise<Projects[]> {
+    public static async getProjectsBy(filter: { accuracy?: string; tag?: string }): Promise<Projects[]> {
         const alias = 'projects';
         let query = `${alias}.number IS NOT NULL`;
 
-        if (filter.accuracy)
-            query += ` AND ${alias}.accuracy = '${filter.accuracy.toLowerCase()}'`;
-        if (filter.tag)
-            query += ` AND ${alias}.tag LIKE '%${filter.tag.toLowerCase()}%'`;
-            
+        if (filter.accuracy) query += ` AND ${alias}.accuracy = '${filter.accuracy.toLowerCase()}'`;
+        if (filter.tag) query += ` AND ${alias}.tag LIKE '%${filter.tag.toLowerCase()}%'`;
+
         const projects = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Projects, alias, query);
         return projects;
     }

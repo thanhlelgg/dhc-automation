@@ -75,6 +75,15 @@ export interface ProjectResultBaseInfo {
     outputOrder: string | null;
 }
 
+export interface ResultBaseUnitPrices {
+    unitPriceWeekday: string;
+    unitPriceWeekdayOT: string;
+    unitPriceHoliday: string;
+    unitPriceWeekdayLate: string;
+    unitPriceWeekdayLateOT: string;
+    unitPriceHolidayLate: string;
+}
+
 export class ProjectInfoData {
     public static OVERVIEW_FULL_DATA: ProjectOverviewInfo = projectInfo.projectOverview.fullData;
     public static OVERVIEW_REQUIRED_ONLY: ProjectOverviewInfo = projectInfo.projectOverview.requiredOnly;
@@ -83,4 +92,6 @@ export class ProjectInfoData {
     public static RESULT_BASE_TWO_RECORDS: ProjectResultBaseInfo[] = projectInfo.projectResultBase.twoRecords;
     public static RESULT_BASE_ONE_RECORD: ProjectResultBaseInfo[] = projectInfo.projectResultBase.oneRecord;
     public static RESULT_BASE_ONE_EMPTY_RECORD: ProjectResultBaseInfo[] = projectInfo.projectResultBase.oneEmptyRecord;
+    public static RESULT_BASE_UNIT_PRICES: ResultBaseUnitPrices = projectInfo.projectResultBase.unitPrices;
+    public static RESULT_BASE_UNIT_PRICES_EMPTY: ResultBaseUnitPrices = projectInfo.projectResultBase.emptyUnitPrices;
 }

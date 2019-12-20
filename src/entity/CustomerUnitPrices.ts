@@ -13,4 +13,10 @@ export class CustomerUnitPrices {
 
     @Column('int')
     tester!: number;
+
+    @Column('date')
+    start_date!: string;
+
+    @Column('date')
+    end_date!: string;
 }

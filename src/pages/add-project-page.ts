@@ -2,7 +2,13 @@ import { action, gondola, locator, page } from 'gondolajs';
 import { GeneralPage } from './general-page';
 import { Utilities } from '../common/utilities';
 import { Constants } from '../common/constants';
-import { ProjectDetailInfo, ProjectOverviewInfo, ProjectResultBaseInfo, SingleResource } from '../models/project-info';
+import {
+    ProjectDetailInfo,
+    ProjectOverviewInfo,
+    ProjectResultBaseInfo,
+    SingleResource,
+    ResultBaseUnitPrices,
+} from '../models/project-info';
 import { FilterType } from '../models/enum-class/filter-field-type';
 import { SearchResultColumn } from '../models/enum-class/search-result-column';
 import { DatabaseHelper } from '../helper/database-helpers';
@@ -675,6 +681,31 @@ export class AddProjectPage extends GeneralPage {
         return !(isDisabled === 'true');
     }
 
+    @action('enter unit prices')
+    public async enterUnitPrices(role: string, unitPrices: ResultBaseUnitPrices): Promise<void> {
+        await gondola.controlPopupAndEnterText(
+            Utilities.formatString(this.unitPriceWeekdayByRoleStr, role),
+            unitPrices.unitPriceWeekday,
+        );
+        await gondola.enter(
+            Utilities.formatString(this.unitPriceWeekdayOTByRoleStr, role),
+            unitPrices.unitPriceWeekdayOT,
+        );
+        await gondola.enter(Utilities.formatString(this.unitPriceHolidayByRoleStr, role), unitPrices.unitPriceHoliday);
+        await gondola.enter(
+            Utilities.formatString(this.unitPriceWeekdayLateByRoleStr, role),
+            unitPrices.unitPriceWeekdayLate,
+        );
+        await gondola.enter(
+            Utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, role),
+            unitPrices.unitPriceWeekdayLateOT,
+        );
+        await gondola.enter(
+            Utilities.formatString(this.unitPriceHolidayLateByRoleStr, role),
+            unitPrices.unitPriceHolidayLate,
+        );
+    }
+
     @action('inputProjectResultBases')
     public async inputProjectResultBases(projectResultBases: ProjectResultBaseInfo[]): Promise<void> {
         const formExist = await gondola.doesControlExist(this.subTitleProjectResult);
@@ -1220,6 +1251,21 @@ export class AddProjectPage extends GeneralPage {
         return doesPeopleDisplayCorrect && doesTimeDisplayCorrect && doesTotalTimeDisplayCorrect;
     }
 
+    public async doesResultBaseUnitPricesDisplayCorrectly(
+        role: string,
+        unitPrices: ResultBaseUnitPrices,
+    ): Promise<boolean> {
+        return await this.doesUnitPricesOfProjectResultBaseDisplayCorrect(
+            role,
+            unitPrices.unitPriceWeekday,
+            unitPrices.unitPriceWeekdayOT,
+            unitPrices.unitPriceWeekdayLate,
+            unitPrices.unitPriceWeekdayLateOT,
+            unitPrices.unitPriceHoliday,
+            unitPrices.unitPriceHolidayLate,
+        );
+    }
+
     @action('doesUnitPricesOfProjectResultBaseDisplayCorrect')
     public async doesUnitPricesOfProjectResultBaseDisplayCorrect(
         role: string,
@@ -1230,6 +1276,7 @@ export class AddProjectPage extends GeneralPage {
         priceHoliday: string,
         priceHolidayLate: string,
     ): Promise<boolean> {
+        await gondola.waitUntilTextAvailable(this.unitPriceWeekdayByRoleStr.format(role), Constants.VERY_SHORT_TIMEOUT);
         const isPriceWeekdayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayByRoleStr, role)),
             priceWeekday,

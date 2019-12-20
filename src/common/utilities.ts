@@ -330,5 +330,11 @@ export class Utilities {
         date.setDate(date.getDate() + days);
         return moment(date).format(returnFormat);
     }
+
+    public static getLaterDateOfTwoDates(date1: string, date2: string, format: string): string {
+        const laterDate =
+            moment(date1, format) >= moment(date2, format) ? moment(date1, format) : moment(date2, format);
+        return laterDate.format(format);
+    }
 }
 export default new Utilities();

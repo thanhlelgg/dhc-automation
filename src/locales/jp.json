@@ -133,7 +133,10 @@
         "duplicatedTypeError": "既に使われている値のため異なる値を入力してください",
         "invalidInputValue": "入力値が不正です",
         "invalidContactNumber": "電話(FAX)番号形式で入力してください",
-        "alreadyInUse": "既に使われている値のため異なる値を入力してください"
+        "alreadyInUse": "既に使われている値のため異なる値を入力してください",
+        "invalidDateFormat": "正しい日付を入力してください",
+        "startDateExceedsEndDate": "終了日よりも前の日付を入力してください",
+        "endDateLesserThanStartDate": "開始日以降の日付を入力してください"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]"
