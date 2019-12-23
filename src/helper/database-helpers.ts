@@ -179,6 +179,17 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get active Departments from the database
+     */
+    public static async getRandomDepartment(): Promise<Departments> {
+        const alias = 'departments';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
+        const orderBy = 'RAND()';
+        const departments = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, Departments, alias, query, orderBy);
+        return departments;
+    }
+
+    /**
      * Get active Workers from the database
      */
     public static async getActiveWorkers(): Promise<Workers[]> {

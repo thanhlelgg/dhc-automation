@@ -77,8 +77,12 @@
             "code": "セグメントコード",
             "name": "セグメント名",
             "parentSegment": "親セグメント",
-            "note": "備考",
             "kanjyoDepartmentCode": "会計システム部門コード"
+        },
+        "addDepartment": {
+            "code": "部門コード",
+            "name": "部門名",
+            "note": "備考"
         },
         "customerList": {
             "customerCode": "顧客コード"
@@ -88,6 +92,9 @@
         },
         "segmentList": {
             "code": "セグメントコード"
+        },
+        "departmentList": {
+            "code": "部門コード"
         },
         "listProject": {
             "searchField": {

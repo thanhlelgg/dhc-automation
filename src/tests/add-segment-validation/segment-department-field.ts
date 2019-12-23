@@ -4,7 +4,7 @@ import setup from './add-segment-setup';
 import addSegmentPage from '../../pages/add-segment-page';
 import { Utilities } from '../../common/utilities';
 
-TestModule('Add Customer - Department field validation');
+TestModule('Add Segment - Department field validation');
 
 const SEGMENT_DEPARTMENT_TEXTFIELD_LABEL = Constants.translator.fieldName.addSegment.kanjyoDepartmentCode;
 const INVALID_SEGMENT_DEPARTMENT_ERROR_MESSAGE =
@@ -50,7 +50,7 @@ TestCase('BMS-217. BMS:マスタ:セグメント作成:会計システム部門�
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_DEPARTMENT_TEXTFIELD_LABEL),
         INVALID_SEGMENT_DEPARTMENT_ERROR_MESSAGE,
-        'Invalid customer code feedback should be displayed',
+        'Invalid segment code feedback should be displayed',
     );
 
     gondola.report(`Step 3. 「会計システム部門コード」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
@@ -61,7 +61,7 @@ TestCase('BMS-217. BMS:マスタ:セグメント作成:会計システム部門�
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_DEPARTMENT_TEXTFIELD_LABEL),
         INVALID_SEGMENT_DEPARTMENT_ERROR_MESSAGE,
-        'Invalid customer code feedback should be displayed',
+        'Invalid segment code feedback should be displayed',
     );
 
     gondola.report(
@@ -74,7 +74,7 @@ TestCase('BMS-217. BMS:マスタ:セグメント作成:会計システム部門�
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_DEPARTMENT_TEXTFIELD_LABEL),
         INVALID_SEGMENT_DEPARTMENT_ERROR_MESSAGE,
-        'Invalid customer code feedback should be displayed',
+        'Invalid segment code feedback should be displayed',
     );
 
     gondola.report(`Step 5. 「会計システム部門コード」で半角英数字を入力し、「保存」ボタンをクリックする。`);
@@ -87,6 +87,6 @@ TestCase('BMS-217. BMS:マスタ:セグメント作成:会計システム部門�
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_DEPARTMENT_TEXTFIELD_LABEL),
         '',
-        'Invalid customer code feedback should not be displayed',
+        'Invalid segment code feedback should not be displayed',
     );
 });

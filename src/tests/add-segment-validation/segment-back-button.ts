@@ -3,7 +3,7 @@ import setup from './add-segment-setup';
 import addSegmentPage from '../../pages/add-segment-page';
 import listSegmentPage from '../../pages/list-segment-page';
 
-TestModule('Add Customer - Back button test');
+TestModule('Add Segment - Back button test');
 
 Before(setup);
 

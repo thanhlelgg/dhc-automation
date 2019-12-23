@@ -8,7 +8,7 @@ import { Constants } from '../../common/constants';
 
 const SEARCH_CODE_FIELD_NAME = Constants.translator.fieldName.segmentList.code;
 
-TestModule('Add Customer - Back button test');
+TestModule('Add Segment - Add Segment successfully test');
 
 Before(setup);
 

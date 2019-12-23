@@ -5,7 +5,7 @@ import addSegmentPage from '../../pages/add-segment-page';
 import { Utilities } from '../../common/utilities';
 import { DatabaseHelper } from '../../helper/database-helpers';
 
-TestModule('Add Customer - Segment code field validation');
+TestModule('Add Segment - Segment code field validation');
 
 const SEGMENT_CODE_TEXTFIELD_LABEL = Constants.translator.fieldName.addSegment.code;
 const INVALID_SEGMENT_CODE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
@@ -53,7 +53,7 @@ TestCase('BMS-211. BMS:マスタ:セグメント作成:セグメントコード:
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_CODE_TEXTFIELD_LABEL),
         INVALID_SEGMENT_CODE_ERROR_MESSAGE,
-        'Invalid customer code feedback should be displayed',
+        'Invalid segment code feedback should be displayed',
     );
 
     gondola.report(`Step 3. 「セグメントコード」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
@@ -64,7 +64,7 @@ TestCase('BMS-211. BMS:マスタ:セグメント作成:セグメントコード:
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_CODE_TEXTFIELD_LABEL),
         INVALID_SEGMENT_CODE_ERROR_MESSAGE,
-        'Invalid customer code feedback should be displayed',
+        'Invalid segment code feedback should be displayed',
     );
 
     gondola.report(
@@ -77,7 +77,7 @@ TestCase('BMS-211. BMS:マスタ:セグメント作成:セグメントコード:
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_CODE_TEXTFIELD_LABEL),
         INVALID_SEGMENT_CODE_ERROR_MESSAGE,
-        'Invalid customer code feedback should be displayed',
+        'Invalid segment code feedback should be displayed',
     );
 
     gondola.report(`Step 5. 「セグメントコード」で半角英数字を入力し、「保存」ボタンをクリックする。`);
@@ -87,7 +87,7 @@ TestCase('BMS-211. BMS:マスタ:セグメント作成:セグメントコード:
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_CODE_TEXTFIELD_LABEL),
         '',
-        'Invalid customer code feedback should not be displayed',
+        'Invalid segment code feedback should not be displayed',
     );
 });
 

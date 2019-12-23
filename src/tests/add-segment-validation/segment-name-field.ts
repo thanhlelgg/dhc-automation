@@ -4,7 +4,7 @@ import setup from './add-segment-setup';
 import addSegmentPage from '../../pages/add-segment-page';
 import { Utilities } from '../../common/utilities';
 
-TestModule('Add Customer - Segment name field validation');
+TestModule('Add Segment - Segment name field validation');
 
 const SEGMENT_NAME_TEXTFIELD_LABEL = Constants.translator.fieldName.addSegment.name;
 Before(setup);
