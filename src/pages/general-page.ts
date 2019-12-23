@@ -41,8 +41,6 @@ export class GeneralPage {
     protected checkboxInputByLabel =
         "//div[contains(@class, 'custom-checkbox')][label[text()='{0}']]/input[@type='checkbox']";
     @locator
-    protected moduleTitle = "//h5[@class='modal-title' and text()='{0}']";
-    @locator
     protected closeModuleButtonByName = "//div[h5[text()='{0}']]//span[text()='×']";
     @locator
     protected savedMessage = "//div[@role='alert'  and text()='saved']";
@@ -73,6 +71,15 @@ export class GeneralPage {
     protected sectionName = "//div[@class='page-sub-title' and text()='{0}']";
     @locator
     protected pagingLastPage = "//li[@class='page-item last']";
+    @locator
+    protected modalWindowByName = "//div[@class='modal-content' and .//h5[text()='{0}']]";
+    @locator
+    protected modalWindowLoading =
+        "//div[@class='modal-content' and .//h5[text()='{0}']]//div[contains(@id, 'loading')]";
+
+    protected async isCurrentPage(pageUrl: string): Promise<boolean> {
+        return (await gondola.getCurrentUrl()) === pageUrl;
+    }
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
@@ -147,17 +154,6 @@ export class GeneralPage {
     public async clickOutsideTextFieldByLabel(label: string): Promise<void> {
         const locator = Utilities.formatString(this.textFieldByLabel, label);
         await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
-    }
-
-    @action('doesModalTitleDisplay')
-    public async doesModalTitleDisplay(name: string, expected = true): Promise<boolean> {
-        const locator = Utilities.formatString(this.moduleTitle, name);
-        if (expected) {
-            await gondola.waitUntilElementVisible(locator, Constants.MEDIUM_TIMEOUT);
-        } else {
-            await gondola.waitUntilElementNotVisible(locator, Constants.SHORT_TIMEOUT);
-        }
-        return await gondola.doesControlDisplay(locator);
     }
 
     @action('closeModalWindowByName')
@@ -412,6 +408,19 @@ export class GeneralPage {
 
     public async clickPagingLastPage(): Promise<void> {
         await gondola.click(this.pagingLastPage);
+    }
+
+    @action('wait for search window fully loaded')
+    public async waitForLoadingIconDisappear(modalName: string): Promise<void> {
+        const locator = Utilities.formatString(this.modalWindowLoading, modalName);
+        await gondola.waitUntilElementNotVisible(locator, Constants.LONG_TIMEOUT);
+    }
+
+    @action('clickOutsideOfWindowModal')
+    public async clickOutsideOfWindowModal(modalName: string): Promise<void> {
+        const locator = Utilities.formatString(this.modalWindowByName, modalName);
+        await this.waitForLoadingIconDisappear(modalName);
+        await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 }
 export default new GeneralPage();

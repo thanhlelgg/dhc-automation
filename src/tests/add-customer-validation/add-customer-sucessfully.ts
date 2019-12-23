@@ -7,7 +7,7 @@ import listSupplierPage from '../../pages/list-supplier-page';
 import { CustomerInfoData } from '../../models/customer-info';
 import { Utilities } from '../../common/utilities';
 
-TestModule('Add Customer - Classify field validation');
+TestModule('Add Customer - Verify adding customer successfully');
 
 const CUSTOMER_CLASSIFY_TEXTFIELD_LABEL = Constants.translator.fieldName.addCustomer.classify;
 const CUSTOMER_CLASSIFY_OPTIONS = Constants.translator.dropdownOptions.customer.classify;

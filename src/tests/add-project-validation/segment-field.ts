@@ -1,5 +1,6 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
+import searchModalWindows from '../../pages/search-modal-windows';
 import { Constants } from '../../common/constants';
 import setup from './add-project-setup';
 import { Utilities } from '../../common/utilities';
@@ -28,20 +29,20 @@ TestCase('BMS-46. 案件:案件作成:セグメント:モーダルウィンド�
     gondola.report(`Step 2. 「セグメント」テキストボックスの枠内をクリックする。`);
     await addProjectPage.clickTextFieldByLabel(SEGMENT_FIELD_NAME);
     gondola.report(`VP. セグメント検索のモーダルウィンドウが起動すること。`);
-    let isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE);
+    let isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE);
     await gondola.checkEqual(isModuleDisplayed, true, 'Search segments modal title should be displayed');
 
     gondola.report(`Step 3. 「×」をクリックする。`);
     await addProjectPage.closeModalWindowByName(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE, false);
+    isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search segments modal title should not be displayed');
 
     gondola.report(`Step 4. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
     await addProjectPage.clickTextFieldByLabel(SEGMENT_FIELD_NAME);
     await addProjectPage.clickOutsideOfWindowModal(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE, false);
+    isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search segments modal title should not be displayed');
 });
 
@@ -49,7 +50,7 @@ TestCase('BMS-47. 案件:案件作成:セグメント:セグメントの検索�
     gondola.report(`Step 2. 「セグメント」テキストボックスの枠内をクリックする。`);
     await addProjectPage.clickTextFieldByLabel(SEGMENT_FIELD_NAME);
     gondola.report(`VP. セグメント検索のモーダルウィンドウが起動すること。`);
-    const isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE);
+    const isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_SEGMENTS_MODAL_WINDOW_TITLE);
     await gondola.checkEqual(isModuleDisplayed, true, 'Search Segments modal title should be displayed');
     gondola.report(`Step 3. セグメントのデータ表示を確認する。`);
     gondola.report(`VP. セグメントマスタのものは表示されること。`);
@@ -60,18 +61,18 @@ TestCase('BMS-47. 案件:案件作成:セグメント:セグメントの検索�
     );
 
     gondola.report(`Step 4. 検索条件欄にはコード、セグメント名、または階層の一部を入力する。`);
-    let randomResult = await addProjectPage.getOneResultItemAllColumns();
+    let randomResult = await searchModalWindows.getOneResultItemAllColumns();
     gondola.report(`Step 5. 検索結果を確認する。`);
-    const doesFilteringWorkCorrectly = await addProjectPage.filterSegmentsAndVerifyResult(randomResult, true);
+    const doesFilteringWorkCorrectly = await searchModalWindows.filterSegmentsAndVerifyResult(randomResult, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに検索(部分一致)できること。`);
     gondola.report(`VP. 各結果行でコード、セグメント名、階層は入力したフィールドと一致すること。`);
     //Bug: currently filtering is not working correctly for some keyword
     await gondola.checkEqual(doesFilteringWorkCorrectly, true, 'Filtering should be working correctly');
 
     gondola.report(`Step 6. 任意の検索結果を選択する。`);
-    randomResult = await addProjectPage.getOneResultItemAllColumns();
+    randomResult = await searchModalWindows.getOneResultItemAllColumns();
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
+    await searchModalWindows.selectSearchResult(randomResultName, SearchResultColumn.NAME);
     gondola.report(`VP. 案件登録画面に戻り、選択したセグメント名が表示されること。`);
     const inputtedText = await addProjectPage.getTextFieldValueByLabel(SEGMENT_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Segment should be selected');

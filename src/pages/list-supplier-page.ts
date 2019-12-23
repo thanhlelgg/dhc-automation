@@ -1,6 +1,4 @@
 import { action, gondola, locator, page } from 'gondolajs';
-import { Utilities } from '../common/utilities';
-import { Constants } from '../common/constants';
 import { GeneralPage } from './general-page';
 @page
 export class ListSupplierPage extends GeneralPage {

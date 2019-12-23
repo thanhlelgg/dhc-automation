@@ -1,5 +1,6 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
+import searchModalWindows from '../../pages/search-modal-windows';
 import { Constants } from '../../common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import setup from './add-project-setup';
@@ -47,7 +48,7 @@ TestCase('BMS-42. 案件:案件作成:場所:選択肢', async () => {
     );
     await addProjectPage.selectSelectorByLabel(PROJECT_PLACE_FIELD_NAME, Constants.projectPlace.secondment);
     await addProjectPage.clickTextFieldByLabel(LAB_NAME_FIELD_NAME);
-    await addProjectPage.waitForTableUpdated();
+    await searchModalWindows.waitForTableUpdated();
     gondola.report(`VP. お客様先が表示されること。`);
     await gondola.checkEqual(
         await addProjectPage.doesLabsDisplayCorrect(false),
@@ -61,7 +62,7 @@ TestCase('BMS-42. 案件:案件作成:場所:選択肢', async () => {
     );
     await addProjectPage.selectSelectorByLabel(PROJECT_PLACE_FIELD_NAME, Constants.projectPlace.dispatch);
     await addProjectPage.clickTextFieldByLabel(LAB_NAME_FIELD_NAME);
-    await addProjectPage.waitForTableUpdated();
+    await searchModalWindows.waitForTableUpdated();
     gondola.report(`VP. お客様先が表示されること。`);
     await gondola.checkEqual(
         await addProjectPage.doesLabsDisplayCorrect(false),

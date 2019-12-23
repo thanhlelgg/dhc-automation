@@ -210,6 +210,17 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get a random Segments from the database
+     */
+    public static async getRandomSegments(): Promise<Segments> {
+        const alias = 'segments';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.code IS NOT NULL`;
+        const orderBy = 'RAND()';
+        const segments = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, Segments, alias, query, orderBy);
+        return segments;
+    }
+
+    /**
      * Get existed code of worker from the database
      */
     public static async getExistedWorkerCode(): Promise<string> {

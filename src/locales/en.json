@@ -73,11 +73,21 @@
             "note": "備考",
             "searchDepartmentModalTitle": "部門検索"
         },
+        "addSegment": {
+            "code": "セグメントコード",
+            "name": "セグメント名",
+            "parentSegment": "親セグメント",
+            "note": "備考",
+            "kanjyoDepartmentCode": "会計システム部門コード"
+        },
         "customerList": {
             "customerCode": "顧客コード"
         },
         "supplierList": {
             "supplierCode": "仕入先コード"
+        },
+        "segmentList": {
+            "code": "セグメントコード"
         },
         "listProject": {
             "searchField": {
