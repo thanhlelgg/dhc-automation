@@ -124,7 +124,7 @@ export class GeneralPage {
     }
 
     @action('enterTextFieldByLabel')
-    public async enterTextFieldByLabel(label: string, text: string | undefined): Promise<void> {
+    public async enterTextFieldByLabel(label: string, text: any | undefined): Promise<void> {
         if (text) {
             await gondola.enter(this.textFieldByLabel.format(label), text);
         }
@@ -137,7 +137,7 @@ export class GeneralPage {
     }
 
     @action('enterTextAreaByLabel')
-    public async enterTextAreaByLabel(label: string, text: string | undefined): Promise<void> {
+    public async enterTextAreaByLabel(label: string, text: any | undefined): Promise<void> {
         if (text) {
             await gondola.enter(this.textAreaByLabel.format(label), text);
         }
