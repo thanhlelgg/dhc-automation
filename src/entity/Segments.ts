@@ -8,6 +8,9 @@ export class Segments {
     @Column('text')
     code: string | undefined;
 
+    @Column('text')
+    name: string | undefined;
+
     @Column('tinyint')
     is_deleted: string | undefined;
 }

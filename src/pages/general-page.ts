@@ -24,7 +24,7 @@ export class GeneralPage {
     @locator
     protected invalidFeedBackByFieldLabel = "//div[label[text()='{0}']]//div[@class='invalid-feedback']";
     @locator
-    protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text']";
+    protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text' or @type='number']";
     @locator
     protected textFieldByPlaceHolder = "//input[@type='text' and @placeholder='{0}']";
     @locator
@@ -34,9 +34,14 @@ export class GeneralPage {
     @locator
     protected radioButtonByLabel = "//div[label[text()='{0}']]//label[input[@type='radio']]";
     @locator
-    protected radioButtonOptionByLabel = "//div[label[text()='{0}']]//label[input[@type='radio'] and text()='{1}']";
+    protected radioButtonOptionByLabel =
+        "//div[label[text()='{0}']]//label[(input[@type='radio'] or ./preceding-sibling::input[@type='radio']) and text()='{1}']";
     @locator
-    protected moduleTitle = "//h5[@class='modal-title' and text()='{0}']";
+    protected modalDialog = { xpath: "//div[@class='modal']" };
+    @locator
+    protected modalTitle = { xpath: "//h5[@class='modal-title']" };
+    @locator
+    protected modalTitleByText = "//h5[@class='modal-title' and text()='{0}']";
     @locator
     protected closeModuleButtonByName = "//div[h5[text()='{0}']]//span[text()='×']";
     @locator
@@ -55,7 +60,7 @@ export class GeneralPage {
     protected backButton = `//a[contains(.,'${this.translator.backButton}')]`;
     @locator
     protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
-    
+
     @locator
     protected searchResultText = `//div[@class='paginator']//p`;
     @locator
@@ -98,9 +103,9 @@ export class GeneralPage {
     }
 
     @action('enterTextFieldByLabel')
-    public async enterTextFieldByLabel(label: string, text: string): Promise<void> {
+    public async enterTextFieldByLabel(label: string, text: any): Promise<void> {
         const locator = Utilities.formatString(this.textFieldByLabel, label);
-        await gondola.enter(locator, text);
+        await gondola.enter(locator, text.toString());
     }
 
     @action('getTextFieldValueByLabel')
@@ -126,6 +131,7 @@ export class GeneralPage {
         const locator = Utilities.formatString(this.textFieldByLabel, label);
         await gondola.waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
         await gondola.click(locator);
+        await gondola.waitForElement(this.modalTitle);
     }
 
     @action('click outside textfield')
@@ -136,7 +142,7 @@ export class GeneralPage {
 
     @action('doesModalTitleDisplay')
     public async doesModalTitleDisplay(name: string, expected = true): Promise<boolean> {
-        const locator = Utilities.formatString(this.moduleTitle, name);
+        const locator = Utilities.formatString(this.modalTitleByText, name);
         if (expected) {
             await gondola.waitUntilElementVisible(locator, Constants.MEDIUM_TIMEOUT);
         } else {
@@ -296,21 +302,20 @@ export class GeneralPage {
 
     @action('verify page display by url')
     public async verifyPageDisplayByUrl(pageUrl: string): Promise<boolean> {
-        let currentUrl = await gondola.getCurrentUrl();
+        const currentUrl = await gondola.getCurrentUrl();
         return Utilities.isTextEqual(currentUrl, pageUrl);
     }
 
     @action('get number of search result resords')
     public async getNumberOfSearchResultRecords(): Promise<number> {
         const resultString = await gondola.getText(this.searchResultText);
-       return Utilities.getNumberOfSearchResultRecords(resultString);
+        return Utilities.getNumberOfSearchResultRecords(resultString);
     }
-    
+
     @action('get number of search result pages')
     public async getNumberOfSearchResultPages(): Promise<number> {
         const resultString = await gondola.getText(this.searchResultText);
         return Utilities.getNumberOfSearchResultPages(resultString);
-
     }
 
     public async doesRadioButtonOptionsExist(label: string, options: string[]): Promise<boolean> {
@@ -347,7 +352,39 @@ export class GeneralPage {
 
     public async getTextInputGroupByName(name: string): Promise<string> {
         return await gondola.getControlProperty(this.inputGroupByName.format(name), 'value');
+    }
 
+    @action('does text field by label display')
+    public async doesTextfieldByLabelDisplay(label: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.textFieldByLabel, label);
+        return await gondola.doesControlDisplay(locator);
+    }
+
+    @action('does selector field by label display')
+    public async doesSelectorfieldByLabelDisplay(label: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.selectorByLabel, label);
+        return await gondola.doesControlDisplay(locator);
+    }
+
+    public async goBack(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.backButton);
+        await gondola.click(this.backButton);
+        await gondola.waitForDisappear(this.backButton);
+    }
+
+    /**
+     * Set state of checkbox
+     * @param locator of checkbox, it should be input tag
+     * @param state boolean, check or uncheck
+     * @param locator of checkbox's label: click on label instead of the checkbox for some special cases
+     */
+    @action('set state checkbox')
+    public async setStateCheckbox(checkbox: ILocator, state: boolean, checkboxLabel?: ILocator): Promise<void> {
+        const checkboxStatus = await gondola.doesCheckboxChecked(checkbox);
+        if (state != checkboxStatus) {
+            if (checkboxLabel) await gondola.click(checkboxLabel);
+            else await gondola.click(checkbox);
+        }
     }
 }
 export default new GeneralPage();

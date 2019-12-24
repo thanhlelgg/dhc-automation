@@ -4,6 +4,7 @@ export class Constants {
     public static translator = Translate.getTranslator();
     public static readonly url = 'https://dhcdms.digitalhearts.com/language/ja_JP';
     public static readonly addProjectUrl = 'https://dhcbms.digitalhearts.com/projects/add';
+    public static readonly itemsUrl = 'https://dhcbms.digitalhearts.com/items';
     public static readonly VERY_SHORT_TIMEOUT = 2;
     public static readonly SHORT_TIMEOUT = 5;
     public static readonly MEDIUM_TIMEOUT = 30;

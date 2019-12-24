@@ -10,6 +10,7 @@ import { Items } from '../entity/Items';
 import { CustomerMagnifications } from '../entity/CustomerMagnifications';
 import { CustomerUnitPrices } from '../entity/CustomerUnitPrices';
 import { Projects } from '../entity/Projects';
+import { Utilities } from '../common/utilities';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -187,6 +188,14 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get a random existed Segments from the database
+     */
+    public static async getExistedSegment(): Promise<Segments> {
+        const segments = await this.getActiveSegments();
+        return segments[Utilities.getRandomNumber(0, segments.length - 1)];
+    }
+
+    /**
      * Get existed code of worker from the database
      */
     public static async getExistedWorkerCode(): Promise<string> {
@@ -208,6 +217,18 @@ export class DatabaseHelper {
         const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
         const items = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Items, alias, query);
         return items;
+    }
+
+    /**
+     * Get existed code of item from the database
+     */
+    public static async getExistedItem(): Promise<Items> {
+        const activeItems: Items[] = await DatabaseHelper.getActiveItems();
+        if (activeItems && activeItems.length > 0) {
+            return activeItems[Utilities.getRandomNumber(0, activeItems.length - 1)];
+        } else {
+            throw new Error('There is no available Items');
+        }
     }
 
     /**
@@ -250,18 +271,13 @@ export class DatabaseHelper {
      * Get Projects by Accuracy, etc. (will add more)
      * @param accuracy (hight, middle, low)
      */
-    public static async getProjectsBy(filter: {
-        accuracy?: string,
-        tag?: string
-    }): Promise<Projects[]> {
+    public static async getProjectsBy(filter: { accuracy?: string; tag?: string }): Promise<Projects[]> {
         const alias = 'projects';
         let query = `${alias}.number IS NOT NULL`;
 
-        if (filter.accuracy)
-            query += ` AND ${alias}.accuracy = '${filter.accuracy.toLowerCase()}'`;
-        if (filter.tag)
-            query += ` AND ${alias}.tag LIKE '%${filter.tag.toLowerCase()}%'`;
-            
+        if (filter.accuracy) query += ` AND ${alias}.accuracy = '${filter.accuracy.toLowerCase()}'`;
+        if (filter.tag) query += ` AND ${alias}.tag LIKE '%${filter.tag.toLowerCase()}%'`;
+
         const projects = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Projects, alias, query);
         return projects;
     }
