@@ -1,5 +1,6 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
+import searchModalWindows from '../../pages/search-modal-windows';
 import { Constants } from '../../common/constants';
 import setup from './results-base-setup';
 import { ResultsBaseField } from '../../models/enum-class/project-results-base-field';
@@ -30,7 +31,7 @@ TestCase('BMS-53. 案件:案件作成:出来高明細:品目:品目の検索お�
     gondola.report(`Step 3. 出来高明細行の「品目」テキストボックスの枠内をクリックする。`);
     await addProjectPage.clickResultsBaseItemTextfield(randomRole);
     gondola.report(`VP. 品目検索のモーダルウィンドウが起動すること。`);
-    const isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE);
+    const isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE);
     await gondola.checkEqual(isModuleDisplayed, true, 'Search Item modal title should be displayed');
 
     gondola.report(`Step 4. 品目のデータ表示を確認する。`);
@@ -38,17 +39,17 @@ TestCase('BMS-53. 案件:案件作成:出来高明細:品目:品目の検索お�
     gondola.checkEqual(await addProjectPage.doesItemsDisplayCorrect(), true, 'Item should be displayed correctly');
 
     gondola.report(`Step 5. 検索条件欄には品目コード又は品目名の一部を入力する。`);
-    let randomResult = await addProjectPage.getOneResultItemAllColumns();
+    let randomResult = await searchModalWindows.getOneResultItemAllColumns();
     gondola.report(`Step 6. 検索結果を確認する。`);
-    const doesFilteringWorkCorrectly = await addProjectPage.filterItemsAndVerifyResult(randomResult, true);
+    const doesFilteringWorkCorrectly = await searchModalWindows.filterItemsAndVerifyResult(randomResult, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに検索(部分一致)できること。`);
     gondola.report(`VP. 各結果行で品目コード、又は品目名は入力したフィールドと一致すること。`);
     await gondola.checkEqual(doesFilteringWorkCorrectly, true, 'Filtering should be working correctly');
 
     gondola.report(`Step 7. 任意の検索結果を選択する。`);
-    randomResult = await addProjectPage.getOneResultItemAllColumns();
+    randomResult = await searchModalWindows.getOneResultItemAllColumns();
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
+    await searchModalWindows.selectSearchResult(randomResultName, SearchResultColumn.NAME);
     gondola.report(`VP. 案件登録画面に戻り、選択した品目名が表示されること。`);
     const inputtedText = await addProjectPage.getResultsBaseItemTextfieldValue(randomRole);
     await gondola.checkEqual(inputtedText, randomResultName, 'Item should be selected');
@@ -58,19 +59,19 @@ TestCase('BMS-54. 案件:案件作成:出来高明細:品目:モーダルウィ�
     gondola.report(`Step 3. 「出来高明細」の「品目」テキストボックスの枠内をクリックする。`);
     await addProjectPage.clickResultsBaseItemTextfield(randomRole);
     gondola.report(`VP. 品目検索のモーダルウィンドウが起動すること。`);
-    let isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE);
+    let isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE);
     await gondola.checkEqual(isModuleDisplayed, true, 'Search item modal title should be displayed');
 
     gondola.report(`Step 3. 「×」をクリックする。`);
     await addProjectPage.closeModalWindowByName(SEARCH_ITEM_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE, false);
+    isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search item modal title should not be displayed');
 
     gondola.report(`Step 4. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
     await addProjectPage.clickResultsBaseItemTextfield(randomRole);
     await addProjectPage.clickOutsideOfWindowModal(SEARCH_ITEM_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE, false);
+    isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search item modal title should not be displayed');
 });

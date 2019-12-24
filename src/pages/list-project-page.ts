@@ -78,19 +78,19 @@ export class ListProjectPage extends GeneralPage {
     @locator
     protected resultTable = `//div[@id='data-table']`;
 
-    private async selectCustomer(customerName: string) {
+    private async selectCustomer(customerName: string): Promise<void> {
         await gondola.click(this.spanSelectCustomer);
         await gondola.enter(this.tbSelectCustomer, customerName);
         await gondola.click(this.liCustomerResult(customerName));
     }
 
-    public async clearSelectedCustomer() {
+    public async clearSelectedCustomer(): Promise<void> {
         await gondola.click(this.btnClearSelectedCustomer);
         await gondola.click(this.spanSelectCustomer);
     }
 
     public async getCurrentSelectedCustomer(): Promise<string> {
-        return gondola.getText(this.spanSelectedCustomer);
+        return await gondola.getText(this.spanSelectedCustomer);
     }
 
     @action('search project')
@@ -226,7 +226,7 @@ export class ListProjectPage extends GeneralPage {
         let results: string[] = [];
 
         for (let i = 1; i <= numOfPage; i++) {
-            let resultsInPage = await this.getResultsOnOneColumn(resultColumn);
+            const resultsInPage = await this.getResultsOnOneColumn(resultColumn);
             results = results.concat(resultsInPage);
 
             // click next page

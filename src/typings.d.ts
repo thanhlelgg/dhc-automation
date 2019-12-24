@@ -159,7 +159,7 @@ declare module 'gondolajs' {
          * @param control
          * @param timeOut
          */
-        waitForElementSoftly(control: any, timeOut: number): Promise<void>;
+        waitForElementSoftly(control: any, timeOut?: number): Promise<void>;
 
         /**
          * Wait until element removed from DOM, don't throw exception if it's not

@@ -17,6 +17,7 @@ export class Constants {
     public static readonly EXAMPLE_DEFAULT_DATE_SHORT = '2019-1-1';
     public static readonly EXAMPLE_DATE_DIVIDED_BY_DOT = '2019.1.1';
     public static readonly EXAMPLE_DATE_DIVIDED_BY_SLASH = '2019/1/1';
+    public static readonly DEFAULT_END_DATE = '9999-12-31';
 
     //#region Input data
     public static adminUserName = 'logigear_admin';

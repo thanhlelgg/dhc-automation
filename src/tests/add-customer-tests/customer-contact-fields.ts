@@ -9,8 +9,8 @@ TestModule('Add Customer - Customer contact fields validation');
 const ZIPCODE_TEXTFIELD_PLACEHOLDER = Constants.translator.fieldPlaceHolder.addCustomer.zipcode;
 const ADDRESS1_TEXTFIELD_PLACEHOLDER = Constants.translator.fieldPlaceHolder.addCustomer.address1;
 const ADDRESS2_TEXTFIELD_PLACEHOLDER = Constants.translator.fieldPlaceHolder.addCustomer.address2;
-const TEL_TEXTFIELD_LABEL = 'TEL';
-const FAX_TEXTFIELD_LABEL = 'FAX';
+const TEL_TEXTFIELD_LABEL = Constants.translator.fieldName.addCustomer.tel;
+const FAX_TEXTFIELD_LABEL = Constants.translator.fieldName.addCustomer.fax;
 const VALID_NOC_ZIPCODE = 10;
 const VALID_NOC_ADDRESS = 100;
 const VALID_NOC_CONTACT_NUMBER = 30;
@@ -140,6 +140,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
     gondola.report(`Step 2. 「TEL」で30文字を入力する。`);
     const maximumCharactersName = Utilities.getRandomText(VALID_NOC_CONTACT_NUMBER);
     await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, maximumCharactersName);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 30文字まで入力できること。`);
     await gondola.checkEqual(
         await addCustomerPage.getTextFieldValueByLabel(TEL_TEXTFIELD_LABEL),
@@ -149,6 +150,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
 
     gondola.report(`Step 3. 「TEL」で31文字を入力する。`);
     await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, maximumCharactersName + 'a');
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 31目の文字まで入力できないこと。`);
     await gondola.checkEqual(
         await addCustomerPage.getTextFieldValueByLabel(TEL_TEXTFIELD_LABEL),
@@ -158,6 +160,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
 
     gondola.report(`Step 4. 「TEL」で半角英字を入力し、「保存」ボタンをクリックする。`);
     await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -167,7 +170,8 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
     );
 
     gondola.report(`Step 5. 「TEL」で全角英数字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
+    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.fullSizeAlphaNumericString);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -178,6 +182,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
 
     gondola.report(`Step 6. 「TEL」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
     await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.hiraganaKatakanaString);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -188,6 +193,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
 
     gondola.report(`Step 7. 「TEL」で「+」「-」以外の記号を入力し、「保存」ボタンをクリックする。`);
     await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.symbolString);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -198,11 +204,12 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
 
     gondola.report(`Step 8. 「TEL」で半角数値と「+」「-」を入力し、「保存」ボタンをクリックする。`);
     await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.validContactNumber);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されないこと。`);
     await gondola.checkEqual(
         await addCustomerPage.getInvalidFeedBack(TEL_TEXTFIELD_LABEL),
         '',
-        'Invalid contact numbers feedback should be displayed',
+        'Invalid contact numbers feedback should not be displayed',
     );
 });
 
@@ -229,6 +236,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
 
     gondola.report(`Step 4. 「FAX」で半角英字を入力し、「保存」ボタンをクリックする。`);
     await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -239,6 +247,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
 
     gondola.report(`Step 5. 「FAX」で全角英数字を入力し、「保存」ボタンをクリックする。`);
     await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -249,6 +258,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
 
     gondola.report(`Step 6. 「FAX」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
     await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.hiraganaKatakanaString);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -259,6 +269,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
 
     gondola.report(`Step 7. 「FAX」で「+」「-」以外の記号を入力し、「保存」ボタンをクリックする。`);
     await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.symbolString);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
     await gondola.checkEqual(
@@ -269,10 +280,11 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
 
     gondola.report(`Step 8. 「FAX」で半角数値と「+」「-」を入力し、「保存」ボタンをクリックする。`);
     await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.validContactNumber);
+    await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されないこと。`);
     await gondola.checkEqual(
         await addCustomerPage.getInvalidFeedBack(FAX_TEXTFIELD_LABEL),
         '',
-        'Invalid contact numbers feedback should be displayed',
+        'Invalid contact numbers feedback should not be displayed',
     );
 });

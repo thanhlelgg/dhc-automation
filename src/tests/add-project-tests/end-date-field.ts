@@ -10,6 +10,8 @@ const PROJECT_NUMBER_FIELD_NAME = Constants.translator.fieldName.addProject.numb
 const START_DATE_FIELD_NAME = Constants.translator.fieldName.addProject.startDate;
 const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
 const END_DATE_FIELD_NAME = Constants.translator.fieldName.addProject.endDate;
+const INVALID_DATE_ERROR_MESSAGE = Constants.translator.invalidFeedback.invalidDateFormat;
+const END_DATE_LESSER_THAN_START_DATE_ERROR_MESSAGE = Constants.translator.invalidFeedback.endDateLesserThanStartDate;
 
 TestModule('Add Project - End Date field validation');
 
@@ -121,5 +123,63 @@ TestCase('BMS-22. 案件:案件作成:案件終了日:「yyyy/mm/dd」形式で�
         Constants.EXAMPLE_DEFAULT_DATE,
         displayedDate,
         'Date should be selected correctly in the textfield',
+    );
+});
+
+TestCase('BMS-166. 案件:案件作成:案件開始日:下限値・上限値', async () => {
+    gondola.report(`Step 2. 案件終了日で「1899-12-31」を入力し、「保存」ボタンをクリックする。`);
+    await addProjectPage.enterTextFieldByLabel(END_DATE_FIELD_NAME, '1899-12-31');
+    await addProjectPage.saveNewProject();
+    gondola.report(`VP. 入力フィールドの下にエラー「正しい日付を入力してください」が表示されること。`);
+    //BUG: no error message presents
+    await gondola.checkEqual(
+        INVALID_DATE_ERROR_MESSAGE,
+        await addProjectPage.getInvalidFeedBack(END_DATE_FIELD_NAME),
+        'Invalid date error message should be displayed',
+    );
+
+    gondola.report(`Step 3. 案件終了日で「2100-01-01」を入力し、「保存」ボタンをクリックする。`);
+    await addProjectPage.enterTextFieldByLabel(END_DATE_FIELD_NAME, '2100-01-01');
+    await addProjectPage.saveNewProject();
+    gondola.report(`VP. 入力フィールドの下にエラー「正しい日付を入力してください」が表示されること。`);
+    //BUG: no error message presents
+    await gondola.checkEqual(
+        INVALID_DATE_ERROR_MESSAGE,
+        await addProjectPage.getInvalidFeedBack(END_DATE_FIELD_NAME),
+        'Invalid date error message should be displayed',
+    );
+
+    gondola.report(`Step 4. 案件終了日で「1900-01-01」を入力し、「保存」ボタンをクリックする。`);
+    await addProjectPage.enterTextFieldByLabel(END_DATE_FIELD_NAME, '1900-01-01');
+    await addProjectPage.saveNewProject();
+    gondola.report(`VP. 入力フィールドの下にエラー「正しい日付を入力してください」が表示されること。`);
+    await gondola.checkEqual(
+        '',
+        await addProjectPage.getInvalidFeedBack(END_DATE_FIELD_NAME),
+        'Invalid date error message should not be displayed',
+    );
+
+    gondola.report(`Step 5. 案件終了日で「2099-12-31」を入力し、「保存」ボタンをクリックする。`);
+    await addProjectPage.enterTextFieldByLabel(END_DATE_FIELD_NAME, '2099-12-31');
+    await addProjectPage.saveNewProject();
+    gondola.report(`VP. 入力フィールドの下にエラー「正しい日付を入力してください」が表示されること。`);
+    await gondola.checkEqual(
+        '',
+        await addProjectPage.getInvalidFeedBack(END_DATE_FIELD_NAME),
+        'Invalid date error message should not be displayed',
+    );
+});
+
+TestCase('BMS-167. 案件:案件作成:案件開始日:下限値・上限値', async () => {
+    gondola.report(`Step 2. 案件終了日で開始日未満の値を入力し、「保存」ボタンをクリックする。`);
+    await addProjectPage.enterTextFieldByLabel(START_DATE_FIELD_NAME, '2020-12-12');
+    await addProjectPage.enterTextFieldByLabel(END_DATE_FIELD_NAME, '2019-12-12');
+    await addProjectPage.saveNewProject();
+    gondola.report(`VP. 入力フィールドの下にエラー「開始日以降の日付を入力してください」が表示されること。`);
+    //BUG: no error message presents
+    await gondola.checkEqual(
+        END_DATE_LESSER_THAN_START_DATE_ERROR_MESSAGE,
+        await addProjectPage.getInvalidFeedBack(END_DATE_FIELD_NAME),
+        'Invalid end date error message should be displayed',
     );
 });

@@ -1,7 +1,13 @@
 import { action, gondola, locator, page } from 'gondolajs';
 import { Utilities } from '../common/utilities';
 import { Constants } from '../common/constants';
-import { ProjectDetailInfo, ProjectOverviewInfo, ProjectResultBaseInfo, SingleResource } from '../models/project-info';
+import {
+    ProjectDetailInfo,
+    ProjectOverviewInfo,
+    ProjectResultBaseInfo,
+    SingleResource,
+    ResultBaseUnitPrices,
+} from '../models/project-info';
 import { FilterType } from '../models/enum-class/filter-field-type';
 import { SearchResultColumn } from '../models/enum-class/search-result-column';
 import { DatabaseHelper } from '../helper/database-helpers';
@@ -9,6 +15,7 @@ import { FlagsCollector, LoggingType } from '../helper/flags-collector';
 import { ResultsBaseField } from '../models/enum-class/project-results-base-field';
 import { CustomerMagnifications } from '../entity/CustomerMagnifications';
 import { ElementType } from '../models/enum-class/element-type';
+import searchModalWindows from './search-modal-windows';
 import '@src/string.extensions';
 import { RegistrationPage } from './registration-page';
 
@@ -16,7 +23,7 @@ import { RegistrationPage } from './registration-page';
 export class AddProjectPage extends RegistrationPage {
     //#region project result
     @locator
-    protected subTitleProjectResult = `//div[.='${this.translator.sectionName.volumeDetail}']`;
+    protected subTitleProjectResult = `//div[.='${this.translator.sectionName.addProject.volumeDetail}']`;
     protected roleCheckboxStr = "//div[contains(@class, 'custom-checkbox')]/label[text()='{0}']";
     protected roleCheckboxInput = "//div[label[text()='{0}']]//input[@type='checkbox']";
     protected roleLabels = "//div[@id='project-result-bases']/div/label";
@@ -57,15 +64,9 @@ export class AddProjectPage extends RegistrationPage {
     //#region Search
     protected searchResultByTabulatorFieldAndIndex =
         "(//div[@class='tabulator-table']//div[@tabulator-field='{0}'])[{1}]";
+
     @locator
     protected itemFilter = "//input[@id='modal-items-filter']";
-    @locator
-    protected itemTable = { id: 'modal-items-table' };
-    @locator
-    protected modalWindowByName = "//div[@class='modal-content' and .//h5[text()='{0}']]";
-    @locator
-    protected modalWindowLoading =
-        "//div[@class='modal-content' and .//h5[text()='{0}']]//div[contains(@id, 'loading')]";
     //#endregion
 
     @locator
@@ -80,21 +81,17 @@ export class AddProjectPage extends RegistrationPage {
     protected searchCustomerField = { id: 'search-business-customers' };
     @locator
     protected searchCustomerButton = { id: 'search-business-customers-button' };
-    @locator
-    protected customerTable = { id: 'modal-business-customers-table' };
     //#endregion
 
     //#region search department
     @locator
     protected searchDepartmentField = { id: 'search-departments' };
-    @locator
-    protected departmentTable = { id: 'modal-departments-table' };
     //#endregion
 
     //#region search worker
     @locator
     protected searchWorkerField = { id: 'search-workers' };
-    //#endregion
+    // //#endregion
 
     //#region dates
     @locator
@@ -392,14 +389,14 @@ export class AddProjectPage extends RegistrationPage {
 
     public async selectRandomCustomer(): Promise<string> {
         await gondola.click(this.searchCustomerField);
-        return await this.selectRandomSearchResult(SearchResultColumn.CODE);
+        return await searchModalWindows.selectRandomSearchResult(SearchResultColumn.CODE);
     }
 
     @action('searchCustomerByName')
     public async selectCustomerByName(customerName: string): Promise<void> {
         await gondola.click(this.searchCustomerField);
-        await this.filterResult(customerName, FilterType.CUSTOMER_NAME);
-        await this.selectSearchResult(customerName, SearchResultColumn.NAME);
+        await searchModalWindows.filterResult(customerName, FilterType.CUSTOMER_NAME);
+        await searchModalWindows.selectSearchResult(customerName, SearchResultColumn.NAME);
     }
 
     @action('searchCustomerByCode')
@@ -411,22 +408,29 @@ export class AddProjectPage extends RegistrationPage {
             await gondola.executeClick(this.searchCustomerField);
         }
 
-        await this.filterResult(customerCode, FilterType.CUSTOMER_CODE);
-        await this.selectSearchResult(customerCode, SearchResultColumn.CODE);
+        await searchModalWindows.filterResult(customerCode, FilterType.CUSTOMER_CODE);
+        await searchModalWindows.selectSearchResult(customerCode, SearchResultColumn.CODE);
     }
 
     @action('searchDepartment')
     public async selectDepartment(department: string, byColumn?: SearchResultColumn): Promise<void> {
         await gondola.click(this.searchDepartmentField);
-        await this.filterResult(department, FilterType.DEPARTMENT);
-        await this.selectSearchResult(department, byColumn);
+        await searchModalWindows.filterResult(department, FilterType.DEPARTMENT);
+        await searchModalWindows.selectSearchResult(department, byColumn);
     }
 
     @action('searchWorker')
     public async selectWorker(worker: string, byColumn?: SearchResultColumn): Promise<void> {
         await gondola.click(this.searchWorkerField);
-        await this.filterResult(worker, FilterType.WORKER);
-        await this.selectSearchResult(worker, byColumn);
+        await searchModalWindows.filterResult(worker, FilterType.WORKER);
+        await searchModalWindows.selectSearchResult(worker, byColumn);
+    }
+
+    @action('searchSegment')
+    public async selectSegment(segment: string, byColumn?: SearchResultColumn): Promise<void> {
+        await gondola.click(this.searchSegmentField);
+        await searchModalWindows.filterResult(segment, FilterType.SEGMENTS);
+        await searchModalWindows.selectSearchResult(segment, byColumn);
     }
 
     @action('clickResultsBaseItemTextfield')
@@ -451,14 +455,14 @@ export class AddProjectPage extends RegistrationPage {
         await gondola.click(searchItemXpath);
         await gondola.waitUntilElementVisible(this.itemFilter, Constants.LONG_TIMEOUT);
         await gondola.enter(this.itemFilter, item);
-        await this.selectSearchResult(item);
+        await searchModalWindows.selectSearchResult(item);
     }
 
     @action('searchLab')
     public async searchLab(lab: string, byColumn?: SearchResultColumn): Promise<void> {
         await gondola.click(this.searchLabField);
-        await this.filterResult(lab, FilterType.LAB);
-        await this.selectSearchResult(lab, byColumn);
+        await searchModalWindows.filterResult(lab, FilterType.LAB);
+        await searchModalWindows.selectSearchResult(lab, byColumn);
     }
 
     @action('checkProjectFormOptions')
@@ -539,6 +543,31 @@ export class AddProjectPage extends RegistrationPage {
             'disabled',
         );
         return !(isDisabled === 'true');
+    }
+
+    @action('enter unit prices')
+    public async enterUnitPrices(role: string, unitPrices: ResultBaseUnitPrices): Promise<void> {
+        await gondola.controlPopupAndEnterText(
+            Utilities.formatString(this.unitPriceWeekdayByRoleStr, role),
+            unitPrices.unitPriceWeekday,
+        );
+        await gondola.enter(
+            Utilities.formatString(this.unitPriceWeekdayOTByRoleStr, role),
+            unitPrices.unitPriceWeekdayOT,
+        );
+        await gondola.enter(Utilities.formatString(this.unitPriceHolidayByRoleStr, role), unitPrices.unitPriceHoliday);
+        await gondola.enter(
+            Utilities.formatString(this.unitPriceWeekdayLateByRoleStr, role),
+            unitPrices.unitPriceWeekdayLate,
+        );
+        await gondola.enter(
+            Utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, role),
+            unitPrices.unitPriceWeekdayLateOT,
+        );
+        await gondola.enter(
+            Utilities.formatString(this.unitPriceHolidayLateByRoleStr, role),
+            unitPrices.unitPriceHolidayLate,
+        );
     }
 
     @action('inputProjectResultBases')
@@ -702,19 +731,6 @@ export class AddProjectPage extends RegistrationPage {
         }
     }
 
-    @action('wait for search window fully loaded')
-    public async waitForLoadingIconDisappear(modalName: string): Promise<void> {
-        const locator = Utilities.formatString(this.modalWindowLoading, modalName);
-        await gondola.waitUntilElementNotVisible(locator, Constants.LONG_TIMEOUT);
-    }
-
-    @action('clickOutsideOfWindowModal')
-    public async clickOutsideOfWindowModal(modalName: string): Promise<void> {
-        const locator = Utilities.formatString(this.modalWindowByName, modalName);
-        await this.waitForLoadingIconDisappear(modalName);
-        await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
-    }
-
     @action('saveNewProject')
     public async saveNewProject(): Promise<void> {
         await gondola.click(this.saveButton);
@@ -742,8 +758,8 @@ export class AddProjectPage extends RegistrationPage {
                 expectedLabCodes.push(lab.code);
             }
         });
-        await this.scrollToRandomResult(expectedLabs.length);
-        const actualDisplayingLabCodes = await this.getAllItemsOneColumn(SearchResultColumn.FULL_CODE);
+        await searchModalWindows.scrollToRandomResult(expectedLabs.length);
+        const actualDisplayingLabCodes = await searchModalWindows.getAllItemsOneColumn(SearchResultColumn.FULL_CODE);
         return Utilities.isSubset(expectedLabCodes, actualDisplayingLabCodes);
     }
 
@@ -756,8 +772,10 @@ export class AddProjectPage extends RegistrationPage {
                 expectedBusinessCustomerCodes.push(businessCustomer.cd);
             }
         });
-        await this.scrollToRandomResult(expectedActiveBusinessCustomers.length);
-        const actualDisplayingBusinessCustomerCodes = await this.getAllItemsOneColumn(SearchResultColumn.CODE);
+        await searchModalWindows.scrollToRandomResult(expectedActiveBusinessCustomers.length);
+        const actualDisplayingBusinessCustomerCodes = await searchModalWindows.getAllItemsOneColumn(
+            SearchResultColumn.CODE,
+        );
         return Utilities.isSubset(expectedBusinessCustomerCodes, actualDisplayingBusinessCustomerCodes);
     }
 
@@ -770,8 +788,8 @@ export class AddProjectPage extends RegistrationPage {
                 expectedDepartmentCodes.push(department.cd);
             }
         });
-        await this.scrollToRandomResult(expectedActiveDepartments.length);
-        const actualDisplayingDepartmentCodes = await this.getAllItemsOneColumn(SearchResultColumn.CODE);
+        await searchModalWindows.scrollToRandomResult(expectedActiveDepartments.length);
+        const actualDisplayingDepartmentCodes = await searchModalWindows.getAllItemsOneColumn(SearchResultColumn.CODE);
         return Utilities.isSubset(expectedDepartmentCodes, actualDisplayingDepartmentCodes);
     }
 
@@ -784,8 +802,8 @@ export class AddProjectPage extends RegistrationPage {
                 expectedWorkerCodes.push(worker.cd);
             }
         });
-        await this.scrollToRandomResult(expectedActiveWorkers.length);
-        const actualDisplayingWorkerCodes = await this.getAllItemsOneColumn(SearchResultColumn.CODE);
+        await searchModalWindows.scrollToRandomResult(expectedActiveWorkers.length);
+        const actualDisplayingWorkerCodes = await searchModalWindows.getAllItemsOneColumn(SearchResultColumn.CODE);
         return Utilities.isSubset(expectedWorkerCodes, actualDisplayingWorkerCodes);
     }
 
@@ -798,14 +816,30 @@ export class AddProjectPage extends RegistrationPage {
                 expectedItemCodes.push(item.cd);
             }
         });
-        await this.scrollToRandomResult(expectedActiveItems.length);
-        const actualDisplayingItemCodes = await this.getAllItemsOneColumn(SearchResultColumn.CODE);
+        await searchModalWindows.scrollToRandomResult(expectedActiveItems.length);
+        const actualDisplayingItemCodes = await searchModalWindows.getAllItemsOneColumn(SearchResultColumn.CODE);
         return Utilities.isSubset(expectedItemCodes, actualDisplayingItemCodes);
     }
 
     @action('waitForTableUpdated')
     public async waitForTableUpdated(): Promise<void> {
         await gondola.waitUntilStalenessOfElement(this.searchResultRow);
+    }
+
+    @action('doesSegmentsDisplayCorrect')
+    public async doesSegmentsDisplayCorrect(): Promise<boolean> {
+        const expectedActiveSegments = await DatabaseHelper.getActiveSegments();
+        const expectedSegmentCodes: string[] = [];
+        expectedActiveSegments.forEach(segment => {
+            if (segment.code) {
+                expectedSegmentCodes.push(segment.code);
+            }
+        });
+        await searchModalWindows.scrollToRandomResult(expectedActiveSegments.length);
+        const actualDisplayingSegmentCodes = await searchModalWindows.getAllItemsOneColumn(
+            SearchResultColumn.FULL_CODE,
+        );
+        return Utilities.isSubset(expectedSegmentCodes, actualDisplayingSegmentCodes);
     }
 
     @action('doesProjectNameDisplayCorrect')
@@ -1044,6 +1078,21 @@ export class AddProjectPage extends RegistrationPage {
         return doesPeopleDisplayCorrect && doesTimeDisplayCorrect && doesTotalTimeDisplayCorrect;
     }
 
+    public async doesResultBaseUnitPricesDisplayCorrectly(
+        role: string,
+        unitPrices: ResultBaseUnitPrices,
+    ): Promise<boolean> {
+        return await this.doesUnitPricesOfProjectResultBaseDisplayCorrect(
+            role,
+            unitPrices.unitPriceWeekday,
+            unitPrices.unitPriceWeekdayOT,
+            unitPrices.unitPriceWeekdayLate,
+            unitPrices.unitPriceWeekdayLateOT,
+            unitPrices.unitPriceHoliday,
+            unitPrices.unitPriceHolidayLate,
+        );
+    }
+
     @action('doesUnitPricesOfProjectResultBaseDisplayCorrect')
     public async doesUnitPricesOfProjectResultBaseDisplayCorrect(
         role: string,
@@ -1054,6 +1103,7 @@ export class AddProjectPage extends RegistrationPage {
         priceHoliday: string,
         priceHolidayLate: string,
     ): Promise<boolean> {
+        await gondola.waitUntilTextAvailable(this.unitPriceWeekdayByRoleStr.format(role), Constants.VERY_SHORT_TIMEOUT);
         const isPriceWeekdayCorrect = Utilities.isTextEqual(
             await this.getTextBoxValue(Utilities.formatString(this.unitPriceWeekdayByRoleStr, role)),
             priceWeekday,

@@ -333,6 +333,17 @@ export class Utilities {
     public static compareArrays(array1: any[], array2: any[]): boolean {
         return array1.length === array2.length && array1.sort().every((value, index) => value === array2.sort()[index]);
     }
+
+    public static addDaysToDate(date: Date, days: number, returnFormat: string): string {
+        date.setDate(date.getDate() + days);
+        return moment(date).format(returnFormat);
+    }
+
+    public static getLaterDateOfTwoDates(date1: string, date2: string, format: string): string {
+        const laterDate =
+            moment(date1, format) >= moment(date2, format) ? moment(date1, format) : moment(date2, format);
+        return laterDate.format(format);
+    }
 }
 
 export class JsonUtility {

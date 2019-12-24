@@ -11,6 +11,7 @@ import { CustomerMagnifications } from '../entity/CustomerMagnifications';
 import { CustomerUnitPrices } from '../entity/CustomerUnitPrices';
 import { Projects } from '../entity/Projects';
 import { Utilities } from '../common/utilities';
+import { Constants } from '../common/constants';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -147,12 +148,45 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get a random Business customer from the database
+     */
+    public static async getRandomBusinessCustomer(): Promise<BusinessCustomers> {
+        const alias = 'businessCustomers';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
+        const orderBy = 'RAND()';
+        const customer = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, BusinessCustomers, alias, query, orderBy);
+        return customer;
+    }
+
+    /**
+     * Get a random Project from the database
+     */
+    public static async getRandomProject(): Promise<Projects> {
+        const alias = 'projects';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.number IS NOT NULL`;
+        const orderBy = 'RAND()';
+        const project = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, Projects, alias, query, orderBy);
+        return project;
+    }
+
+    /**
      * Get active Departments from the database
      */
     public static async getActiveDepartments(): Promise<Departments[]> {
         const alias = 'departments';
         const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
         const departments = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Departments, alias, query);
+        return departments;
+    }
+
+    /**
+     * Get active Departments from the database
+     */
+    public static async getRandomDepartment(): Promise<Departments> {
+        const alias = 'departments';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
+        const orderBy = 'RAND()';
+        const departments = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, Departments, alias, query, orderBy);
         return departments;
     }
 
@@ -193,6 +227,17 @@ export class DatabaseHelper {
     public static async getExistedSegment(): Promise<Segments> {
         const segments = await this.getActiveSegments();
         return segments[Utilities.getRandomNumber(0, segments.length - 1)];
+    }
+
+    /**
+     * Get a random Segments from the database
+     */
+    public static async getRandomSegments(): Promise<Segments> {
+        const alias = 'segments';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.code IS NOT NULL`;
+        const orderBy = 'RAND()';
+        const segments = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, Segments, alias, query, orderBy);
+        return segments;
     }
 
     /**
@@ -246,6 +291,41 @@ export class DatabaseHelper {
             orderBy,
         );
         return magnification;
+    }
+
+    /**
+     * Get a customer Magnification
+     * @param businessCustomerId
+     * @param startDate
+     * @param endDate
+     */
+    public static async getCustomerMagnifications(
+        businessCustomerId: string,
+        endDate: string,
+    ): Promise<CustomerMagnifications> {
+        const alias = 'customer_magnifications';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.business_customer_id = ${businessCustomerId} 
+            AND ${alias}.end_date = '${endDate}'`;
+        const unitPrice = await DatabaseHelper.getOne(DatabaseSchema.BUSINESS, CustomerMagnifications, alias, query);
+        return unitPrice;
+    }
+
+    /**
+     * GET a random Unit prices with valid information
+     */
+    public static async getRandomCustomerUnitPrices(): Promise<CustomerUnitPrices> {
+        const alias = 'customer_unit_prices';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.leader > 0 
+                        AND ${alias}.tester > 0 AND ${alias}.end_date = '${Constants.DEFAULT_END_DATE}'`;
+        const orderBy = 'RAND()';
+        const unitPrices = await DatabaseHelper.getOne(
+            DatabaseSchema.BUSINESS,
+            CustomerUnitPrices,
+            alias,
+            query,
+            orderBy,
+        );
+        return unitPrices;
     }
 
     /**

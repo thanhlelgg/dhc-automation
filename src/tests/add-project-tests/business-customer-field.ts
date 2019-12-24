@@ -1,5 +1,6 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addProjectPage from '../../pages/add-project-page';
+import searchModalWindows from '../../pages/search-modal-windows';
 import { Constants } from '../../common/constants';
 import setup from './add-project-setup';
 import { Utilities } from '../../common/utilities';
@@ -69,7 +70,7 @@ TestCase('BMS-3. 案件:案件作成:取引先:得意先の検索および結果
     gondola.report(`Step 2. 「取引先」テキストボックスの枠内をクリックする。`);
     await addProjectPage.clickTextFieldByLabel(BUSINESS_CUSTOMER_FIELD_NAME);
     gondola.report(`VP. 取引先検索のモーダルウィンドウが起動すること。`);
-    const isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
+    const isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
     await gondola.checkEqual(isModuleDisplayed, true, 'Search customer modal title should be displayed');
     gondola.report(`Step 3. 取引先のデータ表示を確認する`);
     // BUG: disabled item is till displayed
@@ -81,9 +82,9 @@ TestCase('BMS-3. 案件:案件作成:取引先:得意先の検索および結果
     );
 
     gondola.report(`Step 4. 取引先コード、取引先名、取引先担当名について、文字入力する。`);
-    let randomResult = await addProjectPage.getOneResultItemAllColumns();
+    let randomResult = await searchModalWindows.getOneResultItemAllColumns();
     gondola.report(`Step 5. 検索結果を確認する。`);
-    const doesFilteringWorkCorrectly = await addProjectPage.filterCustomerAndVerifyResult(randomResult, true);
+    const doesFilteringWorkCorrectly = await searchModalWindows.filterCustomerAndVerifyResult(randomResult, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに検索(部分一致)できること。`);
     gondola.report(
         `VP. AND検索で絞り込みができ、各結果行で取引先コード、取引先名、取引先担当名は入力したフィールドと一致すること。`,
@@ -92,9 +93,9 @@ TestCase('BMS-3. 案件:案件作成:取引先:得意先の検索および結果
     await gondola.checkEqual(doesFilteringWorkCorrectly, true, 'Filtering should be working correctly');
 
     gondola.report(`Step 6. 検索結果を確認する。`);
-    randomResult = await addProjectPage.getOneResultItemAllColumns();
+    randomResult = await searchModalWindows.getOneResultItemAllColumns();
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addProjectPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
+    await searchModalWindows.selectSearchResult(randomResultName, SearchResultColumn.NAME);
     gondola.report(`VP. 案件登録画面に戻り、選択した社名と担当名が表示されること。`);
     const inputtedText = await addProjectPage.getTextFieldValueByLabel(BUSINESS_CUSTOMER_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Customer should be selected');
@@ -116,19 +117,19 @@ TestCase('BMS-5. 案件:案件作成:取引先:モーダルウィンドウのク
     gondola.report(`Step 2. モーダルウィンドウを起動する`);
     await addProjectPage.clickTextFieldByLabel(BUSINESS_CUSTOMER_FIELD_NAME);
     gondola.report(`VP. モーダルウィンドウが起動すること。`);
-    let isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
+    let isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
     await gondola.checkEqual(isModuleDisplayed, true, 'Search customer modal title should be displayed');
 
     gondola.report(`Step 3.「×」をクリックする。`);
     await addProjectPage.closeModalWindowByName(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE, false);
+    isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search customer modal title should not be displayed');
 
     gondola.report(`Step 4. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
     await addProjectPage.clickTextFieldByLabel(BUSINESS_CUSTOMER_FIELD_NAME);
     await addProjectPage.clickOutsideOfWindowModal(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
-    isModuleDisplayed = await addProjectPage.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE, false);
+    isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE, false);
     await gondola.checkEqual(isModuleDisplayed, false, 'Search customer modal title should not be displayed');
 });

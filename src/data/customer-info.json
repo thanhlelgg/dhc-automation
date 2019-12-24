@@ -1,34 +1,89 @@
 {
     "overview": {
-        "requiredOnly": {
-            "classify": "顧客",
-            "code": "test code",
-            "name": "test name",
-            "fee_payer": "取引先",
-            "roundCode": "四捨五入",
-            "currency": "¥",
-            "closingDateGroup": "1",
-            "taxCalculationMethod": "請求書単位",
-            "billingBankAccountNumber": "test bank account number"
+        "supplier": {
+            "requiredOnly": {
+                "code": "test code",
+                "name": "test name",
+                "fee_payer": "取引先",
+                "roundCode": "四捨五入",
+                "currency": "¥",
+                "closingDateGroup": "1"
+            },
+            "allFields": {
+                "code": "test code",
+                "name": "test name",
+                "repDepartment": "test dep name",
+                "repName": "test rep name",
+                "lastBusinessDate": "2020/12/19",
+                "zipcode": "1234",
+                "address1": "Test address 1",
+                "address2": "Test address 2",
+                "tel": "+8190-000-0001",
+                "fax": "+8190-000-0002",
+                "mail": "test_email@logigear.com",
+                "fee_payer": "取引先",
+                "roundCode": "四捨五入",
+                "currency": "¥",
+                "closingDateGroup": "1",
+                "deliveryPlace": "test place",
+                "paymentCycle": "設定しない",
+                "note": "test note"
+            }
+        },
+        "customer": {
+            "requiredOnly": {
+                "code": "test code",
+                "name": "test name",
+                "fee_payer": "取引先",
+                "roundCode": "四捨五入",
+                "currency": "¥",
+                "closingDateGroup": "1",
+                "taxCalculationMethod": "請求書単位",
+                "billingBankAccountNumber": "bank account number"
+            },
+            "allFields": {
+                "code": "test code",
+                "name": "test name",
+                "repDepartment": "test dep name",
+                "repName": "test rep name",
+                "lastBusinessDate": "2020-12-19",
+                "zipcode": "1234",
+                "address1": "Test address 1",
+                "address2": "Test address 2",
+                "tel": "+8190-000-0001",
+                "fax": "+8190-000-0002",
+                "mail": "test_email@logigear.com",
+                "fee_payer": "取引先",
+                "roundCode": "四捨五入",
+                "currency": "¥",
+                "closingDateGroup": "1",
+                "taxCalculationMethod": "請求書単位",
+                "advanceReceivedAuxCode": "test ADRAC",
+                "accountReceivableAuxCode": "test ACRAC",
+                "salesAuxCd": "test SAC",
+                "collectCycle": "設定しない",
+                "billingBankAccountNumber": "bank account number",
+                "note": "test note"
+            }
         }
     },
     "unitPrices": {
         "record1": {
-            "startDate": "2019-12-12",
+            "startDate": "2019-11-11",
             "leader": 1,
             "tester": 1,
             "dispatch": 1
         },
         "record2": {
-            "startDate": "2019-10-10",
-            "leader": 1.5,
+            "startDate": "2050-12-12",
+            "leader": 1,
             "tester": 2,
-            "dispatch": 1.25
+            "dispatch": 3
         }
     },
     "customerMagnifications": {
         "record1": {
-            "startDate": "2019-12-12",
+            "startDate": "2019-09-09",
             "overtime": 1,
             "lateNight": 1,
             "lateNightOvertime": 1,
@@ -36,7 +91,7 @@
             "holiday_late_night": 1
         },
         "record2": {
-            "startDate": "2019-11-11",
+            "startDate": "2050-10-10",
             "overtime": 1.25,
             "lateNight": 1.5,
             "lateNightOvertime": 2,

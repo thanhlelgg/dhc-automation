@@ -109,6 +109,22 @@
         }
     },
     "projectResultBase": {
+        "unitPrices": {
+            "unitPriceWeekday": "2000",
+            "unitPriceWeekdayOT": "2400",
+            "unitPriceHoliday": "2400",
+            "unitPriceWeekdayLate": "2800",
+            "unitPriceWeekdayLateOT": "2000",
+            "unitPriceHolidayLate": "2400"
+        },
+        "emptyUnitPrices": {
+            "unitPriceWeekday": "",
+            "unitPriceWeekdayOT": "",
+            "unitPriceHoliday": "",
+            "unitPriceWeekdayLate": "",
+            "unitPriceWeekdayLateOT": "",
+            "unitPriceHolidayLate": ""
+        },
         "oneEmptyRecord": [
             {
                 "role": "",

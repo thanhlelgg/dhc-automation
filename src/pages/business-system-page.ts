@@ -45,6 +45,8 @@ export class BusinessSystemPage extends GeneralPage {
     protected listWorkerLink = `//a[@href='/workers']//span[contains(., '${this.translator.verticalMenuBMS.master.worker.listLink}')]`;
     @locator
     protected addWorkerLink = "//a[@href='/workers/add']";
+    @locator
+    protected listCustomerLink = "//a[@href='/customers/business-customer']";
 
     @action('gotoAddProjectPage')
     public async gotoAddProjectPage(): Promise<void> {
@@ -92,6 +94,26 @@ export class BusinessSystemPage extends GeneralPage {
         if (!(await gondola.awaitClick(this.addItemLink))) await gondola.click(this.addItemLink);
     }
 
+    @action('go to Segments page')
+    public async gotoAddSegmentPage(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.masterLink);
+        await gondola.click(this.masterLink);
+        await gondola.waitUntilElementVisible(this.segmentLink);
+        await gondola.click(this.segmentLink);
+        await gondola.waitUntilElementVisible(this.addSegmentLink);
+        await gondola.click(this.addSegmentLink);
+    }
+
+    @action('go to Segments page')
+    public async gotoAddDepartmentPage(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.masterLink);
+        await gondola.click(this.masterLink);
+        await gondola.waitUntilElementVisible(this.departmentLink);
+        await gondola.click(this.departmentLink);
+        await gondola.waitUntilElementVisible(this.addDepartmentLink);
+        await gondola.click(this.addDepartmentLink);
+    }
+
     @action('go to list worker')
     public async gotoListWorker(): Promise<void> {
         await gondola.waitUntilElementVisible(this.masterLink);
@@ -100,6 +122,16 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.click(this.workerLink);
         await gondola.waitUntilElementVisible(this.listWorkerLink);
         await gondola.click(this.addWorkerLink);
+    }
+
+    @action('go to list customer')
+    public async gotoListCustomer(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.masterLink);
+        await gondola.click(this.masterLink);
+        await gondola.waitUntilElementVisible(this.customerLink);
+        await gondola.click(this.workerLink);
+        await gondola.waitUntilElementVisible(this.listCustomerLink);
+        await gondola.click(this.listCustomerLink);
     }
 }
 export default new BusinessSystemPage();

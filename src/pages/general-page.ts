@@ -42,6 +42,10 @@ export class GeneralPage {
     protected modalTitle = { xpath: "//h5[@class='modal-title']" };
     @locator
     protected modalTitleByText = "//h5[@class='modal-title' and text()='{0}']";
+    protected checkboxByLabel = "//div[contains(@class, 'custom-checkbox')]/label[text()='{0}']";
+    @locator
+    protected checkboxInputByLabel =
+        "//div[contains(@class, 'custom-checkbox')][label[text()='{0}']]/input[@type='checkbox']";
     @locator
     protected closeModuleButtonByName = "//div[h5[text()='{0}']]//span[text()='×']";
     @locator
@@ -55,9 +59,13 @@ export class GeneralPage {
     @locator
     protected recordField = "//{0}[@name='{1}[{2}][{3}]']";
     @locator
+    protected returnButton = { css: '.btn-secondary' };
+    @locator
     protected saveButton = "//button[@class='btn btn-info']";
     @locator
     protected backButton = `//a[contains(.,'${this.translator.backButton}')]`;
+    @locator
+    protected searchButton = "//button[@type='submit'][i[@class='fa fa-search']]";
     @locator
     protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
 
@@ -65,6 +73,19 @@ export class GeneralPage {
     protected searchResultText = `//div[@class='paginator']//p`;
     @locator
     protected inputGroupByName = "//div[div[@class='input-group-append']/span[normalize-space()='{0}']]/input";
+    @locator
+    protected sectionName = "//div[@class='page-sub-title' and text()='{0}']";
+    @locator
+    protected pagingLastPage = "//li[@class='page-item last']";
+    @locator
+    protected modalWindowByName = "//div[@class='modal-content' and .//h5[text()='{0}']]";
+    @locator
+    protected modalWindowLoading =
+        "//div[@class='modal-content' and .//h5[text()='{0}']]//div[contains(@id, 'loading')]";
+
+    protected async isCurrentPage(pageUrl: string): Promise<boolean> {
+        return (await gondola.getCurrentUrl()) === pageUrl;
+    }
 
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
@@ -103,9 +124,10 @@ export class GeneralPage {
     }
 
     @action('enterTextFieldByLabel')
-    public async enterTextFieldByLabel(label: string, text: any): Promise<void> {
-        const locator = Utilities.formatString(this.textFieldByLabel, label);
-        await gondola.enter(locator, text.toString());
+    public async enterTextFieldByLabel(label: string, text: string | undefined): Promise<void> {
+        if (text) {
+            await gondola.enter(this.textFieldByLabel.format(label), text);
+        }
     }
 
     @action('getTextFieldValueByLabel')
@@ -115,9 +137,10 @@ export class GeneralPage {
     }
 
     @action('enterTextAreaByLabel')
-    public async enterTextAreaByLabel(label: string, text: string): Promise<void> {
-        const locator = Utilities.formatString(this.textAreaByLabel, label);
-        await gondola.enter(locator, text);
+    public async enterTextAreaByLabel(label: string, text: string | undefined): Promise<void> {
+        if (text) {
+            await gondola.enter(this.textAreaByLabel.format(label), text);
+        }
     }
 
     @action('getTextAreaValueByLabel')
@@ -220,7 +243,10 @@ export class GeneralPage {
     }
 
     @action('selectSelectorByLabel')
-    public async selectSelectorByLabel(label: string, option: string): Promise<void> {
+    public async selectSelectorByLabel(label: string, option: string | undefined): Promise<void> {
+        if (!option) {
+            return;
+        }
         const locator = Utilities.formatString(this.selectorByLabel, label);
         await gondola.select(locator, option);
     }
@@ -252,6 +278,10 @@ export class GeneralPage {
         }
     }
 
+    public async getCheckboxStateByLabel(label: string): Promise<boolean> {
+        return await gondola.doesCheckboxChecked(this.checkboxInputByLabel.format(label));
+    }
+
     @action('does checkbox label exist')
     public async doesCheckboxLabelExist(label: string): Promise<boolean> {
         const locator = Utilities.formatString(this.labelCheckBox, label);
@@ -275,7 +305,18 @@ export class GeneralPage {
         fieldType = ElementType.TEXTFIELD,
     ): Promise<void> {
         const locator = this.buildRecordFieldXpath(tableName, index, tableFieldName, fieldType);
+        await gondola.waitForElementSoftly(locator, Constants.SHORT_TIMEOUT);
         await gondola.enter(locator, text);
+    }
+
+    public async getTextRecordField(
+        tableName: RecordTable,
+        index: number,
+        tableFieldName: RecordFieldName,
+        fieldType = ElementType.TEXTFIELD,
+    ): Promise<string> {
+        const locator = this.buildRecordFieldXpath(tableName, index, tableFieldName, fieldType);
+        return await gondola.getControlProperty(locator, 'value');
     }
 
     public async doesRecordFieldExist(
@@ -292,8 +333,10 @@ export class GeneralPage {
         return await gondola.isControlEnabled(this.selectorByLabel.format(label));
     }
 
-    public async enterTextfieldByPlaceholder(placeholder: string, text: string): Promise<void> {
-        await gondola.enter(this.textFieldByPlaceHolder.format(placeholder), text);
+    public async enterTextfieldByPlaceholder(placeholder: string, text: string | undefined): Promise<void> {
+        if (text) {
+            await gondola.enter(this.textFieldByPlaceHolder.format(placeholder), text);
+        }
     }
 
     public async getTextfieldValueByPlaceholder(placeholder: string): Promise<string> {
@@ -326,8 +369,10 @@ export class GeneralPage {
         return Utilities.compareArrays(radioButtonNames, options);
     }
 
-    public async selectRadioButtonByLabel(label: string, option: string): Promise<void> {
-        await gondola.click(this.radioButtonOptionByLabel.format(label, option));
+    public async selectRadioButtonByLabel(label: string, option: string | undefined): Promise<void> {
+        if (option) {
+            await gondola.click(this.radioButtonOptionByLabel.format(label, option));
+        }
     }
 
     public async isRadioButtonByLabelSelected(label: string, option: string): Promise<boolean> {
@@ -346,8 +391,10 @@ export class GeneralPage {
         return await this.isTextFieldNumeric(this.inputGroupByName.format(name));
     }
 
-    public async enterInputGroupByName(name: string, text: string): Promise<void> {
-        await gondola.enter(this.inputGroupByName.format(name), text);
+    public async enterInputGroupByName(name: string, text: string | undefined): Promise<void> {
+        if (text) {
+            await gondola.enter(this.inputGroupByName.format(name), text);
+        }
     }
 
     public async getTextInputGroupByName(name: string): Promise<string> {
@@ -385,6 +432,46 @@ export class GeneralPage {
             if (checkboxLabel) await gondola.click(checkboxLabel);
             else await gondola.click(checkbox);
         }
+    }
+
+    public async setStateCheckboxByLabel(label: string, checked: boolean | undefined): Promise<void> {
+        if (checked === undefined) {
+            return;
+        }
+        await this.setStateCustomizeCheckbox(
+            this.checkboxByLabel.format(label),
+            checked,
+            this.checkboxInputByLabel.format(label),
+        );
+    }
+
+    public async doesSectionDisplay(name: string): Promise<boolean> {
+        return await gondola.doesControlDisplay(this.sectionName.format(name));
+    }
+
+    public async clickReturnButton(): Promise<void> {
+        await gondola.click(this.returnButton);
+    }
+
+    public async clickSearchButton(): Promise<void> {
+        await gondola.click(this.searchButton);
+    }
+
+    public async clickPagingLastPage(): Promise<void> {
+        await gondola.click(this.pagingLastPage);
+    }
+
+    @action('wait for search window fully loaded')
+    public async waitForLoadingIconDisappear(modalName: string): Promise<void> {
+        const locator = Utilities.formatString(this.modalWindowLoading, modalName);
+        await gondola.waitUntilElementNotVisible(locator, Constants.LONG_TIMEOUT);
+    }
+
+    @action('clickOutsideOfWindowModal')
+    public async clickOutsideOfWindowModal(modalName: string): Promise<void> {
+        const locator = Utilities.formatString(this.modalWindowByName, modalName);
+        await this.waitForLoadingIconDisappear(modalName);
+        await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 }
 export default new GeneralPage();

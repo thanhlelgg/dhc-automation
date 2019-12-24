@@ -1,0 +1,11 @@
+{
+    "requiredOnly": {
+        "code": "testcode",
+        "name": "test name"
+    },
+    "fullData": {
+        "code": "testcode",
+        "name": "test name",
+        "note": "test note"
+    }
+}

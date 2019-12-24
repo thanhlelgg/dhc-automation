@@ -5,7 +5,7 @@ import addCustomerPage from '../../pages/add-customer-page';
 
 TestModule('Add Customer - Customer collect circle fields validation');
 
-const COLLECT_CYCLE_FIELD_NAME = Constants.translator.fieldName.addCustomer.collectCircle;
+const COLLECT_CYCLE_FIELD_NAME = Constants.translator.fieldName.addCustomer.collectCycle;
 const COLLECT_CYCLE_OPTIONS = Constants.translator.radioButtonOptions.addCustomer.collectCycle;
 const COLLECT_CYCLE_DAY_INPUT_GROUP_NAME = Constants.translator.inputGroupName.addCustomer.collectCycleDay;
 const COLLECT_CYCLE_MONTH_INPUT_GROUP_NAME = Constants.translator.inputGroupName.addCustomer.collectCycleMonth;
