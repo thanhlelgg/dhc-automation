@@ -6,7 +6,7 @@
     "fullData": {
         "code": "testcode",
         "name": "加藤",
-        "parentSegment": ">>PatAD",
+        "parentSegment": "test name",
         "department": "ノート"
     }
 }

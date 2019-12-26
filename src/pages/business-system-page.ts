@@ -88,10 +88,10 @@ export class BusinessSystemPage extends GeneralPage {
     public async gotoAddItemPage(): Promise<void> {
         await gondola.waitUntilElementVisible(this.masterLink);
         await gondola.click(this.masterLink);
-        await gondola.waitUntilElementVisible(this.customerLink);
-        await gondola.click(this.itemLink);
         await gondola.waitUntilElementVisible(this.itemLink);
-        if (!(await gondola.awaitClick(this.addItemLink))) await gondola.click(this.addItemLink);
+        await gondola.click(this.itemLink);
+        await gondola.waitUntilElementVisible(this.addItemLink);
+        await gondola.click(this.addItemLink);
     }
 
     @action('go to Segments page')
@@ -132,6 +132,16 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.click(this.workerLink);
         await gondola.waitUntilElementVisible(this.listCustomerLink);
         await gondola.click(this.listCustomerLink);
+    }
+
+    @action('go to list item')
+    public async gotoListItem(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.masterLink);
+        await gondola.click(this.masterLink);
+        await gondola.waitUntilElementVisible(this.itemLink);
+        await gondola.click(this.itemLink);
+        await gondola.waitUntilElementVisible(this.listItemsLink);
+        await gondola.click(this.listItemsLink);
     }
 }
 export default new BusinessSystemPage();

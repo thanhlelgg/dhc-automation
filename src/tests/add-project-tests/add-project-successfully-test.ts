@@ -1,10 +1,10 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
-import loginPage from '../pages/login-page';
-import addProjectPage from '../pages/add-project-page';
-import businessSystemPage from '../pages/business-system-page';
-import listProjectPage from '../pages/list-project-page';
-import { Constants } from '../common/constants';
-import { ProjectInfoData } from '../models/project-info';
+import loginPage from '../../pages/login-page';
+import addProjectPage from '../../pages/add-project-page';
+import businessSystemPage from '../../pages/business-system-page';
+import listProjectPage from '../../pages/list-project-page';
+import { Constants } from '../../common/constants';
+import { ProjectInfoData } from '../../models/project-info';
 
 TestModule('Add Project Successfully');
 

@@ -1,6 +1,6 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import addItemPage from '../../pages/add-item-page';
-
+import searchModalWindows from '../../pages/search-modal-windows';
 import setup from './add-item-setup';
 import { Constants } from '../../common/constants';
 import { Utilities } from '../../common/utilities';
@@ -60,21 +60,21 @@ TestCase('BMS-196. マスタ:品目作成:セグメント:セグメントの検�
     await gondola.checkEqual(isModuleDisplayed, true, 'Search Segments modal title should be displayed');
     gondola.report(`Step 3. セグメントの表示を確認する`);
     gondola.report(`VP. セグメントマスタのものは表示されること。`);
-    gondola.checkEqual(await addItemPage.doesSegmentsDisplayCorrect(), true, 'Segments should be displayed correctly');
+    gondola.checkTrue(await searchModalWindows.doesSegmentsDisplayCorrect(), 'Segments should be displayed correctly');
 
     gondola.report(`Step 4. 検索条件を入力する`);
-    let randomResult = await addItemPage.getOneResultItemAllColumns();
+    let randomResult = await searchModalWindows.getOneResultItemAllColumns();
     gondola.report(`Step 5. 検索結果を確認する`);
-    const doesFilteringWorkCorrectly = await addItemPage.filterSegmentsAndVerifyResult(randomResult, true);
+    const doesFilteringWorkCorrectly = await searchModalWindows.filterSegmentsAndVerifyResult(randomResult, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに検索(部分一致)できること。`);
     gondola.report(`VP. 各結果行でコード、セグメント名、階層は入力したフィールドと一致すること。`);
     //Bug: currently filtering is not working correctly for some keyword
-    await gondola.checkEqual(doesFilteringWorkCorrectly, true, 'Filtering should be working correctly');
+    await gondola.checkTrue(doesFilteringWorkCorrectly, 'Filtering should be working correctly');
 
     gondola.report(`Step 6. 結果を選択する`);
-    randomResult = await addItemPage.getOneResultItemAllColumns();
+    randomResult = await searchModalWindows.getOneResultItemAllColumns();
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
-    await addItemPage.selectSearchResult(randomResultName, SearchResultColumn.NAME);
+    await searchModalWindows.selectSearchResult(randomResultName, SearchResultColumn.NAME);
     gondola.report(`VP. 品目登録画面に戻り、選択したセグメント名が表示されること。`);
     const inputtedText = await addItemPage.getTextFieldValueByLabel(ITEM_SEGMENT_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Segment should be selected');

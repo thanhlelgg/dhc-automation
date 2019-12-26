@@ -147,6 +147,20 @@
                 "arrangementUnitMultiple": "手配単位倍数",
                 "unitPurchasePrice": "購入単価"
             }
+        },
+        "listItem": {
+            "searchField": {
+                "code": "品目コード",
+                "name": "品目名",
+                "managementSection": "管理区分",
+                "displayTarget": "表示対象",
+                "segmentCode": "セグメントコード",
+                "segmentName": "セグメント名"
+            },
+            "tableColumns": {
+                "code": "品目コード"
+            },
+            "addNewButton": "新規登録"
         }
     },
     "fieldPlaceHolder": {
@@ -177,7 +191,9 @@
         "alreadyInUse": "既に使われている値のため異なる値を入力してください",
         "invalidDateFormat": "正しい日付を入力してください",
         "startDateExceedsEndDate": "終了日よりも前の日付を入力してください",
-        "endDateLesserThanStartDate": "開始日以降の日付を入力してください"
+        "endDateLesserThanStartDate": "開始日以降の日付を入力してください",
+        "inputNumericTypeError": "数値を入力してください",
+        "decimalPlaceTypeError": "小数は第2位までが有効です"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]"
@@ -343,7 +359,7 @@
                 "jpy": "¥",
                 "dollar": "$",
                 "vnd": "₫"
-            }, 
+            },
             "taxCalcMethod": {
                 "billing": "請求書単位",
                 "project": "納品書単位",
@@ -356,7 +372,7 @@
         }
     },
     "checkboxOptions": {
-        "addItem":{
+        "addItem": {
             "disable": "無効にする"
         }
     }

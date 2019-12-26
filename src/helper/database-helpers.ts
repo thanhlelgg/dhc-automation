@@ -18,6 +18,8 @@ export class DatabaseHelper {
      * @param database Schema name
      */
     public static async getConnection(database: string): Promise<Connection> {
+        const host = process.env.MYSQL_HOST;
+        const port = +process.env.MYSQL_PORT;
         const username = process.env.MYSQL_USERNAME;
         const password = process.env.MYSQL_PASSWORD;
         if (!username || !password) {
@@ -28,8 +30,8 @@ export class DatabaseHelper {
         try {
             const connection = await createConnection({
                 type: 'mysql',
-                host: 'dhc-jpw-dbm01.mysql.database.azure.com',
-                port: 3306,
+                host: host,
+                port: port,
                 username: username,
                 password: password,
                 database: database,

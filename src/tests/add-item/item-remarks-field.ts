@@ -26,5 +26,9 @@ TestCase('BMS-206. BMS:マスタ:品目作成:備考:文字数', async () => {
     await addItemPage.saveNewItem();
     gondola.report(`VP. 入力フィールドの下にエラー「1024文字以内で入力してください」が表示されること。`);
     actualFeedback = await addItemPage.getInvalidFeedBack(REMARKS_FIELD_NAME);
-    await gondola.checkEqual(actualFeedback, TEXT_1025_CHARACTERS, 'Invalid feedback message should be correct');
+    await gondola.checkEqual(
+        actualFeedback,
+        Constants.exceededNOCErrorMessage1024,
+        'Invalid feedback message should be correct',
+    );
 });

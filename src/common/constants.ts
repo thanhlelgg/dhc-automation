@@ -51,10 +51,13 @@ export class Constants {
     public static exceededNOCErrorMessage255 = '255' + Constants.translator.invalidFeedback.exceededNOC;
     public static exceededNOCErrorMessage50 = '50' + Constants.translator.invalidFeedback.exceededNOC;
     public static exceededNOCErrorMessage1024 = '1024' + Constants.translator.invalidFeedback.exceededNOC;
+    public static exceededNOCErrorMessage64 = '64' + Constants.translator.invalidFeedback.exceededNOC;
     // this message content has been not decided yet
     public static inputHalfSizeAlphaNumericTypeErrorMessage =
         Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
     public static duplicatedTypeErrorMessage = Constants.translator.invalidFeedback.duplicatedTypeError;
+    public static inputNumericTypeErrorMessage = Constants.translator.invalidFeedback.inputNumericTypeError;
+    public static decimalPlaceErrorMessage = Constants.translator.invalidFeedback.decimalPlaceTypeError;
     //#endregion
 
     //#region Project attributes
