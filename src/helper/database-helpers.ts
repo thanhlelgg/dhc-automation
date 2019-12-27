@@ -10,6 +10,7 @@ import { Items } from '../entity/Items';
 import { CustomerMagnifications } from '../entity/CustomerMagnifications';
 import { CustomerUnitPrices } from '../entity/CustomerUnitPrices';
 import { Projects } from '../entity/Projects';
+import { Utilities } from '../common/utilities';
 import { Constants } from '../common/constants';
 export class DatabaseHelper {
     /**
@@ -17,6 +18,8 @@ export class DatabaseHelper {
      * @param database Schema name
      */
     public static async getConnection(database: string): Promise<Connection> {
+        const host = process.env.MYSQL_HOST;
+        const port = +process.env.MYSQL_PORT;
         const username = process.env.MYSQL_USERNAME;
         const password = process.env.MYSQL_PASSWORD;
         if (!username || !password) {
@@ -27,8 +30,8 @@ export class DatabaseHelper {
         try {
             const connection = await createConnection({
                 type: 'mysql',
-                host: 'dhc-jpw-dbm01.mysql.database.azure.com',
-                port: 3306,
+                host: host,
+                port: port,
                 username: username,
                 password: password,
                 database: database,
@@ -221,6 +224,14 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get a random existed Segments from the database
+     */
+    public static async getExistedSegment(): Promise<Segments> {
+        const segments = await this.getActiveSegments();
+        return segments[Utilities.getRandomNumber(0, segments.length - 1)];
+    }
+
+    /**
      * Get a random Segments from the database
      */
     public static async getRandomSegments(): Promise<Segments> {
@@ -253,6 +264,18 @@ export class DatabaseHelper {
         const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
         const items = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Items, alias, query);
         return items;
+    }
+
+    /**
+     * Get existed code of item from the database
+     */
+    public static async getExistedItem(): Promise<Items> {
+        const activeItems: Items[] = await DatabaseHelper.getActiveItems();
+        if (activeItems && activeItems.length > 0) {
+            return activeItems[Utilities.getRandomNumber(0, activeItems.length - 1)];
+        } else {
+            throw new Error('There is no available Items');
+        }
     }
 
     /**

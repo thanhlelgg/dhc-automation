@@ -6,6 +6,7 @@ export class Constants {
     public static translator = Translate.getTranslator();
     public static readonly url = 'https://dhcdms.digitalhearts.com/language/ja_JP';
     public static readonly addProjectUrl = 'https://dhcbms.digitalhearts.com/projects/add';
+    public static readonly itemsUrl = 'https://dhcbms.digitalhearts.com/items';
     public static readonly VERY_SHORT_TIMEOUT = 2;
     public static readonly SHORT_TIMEOUT = 5;
     public static readonly MEDIUM_TIMEOUT = 30;
@@ -57,10 +58,13 @@ export class Constants {
     public static exceededNOCErrorMessage255 = '255' + Constants.translator.invalidFeedback.exceededNOC;
     public static exceededNOCErrorMessage50 = '50' + Constants.translator.invalidFeedback.exceededNOC;
     public static exceededNOCErrorMessage1024 = '1024' + Constants.translator.invalidFeedback.exceededNOC;
+    public static exceededNOCErrorMessage64 = '64' + Constants.translator.invalidFeedback.exceededNOC;
     // this message content has been not decided yet
     public static inputHalfSizeAlphaNumericTypeErrorMessage =
         Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
     public static duplicatedTypeErrorMessage = Constants.translator.invalidFeedback.duplicatedTypeError;
+    public static inputNumericTypeErrorMessage = Constants.translator.invalidFeedback.inputNumericTypeError;
+    public static decimalPlaceErrorMessage = Constants.translator.invalidFeedback.decimalPlaceTypeError;
     //#endregion
 
     //#region Project attributes

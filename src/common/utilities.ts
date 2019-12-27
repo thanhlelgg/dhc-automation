@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import { parse } from 'papaparse';
 
 const converter = new AFHConvert();
+import { JsonConvert, ValueCheckingMode } from 'json2typescript';
 
 export class Utilities {
     public static formatString(str: string, ...val: string[]): string {
@@ -25,8 +26,12 @@ export class Utilities {
         return adaptedObj;
     }
 
-    public static getRandomNumber(min: number, max: number): number {
-        return Math.floor(Math.random() * (max - min + 1) + min);
+    public static getRandomNumber(min: number, max: number, length = 0): number {
+        if (length == 0) return Math.floor(Math.random() * (max - min + 1) + min);
+
+        let numberAsString: string = '' + this.getRandomNumber(1, 9);
+        for (let i = 1; i < length; i++) numberAsString += this.getRandomNumber(0, 9);
+        return parseInt(numberAsString);
     }
 
     /**
@@ -162,10 +167,13 @@ export class Utilities {
         return new Date().getTime() / 1000;
     }
 
-    public static getRandomText(numberOfCharacters: number): string {
-        return Array(numberOfCharacters + 1)
+    public static getRandomText(numberOfCharacters: number, prefix?: string): string {
+        const randomCharacter = Array(numberOfCharacters + 1)
             .join((Math.random().toString(36) + '00000000000000000').slice(2, 18))
             .slice(0, numberOfCharacters);
+
+        if (prefix) return prefix + randomCharacter;
+        return randomCharacter;
     }
 
     /**
@@ -350,4 +358,86 @@ export class Utilities {
         }
     }
 }
+
+export class JsonUtility {
+    /**
+     * Convert json object to redefined object
+     * @static
+     * @param {*} json
+     * @param {new () => any} classReference
+     * @returns {*}
+     * @memberof JsonUtility
+     */
+    public static deserialize(json: any, classReference: new () => any): any {
+        try {
+            let jsobj = json;
+            if (typeof json == 'string') jsobj = JSON.parse(json as string);
+
+            const jsonConvert = new JsonConvert();
+            jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
+            jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL; // never allow null
+
+            try {
+                const obj = jsonConvert.deserialize(jsobj, classReference);
+                if ('triggerFunction' in obj) obj[obj.triggerFunction]();
+                return obj;
+            } catch (e) {
+                console.log(e);
+            }
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     * Convert json array object to redefined objects
+     * @static
+     * @param {*} json
+     * @param {new () => any} classReference
+     * @returns {*}
+     * @memberof JsonUtility
+     */
+    public static deserializeArray(json: any, classReference: new () => any): any[] {
+        try {
+            let jsobj = json;
+            if (typeof json == 'string') jsobj = JSON.parse(json as string);
+
+            const jsonConvert = new JsonConvert();
+            jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
+            jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_NULL; // never allow null
+
+            try {
+                return jsonConvert.deserializeArray(jsobj, classReference);
+            } catch (e) {
+                console.log(e);
+            }
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     * Convert redefined object to json object
+     * @static
+     * @param {*} classReference
+     * @returns {*}
+     * @memberof JsonUtility
+     */
+    public static serialize(classReference: any): any {
+        try {
+            const jsonConvert = new JsonConvert();
+            jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
+            jsonConvert.valueCheckingMode = ValueCheckingMode.DISALLOW_NULL; // never allow null
+
+            try {
+                return jsonConvert.serialize(classReference);
+            } catch (e) {
+                console.log(e);
+            }
+        } catch (err) {
+            throw err;
+        }
+    }
+}
+
 export default new Utilities();

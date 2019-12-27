@@ -84,6 +84,16 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.click(this.addCustomerLink);
     }
 
+    @action('gotoAddItemPage')
+    public async gotoAddItemPage(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.masterLink);
+        await gondola.click(this.masterLink);
+        await gondola.waitUntilElementVisible(this.itemLink);
+        await gondola.click(this.itemLink);
+        await gondola.waitUntilElementVisible(this.addItemLink);
+        await gondola.click(this.addItemLink);
+    }
+
     @action('go to Segments page')
     public async gotoAddSegmentPage(): Promise<void> {
         await gondola.waitUntilElementVisible(this.masterLink);
@@ -111,7 +121,7 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.waitUntilElementVisible(this.workerLink);
         await gondola.click(this.workerLink);
         await gondola.waitUntilElementVisible(this.listWorkerLink);
-        await gondola.click(this.listWorkerLink);
+        await gondola.click(this.addWorkerLink);
     }
 
     @action('go to list customer')
@@ -122,6 +132,16 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.click(this.workerLink);
         await gondola.waitUntilElementVisible(this.listCustomerLink);
         await gondola.click(this.listCustomerLink);
+    }
+
+    @action('go to list item')
+    public async gotoListItem(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.masterLink);
+        await gondola.click(this.masterLink);
+        await gondola.waitUntilElementVisible(this.itemLink);
+        await gondola.click(this.itemLink);
+        await gondola.waitUntilElementVisible(this.listItemsLink);
+        await gondola.click(this.listItemsLink);
     }
 }
 export default new BusinessSystemPage();
