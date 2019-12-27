@@ -18,7 +18,7 @@ export class PositionsTableHeader {
         COLUMN_NAME.timeCardApprove,
         'timecard_approve',
     );
-    static readonly CREATED = new PositionsTableHeader('CREATED', COLUMN_NAME.created, 'created');
+    static readonly CREATED = new PositionsTableHeader('CREATED', COLUMN_NAME.created);
     static readonly MODIFIED = new PositionsTableHeader('MODIFIED', COLUMN_NAME.modified);
     static readonly ALLS = [
         PositionsTableHeader.POSITION_NAME,

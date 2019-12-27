@@ -169,6 +169,11 @@
         },
         "positions": {
             "name": "グループ名"
+        },
+        "addPosition": {
+            "positionName": "役職名",
+            "positionAbbreviation": "省略名",
+            "timeCardApprove": "タイムカード承認"
         }
     },
     "tableColumnName": {
@@ -178,7 +183,7 @@
             "timeCardApprove": "タイムカード承認",
             "created": "作成日",
             "modified": "更新日"
-        },
+        }
     },
     "fieldPlaceHolder": {
         "addCustomer": {

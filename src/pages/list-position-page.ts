@@ -12,6 +12,7 @@ import { TimeCardApprove } from '../models/enum-class/timecard-approve';
 
 @page
 export class PositionsPage extends GeneralPage {
+    pageUrl = 'https://dhctms.digitalhearts.com/positions';
     @locator
     protected positionsTable = '//table';
     protected tableHelper = new HTMLTableHelper(this.positionsTable);
@@ -114,8 +115,23 @@ export class PositionsPage extends GeneralPage {
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
     }
 
+    @action('does position name display')
+    public async doesPositionValueDisplay(value: string, header: PositionsTableHeader): Promise<boolean> {
+        return await this.tableHelper.doesRowValueExists(header.uiColumnName, value);
+    }
+
+    // since both name and abbreviation must be unique, remove both of them
     @action('remove position if exist')
-    public async removePositionIfExist(filePath: string): Promise<void> {
+    public async removePositionIfExist(positionName: string, positionAbbreviation: string): Promise<void> {
+        await this.tableHelper.removeRecordIfValueExist(positionName, PositionsTableHeader.POSITION_NAME.uiColumnName);
+        await this.tableHelper.removeRecordIfValueExist(
+            positionAbbreviation,
+            PositionsTableHeader.POSITION_ABBREVIATION.uiColumnName,
+        );
+    }
+
+    @action('remove position if exist')
+    public async removePositionIfExistFromCSVFile(filePath: string): Promise<void> {
         if (!PositionsTableHeader.POSITION_NAME.csvColumnName) {
             throw new Error('CSV column is not available');
         }
@@ -123,27 +139,24 @@ export class PositionsPage extends GeneralPage {
             filePath,
             PositionsTableHeader.POSITION_NAME.csvColumnName,
         );
+        const csvAbbreviationNameIdx = CsvHelpers.getColumnIndex(
+            filePath,
+            PositionsTableHeader.POSITION_ABBREVIATION.csvColumnName,
+        );
         const csvData = CsvHelpers.getCsvData(Constants.POSITION_CSV_PATH);
         for (const csvRow of csvData) {
-            const positionName = csvRow[csvPositionNameIdx];
-            if (
-                await this.tableHelper.doesRowValueExists(PositionsTableHeader.POSITION_NAME.uiColumnName, positionName)
-            ) {
-                await this.clickActionButton(
-                    ActionButton.DELETE,
-                    PositionsTableHeader.POSITION_NAME.uiColumnName,
-                    positionName,
-                );
-                await gondola.waitForAlert();
-                await gondola.clickPopup('OK');
-                await gondola.waitUntilStalenessOfElement(this.positionsTable);
-            }
+            await this.removePositionIfExist(csvRow[csvPositionNameIdx], csvRow[csvAbbreviationNameIdx]);
         }
     }
 
     @action('upload csv file')
     public async uploadFile(filePath: string): Promise<void> {
         await gondola.sendKeys(this.fileInput, filePath);
+    }
+
+    @action('is current page')
+    public async isCurrentPage(): Promise<boolean> {
+        return await super.isCurrentPage(this.pageUrl);
     }
 }
 export default new PositionsPage();
