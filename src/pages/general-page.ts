@@ -7,12 +7,13 @@ import { ElementType } from '../models/enum-class/element-type';
 import { RecordTable } from '../models/enum-class/recordTable';
 import { RecordFieldName } from '../models/enum-class/recordFieldName';
 import '@src/string.extensions';
+import { ButtonIcon } from '../models/enum-class/button-icon';
 
 @page
 export class GeneralPage {
     protected translator = Translate.getTranslator();
     @locator
-    protected pageTitle = { css: '.page-title' };
+    protected pageTitle = "//h1[@class = 'page-title' and normalize-space()='{0}']";
     @locator
     protected captionSubject = { css: '.page-title-text' };
     @locator
@@ -22,9 +23,13 @@ export class GeneralPage {
     @locator
     protected taskSystemLink = `//a[.='${this.translator.headerMenu.businessSystem}']`;
     @locator
+    protected talentManagementLink = `//a[.='${this.translator.headerMenu.talentManagement}']`;
+    @locator
     protected invalidFeedBackByFieldLabel = "//div[label[text()='{0}']]//div[@class='invalid-feedback']";
     @locator
     protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text']";
+    @locator
+    protected textFieldByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//input[@type='text']";
     @locator
     protected textFieldByPlaceHolder = "//input[@type='text' and @placeholder='{0}']";
     @locator
@@ -61,6 +66,8 @@ export class GeneralPage {
     @locator
     protected searchButton = "//button[@type='submit'][i[@class='fa fa-search']]";
     @locator
+    protected addButton = "//a[@title='add']";
+    @locator
     protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
 
     @locator
@@ -76,6 +83,10 @@ export class GeneralPage {
     @locator
     protected modalWindowLoading =
         "//div[@class='modal-content' and .//h5[text()='{0}']]//div[contains(@id, 'loading')]";
+    @locator
+    protected menuLinkByTitle = "//a[span[@class='title' and normalize-space()='{0}']]";
+    @locator
+    protected buttonByIcon = "//*[contains(@class, 'btn') and i[@class='{0}']]";
 
     protected async isCurrentPage(pageUrl: string): Promise<boolean> {
         return (await gondola.getCurrentUrl()) === pageUrl;
@@ -97,6 +108,12 @@ export class GeneralPage {
     public async gotoTaskSystem(): Promise<void> {
         await gondola.waitUntilElementVisible(this.taskSystemLink, Constants.MEDIUM_TIMEOUT);
         await gondola.click(this.taskSystemLink);
+    }
+
+    @action('go to talent management')
+    public async gotoTalentManagement(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.talentManagementLink, Constants.MEDIUM_TIMEOUT);
+        await gondola.click(this.talentManagementLink);
     }
 
     @action('openWebsite')
@@ -125,8 +142,10 @@ export class GeneralPage {
     }
 
     @action('getTextFieldValueByLabel')
-    public async getTextFieldValueByLabel(label: string): Promise<string> {
-        const locator = Utilities.formatString(this.textFieldByLabel, label);
+    public async getTextFieldValueByLabel(label: string, partialMatch = false): Promise<string> {
+        const locator = partialMatch
+            ? Utilities.formatString(this.textFieldByLabelPartialMatch, label)
+            : Utilities.formatString(this.textFieldByLabel, label);
         return await gondola.getElementAttribute(locator, 'value');
     }
 
@@ -406,6 +425,10 @@ export class GeneralPage {
         await gondola.click(this.searchButton);
     }
 
+    public async clickAddButton(): Promise<void> {
+        await gondola.click(this.addButton);
+    }
+
     public async clickPagingLastPage(): Promise<void> {
         await gondola.click(this.pagingLastPage);
     }
@@ -421,6 +444,19 @@ export class GeneralPage {
         const locator = Utilities.formatString(this.modalWindowByName, modalName);
         await this.waitForLoadingIconDisappear(modalName);
         await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
+    }
+
+    public async clickMenuLinkByTitle(title: string): Promise<void> {
+        await gondola.waitUntilElementVisible(this.menuLinkByTitle.format(title));
+        await gondola.click(this.menuLinkByTitle.format(title));
+    }
+
+    public async clickButtonByIcon(buttonIcon: ButtonIcon): Promise<void> {
+        await gondola.click(this.buttonByIcon.format(buttonIcon._class));
+    }
+
+    public async isPageTitleDisplayed(name: string): Promise<boolean> {
+        return await gondola.doesControlDisplay(this.pageTitle.format(name));
     }
 }
 export default new GeneralPage();

@@ -5,3 +5,4 @@ node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.js
 node_modules/protractor/node_modules/webdriver-manager/selenium/chrome-response.xml
 /node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
 debug.log
+src/tests/test.ts

@@ -2,6 +2,9 @@ import moment from 'moment';
 import Kuroshiro from 'kuroshiro';
 import AFHConvert from 'ascii-fullwidth-halfwidth-convert';
 import { convertCircleDigitsCharacterToNumber } from '../helper/unicode-search';
+import * as fs from 'fs';
+import { parse } from 'papaparse';
+
 const converter = new AFHConvert();
 
 export class Utilities {
@@ -335,6 +338,16 @@ export class Utilities {
         const laterDate =
             moment(date1, format) >= moment(date2, format) ? moment(date1, format) : moment(date2, format);
         return laterDate.format(format);
+    }
+
+    public static isFileExist(path: string): boolean {
+        return fs.existsSync(path);
+    }
+
+    public static removeFileIfExist(path: string): void {
+        if (fs.existsSync(path)) {
+            fs.unlinkSync(path);
+        }
     }
 }
 export default new Utilities();

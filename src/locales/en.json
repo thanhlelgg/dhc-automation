@@ -2,7 +2,11 @@
     "headerMenu": {
         "home": "ホーム",
         "taskSystem": "業務管理",
-        "businessSystem": "営業管理"
+        "businessSystem": "営業管理",
+        "talentManagement": "タレントマネジメント"
+    },
+    "pageTitle": {
+        "editTitle": "役職編集"
     },
     "modalWindows": {
         "customerSearchTitle": "取引先選択",
@@ -10,7 +14,8 @@
         "workerSearchTitle": "従業員選択",
         "segmentSearchTitle": "セグメント選択",
         "searchItemTitle": "品目選択",
-        "searchLabsTitle": "ラボ選択"
+        "searchLabsTitle": "ラボ選択",
+        "importPositionTitle": "インポートするファイルをご選択ください。"
     },
     "sectionName": {
         "addProject": {
@@ -123,6 +128,18 @@
                 "lab": "拠点"
             },
             "addNewButton": "新規登録"
+        },
+        "positions": {
+            "name": "グループ名"
+        }
+    },
+    "tableColumnName": {
+        "positionsList": {
+            "positionName": "役職名",
+            "positionAbbreviation": "省略名",
+            "timeCardApprove": "タイムカード承認",
+            "created": "作成日",
+            "modified": "更新日"
         }
     },
     "fieldPlaceHolder": {
@@ -132,6 +149,9 @@
             "zipcode": "郵便番号",
             "address1": "住所１",
             "address2": "住所２（建物名）"
+        },
+        "positions": {
+            "searchTextBox": "検索"
         }
     },
     "inputGroupName": {
@@ -203,6 +223,14 @@
                 "deliveryTemplateLink": "納品書",
                 "billingTemplateLink": "請求書"
             }
+        }
+    },
+    "verticalMenuTMS": {
+        "masterDataManagement": {
+            "title": "マスタデータ管理",
+            "workingPlace": "ラボ管理",
+            "groups": "ラボ管理",
+            "positions": "役職"
         }
     },
     "backButton": "戻る",
@@ -318,6 +346,13 @@
                 "billing": "請求書単位",
                 "project": "納品書単位",
                 "detail": "納品明細単位"
+            }
+        },
+        "position": {
+            "timeCardApprove": {
+                "none": "不可能",
+                "full": "全て可能",
+                "onlyAssign": "担当のみ"
             }
         }
     }

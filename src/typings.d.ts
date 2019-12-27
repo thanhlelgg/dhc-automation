@@ -171,6 +171,27 @@ declare module 'gondolajs' {
         /**
          * get current url of web
          */
-        getCurrentUrl():Promise<string>;
+        getCurrentUrl(): Promise<string>;
+
+        /**
+         * Send keys to an input
+         * @param control
+         * @param text
+         */
+        sendKeys(control: any, text: string): Promise<void>;
+
+        /**
+         * Wait until file exists
+         * @param filePath
+         * @param timeOut
+         */
+        waitUntilFileExists(filePath: string, timeOut?: number): Promise<void>;
+
+        /**
+         * Wait until condition correct
+         * @param condition
+         * @param timeOut
+         */
+        waitUntilConditionCorrect(condition: Function | PromiseLike<boolean>, timeOut?: number): Promise<void>;
     }
 }

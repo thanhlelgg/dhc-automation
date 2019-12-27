@@ -62,6 +62,11 @@ class HelperExt extends Helper {
         await browser.executeScript('arguments[0].click();', element);
     }
 
+    public async sendKeys(control: any, text: string): Promise<void> {
+        const element = await this.getElement(control);
+        await element.sendKeys(text);
+    }
+
     /**
      * Find elements using protractor directly
      * @param locator
@@ -238,6 +243,30 @@ class HelperExt extends Helper {
             await browser.wait(condition, timeOut, 'Text is still not present');
         } catch (error) {
             console.log('Text is not present on the field');
+        }
+    }
+
+    public async waitUntilFileExists(filePath: string, timeOut = DEFAULT_TIMEOUT): Promise<void> {
+        timeOut = timeOut * 1000; //convert to milliseconds
+        const condition = function(): boolean {
+            return Utilities.isFileExist(filePath);
+        };
+        try {
+            await browser.wait(condition, timeOut, 'File is not present');
+        } catch (error) {
+            console.log(`File is not exist after ${timeOut} seconds`);
+        }
+    }
+
+    public async waitUntilConditionCorrect(
+        condition: Function | PromiseLike<boolean>,
+        timeOut = DEFAULT_TIMEOUT,
+    ): Promise<void> {
+        timeOut = timeOut * 1000; //convert to milliseconds
+        try {
+            await browser.wait(condition, timeOut, 'File is not present');
+        } catch (error) {
+            console.log(`File is not exist after ${timeOut} seconds`);
         }
     }
 

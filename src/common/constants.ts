@@ -1,4 +1,6 @@
 import { Translate } from '../locales/translate';
+import downloadsFolder from 'downloads-folder';
+import path from 'path';
 
 export class Constants {
     public static translator = Translate.getTranslator();
@@ -17,10 +19,15 @@ export class Constants {
     public static readonly EXAMPLE_DATE_DIVIDED_BY_DOT = '2019.1.1';
     public static readonly EXAMPLE_DATE_DIVIDED_BY_SLASH = '2019/1/1';
     public static readonly DEFAULT_END_DATE = '9999-12-31';
+    public static readonly DEFAULT_DOWNLOAD_FOLDER = downloadsFolder().replace('/', '\\');
+    public static readonly DEFAULT_POSITION_DOWNLOAD_FILE_PATH = `${Constants.DEFAULT_DOWNLOAD_FOLDER}\\positions.csv`;
+    public static readonly POSITION_CSV_PATH = path.resolve('src/data/positions.csv');
 
     //#region Input data
     public static adminUserName = 'logigear_admin';
     public static adminPassword = 'log2019';
+    public static modUserName = 'administrator';
+    public static modPassword = '123456';
     public static exceededNOCMessage =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor \
     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut \
