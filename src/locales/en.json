@@ -89,6 +89,44 @@
             "name": "部門名",
             "note": "備考"
         },
+        "addItem": {
+            "itemCode": "品目コード",
+            "itemName": "品目名",
+            "managementSection": "管理区分",
+            "segment": "セグメント",
+            "unitPrice": "標準販売単価",
+            "inventoryEvaluationUnitPrice": "在庫評価単価",
+            "supplyUnitPrice": "支給単価",
+            "tax": "課税区分",
+            "managementUnit": "管理単位",
+            "costCenter": "原価センター",
+            "debitSubcode": "借方補助コード",
+            "creditSubcode": "貸方補助コード",
+            "isInvalidation": "無効化",
+            "remarks": "備考",
+            "itemArrangerInfo": {
+                "arrangementLevel": "手配レベル",
+                "arrangement": "手配先",
+                "arrangeClassification": "手配区分",
+                "arrangementUnit": "手配単位",
+                "arrangementUnitMultiple": "手配単位倍数",
+                "unitPurchasePrice": "購入単価"
+            }
+        },
+        "listItem": {
+            "searchField": {
+                "code": "品目コード",
+                "name": "品目名",
+                "managementSection": "管理区分",
+                "displayTarget": "表示対象",
+                "segmentCode": "セグメントコード",
+                "segmentName": "セグメント名"
+            },
+            "tableColumns": {
+                "code": "品目コード"
+            },
+            "addNewButton": "新規登録"
+        },
         "customerList": {
             "customerCode": "顧客コード"
         },
@@ -141,44 +179,6 @@
             "created": "作成日",
             "modified": "更新日"
         },
-        "addItem": {
-            "itemCode": "品目コード",
-            "itemName": "品目名",
-            "managementSection": "管理区分",
-            "segment": "セグメント",
-            "unitPrice": "標準販売単価",
-            "inventoryEvaluationUnitPrice": "在庫評価単価",
-            "supplyUnitPrice": "支給単価",
-            "tax": "課税区分",
-            "managementUnit": "管理単位",
-            "costCenter": "原価センター",
-            "debitSubcode": "借方補助コード",
-            "creditSubcode": "貸方補助コード",
-            "isInvalidation": "無効化",
-            "remarks": "備考",
-            "itemArrangerInfo": {
-                "arrangementLevel": "手配レベル",
-                "arrangement": "手配先",
-                "arrangeClassification": "手配区分",
-                "arrangementUnit": "手配単位",
-                "arrangementUnitMultiple": "手配単位倍数",
-                "unitPurchasePrice": "購入単価"
-            }
-        },
-        "listItem": {
-            "searchField": {
-                "code": "品目コード",
-                "name": "品目名",
-                "managementSection": "管理区分",
-                "displayTarget": "表示対象",
-                "segmentCode": "セグメントコード",
-                "segmentName": "セグメント名"
-            },
-            "tableColumns": {
-                "code": "品目コード"
-            },
-            "addNewButton": "新規登録"
-        }
     },
     "fieldPlaceHolder": {
         "addCustomer": {
