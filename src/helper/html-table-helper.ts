@@ -94,4 +94,13 @@ export class HTMLTableHelper {
         };
         await gondola.waitUntilConditionCorrect(condition, Constants.SHORT_TIMEOUT);
     }
+
+    public async removeRecordIfValueExist(value: string, header: string): Promise<void> {
+        if (await this.doesRowValueExists(header, value)) {
+            await this.clickActionButton(ActionButton.DELETE, header, value);
+            await gondola.waitForAlert();
+            await gondola.clickPopup('OK');
+            await gondola.waitUntilStalenessOfElement(this.tableLocator);
+        }
+    }
 }

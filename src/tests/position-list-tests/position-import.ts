@@ -59,10 +59,10 @@ TestCase('TMS-139. マスタ:役職一覧:インポート操作:戻る', async (
     );
 });
 
-TestCase('DebugTMS-140. マスタ:役職一覧:インポート操作:保存', async () => {
+TestCase('TMS-140. マスタ:役職一覧:インポート操作:保存', async () => {
     const inputFilePath = Constants.POSITION_CSV_PATH;
     gondola.report(`Pre-condition 2. Remove position if already exists`);
-    await listPositionPage.removePositionIfExist(inputFilePath);
+    await listPositionPage.removePositionIfExistFromCSVFile(inputFilePath);
     gondola.report(`Step 2.「インポートボタン 」ボタンをクリックする。`);
     await listPositionPage.clickButtonByIcon(ButtonIcon.UPLOAD);
     gondola.report(`VP. 役職のインポート操作画面に遷移すること。`);

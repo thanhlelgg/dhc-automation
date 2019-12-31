@@ -27,9 +27,21 @@ export class GeneralPage {
     @locator
     protected invalidFeedBackByFieldLabel = "//div[label[text()='{0}']]//div[@class='invalid-feedback']";
     @locator
+    protected invalidFeedBackByFieldLabelPartialMatch =
+        "//div[label[contains(text(),'{0}')]]//div[@class='invalid-feedback']";
+    @locator
+    protected helpBlockErrorByLabel = "//div[label[text()='{0}']]//span[@class='help-block help-block-error']";
+    @locator
+    protected helpBlockErrorByLabelPartialMatch =
+        "//div[label[contains(text(),'{0}')]]//span[@class='help-block help-block-error']";
+    @locator
     protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text' or @type='number']";
     @locator
     protected textFieldByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//input[@type='text']";
+    @locator
+    protected paragraphByLabel = "//div[label[text()='{0}']]//p";
+    @locator
+    protected paragraphByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//p";
     @locator
     protected textFieldByPlaceHolder = "//input[@type='text' and @placeholder='{0}']";
     @locator
@@ -129,8 +141,22 @@ export class GeneralPage {
     }
 
     @action('getInvalidFeedBack')
-    public async getInvalidFeedBack(fieldName: string): Promise<string> {
-        const locator = Utilities.formatString(this.invalidFeedBackByFieldLabel, fieldName);
+    public async getInvalidFeedBack(fieldName: string, partial = false): Promise<string> {
+        const locator = partial ? this.invalidFeedBackByFieldLabelPartialMatch : this.invalidFeedBackByFieldLabel;
+        const doesExist = await gondola.doesControlExist(locator);
+        if (!doesExist) {
+            gondola.report('Invalid feedback of field ' + fieldName + ' does not exist!');
+            return '';
+        } else {
+            return await gondola.getText(locator);
+        }
+    }
+
+    @action('getInvalidFeedBack')
+    public async getHelpBlockError(fieldName: string, partial = false): Promise<string> {
+        const dynamicLocator = partial ? this.helpBlockErrorByLabelPartialMatch : this.helpBlockErrorByLabel;
+        const locator = dynamicLocator.format(fieldName);
+        await gondola.waitUntilElementVisible(locator, Constants.SHORT_TIMEOUT);
         const doesExist = await gondola.doesControlExist(locator);
         if (!doesExist) {
             gondola.report('Invalid feedback of field ' + fieldName + ' does not exist!');
@@ -141,9 +167,10 @@ export class GeneralPage {
     }
 
     @action('enterTextFieldByLabel')
-    public async enterTextFieldByLabel(label: string, text: any | undefined): Promise<void> {
+    public async enterTextFieldByLabel(label: string, text: any | undefined, partial = false): Promise<void> {
+        const locator = partial ? this.textFieldByLabelPartialMatch : this.textFieldByLabel;
         if (text) {
-            await gondola.enter(this.textFieldByLabel.format(label), text);
+            await gondola.enter(locator.format(label), text);
         }
     }
 
@@ -153,6 +180,14 @@ export class GeneralPage {
             ? Utilities.formatString(this.textFieldByLabelPartialMatch, label)
             : Utilities.formatString(this.textFieldByLabel, label);
         return await gondola.getElementAttribute(locator, 'value');
+    }
+
+    @action('getParagraphValueByLabel')
+    public async getParagraphValueByLabel(label: string, partialMatch = false): Promise<string> {
+        const locator = partialMatch
+            ? Utilities.formatString(this.paragraphByLabelPartialMatch, label)
+            : Utilities.formatString(this.paragraphByLabel, label);
+        return await gondola.getText(locator);
     }
 
     @action('enterTextAreaByLabel')
@@ -477,6 +512,7 @@ export class GeneralPage {
     }
 
     public async clickAddButton(): Promise<void> {
+        await gondola.waitUntilElementVisible(this.addButton);
         await gondola.click(this.addButton);
     }
 

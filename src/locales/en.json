@@ -170,6 +170,11 @@
         },
         "positions": {
             "name": "グループ名"
+        },
+        "addPosition": {
+            "positionName": "役職名",
+            "positionAbbreviation": "省略名",
+            "timeCardApprove": "タイムカード承認"
         }
     },
     "tableColumnName": {
