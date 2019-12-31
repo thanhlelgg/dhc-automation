@@ -4,7 +4,7 @@ import { GeneralPage } from './general-page';
 export class ListSegmentPage extends GeneralPage {
     protected pageUrl = 'https://dhcbms.digitalhearts.com/segments';
     @locator
-    protected segmentLink = "//div[@tabulator-field='セグメントコード']/a[text()='{0}']";
+    protected segmentLink = "//div[@tabulator-field='code']/a[text()='{0}']";
 
     @action('openCustomerByName')
     public async openSegmentByCode(name: string): Promise<void> {

@@ -1,0 +1,30 @@
+[
+    {
+        "workerCode": "WK001",
+        "workerName": "営業　一郎",
+        "department": "エンターテイメント事業本部 営業部",
+        "isRetired": false,
+        "note": "テスト備考1"
+    },
+    {
+        "workerCode": "WK002",
+        "workerName": "営業　二郎",
+        "department": "エンタープライズ事業本部",
+        "isRetired": false,
+        "note": "テスト備考2"
+    },
+    {
+        "workerCode": "WK003",
+        "workerName": "退職　三郎",
+        "department": "エンターテイメント事業本部 営業部",
+        "isRetired": true,
+        "note": "テスト備考3"
+    },
+    {
+        "workerCode": "WK004",
+        "workerName": "サンプル　太郎",
+        "department": "エンターテイメント事業本部 営業部",
+        "isRetired": false,
+        "note": "サンプル備考"
+    }
+]

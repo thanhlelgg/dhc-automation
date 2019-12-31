@@ -1,11 +1,10 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
-import loginPage from '../../pages/login-page';
 import addWorkerPage from '../../pages/add-worker-page';
-import businessSystemPage from '../../pages/business-system-page';
 import { Constants } from '../../common/constants';
 import { DatabaseHelper } from '../../helper/database-helpers';
 import { WorkerInfoData } from '../../models/worker-info';
 import { Utilities } from '../../common/utilities';
+import setup from './add-worker-setup';
 
 TestModule('Add Worker - Worker code field validation');
 
@@ -18,15 +17,7 @@ const TEXT_SYMBOL = Constants.symbolString;
 const TEXT_HALF_SIZE_ALPHANUMERIC = Constants.halfSizeAlphaNumericString;
 const WORKER_INFO_REQUIRED_ONLY = WorkerInfoData.WORKER_REQUIRED_DATA;
 
-Before(async () => {
-    gondola.report(`Precondition 1. 有効なユーザー名とパスワードでdh-connectシステムに正常にログインすること`);
-    await loginPage.openWebsite();
-    await loginPage.login(Constants.adminUserName, Constants.adminPassword);
-
-    gondola.report(`Step 1.新規従業員登録の画面に移動する`);
-    await loginPage.gotoBusinessSystem();
-    await businessSystemPage.gotoAddWorkerPage();
-});
+Before(setup);
 
 TestCase('BMS-102. BMS:案件:従業員マスタ作成:従業員コード:文字数', async () => {
     gondola.report(`Step 2.「従業員コード」で入力しなくて、保存する`);

@@ -2,8 +2,7 @@ import { gondola, TestCase, TestModule } from 'gondolajs';
 import addItemPage from '../../pages/add-item-page';
 
 import setup from './add-item-setup';
-import { DatabaseHelper } from '../../helper/database-helpers';
-import { ItemInfo, ItemInfoData } from '../../models/item-info';
+import { ItemInfoData } from '../../models/item-info';
 import businessSystemPage from '../../pages/business-system-page';
 import listItemPage from '../../pages/list-item-page';
 import { Utilities } from '../../common/utilities';

@@ -56,7 +56,7 @@ export class ListProjectPage extends GeneralPage {
     @locator
     protected ttsLinkByProjectId = `//div[div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.code}']/a[text()='{0}']]/div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.ttsLink}']//a`;
     @locator
-    protected editProjectLinkStr = `//div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.code}']/a[.='{0}']`;
+    protected editProjectLinkStr = `//div[@tabulator-field='cd']/a[.='{0}']`;
 
     @locator
     protected resultsByProjectCode = `//div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.code}' and @role='gridcell']`;

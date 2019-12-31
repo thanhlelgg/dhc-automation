@@ -104,7 +104,7 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.click(this.addSegmentLink);
     }
 
-    @action('go to Segments page')
+    @action('go to department page')
     public async gotoAddDepartmentPage(): Promise<void> {
         await gondola.waitUntilElementVisible(this.masterLink);
         await gondola.click(this.masterLink);
@@ -129,7 +129,7 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.waitUntilElementVisible(this.masterLink);
         await gondola.click(this.masterLink);
         await gondola.waitUntilElementVisible(this.customerLink);
-        await gondola.click(this.workerLink);
+        await gondola.click(this.customerLink);
         await gondola.waitUntilElementVisible(this.listCustomerLink);
         await gondola.click(this.listCustomerLink);
     }

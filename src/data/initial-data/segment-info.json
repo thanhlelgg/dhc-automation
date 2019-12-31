@@ -1,0 +1,54 @@
+[
+    {
+        "code": "SE001",
+        "name": "ゲームデバッグ",
+        "department": "1001"
+    },
+    {
+        "code": "SE002",
+        "name": "テスト全般",
+        "parentSegment": "ゲームデバッグ",
+        "department": "1002"
+    },
+    {
+        "code": "SE003",
+        "name": "探索型テスト",
+        "parentSegment": "ゲームデバッグ",
+        "department": "1003"
+    },
+    {
+        "code": "SE004",
+        "name": "SI",
+        "department": "1004"
+    },
+    {
+        "code": "SE005",
+        "name": "SES",
+        "parentSegment": "SI",
+        "department": "1005"
+    },
+    {
+        "code": "SE006",
+        "name": "受託開発",
+        "parentSegment": "SI",
+        "department": "1006"
+    },
+    {
+        "code": "SE007",
+        "name": "保守",
+        "parentSegment": "SI",
+        "department": "1007"
+    },
+    {
+        "code": "SE008",
+        "name": "物販",
+        "parentSegment": "SI",
+        "department": "1008"
+    },
+    {
+        "code": "SE009",
+        "name": "サンプルセグメント",
+        "parentSegment": "SI",
+        "department": "1009"
+    }
+]

@@ -1,55 +1,105 @@
 import customerInfo from '../data/customer-info.json';
+import customerInitialData from '../data/initial-data/customer-info.json';
+import { JsonUtility } from '../common/utilities.js';
+import { JsonProperty, JsonObject } from 'json2typescript';
 
-export interface CustomerInfo {
-    overview: Overview;
-    unitPricesRecords?: UnitPrices[];
-    customerMagnificationsRecords?: CustomerMagnifications[];
-}
-
-export interface Overview {
-    code: string;
-    name: string;
-    repDepartment?: string;
-    repName?: string;
-    lastBusinessDate?: string;
+@JsonObject('Overview')
+export class Overview {
+    @JsonProperty('code', String)
+    code: string = undefined;
+    @JsonProperty('name', String)
+    name: string = undefined;
+    @JsonProperty('repDepartment', String)
+    repDepartment?: string = undefined;
+    @JsonProperty('repName', String)
+    repName?: string = undefined;
+    @JsonProperty('lastBusinessDate', String)
+    lastBusinessDate?: string = undefined;
+    @JsonProperty('isDisable', Boolean)
     isDisable?: boolean;
-    zipcode?: string;
-    address1?: string;
-    address2?: string;
-    tel?: string;
-    fax?: string;
-    mail?: string;
-    fee_payer: string;
-    roundCode: string;
-    currency: string;
-    closingDateGroup: string;
-    taxCalculationMethod?: string;
-    advanceReceivedAuxCode?: string;
-    accountReceivableAuxCode?: string;
-    salesAuxCd?: string;
-    collectCycle?: string;
-    paymentCycle?: string;
-    billingBankAccountNumber?: string;
-    note?: string;
-    deliveryPlace?: string;
+    @JsonProperty('zipcode', String)
+    zipcode?: string = undefined;
+    @JsonProperty('address1', String)
+    address1?: string = undefined;
+    @JsonProperty('address2', String)
+    address2?: string = undefined;
+    @JsonProperty('tel', String)
+    tel?: string = undefined;
+    @JsonProperty('fax', String)
+    fax?: string = undefined;
+    @JsonProperty('mail', String)
+    mail?: string = undefined;
+    @JsonProperty('fee_payer', String)
+    fee_payer: string = undefined;
+    @JsonProperty('roundCode', String)
+    roundCode: string = undefined;
+    @JsonProperty('currency', String)
+    currency: string = undefined;
+    @JsonProperty('closingDateGroup', String)
+    closingDateGroup: string = undefined;
+    @JsonProperty('taxCalculationMethod', String)
+    taxCalculationMethod?: string = undefined;
+    @JsonProperty('advanceReceivedAuxCode', String)
+    advanceReceivedAuxCode?: string = undefined;
+    @JsonProperty('accountReceivableAuxCode', String)
+    accountReceivableAuxCode?: string = undefined;
+    @JsonProperty('salesAuxCd', String)
+    salesAuxCd?: string = undefined;
+    @JsonProperty('collectCycle', String)
+    collectCycle?: string = undefined;
+    @JsonProperty('collectCycleMonth', String)
+    collectCycleMonth?: string = undefined;
+    @JsonProperty('collectCycleDay', String)
+    collectCycleDay?: string = undefined;
+    @JsonProperty('paymentCycle', String)
+    paymentCycle?: string = undefined;
+    @JsonProperty('billingBankAccountNumber', String)
+    billingBankAccountNumber?: string = undefined;
+    @JsonProperty('note', String)
+    note?: string = undefined;
+    @JsonProperty('deliveryPlace', String)
+    deliveryPlace?: string = undefined;
 }
 
-export interface UnitPrices {
-    startDate: string;
-    endDate?: string;
-    leader: number;
-    tester: number;
-    dispatch: number;
+@JsonObject('UnitPrices')
+export class UnitPrices {
+    @JsonProperty('startDate', String)
+    startDate!: string;
+    @JsonProperty('endDate', String)
+    endDate?: string = undefined;
+    @JsonProperty('leader', Number)
+    leader!: number;
+    @JsonProperty('tester', Number)
+    tester!: number;
+    @JsonProperty('dispatch', Number)
+    dispatch!: number;
 }
 
-export interface CustomerMagnifications {
-    startDate: string;
-    endDate?: string;
-    overtime: number;
-    lateNight: number;
-    lateNightOvertime: number;
-    holiday: number;
-    holiday_late_night: number;
+@JsonObject('CustomerMagnifications')
+export class CustomerMagnifications {
+    @JsonProperty('startDate', String)
+    startDate!: string;
+    @JsonProperty('endDate', String)
+    endDate?: string = undefined;
+    @JsonProperty('overtime', Number)
+    overtime!: number;
+    @JsonProperty('lateNight', Number)
+    lateNight!: number;
+    @JsonProperty('lateNightOvertime', Number)
+    lateNightOvertime!: number;
+    @JsonProperty('holiday', Number)
+    holiday!: number;
+    @JsonProperty('holiday_late_night', Number)
+    holiday_late_night!: number;
+}
+
+export class CustomerInfo {
+    @JsonProperty('overview', Overview)
+    overview: Overview = undefined;
+    @JsonProperty('unitPricesRecords')
+    unitPricesRecords?: UnitPrices[] = undefined;
+    @JsonProperty('customerMagnificationsRecords')
+    customerMagnificationsRecords?: CustomerMagnifications[] = undefined;
 }
 
 export class CustomerInfoData {
@@ -75,4 +125,9 @@ export class CustomerInfoData {
     public static SUPPLIER_ALL_DATA: CustomerInfo = {
         overview: customerInfo.overview.supplier.allFields,
     };
+
+    public static CUSTOMER_INITIAL_DATA: CustomerInfo[] = JsonUtility.deserializeArray(
+        customerInitialData,
+        CustomerInfo,
+    );
 }

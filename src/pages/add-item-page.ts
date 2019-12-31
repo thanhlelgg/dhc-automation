@@ -164,7 +164,7 @@ export class AddItemPage extends GeneralPage {
     }
 
     @action('does manage unit display correct')
-    public async doesManageUnitDisplayCorrect(manageUnit: number | undefined): Promise<boolean> {
+    public async doesManageUnitDisplayCorrect(manageUnit: string | undefined): Promise<boolean> {
         const currentValue = await this.getTextBoxValue(this.manageUnit);
         return Utilities.isTextEqual(currentValue, manageUnit ? manageUnit + '' : '');
     }

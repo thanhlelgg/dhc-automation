@@ -20,7 +20,7 @@ export class ListWorkerPage {
     @locator
     protected searchButton = "//button[@class='btn btn-info px-5 mr-2']";
     @locator
-    protected editWorkerLinkStr = "//a[.='{0}']";
+    protected editWorkerLinkStr = "//div[@tabulator-field='cd']/a[text()='{0}']";
     @locator
     protected dataTable = "//div[@id='data-table']";
 

@@ -1,4 +1,5 @@
 import itemInfo from '../data/item-info.json';
+import itemInitialData from '../data/initial-data/item-info.json';
 import { JsonUtility, Utilities } from '../common/utilities.js';
 import { JsonProperty } from 'json2typescript';
 import { Constants } from '../common/constants.js';
@@ -12,7 +13,7 @@ export class ItemInfo {
     managementSection!: string;
     @JsonProperty('segment', String)
     segment!: string;
-    @JsonProperty('unitPrice', String, true)
+    @JsonProperty('unitPrice', Number, true)
     unitPrice?: number;
     @JsonProperty('inventoryEvaluationUnitPrice', Number, true)
     inventoryEvaluationUnitPrice?: number;
@@ -20,8 +21,8 @@ export class ItemInfo {
     supplyUnitPrice?: number;
     @JsonProperty('tax', String, true)
     tax?: string;
-    @JsonProperty('managementUnit', Number, true)
-    managementUnit?: number;
+    @JsonProperty('managementUnit', String, true)
+    managementUnit?: string;
     @JsonProperty('costCenter', String, true)
     costCenter?: string;
     @JsonProperty('debitSubcode', String, true)
@@ -46,7 +47,7 @@ export class ItemInfo {
         this.unitPrice = Utilities.getRandomNumber(0, 999999);
         this.inventoryEvaluationUnitPrice = Utilities.getRandomNumber(0, 999999);
         this.supplyUnitPrice = Utilities.getRandomNumber(0, 999999);
-        this.managementUnit = Utilities.getRandomNumber(0, 99);
+        this.managementUnit = Utilities.getRandomText(3);
         this.costCenter = 'SES・開発';
         this.debitSubcode = Utilities.getRandomText(16);
         this.creditSubcode = Utilities.getRandomText(16);
@@ -67,4 +68,5 @@ export class ItemInfo {
 
 export class ItemInfoData {
     public static ITEM_REQUIRED_DATA: ItemInfo = JsonUtility.deserialize(itemInfo, ItemInfo);
+    public static ITEM_INITIAL_DATA: ItemInfo[] = JsonUtility.deserializeArray(itemInitialData, ItemInfo);
 }

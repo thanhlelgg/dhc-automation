@@ -17,7 +17,7 @@ export class ListItemPage extends GeneralPage {
     protected searchButton = "//button[@class='btn btn-info px-5 mr-2']";
     @locator
     @locator
-    protected editItemLinkStr = `//div[@tabulator-field='${this.translator.fieldName.listItem.tableColumns.code}']/a[.='{0}']`;
+    protected editItemLinkStr = `//div[@tabulator-field='cd']/a[.='{0}']`;
     @locator
     protected dataTable = "//div[@id='data-table']";
 

@@ -1,26 +1,16 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
-import loginPage from '../../pages/login-page';
 import addWorkerPage from '../../pages/add-worker-page';
-import businessSystemPage from '../../pages/business-system-page';
-import { Constants } from '../../common/constants';
 import { WorkerInfoData } from '../../models/worker-info';
 import listWorkerPage from '../../pages/list-worker-page';
 import { Utilities } from '../../common/utilities';
+import setup from './add-worker-setup';
 
 TestModule('Add Worker Successfully');
 
 const WORKER_INFO_REQUIRED_ONLY = WorkerInfoData.WORKER_REQUIRED_DATA;
 const WORKER_INFO_FULL = WorkerInfoData.WORKER_FULL_DATA;
 
-Before(async () => {
-    gondola.report(`Precondition 1. 有効なユーザー名とパスワードでdh-connectシステムに正常にログインすること`);
-    await loginPage.openWebsite();
-    await loginPage.login(Constants.adminUserName, Constants.adminPassword);
-
-    gondola.report(`Step 1.新規従業員登録の画面に移動する`);
-    await loginPage.gotoBusinessSystem();
-    await businessSystemPage.gotoAddWorkerPage();
-});
+Before(setup);
 
 TestCase('BMS-143. BMS:案件:従業員マスタ作成:保存:必須項目のみ', async () => {
     gondola.report(`Step 2.必須項目で情報を入力する`);
@@ -32,7 +22,7 @@ TestCase('BMS-143. BMS:案件:従業員マスタ作成:保存:必須項目のみ
     gondola.report(
         `VP. 正常に保存でき、従業員一覧画面には登録した従業員が表示され、登録された従業員の内容は正しく保存されること。`,
     );
-    await businessSystemPage.gotoListWorker();
+    await addWorkerPage.clickReturnButton();
     await listWorkerPage.searchWorker(WORKER_INFO_REQUIRED_ONLY.workerCode);
     await gondola.checkControlExist(listWorkerPage.getWorkerLink(WORKER_INFO_REQUIRED_ONLY.workerCode));
 
@@ -57,7 +47,7 @@ TestCase('BMS-144. BMS:案件:従業員マスタ作成:保存:全ての項目', 
     gondola.report(
         `VP. 正常に保存でき、従業員一覧画面には登録した従業員が表示され、登録された従業員の内容は正しく保存されること。`,
     );
-    await businessSystemPage.gotoListWorker();
+    await addWorkerPage.clickReturnButton();
     await listWorkerPage.searchWorker(WORKER_INFO_FULL.workerCode);
     await gondola.checkControlExist(listWorkerPage.getWorkerLink(WORKER_INFO_FULL.workerCode));
 
