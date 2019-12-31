@@ -410,6 +410,7 @@ export class JsonUtility {
                 return jsonConvert.deserializeArray(jsobj, classReference);
             } catch (e) {
                 console.log(e);
+                return [];
             }
         } catch (err) {
             throw err;

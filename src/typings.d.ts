@@ -166,7 +166,7 @@ declare module 'gondolajs' {
          * @param control
          * @param timeOut
          */
-        waitForElementDisappearSoftly(control: any, timeOut: number): Promise<void>;
+        waitForElementDisappearSoftly(control: any, timeOut?: number): Promise<void>;
 
         /**
          * get current url of web

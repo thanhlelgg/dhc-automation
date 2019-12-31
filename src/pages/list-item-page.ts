@@ -4,6 +4,7 @@ import { Constants } from '../common/constants';
 import { GeneralPage } from './general-page';
 @page
 export class ListItemPage extends GeneralPage {
+    private pageUrl = `${Constants.bmsBaseUrl}/items`;
     @locator
     protected itemCode = "//input[@id='cd']";
     @locator
@@ -52,6 +53,11 @@ export class ListItemPage extends GeneralPage {
     @action('get item link')
     public getItemLink(itemCode: string): string {
         return Utilities.formatString(this.editItemLinkStr, itemCode);
+    }
+
+    @action('is current page')
+    public async isCurrentPage(): Promise<boolean> {
+        return await super.isCurrentPage(this.pageUrl);
     }
 }
 export default new ListItemPage();

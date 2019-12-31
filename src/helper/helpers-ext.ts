@@ -213,11 +213,10 @@ class HelperExt extends Helper {
      * @param attribute
      */
     public async waitUntilElementVisible(control: any, timeOut = DEFAULT_TIMEOUT): Promise<void> {
-        timeOut = timeOut * 1000; //convert to milliseconds
         try {
             const currentTime = Utilities.currentTimeInSeconds();
             await this.helpers['GondolaHelper'].waitForElement(control, timeOut);
-            timeOut = timeOut - (Utilities.currentTimeInSeconds() - currentTime);
+            timeOut = timeOut * 1000 - (Utilities.currentTimeInSeconds() - currentTime);
             const element = await this.getElement(control);
             if (timeOut > 0) {
                 await browser.wait(protractor.until.elementIsVisible(element), timeOut);

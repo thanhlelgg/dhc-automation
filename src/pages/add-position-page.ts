@@ -8,7 +8,7 @@ import { FlagsCollector, LoggingType } from '../helper/flags-collector';
 @page
 export class AddPositionPage extends GeneralPage {
     private positionFieldName = Constants.translator.fieldName.addPosition;
-    protected pageUrl = 'https://dhctms.digitalhearts.com/positions/add';
+    protected pageUrl = `${Constants.tmsBaseUrl}/positions/add`;
 
     @action('input position info')
     public async inputPositionInfo(positionInfo: PositionInfo): Promise<void> {

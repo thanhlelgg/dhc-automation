@@ -12,7 +12,7 @@ import { TimeCardApprove } from '../models/enum-class/timecard-approve';
 
 @page
 export class PositionsPage extends GeneralPage {
-    pageUrl = 'https://dhctms.digitalhearts.com/positions';
+    pageUrl = `${Constants.bmsBaseUrl}/positions`;
     @locator
     protected positionsTable = '//table';
     protected tableHelper = new HTMLTableHelper(this.positionsTable);
@@ -133,6 +133,9 @@ export class PositionsPage extends GeneralPage {
     @action('remove position if exist')
     public async removePositionIfExistFromCSVFile(filePath: string): Promise<void> {
         if (!PositionsTableHeader.POSITION_NAME.csvColumnName) {
+            throw new Error('CSV column is not available');
+        }
+        if (!PositionsTableHeader.POSITION_ABBREVIATION.csvColumnName) {
             throw new Error('CSV column is not available');
         }
         const csvPositionNameIdx = CsvHelpers.getColumnIndex(

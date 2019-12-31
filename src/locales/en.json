@@ -113,6 +113,22 @@
                 "unitPurchasePrice": "購入単価"
             }
         },
+        "addWorkingPlace": {
+            "name": "就業先名称",
+            "code": "就業先コード",
+            "category": "カテゴリ",
+            "address": "住所",
+            "nearestStation1": "最寄り駅 1",
+            "nearestStation2": "最寄り駅 2",
+            "nearestStation3": "最寄り駅 3",
+            "timeZone": "タイムゾーン"
+        },
+        "listWorkingPlace": {
+            "name": "就業先名称",
+            "code": "就業先コード",
+            "category": "カテゴリ",
+            "address": "住所"
+        },
         "listItem": {
             "searchField": {
                 "code": "品目コード",
@@ -273,8 +289,8 @@
     "verticalMenuTMS": {
         "masterDataManagement": {
             "title": "マスタデータ管理",
-            "workingPlace": "ラボ管理",
-            "groups": "ラボ管理",
+            "workingPlace": "就業先(ラボ管理)",
+            "groups": "部門（ユーザーグループ",
             "positions": "役職"
         }
     },
@@ -310,6 +326,12 @@
             "tax": {
                 "taxation": "課税",
                 "taxExempt": "非課税"
+            }
+        },
+        "addWorkingPlace": {
+            "category": {
+                "lab": "ラボ",
+                "client": "クライアント"
             }
         }
     },
