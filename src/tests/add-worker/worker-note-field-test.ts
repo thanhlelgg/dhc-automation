@@ -1,9 +1,8 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
-import loginPage from '../../pages/login-page';
 import addWorkerPage from '../../pages/add-worker-page';
-import businessSystemPage from '../../pages/business-system-page';
 import { Constants } from '../../common/constants';
 import { Utilities } from '../../common/utilities';
+import setup from './add-worker-setup';
 
 TestModule('Add Worker - Worker note field validation');
 
@@ -11,15 +10,7 @@ const WORKER_NOTE_FIELD_NAME = Constants.translator.fieldName.addWorker.note;
 const TEXT_1024_CHARACTERS = Utilities.getRandomText(1024);
 const TEXT_1025_CHARACTERS = Utilities.getRandomText(1025);
 
-Before(async () => {
-    gondola.report(`Precondition 1. 有効なユーザー名とパスワードでdh-connectシステムに正常にログインすること`);
-    await loginPage.openWebsite();
-    await loginPage.login(Constants.adminUserName, Constants.adminPassword);
-
-    gondola.report(`Step 1.新規従業員登録の画面に移動する`);
-    await loginPage.gotoBusinessSystem();
-    await businessSystemPage.gotoAddWorkerPage();
-});
+Before(setup);
 
 TestCase('BMS-107. BMS:案件:従業員マスタ作成:備考:文字数', async () => {
     gondola.report(`Step 2.「備考」で1024文字を入力し、保存する`);

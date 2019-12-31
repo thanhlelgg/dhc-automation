@@ -1,6 +1,5 @@
 import { gondola } from 'gondolajs';
 import loginPage from '../../pages/login-page';
-import businessSystemPage from '../../pages/business-system-page';
 import { Constants } from '../../common/constants';
 
 export default async function setup(): Promise<void> {
@@ -8,10 +7,4 @@ export default async function setup(): Promise<void> {
     await loginPage.openWebsite();
     await loginPage.login(Constants.modUserName, Constants.modPassword);
     await loginPage.chooseLanguage(process.env.LANGUAGE);
-
-    gondola.report(
-        `Step 1. 水平メニューで「営業管理」をクリックして、垂直メニューで「マスタ」→「顧客」の「登録」をクリックします。`,
-    );
-    await loginPage.gotoBusinessSystem();
-    await businessSystemPage.gotoAddCustomerPage();
 }

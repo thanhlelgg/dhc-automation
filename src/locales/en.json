@@ -75,8 +75,9 @@
             "code": "従業員コード",
             "name": "従業員名",
             "department": "所属部門",
+            "isRetired": "退職済",
             "note": "備考",
-            "searchDepartmentModalTitle": "部門検索"
+            "searchDepartmentModalTitle": "部門選択"
         },
         "addSegment": {
             "code": "セグメントコード",
@@ -178,7 +179,7 @@
             "timeCardApprove": "タイムカード承認",
             "created": "作成日",
             "modified": "更新日"
-        },
+        }
     },
     "fieldPlaceHolder": {
         "addCustomer": {

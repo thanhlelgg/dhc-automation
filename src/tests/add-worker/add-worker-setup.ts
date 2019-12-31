@@ -9,9 +9,7 @@ export default async function setup(): Promise<void> {
     await loginPage.login(Constants.modUserName, Constants.modPassword);
     await loginPage.chooseLanguage(process.env.LANGUAGE);
 
-    gondola.report(
-        `Step 1. 水平メニューで「営業管理」をクリックして、垂直メニューで「マスタ」→「顧客」の「登録」をクリックします。`,
-    );
+    gondola.report(`Step 1. 新規従業員登録の画面に移動する`);
     await loginPage.gotoBusinessSystem();
-    await businessSystemPage.gotoAddCustomerPage();
+    await businessSystemPage.gotoAddWorkerPage();
 }

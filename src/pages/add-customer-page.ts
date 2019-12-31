@@ -5,6 +5,7 @@ import { RecordTable } from '../models/enum-class/recordTable';
 import { RecordFieldName } from '../models/enum-class/recordFieldName';
 import '@src/string.extensions';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
+import { Constants } from '../common/constants';
 
 @page
 export class AddCustomerPage extends GeneralPage {
@@ -12,6 +13,12 @@ export class AddCustomerPage extends GeneralPage {
     protected addUnitPricesRecordButton = { id: 'addRow' };
     @locator
     protected addCustomerMagnificationRecordButton = { id: 'magnifyAddRow' };
+    @locator
+    protected paymentCycleDaily = "//input[@id='collect_cycle_daily_day']";
+    @locator
+    protected paymentCycleMonth = "//input[@id='collect_cycle_month']";
+    @locator
+    protected paymentCycleMonthlyDay = "//input[@id='collect_cycle_monthly_day']";
 
     fieldName = this.translator.fieldName.addCustomer;
     placeHolder = this.translator.fieldPlaceHolder.addCustomer;
@@ -59,6 +66,16 @@ export class AddCustomerPage extends GeneralPage {
         await this.enterTextFieldByLabel(this.fieldName.salesAuxCode, overviewInfo.salesAuxCd);
         await this.enterTextFieldByLabel(this.fieldName.deliveryPlace, overviewInfo.deliveryPlace);
         await this.selectRadioButtonByLabel(this.fieldName.collectCycle, overviewInfo.collectCycle);
+        if (overviewInfo.collectCycle === this.translator.radioButtonOptions.addCustomer.collectCycle.daily) {
+            await gondola.waitUntilElementVisible(this.paymentCycleDaily, Constants.MEDIUM_TIMEOUT);
+            await gondola.enter(this.paymentCycleDaily, overviewInfo.collectCycleDay);
+        }
+        if (overviewInfo.collectCycle === this.translator.radioButtonOptions.addCustomer.collectCycle.monthly) {
+            await gondola.waitUntilElementVisible(this.paymentCycleMonthlyDay, Constants.MEDIUM_TIMEOUT);
+            await gondola.enter(this.paymentCycleMonthlyDay, overviewInfo.collectCycleDay);
+            await gondola.waitUntilElementVisible(this.paymentCycleMonth, Constants.MEDIUM_TIMEOUT);
+            await gondola.enter(this.paymentCycleMonth, overviewInfo.collectCycleMonth);
+        }
         await this.selectRadioButtonByLabel(this.fieldName.paymentCycle, overviewInfo.paymentCycle);
         await this.enterTextFieldByLabel(
             this.fieldName.billingBankAccountNumber,
@@ -173,12 +190,15 @@ export class AddCustomerPage extends GeneralPage {
             this.getTextFieldValueByLabel.bind(this),
             this.fieldName.salesAuxCode,
         );
-        FlagsCollector.collectEqualLazy(
-            'Delivery place should be displayed correctly',
-            overviewInfo.deliveryPlace,
-            this.getTextFieldValueByLabel.bind(this),
-            this.fieldName.deliveryPlace,
-        );
+        if (overviewInfo.deliveryPlace) {
+            FlagsCollector.collectEqualLazy(
+                'Delivery place should be displayed correctly',
+                overviewInfo.deliveryPlace,
+                this.getTextFieldValueByLabel.bind(this),
+                this.fieldName.deliveryPlace,
+            );
+        }
+
         FlagsCollector.collectEqualLazy(
             `Radio button ${overviewInfo.collectCycle} should be selected`,
             overviewInfo.collectCycle ? true : undefined,
@@ -186,13 +206,36 @@ export class AddCustomerPage extends GeneralPage {
             this.fieldName.collectCycle,
             overviewInfo.collectCycle,
         );
-        FlagsCollector.collectEqualLazy(
-            `Radio button ${overviewInfo.paymentCycle} should be selected`,
-            overviewInfo.paymentCycle ? true : undefined,
-            this.isRadioButtonByLabelSelected.bind(this),
-            this.fieldName.paymentCycle,
-            overviewInfo.paymentCycle,
-        );
+        if (overviewInfo.collectCycle === this.translator.radioButtonOptions.addCustomer.collectCycle.daily) {
+            FlagsCollector.collectEqual(
+                `Payment cycle day ${overviewInfo.collectCycleDay} should be displayed correctly`,
+                overviewInfo.collectCycleDay,
+                await this.getTextBoxValue(this.paymentCycleDaily),
+            );
+        }
+        if (overviewInfo.collectCycle === this.translator.radioButtonOptions.addCustomer.collectCycle.monthly) {
+            FlagsCollector.collectEqual(
+                `Payment cycle month ${overviewInfo.collectCycleDay} should be displayed correctly`,
+                overviewInfo.collectCycleMonth,
+                await this.getTextBoxValue(this.paymentCycleMonth),
+            );
+            FlagsCollector.collectEqual(
+                `Payment cycle day ${overviewInfo.collectCycleDay} should be displayed correctly`,
+                overviewInfo.collectCycleDay,
+                await this.getTextBoxValue(this.paymentCycleMonthlyDay),
+            );
+        }
+
+        if (overviewInfo.paymentCycle) {
+            FlagsCollector.collectEqualLazy(
+                `Radio button ${overviewInfo.paymentCycle} should be selected`,
+                overviewInfo.paymentCycle ? true : undefined,
+                this.isRadioButtonByLabelSelected.bind(this),
+                this.fieldName.paymentCycle,
+                overviewInfo.paymentCycle,
+            );
+        }
+
         FlagsCollector.collectEqualLazy(
             'Billing bank account number should be displayed correctly',
             overviewInfo.billingBankAccountNumber,
@@ -209,6 +252,7 @@ export class AddCustomerPage extends GeneralPage {
 
     @action('input unit prices')
     public async inputUnitPrices(unitPricesRecords: UnitPrices[]): Promise<void> {
+        gondola.report('Number of record: ' + unitPricesRecords.length);
         for (let i = 0; i < unitPricesRecords.length; i++) {
             const unitPrices = unitPricesRecords[i];
             if (!(await this.doesRecordFieldExist(RecordTable.CUSTOMER_UNIT_PRICES, i, RecordFieldName.START_DATE))) {

@@ -1,4 +1,5 @@
 import workerInfo from '../data/worker-info.json';
+import workerInitialData from '../data/initial-data/worker-info.json';
 
 export interface WorkerInfo {
     workerCode: string;
@@ -11,4 +12,5 @@ export interface WorkerInfo {
 export class WorkerInfoData {
     public static WORKER_FULL_DATA: WorkerInfo = workerInfo.fullData;
     public static WORKER_REQUIRED_DATA: WorkerInfo = workerInfo.requiredOnly;
+    public static WORKER_INITIAL_DATA: WorkerInfo[] = workerInitialData;
 }

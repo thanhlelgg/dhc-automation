@@ -4,8 +4,8 @@
             "projectName": "【4月案件】テスト",
             "projectForm": "出来高案件",
             "customerName": "移行ﾃｽﾄ グリー株式会社",
-            "department": "エンターテイメント事業本部__",
-            "workerName": "桃澤秀行",
+            "department": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "workerName": "営業　二郎",
             "startDate": null,
             "endDate": null,
             "scheduleStartDate": null,
@@ -16,7 +16,7 @@
             "currencyId": "JPY",
             "billingType": "案件個別",
             "closingDate": "未",
-            "segment": "Test",
+            "segment": "受託開発",
             "tag": null,
             "description": null
         },
@@ -24,8 +24,8 @@
             "projectName": "【4月案件】テスト",
             "projectForm": "出来高案件",
             "customerName": "移行ﾃｽﾄ グリー株式会社",
-            "department": "エンターテイメント事業本部__",
-            "workerName": "桃澤秀行",
+            "department": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "workerName": "営業　二郎",
             "startDate": "2019-04-18",
             "endDate": "2019-04-19",
             "scheduleStartDate": null,
@@ -36,7 +36,7 @@
             "currencyId": "JPY",
             "billingType": "案件個別",
             "closingDate": "末",
-            "segment": "TEST_初台_0031",
+            "segment": "受託開発",
             "tag": "4月,test",
             "description": null
         }
@@ -45,10 +45,10 @@
         "twoRecords": [
             {
                 "detailName": "機器使用料金",
-                "item": "システムテスト",
+                "item": "物販",
                 "debitCredit": "売掛",
                 "isTaxable": true,
-                "taxId": "８％",
+                "taxId": "8%",
                 "quantity": "3",
                 "unit": "台",
                 "unitPrice": "1000",
@@ -59,10 +59,10 @@
             },
             {
                 "detailName": "機器使用料金2",
-                "item": "システムテスト",
+                "item": "物販",
                 "debitCredit": "売掛",
                 "isTaxable": true,
-                "taxId": "８％",
+                "taxId": "8%",
                 "quantity": "1",
                 "unit": "台",
                 "unitPrice": "2000",
@@ -147,7 +147,7 @@
         "oneRecord": [
             {
                 "role": "リーダ",
-                "item": "システムテスト",
+                "item": "物販",
                 "debitCredit": "売掛",
                 "planPeople": 1,
                 "planTime": 16,
@@ -158,7 +158,7 @@
                 "unitPriceWeekdayLateOT": "2000",
                 "unitPriceHolidayLate": "2400",
                 "isTaxable": true,
-                "taxId": "８％",
+                "taxId": "8%",
                 "note": "validation",
                 "outputOrder": "1"
             }
@@ -166,7 +166,7 @@
         "twoRecords": [
             {
                 "role": "リーダ",
-                "item": "システムテスト",
+                "item": "物販",
                 "debitCredit": "売掛",
                 "planPeople": 1,
                 "planTime": 16,
@@ -177,13 +177,13 @@
                 "unitPriceWeekdayLateOT": "2000",
                 "unitPriceHolidayLate": "2400",
                 "isTaxable": true,
-                "taxId": "８％",
+                "taxId": "8%",
                 "note": null,
                 "outputOrder": null
             },
             {
                 "role": "テスター",
-                "item": "システムテスト",
+                "item": "物販",
                 "debitCredit": "売掛",
                 "planPeople": 2,
                 "planTime": 16,
@@ -194,7 +194,7 @@
                 "unitPriceWeekdayLateOT": "2000",
                 "unitPriceHolidayLate": "2400",
                 "isTaxable": true,
-                "taxId": "８％",
+                "taxId": "8%",
                 "note": null,
                 "outputOrder": null
             }
