@@ -23,7 +23,7 @@ export class GeneralPage {
     @locator
     protected taskSystemLink = `//a[.='${this.translator.headerMenu.businessSystem}']`;
     @locator
-    protected talentManagementLink = `//a[.='${this.translator.headerMenu.talentManagement}']`;
+    protected talentManagementLink = `//a[.='${this.translator.headerMenu.home}']`;
     @locator
     protected invalidFeedBackByFieldLabel = "//div[label[text()='{0}']]//div[@class='invalid-feedback']";
     @locator

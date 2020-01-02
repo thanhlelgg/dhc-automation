@@ -132,54 +132,49 @@ Data(WORKER_INFO).TestCase('InitialData4. BMS:案件:従業員マスタ作成', 
     );
 });
 
-Data(CUSTOMER_DATA).TestCase(
-    'InitialData. 案件:得意先マスタ作成:顧客情報:保存顧客:全ての項目',
-    async (current: any) => {
-        gondola.report(
-            `Step 1. 水平メニューで「営業管理」をクリックして、垂直メニューで「マスタ」→「顧客」の「登録」をクリックします。`,
-        );
-        await loginPage.gotoBusinessSystem();
-        await businessSystemPage.gotoAddCustomerPage();
+Data(CUSTOMER_DATA).TestCase('InitialData5. BMS:案件:得意先マスタ作成', async (current: any) => {
+    gondola.report(
+        `Step 1. 水平メニューで「営業管理」をクリックして、垂直メニューで「マスタ」→「顧客」の「登録」をクリックします。`,
+    );
+    await loginPage.gotoBusinessSystem();
+    await businessSystemPage.gotoAddCustomerPage();
 
-        gondola.report(`Step 2. 「区分」で「顧客」を選択する。`);
-        await addCustomerPage.selectSelectorByLabel(
-            Constants.translator.fieldName.addCustomer.classify,
-            Constants.translator.dropdownOptions.customer.classify.client,
-        );
-        gondola.report(`VP. 「顧客単価」と「割増」入力セッションが表示されること。`);
-        gondola.checkTrue(
-            await addCustomerPage.doesSectionDisplay(
-                Constants.translator.sectionName.addCustomer.customerMagnifications,
-            ),
-        );
-        gondola.checkTrue(
-            await addCustomerPage.doesSectionDisplay(Constants.translator.sectionName.addCustomer.customerUnitPrices),
-        );
+    gondola.report(`Step 2. 「区分」で「顧客」を選択する。`);
+    await addCustomerPage.selectSelectorByLabel(
+        Constants.translator.fieldName.addCustomer.classify,
+        Constants.translator.dropdownOptions.customer.classify.client,
+    );
+    gondola.report(`VP. 「顧客単価」と「割増」入力セッションが表示されること。`);
+    gondola.checkTrue(
+        await addCustomerPage.doesSectionDisplay(Constants.translator.sectionName.addCustomer.customerMagnifications),
+    );
+    gondola.checkTrue(
+        await addCustomerPage.doesSectionDisplay(Constants.translator.sectionName.addCustomer.customerUnitPrices),
+    );
 
-        gondola.report(
-            `Step 3. 「顧客情報」入力セッションで「取引先コード」、「取引先名」、「振込手数料負担」、「端数処理」、「取引通貨」、「締め日」、「税計算単位」、「個別請求口座番号」の有効な情報を入力する。`,
-        );
-        gondola.report(`Step 4. 「顧客情報」入力セッションの他の項目で有効な情報を入力する。`);
-        gondola.report(`Step 5. 顧客単価行を二つ追加し、顧客単価行で有効な情報を入力する。`);
-        gondola.report(`Step 6. 割増行を二つ追加し、割増行で有効な情報を入力する。`);
-        await addCustomerPage.inputCustomerInfo(current);
-        gondola.report(`Step 7. 「保存」ボタンをクリックする。`);
-        await addCustomerPage.saveCustomer();
-        await addCustomerPage.clickReturnButton();
-        await listCustomerPage.enterTextFieldByLabel(
-            Constants.translator.fieldName.customerList.customerCode,
-            current.overview.code,
-        );
-        await listCustomerPage.clickSearchButton();
-        // Currently there's a bug with start date that doesn't allow us to enter a valid date,
-        // therefore we can't save customer and failed the test
-        await listCustomerPage.openCustomerByCode(current.overview.code);
-        gondola.report(
-            `VP. 正常に保存でき、得意先一覧画面には登録した得意先が表示され、登録された得意先の内容は正しく保存されること。`,
-        );
-        await gondola.checkTrue(
-            await addCustomerPage.doesCustomerDisplayCorrectly(current),
-            'Customer should be created correctly',
-        );
-    },
-);
+    gondola.report(
+        `Step 3. 「顧客情報」入力セッションで「取引先コード」、「取引先名」、「振込手数料負担」、「端数処理」、「取引通貨」、「締め日」、「税計算単位」、「個別請求口座番号」の有効な情報を入力する。`,
+    );
+    gondola.report(`Step 4. 「顧客情報」入力セッションの他の項目で有効な情報を入力する。`);
+    gondola.report(`Step 5. 顧客単価行を二つ追加し、顧客単価行で有効な情報を入力する。`);
+    gondola.report(`Step 6. 割増行を二つ追加し、割増行で有効な情報を入力する。`);
+    await addCustomerPage.inputCustomerInfo(current);
+    gondola.report(`Step 7. 「保存」ボタンをクリックする。`);
+    await addCustomerPage.saveCustomer();
+    await addCustomerPage.clickReturnButton();
+    await listCustomerPage.enterTextFieldByLabel(
+        Constants.translator.fieldName.customerList.customerCode,
+        current.overview.code,
+    );
+    await listCustomerPage.clickSearchButton();
+    // Currently there's a bug with start date that doesn't allow us to enter a valid date,
+    // therefore we can't save customer and failed the test
+    await listCustomerPage.openCustomerByCode(current.overview.code);
+    gondola.report(
+        `VP. 正常に保存でき、得意先一覧画面には登録した得意先が表示され、登録された得意先の内容は正しく保存されること。`,
+    );
+    await gondola.checkTrue(
+        await addCustomerPage.doesCustomerDisplayCorrectly(current),
+        'Customer should be created correctly',
+    );
+});

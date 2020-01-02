@@ -1,23 +1,13 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
-import loginPage from '../../pages/login-page';
 import listProjectPage from '../../pages/list-project-page';
-import businessSystemPage from '../../pages/business-system-page';
-import { Constants } from '../../common/constants';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 import Accuracy from '../../models/enum-class/accuracy';
 import { DatabaseHelper } from '../../helper/database-helpers';
+import setup from './search-project-setup';
 
 TestModule('Search project - Search project by accuracy');
 
-Before(async () => {
-    gondola.report(`Precondition 1. 有効なユーザー名とパスワードでdh-connectシステムに正常にログインすること`);
-    await loginPage.openWebsite();
-    await loginPage.login(Constants.adminUserName, Constants.adminPassword);
-
-    gondola.report(`Step 1.案件一覧の画面に移動する`);
-    await loginPage.gotoBusinessSystem();
-    await businessSystemPage.gotoListProject();
-});
+Before(setup);
 
 TestCase('BMS-115. BMS:案件:案件検索:確度', async () => {
     gondola.report(`Step 2. プルダウンの選択肢を確認する`);
@@ -26,13 +16,16 @@ TestCase('BMS-115. BMS:案件:案件検索:確度', async () => {
     let expectedResults: any[];
     let actualResults: any[];
 
-    for (let accuracyKey in Accuracy) {
+    for (const accuracyKey in Accuracy) {
         expectedResults = [];
         actualResults = [];
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         //@ts-ignore
         accuracy = Accuracy[accuracyKey];
         resultsFromDatabase = await DatabaseHelper.getProjectsBy({ accuracy: accuracyKey });
-        resultsFromDatabase.forEach((v) => { expectedResults.push((v.number as string).trim()); });
+        resultsFromDatabase.forEach(v => {
+            expectedResults.push((v.number as string).trim());
+        });
 
         gondola.report(`Step 3. プルダウンで任意の選択肢を選択し、検索する`);
         gondola.report(`===== 確度: ${accuracy}`);
