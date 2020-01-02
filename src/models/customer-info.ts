@@ -6,9 +6,9 @@ import { JsonProperty, JsonObject } from 'json2typescript';
 @JsonObject('Overview')
 export class Overview {
     @JsonProperty('code', String)
-    code: string = undefined;
+    code!: string;
     @JsonProperty('name', String)
-    name: string = undefined;
+    name!: string;
     @JsonProperty('repDepartment', String)
     repDepartment?: string = undefined;
     @JsonProperty('repName', String)
@@ -30,13 +30,13 @@ export class Overview {
     @JsonProperty('mail', String)
     mail?: string = undefined;
     @JsonProperty('fee_payer', String)
-    fee_payer: string = undefined;
+    fee_payer?: string = undefined;
     @JsonProperty('roundCode', String)
-    roundCode: string = undefined;
+    roundCode?: string = undefined;
     @JsonProperty('currency', String)
-    currency: string = undefined;
+    currency?: string = undefined;
     @JsonProperty('closingDateGroup', String)
-    closingDateGroup: string = undefined;
+    closingDateGroup?: string = undefined;
     @JsonProperty('taxCalculationMethod', String)
     taxCalculationMethod?: string = undefined;
     @JsonProperty('advanceReceivedAuxCode', String)
@@ -95,7 +95,7 @@ export class CustomerMagnifications {
 
 export class CustomerInfo {
     @JsonProperty('overview', Overview)
-    overview: Overview = undefined;
+    overview!: Overview;
     @JsonProperty('unitPricesRecords')
     unitPricesRecords?: UnitPrices[] = undefined;
     @JsonProperty('customerMagnificationsRecords')
