@@ -212,6 +212,18 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get Random Labs from the database
+     */
+    public static async getRandomLab(inHouseOnly = false): Promise<Labs> {
+        const alias = 'labs';
+        const category = inHouseOnly ? `${alias}.category = 0 AND` : '';
+        const query = `${category} ${alias}.is_deleted IS NOT NULL`;
+        const orderBy = 'RAND()';
+        const labs = await DatabaseHelper.getOne(DatabaseSchema.TALENT, Labs, alias, query, orderBy);
+        return labs;
+    }
+
+    /**
      * Get active Segments from the database
      */
     public static async getActiveSegments(): Promise<Segments[]> {

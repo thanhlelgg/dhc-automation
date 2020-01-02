@@ -56,7 +56,7 @@ export class AddWorkerPage extends GeneralPage {
     }
 
     @action('does department display correct')
-    public async doesDepartmentDisplayCorrect(department: string | null): Promise<boolean> {
+    public async doesDepartmentDisplayCorrect(department?: string): Promise<boolean> {
         const currentName = await this.getTextBoxValue(this.departmentName);
         return Utilities.isTextEqual(currentName, department ? department : '');
     }
@@ -68,7 +68,7 @@ export class AddWorkerPage extends GeneralPage {
     }
 
     @action('does note display correct')
-    public async doesNoteDisplayCorrect(note: string | null): Promise<boolean> {
+    public async doesNoteDisplayCorrect(note?: string): Promise<boolean> {
         const currentName = await this.getTextBoxValue(this.note);
         return Utilities.isTextEqual(currentName, note ? note : '');
     }

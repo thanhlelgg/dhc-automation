@@ -1,37 +1,22 @@
 import itemInfo from '../data/item-info.json';
 import itemInitialData from '../data/initial-data/item-info.json';
-import { JsonUtility, Utilities } from '../common/utilities.js';
-import { JsonProperty } from 'json2typescript';
+import { Utilities } from '../common/utilities.js';
 import { Constants } from '../common/constants.js';
 
 export class ItemInfo {
-    @JsonProperty('itemCode', String)
     itemCode: string;
-    @JsonProperty('itemName', String)
     itemName: string;
-    @JsonProperty('managementSection', String)
     managementSection!: string;
-    @JsonProperty('segment', String)
     segment!: string;
-    @JsonProperty('unitPrice', Number, true)
     unitPrice?: number;
-    @JsonProperty('inventoryEvaluationUnitPrice', Number, true)
     inventoryEvaluationUnitPrice?: number;
-    @JsonProperty('supplyUnitPrice', Number, true)
     supplyUnitPrice?: number;
-    @JsonProperty('tax', String, true)
     tax?: string;
-    @JsonProperty('managementUnit', String, true)
     managementUnit?: string;
-    @JsonProperty('costCenter', String, true)
     costCenter?: string;
-    @JsonProperty('debitSubcode', String, true)
     debitSubcode?: string;
-    @JsonProperty('creditSubcode', String, true)
     creditSubcode?: string;
-    @JsonProperty('isInvalidation', Boolean, true)
     isInvalidation?: boolean;
-    @JsonProperty('remarks', String, true)
     remarks?: string;
 
     constructor() {
@@ -67,6 +52,8 @@ export class ItemInfo {
 }
 
 export class ItemInfoData {
-    public static ITEM_REQUIRED_DATA: ItemInfo = JsonUtility.deserialize(itemInfo, ItemInfo);
-    public static ITEM_INITIAL_DATA: ItemInfo[] = JsonUtility.deserializeArray(itemInitialData, ItemInfo);
+    public static ITEM_REQUIRED_DATA: ItemInfo = Object.assign(new ItemInfo(), itemInfo);
+    public static ITEM_INITIAL_DATA: ItemInfo[] = itemInitialData.map(item => {
+        return Object.assign(new ItemInfo(), item);
+    });
 }
