@@ -1,9 +1,7 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
-import loginPage from '../../pages/login-page';
 import listProjectPage from '../../pages/list-project-page';
-import businessSystemPage from '../../pages/business-system-page';
-import { Constants } from '../../common/constants';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
+import setup from './search-project-setup';
 
 TestModule('Search project - Search project by code');
 
@@ -12,15 +10,7 @@ const PROJECT_CODE_IGNORE_CHARACTER_WIDTH_SEARCH = '123';
 const PROJECT_CODE_IGNORE_LOWER_UPPERCASE_SEARCH = 'ABC';
 const PROJECT_CODE_IGNORE_DAKUTEN_HANDAKUTEN_SEARCH = 'ひひ';
 
-Before(async () => {
-    gondola.report(`Precondition 1. 有効なユーザー名とパスワードでdh-connectシステムに正常にログインすること`);
-    await loginPage.openWebsite();
-    await loginPage.login(Constants.adminUserName, Constants.adminPassword);
-
-    gondola.report(`Step 1.案件一覧の画面に移動する`);
-    await loginPage.gotoBusinessSystem();
-    await businessSystemPage.gotoListProject();
-});
+Before(setup);
 
 TestCase('BMS-111. BMS:案件:案件検索:案件番号', async () => {
     gondola.report(`Step 2.案件番号で一部の検索条件を入力し、「検索」ボタンをクリックする。（例：「１」を入力`);

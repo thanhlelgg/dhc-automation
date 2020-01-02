@@ -59,19 +59,19 @@ export class ListProjectPage extends GeneralPage {
     protected editProjectLinkStr = `//div[@tabulator-field='cd']/a[.='{0}']`;
 
     @locator
-    protected resultsByProjectCode = `//div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.code}' and @role='gridcell']`;
+    protected resultsByProjectCode = `//div[@tabulator-field='number' and @role='gridcell']`;
     @locator
-    protected resultsByProjectName = `//div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.name}' and @role='gridcell']`;
+    protected resultsByProjectName = `//div[@tabulator-field='name' and @role='gridcell']`;
     @locator
-    protected resultsByCustomer = `//div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.customer}' and @role='gridcell']`;
+    protected resultsByCustomer = `//div[@tabulator-field='business_customer' and @role='gridcell']`;
     @locator
-    protected resultsByStatus = `//div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.status}' and @role='gridcell']`;
+    protected resultsByStatus = `//div[@tabulator-field='status' and @role='gridcell']`;
     @locator
-    protected resultsByStartDate = `//div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.startDate}' and @role='gridcell']`;
+    protected resultsByStartDate = `//div[@tabulator-field='start_date' and @role='gridcell']`;
     @locator
-    protected resultsByEndDate = `//div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.endDate}' and @role='gridcell']`;
+    protected resultsByEndDate = `//div[@tabulator-field='end_date' and @role='gridcell']`;
     @locator
-    protected resultsByLab = `//div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.lab}' and @role='gridcell']`;
+    protected resultsByLab = `//div[@tabulator-field='lab_code' and @role='gridcell']`;
 
     @locator
     protected pageLink = `//ul[@class='pagination green']/li[.='{0}']`;
@@ -223,20 +223,24 @@ export class ListProjectPage extends GeneralPage {
     @action('get all results of all pages on one column')
     public async getResultsOfAllPagesOnOneColumn(resultColumn: SearchResultColumn): Promise<string[]> {
         const numOfPage = await this.getNumberOfSearchResultPages();
+        const numOfRecord = await this.getNumberOfSearchResultRecords();
         let results: string[] = [];
+        if (numOfRecord === 0) {
+            return results;
+        } else {
+            for (let i = 1; i <= numOfPage; i++) {
+                const resultsInPage = await this.getResultsOnOneColumn(resultColumn);
+                results = results.concat(resultsInPage);
 
-        for (let i = 1; i <= numOfPage; i++) {
-            const resultsInPage = await this.getResultsOnOneColumn(resultColumn);
-            results = results.concat(resultsInPage);
-
-            // click next page
-            if (i !== numOfPage) {
-                gondola.click(this.pageLink.format(i + 1 + ''));
-                await gondola.waitUntilStalenessOfElement(this.searchResultText);
+                // click next page
+                if (i !== numOfPage) {
+                    gondola.click(this.pageLink.format(i + 1 + ''));
+                    await gondola.waitUntilStalenessOfElement(this.searchResultText);
+                }
             }
-        }
 
-        return results;
+            return results;
+        }
     }
 }
 export default new ListProjectPage();

@@ -13,7 +13,7 @@ const TAX_OPTIONS = Constants.translator.radioButtonOptions.addItem.tax;
 
 Before(setup);
 
-TestCase('BMS-200. BMS:マスタ:品目作成:借方補助コード:文字数', async () => {
+TestCase('BMS-200. BMS:マスタ:品目作成:課税区分:選択肢', async () => {
     gondola.report(`VP.「課税区分」プルダウンには選択肢が二つあり、「課税」と「非課税」を含んでいること。`);
     const collectTaxOptions: string[] = Object.values(TAX_OPTIONS);
     await gondola.checkTrue(

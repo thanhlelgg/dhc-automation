@@ -138,7 +138,7 @@ TestCase('BMS-164. 案件:案件作成:案件開始日:下限値・上限値', a
     gondola.report(`Step 4. 案件開始日で「1900-01-01」を入力し、「保存」ボタンをクリックする。`);
     await addProjectPage.enterTextFieldByLabel(START_DATE_FIELD_NAME, '1900-01-01');
     await addProjectPage.saveNewProject();
-    gondola.report(`VP. 入力フィールドの下にエラー「正しい日付を入力してください」が表示されること。`);
+    gondola.report(`入力フィールドの下にエラー「正しい日付を入力してください」が表示されないこと。`);
     await gondola.checkEqual(
         '',
         await addProjectPage.getInvalidFeedBack(START_DATE_FIELD_NAME),
@@ -148,7 +148,7 @@ TestCase('BMS-164. 案件:案件作成:案件開始日:下限値・上限値', a
     gondola.report(`Step 5. 案件開始日で「2099-12-31」を入力し、「保存」ボタンをクリックする。`);
     await addProjectPage.enterTextFieldByLabel(START_DATE_FIELD_NAME, '2099-12-31');
     await addProjectPage.saveNewProject();
-    gondola.report(`VP. 入力フィールドの下にエラー「正しい日付を入力してください」が表示されること。`);
+    gondola.report(`入力フィールドの下にエラー「正しい日付を入力してください」が表示されないこと。`);
     await gondola.checkEqual(
         '',
         await addProjectPage.getInvalidFeedBack(START_DATE_FIELD_NAME),
