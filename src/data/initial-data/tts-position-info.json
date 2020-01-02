@@ -1,0 +1,26 @@
+[
+    {
+        "name": "リーダー",
+        "abbreviationName": "L",
+        "payAllowance": "ON",
+        "timecardApprove": "ON"
+    },
+    {
+        "name": "副リーダー",
+        "abbreviationName": "副",
+        "payAllowance": "ON",
+        "timecardApprove": "OFF"
+    },
+    {
+        "name": "テスター",
+        "abbreviationName": "T",
+        "payAllowance": "OFF",
+        "timecardApprove": "OFF"
+    },
+    {
+        "name": "サンプル",
+        "abbreviationName": "S",
+        "payAllowance": "ON",
+        "timecardApprove": "ON"
+    }
+]

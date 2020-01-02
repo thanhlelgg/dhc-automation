@@ -1,0 +1,22 @@
+[
+    {
+        "positionName": "PM",
+        "abbreviationName": "PM",
+        "timeCardApprove": "全て可能"
+    },
+    {
+        "positionName": "リーダー",
+        "abbreviationName": "L",
+        "timeCardApprove": "担当のみ"
+    },
+    {
+        "positionName": "テスター",
+        "abbreviationName": "T",
+        "timeCardApprove": "不可能"
+    },
+    {
+        "positionName": "サンプル",
+        "abbreviationName": "S",
+        "timeCardApprove": "全て可能"
+    }
+]

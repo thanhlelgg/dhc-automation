@@ -1,0 +1,17 @@
+[
+    {
+        "name": "10%",
+        "taxRate": 10,
+        "displayOrder": 1
+    },
+    {
+        "name": "8%",
+        "taxRate": 8,
+        "displayOrder": 2
+    },
+    {
+        "name": "サンプル税",
+        "taxRate": 99,
+        "displayOrder": 3
+    }
+]

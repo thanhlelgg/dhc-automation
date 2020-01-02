@@ -1,0 +1,32 @@
+[
+    {
+        "name": "出張手当",
+        "amount": 140,
+        "necessarySkill": "長期的な出張対応可能な意思"
+    },
+    {
+        "name": "車両運転手当",
+        "amount": 130,
+        "necessarySkill": "普通免許取得"
+    },
+    {
+        "name": "電話業務手当",
+        "amount": 120,
+        "necessarySkill": "カスタマーサポート業務"
+    },
+    {
+        "name": "翻訳手当",
+        "amount": 110,
+        "necessarySkill": "言語スキル"
+    },
+    {
+        "name": "サンプル手当",
+        "amount": 999,
+        "necessarySkill": "サンプルスキル"
+    },
+    {
+        "name": "出張手当",
+        "amount": 140,
+        "necessarySkill": "長期的な出張対応可能な意思"
+    }
+]
