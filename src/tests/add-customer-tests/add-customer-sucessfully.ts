@@ -12,7 +12,7 @@ TestModule('Add Customer - Verify adding customer successfully');
 const CUSTOMER_CLASSIFY_TEXTFIELD_LABEL = Constants.translator.fieldName.addCustomer.classify;
 const CUSTOMER_CLASSIFY_OPTIONS = Constants.translator.dropdownOptions.customer.classify;
 const CUSTOMER_CODE_SEARCH_TEXTFIELD_LABEL = Constants.translator.fieldName.customerList.customerCode;
-const SUPPLIER_CODE_SEARCH_TEXTFIELD_LABEL = Constants.translator.fieldName.supplierList.supplierCode;
+
 Before(setup);
 
 TestCase('BMS-145. 案件:得意先マスタ作成:顧客情報:保存顧客:必須項目のみ', async () => {

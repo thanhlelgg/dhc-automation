@@ -5,101 +5,59 @@ import { JsonProperty, JsonObject } from 'json2typescript';
 
 @JsonObject('Overview')
 export class Overview {
-    @JsonProperty('code', String)
     code!: string;
-    @JsonProperty('name', String)
     name!: string;
-    @JsonProperty('repDepartment', String)
     repDepartment?: string = undefined;
-    @JsonProperty('repName', String)
     repName?: string = undefined;
-    @JsonProperty('lastBusinessDate', String)
     lastBusinessDate?: string = undefined;
-    @JsonProperty('isDisable', Boolean)
     isDisable?: boolean;
-    @JsonProperty('zipcode', String)
     zipcode?: string = undefined;
-    @JsonProperty('address1', String)
     address1?: string = undefined;
-    @JsonProperty('address2', String)
     address2?: string = undefined;
-    @JsonProperty('tel', String)
     tel?: string = undefined;
-    @JsonProperty('fax', String)
     fax?: string = undefined;
-    @JsonProperty('mail', String)
     mail?: string = undefined;
-    @JsonProperty('fee_payer', String)
     fee_payer?: string = undefined;
-    @JsonProperty('roundCode', String)
     roundCode?: string = undefined;
-    @JsonProperty('currency', String)
     currency?: string = undefined;
-    @JsonProperty('closingDateGroup', String)
     closingDateGroup?: string = undefined;
-    @JsonProperty('taxCalculationMethod', String)
     taxCalculationMethod?: string = undefined;
-    @JsonProperty('advanceReceivedAuxCode', String)
     advanceReceivedAuxCode?: string = undefined;
-    @JsonProperty('accountReceivableAuxCode', String)
     accountReceivableAuxCode?: string = undefined;
-    @JsonProperty('salesAuxCd', String)
     salesAuxCd?: string = undefined;
-    @JsonProperty('collectCycle', String)
     collectCycle?: string = undefined;
-    @JsonProperty('collectCycleMonth', String)
     collectCycleMonth?: string = undefined;
-    @JsonProperty('collectCycleDay', String)
     collectCycleDay?: string = undefined;
-    @JsonProperty('paymentCycle', String)
     paymentCycle?: string = undefined;
-    @JsonProperty('billingBankAccountNumber', String)
     billingBankAccountNumber?: string = undefined;
-    @JsonProperty('note', String)
     note?: string = undefined;
-    @JsonProperty('deliveryPlace', String)
     deliveryPlace?: string = undefined;
 }
 
 @JsonObject('UnitPrices')
 export class UnitPrices {
-    @JsonProperty('startDate', String)
     startDate!: string;
-    @JsonProperty('endDate', String)
     endDate?: string = undefined;
-    @JsonProperty('leader', Number)
     leader!: number;
-    @JsonProperty('tester', Number)
     tester!: number;
-    @JsonProperty('dispatch', Number)
     dispatch!: number;
 }
 
 @JsonObject('CustomerMagnifications')
 export class CustomerMagnifications {
-    @JsonProperty('startDate', String)
     startDate!: string;
-    @JsonProperty('endDate', String)
     endDate?: string = undefined;
-    @JsonProperty('overtime', Number)
     overtime!: number;
-    @JsonProperty('lateNight', Number)
     lateNight!: number;
-    @JsonProperty('lateNightOvertime', Number)
     lateNightOvertime!: number;
-    @JsonProperty('holiday', Number)
     holiday!: number;
-    @JsonProperty('holiday_late_night', Number)
     holiday_late_night!: number;
 }
 
 export class CustomerInfo {
-    @JsonProperty('overview', Overview)
     overview!: Overview;
-    @JsonProperty('unitPricesRecords')
-    unitPricesRecords?: UnitPrices[] = undefined;
-    @JsonProperty('customerMagnificationsRecords')
-    customerMagnificationsRecords?: CustomerMagnifications[] = undefined;
+    unitPricesRecords?: UnitPrices[];
+    customerMagnificationsRecords?: CustomerMagnifications[];
 }
 
 export class CustomerInfoData {
@@ -126,8 +84,12 @@ export class CustomerInfoData {
         overview: customerInfo.overview.supplier.allFields,
     };
 
-    public static CUSTOMER_INITIAL_DATA: CustomerInfo[] = JsonUtility.deserializeArray(
-        customerInitialData,
-        CustomerInfo,
-    );
+    public static CUSTOMER_INITIAL_DATA: CustomerInfo[] = customerInitialData.map(item => {
+        const customerData: CustomerInfo = {
+            overview: item.overview,
+            unitPricesRecords: item.unitPricesRecords,
+            customerMagnificationsRecords: item.customerMagnificationsRecords,
+        };
+        return customerData;
+    });
 }

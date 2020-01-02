@@ -21,23 +21,18 @@
             "accountReceivableAuxCode": "5002",
             "salesAuxCd": "5003",
             "collectCycle": "日ごと",
-            "collectCycleMonth": null,
             "collectCycleDay": "45",
-            "paymentCycle": null,
             "billingBankAccountNumber": "6001",
-            "note": "テスト備考1",
-            "deliveryPlace": null
+            "note": "テスト備考1"
         },
         "unitPricesRecords": [{
             "startDate": "2019-01-01",
-            "endDate": null,
             "leader": 2500,
             "tester": 2300,
             "dispatch": 200
         }],
         "customerMagnificationsRecords": [{
             "startDate": "2019-01-01",
-            "endDate": null,
             "overtime": 1.25,
             "lateNight": 1.25,
             "lateNightOvertime": 1.5,
@@ -69,21 +64,17 @@
             "collectCycle": "月ごと",
             "collectCycleMonth": "1",
             "collectCycleDay": "31",
-            "paymentCycle": null,
             "billingBankAccountNumber": "6002",
-            "note": "テスト備考1",
-            "deliveryPlace": null
+            "note": "テスト備考1"
         },
         "unitPricesRecords": [{
             "startDate": "2019-01-01",
-            "endDate": null,
             "leader": 2600,
             "tester": 2400,
             "dispatch": 300
         }],
         "customerMagnificationsRecords": [{
             "startDate": "2019-01-01",
-            "endDate": null,
             "overtime": 1.25,
             "lateNight": 1.25,
             "lateNightOvertime": 1.5,
@@ -113,23 +104,17 @@
             "accountReceivableAuxCode": "5008",
             "salesAuxCd": "5009",
             "collectCycle": "設定しない",
-            "collectCycleMonth": null,
-            "collectCycleDay": null,
-            "paymentCycle": null,
             "billingBankAccountNumber": "6003",
-            "note": "テスト備考1",
-            "deliveryPlace": null
+            "note": "テスト備考1"
         },
         "unitPricesRecords": [{
             "startDate": "2019-01-01",
-            "endDate": null,
             "leader": 2700,
             "tester": 2500,
             "dispatch": 400
         }],
         "customerMagnificationsRecords": [{
             "startDate": "2019-01-01",
-            "endDate": null,
             "overtime": 1.25,
             "lateNight": 1.25,
             "lateNightOvertime": 1.5,
@@ -159,23 +144,18 @@
             "accountReceivableAuxCode": "5002",
             "salesAuxCd": "5003",
             "collectCycle": "日ごと",
-            "collectCycleMonth": null,
             "collectCycleDay": "45",
-            "paymentCycle": null,
             "billingBankAccountNumber": "6001",
-            "note": "テスト備考1",
-            "deliveryPlace": null
+            "note": "テスト備考1"
         },
         "unitPricesRecords": [{
             "startDate": "2019-01-01",
-            "endDate": null,
             "leader": 2500,
             "tester": 2300,
             "dispatch": 200
         }],
         "customerMagnificationsRecords": [{
             "startDate": "2019-01-01",
-            "endDate": null,
             "overtime": 1.25,
             "lateNight": 1.25,
             "lateNightOvertime": 1.5,

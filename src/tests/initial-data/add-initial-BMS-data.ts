@@ -133,7 +133,7 @@ Data(WORKER_INFO).TestCase('InitialData4. BMS:案件:従業員マスタ作成', 
 });
 
 Data(CUSTOMER_DATA).TestCase(
-    'InitialData. 案件:得意先マスタ作成:顧客情報:保存顧客:全ての項目',
+    'InitialData5. 案件:得意先マスタ作成:顧客情報:保存顧客:全ての項目',
     async (current: any) => {
         gondola.report(
             `Step 1. 水平メニューで「営業管理」をクリックして、垂直メニューで「マスタ」→「顧客」の「登録」をクリックします。`,

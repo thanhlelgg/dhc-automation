@@ -887,10 +887,10 @@ export class AddProjectPage extends RegistrationPage {
 
     @action('doesProjectDatesDisplayCorrect')
     public async doesProjectDatesDisplayCorrect(
-        startDate: string | null,
-        endDate: string | null,
-        scheduleStartDate: string | null,
-        scheduleEndDate: string | null,
+        startDate?: string,
+        endDate?: string,
+        scheduleStartDate?: string,
+        scheduleEndDate?: string,
     ): Promise<boolean> {
         gondola.report('verify date: start date, end date, schedule start date, schedule end date');
         const currentStartDate = await this.getTextBoxValue(this.startDate);
@@ -962,7 +962,7 @@ export class AddProjectPage extends RegistrationPage {
     }
 
     @action('doesProjectTagsDisplayCorrect')
-    public async doesProjectTagsDisplayCorrect(tag: string | null): Promise<boolean> {
+    public async doesProjectTagsDisplayCorrect(tag?: string): Promise<boolean> {
         const currentTag = await this.getTextBoxValue(this.tagContent);
         if (!tag) {
             tag = '';
@@ -971,7 +971,7 @@ export class AddProjectPage extends RegistrationPage {
     }
 
     @action('doesProjectDescriptionDisplayCorrect')
-    public async doesProjectDescriptionDisplayCorrect(description: string | null): Promise<boolean> {
+    public async doesProjectDescriptionDisplayCorrect(description?: string): Promise<boolean> {
         const currentTag = await this.getTextBoxValue(this.description);
         if (!description) {
             description = '';
@@ -1057,9 +1057,9 @@ export class AddProjectPage extends RegistrationPage {
     @action('doesTimeOfProjectResultBaseDisplayCorrect')
     public async doesTimeOfProjectResultBaseDisplayCorrect(
         role: string,
-        planTime: number | null,
-        planPeople: number | null,
-        totalTime: number | null,
+        planTime?: number,
+        planPeople?: number,
+        totalTime?: number,
     ): Promise<boolean> {
         const expectedPlanPeople = planPeople ? planPeople.toString() : '';
         const doesPeopleDisplayCorrect = Utilities.isTextEqual(
@@ -1250,10 +1250,10 @@ export class AddProjectPage extends RegistrationPage {
     @action('doesProjectDetailDatesDisplayCorrect')
     public async doesProjectDetailDatesDisplayCorrect(
         rowIndex: string,
-        shipDate: string | null,
-        deliveryDate: string | null,
-        acceptedDate: string | null,
-        billingDate: string | null,
+        shipDate?: string,
+        deliveryDate?: string,
+        acceptedDate?: string,
+        billingDate?: string,
     ): Promise<boolean> {
         const currentShipDate = await this.getTextBoxValue(Utilities.formatString(this.shipDateByRowStr, rowIndex));
         if (!shipDate) {

@@ -36,7 +36,7 @@ TestCase('TMS-131. マスタ:役職作成:戻るボタン', async () => {
         `Step 2. 「役職名」と「省略名」で有効な情報を入力し、「タイムカード承認」プルダウンで選択肢を選択し、「保存」ボタンをクリックする。`,
     );
     await addPositionPage.inputPositionInfo(POSITION_DATA);
-    await addPositionPage.clickButtonByIcon(ButtonIcon.CHECK);
+    await addPositionPage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 正常に保存でき、新しい役職が役職一覧画面で表示されること。`);
     await gondola.checkTrue(
         await listPositionPage.doesPositionValueDisplay(POSITION_DATA.positionName, PositionsTableHeader.POSITION_NAME),

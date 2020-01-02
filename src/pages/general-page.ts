@@ -27,10 +27,11 @@ export class GeneralPage {
     @locator
     protected talentManagementLink = `//a[.='${this.translator.headerMenu.talentManagement}']`;
     @locator
-    protected invalidFeedBackByFieldLabel = "//div[label[text()='{0}']]//div[@class='invalid-feedback']";
+    protected invalidFeedBackByFieldLabel =
+        "//div[label[text()='{0}']]//div[@class='invalid-feedback' or @class='error-message']";
     @locator
     protected invalidFeedBackByFieldLabelPartialMatch =
-        "//div[label[contains(text(),'{0}')]]//div[@class='invalid-feedback']";
+        "//div[label[contains(text(),'{0}')]]//div[@class='invalid-feedback' or @class='error-message']";
     @locator
     protected helpBlockErrorByLabel = "//div[label[text()='{0}']]//span[contains(@class,'help-block')]";
     @locator
@@ -189,7 +190,8 @@ export class GeneralPage {
 
     @action('getInvalidFeedBack')
     public async getInvalidFeedBack(fieldName: string, partial = false): Promise<string> {
-        const locator = partial ? this.invalidFeedBackByFieldLabelPartialMatch : this.invalidFeedBackByFieldLabel;
+        let locator = partial ? this.invalidFeedBackByFieldLabelPartialMatch : this.invalidFeedBackByFieldLabel;
+        locator = locator.format(fieldName);
         const doesExist = await gondola.doesControlExist(locator);
         if (!doesExist) {
             gondola.report('Invalid feedback of field ' + fieldName + ' does not exist!');
