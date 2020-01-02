@@ -8,5 +8,9 @@ class TalentManagementMenu extends GeneralPage {
         await this.clickMenuLinkByTitle(MASTER_DATA_MANAGEMENT);
         await this.clickMenuLinkByTitle(Constants.translator.verticalMenuTMS.masterDataManagement.positions);
     }
+    public async gotoWorkingPlacePage(): Promise<void> {
+        await this.clickMenuLinkByTitle(MASTER_DATA_MANAGEMENT);
+        await this.clickMenuLinkByTitle(Constants.translator.verticalMenuTMS.masterDataManagement.workingPlace);
+    }
 }
 export default new TalentManagementMenu();

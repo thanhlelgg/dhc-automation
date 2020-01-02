@@ -2,7 +2,6 @@
     {
         "code": "SE001",
         "name": "ゲームデバッグ",
-        "parentSegment": null,
         "department": "1001"
     },
     {
@@ -20,7 +19,6 @@
     {
         "code": "SE004",
         "name": "SI",
-        "parentSegment": null,
         "department": "1004"
     },
     {

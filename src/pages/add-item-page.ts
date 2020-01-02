@@ -11,6 +11,8 @@ import { Utilities } from '../common/utilities';
 
 @page
 export class AddItemPage extends GeneralPage {
+    private pageUrl = `${Constants.bmsBaseUrl}/items/add`;
+
     //#region Item information
     @locator
     private itemCode = { id: 'cd' };
@@ -156,50 +158,61 @@ export class AddItemPage extends GeneralPage {
     }
 
     @action('does unit price display correct')
-    public async doesUnitPriceDisplayCorrect(unitPrice: number | null): Promise<boolean> {
+    public async doesUnitPriceDisplayCorrect(unitPrice: number | undefined): Promise<boolean> {
         const currentValue = await this.getTextBoxValue(this.unitPrice);
         return Utilities.isTextEqual(currentValue, unitPrice ? unitPrice + '' : '');
     }
 
     @action('does manage unit display correct')
-    public async doesManageUnitDisplayCorrect(manageUnit: string | null): Promise<boolean> {
+    public async doesManageUnitDisplayCorrect(manageUnit: string | undefined): Promise<boolean> {
         const currentValue = await this.getTextBoxValue(this.manageUnit);
         return Utilities.isTextEqual(currentValue, manageUnit ? manageUnit + '' : '');
     }
 
     @action('does cost center display correct')
-    public async doesCostCenterDisplayCorrect(costCenter: string | null): Promise<boolean> {
+    public async doesCostCenterDisplayCorrect(costCenter: string | undefined): Promise<boolean> {
         const currentValue = await this.getTextBoxValue(this.costCenter);
         return Utilities.isTextEqual(currentValue, costCenter ? costCenter : '');
     }
 
     @action('does debit code display correct')
-    public async doesDebitCodeDisplayCorrect(debitCode: string | null): Promise<boolean> {
+    public async doesDebitCodeDisplayCorrect(debitCode: string | undefined): Promise<boolean> {
         const currentValue = await this.getTextBoxValue(this.debitSubcode);
         return Utilities.isTextEqual(currentValue, debitCode ? debitCode : '');
     }
 
     @action('does credit code display correct')
-    public async doesCreditCodeDisplayCorrect(creditCode: string | null): Promise<boolean> {
+    public async doesCreditCodeDisplayCorrect(creditCode: string | undefined): Promise<boolean> {
         const currentValue = await this.getTextBoxValue(this.creditSubcode);
         return Utilities.isTextEqual(currentValue, creditCode ? creditCode : '');
     }
 
     @action('isDisable checkbox display correct')
-    public async isDisableCheckboxDisplayCorrect(isDisable: boolean): Promise<boolean> {
+    public async isDisableCheckboxDisplayCorrect(isDisable: boolean | undefined): Promise<boolean> {
+        if (isDisable === undefined) {
+            return true;
+        }
         const isChecked = await this.getCheckboxValue(this.isDisable, false);
         return isDisable ? isChecked === isDisable : isChecked === false;
     }
 
     @action('does note display correct')
-    public async doesNoteDisplayCorrect(note: string | null): Promise<boolean> {
+    public async doesNoteDisplayCorrect(note: string | undefined): Promise<boolean> {
         const currentValue = await this.getTextBoxValue(this.remarks);
         return Utilities.isTextEqual(currentValue, note ? note : '');
     }
 
     @action('isTaxable selected correct')
-    public async isTaxableSelectedCorrect(tax: string | null): Promise<boolean> {
+    public async isTaxableSelectedCorrect(tax: string | undefined): Promise<boolean> {
+        if (!tax) {
+            return true;
+        }
         return await this.getCheckboxValue(this.radioButtonByLabel.format(this.fieldName.tax, tax), false);
+    }
+
+    @action('is current page')
+    public async isCurrentPage(): Promise<boolean> {
+        return await super.isCurrentPage(this.pageUrl);
     }
 }
 export default new AddItemPage();

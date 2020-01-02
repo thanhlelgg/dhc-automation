@@ -68,13 +68,22 @@ export class AddCustomerPage extends GeneralPage {
         await this.selectRadioButtonByLabel(this.fieldName.collectCycle, overviewInfo.collectCycle);
         if (overviewInfo.collectCycle === this.translator.radioButtonOptions.addCustomer.collectCycle.daily) {
             await gondola.waitUntilElementVisible(this.paymentCycleDaily, Constants.MEDIUM_TIMEOUT);
-            await gondola.enter(this.paymentCycleDaily, overviewInfo.collectCycleDay);
+            await gondola.enter(
+                this.paymentCycleDaily,
+                overviewInfo.collectCycleDay ? overviewInfo.collectCycleDay : '',
+            );
         }
         if (overviewInfo.collectCycle === this.translator.radioButtonOptions.addCustomer.collectCycle.monthly) {
             await gondola.waitUntilElementVisible(this.paymentCycleMonthlyDay, Constants.MEDIUM_TIMEOUT);
-            await gondola.enter(this.paymentCycleMonthlyDay, overviewInfo.collectCycleDay);
+            await gondola.enter(
+                this.paymentCycleMonthlyDay,
+                overviewInfo.collectCycleDay ? overviewInfo.collectCycleDay : '',
+            );
             await gondola.waitUntilElementVisible(this.paymentCycleMonth, Constants.MEDIUM_TIMEOUT);
-            await gondola.enter(this.paymentCycleMonth, overviewInfo.collectCycleMonth);
+            await gondola.enter(
+                this.paymentCycleMonth,
+                overviewInfo.collectCycleMonth ? overviewInfo.collectCycleMonth : '',
+            );
         }
         await this.selectRadioButtonByLabel(this.fieldName.paymentCycle, overviewInfo.paymentCycle);
         await this.enterTextFieldByLabel(

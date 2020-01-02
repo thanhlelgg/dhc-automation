@@ -6,7 +6,7 @@ export class Items {
     id: number | undefined;
 
     @Column('text')
-    cd: string | undefined;
+    cd!: string;
 
     @Column('tinyint')
     is_deleted: string | undefined;

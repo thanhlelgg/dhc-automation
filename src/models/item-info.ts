@@ -6,38 +6,38 @@ import { Constants } from '../common/constants.js';
 
 export class ItemInfo {
     @JsonProperty('itemCode', String)
-    itemCode: string = undefined;
+    itemCode: string;
     @JsonProperty('itemName', String)
-    itemName: string = undefined;
+    itemName: string;
     @JsonProperty('managementSection', String)
-    managementSection: string = undefined;
+    managementSection!: string;
     @JsonProperty('segment', String)
-    segment: string = undefined;
+    segment!: string;
     @JsonProperty('unitPrice', Number, true)
-    unitPrice: number = undefined;
+    unitPrice?: number;
     @JsonProperty('inventoryEvaluationUnitPrice', Number, true)
-    inventoryEvaluationUnitPrice: number = undefined;
+    inventoryEvaluationUnitPrice?: number;
     @JsonProperty('supplyUnitPrice', Number, true)
-    supplyUnitPrice: number = undefined;
+    supplyUnitPrice?: number;
     @JsonProperty('tax', String, true)
-    tax: string = undefined;
+    tax?: string;
     @JsonProperty('managementUnit', String, true)
-    managementUnit: string = undefined;
+    managementUnit?: string;
     @JsonProperty('costCenter', String, true)
-    costCenter: string = undefined;
+    costCenter?: string;
     @JsonProperty('debitSubcode', String, true)
-    debitSubcode: string = undefined;
+    debitSubcode?: string;
     @JsonProperty('creditSubcode', String, true)
-    creditSubcode: string = undefined;
+    creditSubcode?: string;
     @JsonProperty('isInvalidation', Boolean, true)
-    isInvalidation: boolean = undefined;
+    isInvalidation?: boolean;
     @JsonProperty('remarks', String, true)
-    remarks: string = undefined;
+    remarks?: string;
 
     constructor() {
         this.itemCode = Utilities.getRandomText(8, 'code');
         this.itemName = Utilities.getRandomText(8, 'name');
-        this.segment = undefined;
+        this.segment;
         this.randomManagementSection();
         this.randomTax();
     }

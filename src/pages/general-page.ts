@@ -8,6 +8,8 @@ import { RecordTable } from '../models/enum-class/recordTable';
 import { RecordFieldName } from '../models/enum-class/recordFieldName';
 import '@src/string.extensions';
 import { ButtonIcon } from '../models/enum-class/button-icon';
+import { FlagsCollector, LoggingType } from '../helper/flags-collector';
+import { SearchResultColumn } from '../models/enum-class/search-result-column';
 
 @page
 export class GeneralPage {
@@ -30,10 +32,10 @@ export class GeneralPage {
     protected invalidFeedBackByFieldLabelPartialMatch =
         "//div[label[contains(text(),'{0}')]]//div[@class='invalid-feedback']";
     @locator
-    protected helpBlockErrorByLabel = "//div[label[text()='{0}']]//span[@class='help-block help-block-error']";
+    protected helpBlockErrorByLabel = "//div[label[text()='{0}']]//span[contains(@class,'help-block')]";
     @locator
     protected helpBlockErrorByLabelPartialMatch =
-        "//div[label[contains(text(),'{0}')]]//span[@class='help-block help-block-error']";
+        "//div[label[contains(text(),'{0}')]]//span[contains(@class,'help-block')]";
     @locator
     protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text' or @type='number']";
     @locator
@@ -47,22 +49,37 @@ export class GeneralPage {
     @locator
     protected textAreaByLabel = "//div[label[text()='{0}']]//textarea";
     @locator
+    protected textAreaByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//textarea";
+    @locator
     protected selectorByLabel = "//div[label[text()='{0}']]//select";
+    @locator
+    protected selectorByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//select";
     @locator
     protected radioButtonByLabel = "//div[label[text()='{0}']]//label[input[@type='radio']]";
     @locator
+    protected radioButtonByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//label[input[@type='radio']]";
+    @locator
     protected radioButtonOptionByLabel =
-        "//div[label[text()='{0}']]//label[(input[@type='radio'] or ./preceding-sibling::input[@type='radio']) and text()='{1}']";
+        "//div[label[text()='{0}']]//label[(input[@type='radio'] or ./preceding-sibling::input[@type='radio']) and normalize-space()='{1}']";
+    @locator
+    protected radioButtonOptionByLabelPartialMatch =
+        "//div[label[contains(text(),'{0}')]]//label[(input[@type='radio'] or ./preceding-sibling::input[@type='radio']) and normalize-space()='{1}']";
     @locator
     protected modalDialog = { xpath: "//div[@class='modal']" };
     @locator
     protected modalTitle = { xpath: "//h5[@class='modal-title']" };
     @locator
     protected modalTitleByText = "//h5[@class='modal-title' and text()='{0}']";
+    @locator
     protected checkboxByLabel = "//div[contains(@class, 'custom-checkbox')]/label[text()='{0}']";
+    @locator
+    protected checkboxByLabelPartialMatch = "//div[contains(@class, 'custom-checkbox')]/label[contains(text(),'{0}')]";
     @locator
     protected checkboxInputByLabel =
         "//div[contains(@class, 'custom-checkbox')][label[text()='{0}']]/input[@type='checkbox']";
+    @locator
+    protected checkboxInputByLabelPartialMatch =
+        "//div[contains(@class, 'custom-checkbox')][label[contains(text(),'{0}')]]/input[@type='checkbox']";
     @locator
     protected closeModuleButtonByName = "//div[h5[text()='{0}']]//span[text()='×']";
     @locator
@@ -84,7 +101,7 @@ export class GeneralPage {
     @locator
     protected searchButton = "//button[@type='submit'][i[@class='fa fa-search']]";
     @locator
-    protected addButton = "//a[@title='add']";
+    protected addButton = "//a[i[@class='fa fa-plus']]";
     @locator
     protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
 
@@ -104,7 +121,36 @@ export class GeneralPage {
     @locator
     protected menuLinkByTitle = "//a[span[@class='title' and normalize-space()='{0}']]";
     @locator
-    protected buttonByIcon = "//*[contains(@class, 'btn') and i[@class='{0}']]";
+    protected buttonByIcon = "//*[contains(@class, 'btn') and i[contains(@class,'{0}')]]";
+    @locator
+    protected selectSelectionSpnByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//span[@role='combobox']";
+    @locator
+    protected selectSelectionSpnByLabel = "//div[label[text()='{0}']]//span[@role='combobox']";
+    @locator
+    protected selectSelectionSearchField = "//input[@type='search']";
+    @locator
+    protected selectSelectionOptions = "//li[@class='select2-results__option']";
+    @locator
+    protected selectSelectionLoadingResults = "//li[contains(@class, 'loading-results')]";
+    @locator
+    protected selectSelectionOptionByTextPartialMatch =
+        "//li[contains(@class, 'results__option') and contains(text(),'{0}')]";
+    @locator
+    protected selectSelectionOptionByText = "//li[contains(@class, 'results__option') and text()='{0}']";
+    @locator
+    protected selectSelectionSelectedItemByLabelPartialMatch =
+        "//div[label[contains(text(),'{0}')]]//span[contains(@class, 'selection__rendered')]";
+    @locator
+    protected selectSelectionSelectedItemByLabel =
+        "//div[label[text()='{0}']]//span[contains(@class, 'selection__rendered')]";
+    @locator
+    protected selectSelectionClearButtonByLabelPartialMatch =
+        "//div[label[contains(text(),'{0}')]]//span[contains(@class, 'selection__clear')]";
+    @locator
+    protected selectSelectionClearButtonByLabel =
+        "//div[label[text()='{0}']]//span[contains(@class, 'selection__clear')]";
+    @locator
+    protected tabularTableLinkByText = "//div[@tabulator-field='{0}']/a[text()='{1}']";
 
     protected async isCurrentPage(pageUrl: string): Promise<boolean> {
         return (await gondola.getCurrentUrl()) === pageUrl;
@@ -130,13 +176,14 @@ export class GeneralPage {
 
     @action('go to talent management')
     public async gotoTalentManagement(): Promise<void> {
-        await gondola.waitUntilElementVisible(this.talentManagementLink, Constants.MEDIUM_TIMEOUT);
-        await gondola.click(this.talentManagementLink);
+        if (await gondola.doesControlExist(this.talentManagementLink)) {
+            await gondola.click(this.talentManagementLink);
+        }
     }
 
     @action('openWebsite')
     public async openWebsite(): Promise<void> {
-        await gondola.navigate(Constants.url);
+        await gondola.navigate(Constants.loginUrl);
         await gondola.maximize();
     }
 
@@ -179,6 +226,7 @@ export class GeneralPage {
         const locator = partialMatch
             ? Utilities.formatString(this.textFieldByLabelPartialMatch, label)
             : Utilities.formatString(this.textFieldByLabel, label);
+        await gondola.waitUntilElementVisible(locator);
         return await gondola.getElementAttribute(locator, 'value');
     }
 
@@ -191,16 +239,17 @@ export class GeneralPage {
     }
 
     @action('enterTextAreaByLabel')
-    public async enterTextAreaByLabel(label: string, text: any | undefined): Promise<void> {
+    public async enterTextAreaByLabel(label: string, text: any | undefined, partial = false): Promise<void> {
+        const locator = partial ? this.textAreaByLabelPartialMatch : this.textAreaByLabel;
         if (text) {
-            await gondola.enter(this.textAreaByLabel.format(label), text);
+            await gondola.enter(locator.format(label), text);
         }
     }
 
     @action('getTextAreaValueByLabel')
-    public async getTextAreaValueByLabel(label: string): Promise<string> {
-        const locator = Utilities.formatString(this.textAreaByLabel, label);
-        return await gondola.getElementAttribute(locator, 'value');
+    public async getTextAreaValueByLabel(label: string, partial = false): Promise<string> {
+        const locator = partial ? this.textAreaByLabelPartialMatch : this.textAreaByLabel;
+        return await gondola.getElementAttribute(locator.format(label), 'value');
     }
 
     @action('clickTextFieldByLabel')
@@ -291,24 +340,24 @@ export class GeneralPage {
     }
 
     @action('doesSelectorByLabelOptionsExist')
-    public async doesSelectorByLabelOptionsExist(label: string, options: string[]): Promise<boolean> {
-        const locator = Utilities.formatString(this.selectorByLabel, label);
-        return await gondola.areOptionsExists(locator, options);
+    public async doesSelectorByLabelOptionsExist(label: string, options: string[], partial = false): Promise<boolean> {
+        const locator = partial ? this.selectorByLabelPartialMatch : this.selectorByLabel;
+        return await gondola.areOptionsExists(locator.format(label), options);
     }
 
     @action('selectSelectorByLabel')
-    public async selectSelectorByLabel(label: string, option: string | undefined): Promise<void> {
+    public async selectSelectorByLabel(label: string, option: string | undefined, partial = false): Promise<void> {
         if (!option) {
             return;
         }
-        const locator = Utilities.formatString(this.selectorByLabel, label);
-        await gondola.select(locator, option);
+        const locator = partial ? this.selectorByLabelPartialMatch : this.selectorByLabel;
+        await gondola.select(locator.format(label), option);
     }
 
     @action('selectSelectorByLabel')
-    public async getSelectedOptionByLabel(label: string): Promise<string> {
-        const locator = Utilities.formatString(this.selectorByLabel, label);
-        return await gondola.getSelectedOption(locator);
+    public async getSelectedOptionByLabel(label: string, partial = false): Promise<string> {
+        const locator = partial ? this.selectorByLabelPartialMatch : this.selectorByLabel;
+        return await gondola.getSelectedOption(locator.format(label));
     }
 
     /**
@@ -415,22 +464,30 @@ export class GeneralPage {
         return Utilities.getNumberOfSearchResultPages(resultString);
     }
 
-    public async doesRadioButtonOptionsExist(label: string, options: string[]): Promise<boolean> {
-        const radioButtonNames = await gondola.getElementsAttributes(
-            this.radioButtonByLabel.format(label),
-            'innerText',
-        );
+    public async doesRadioButtonOptionsExist(label: string, options: string[], partial = false): Promise<boolean> {
+        const locator = partial ? this.radioButtonByLabelPartialMatch : this.radioButtonByLabel;
+        const radioButtonNames = await gondola.getElementsAttributes(locator.format(label), 'innerText');
         return Utilities.compareArrays(radioButtonNames, options);
     }
 
-    public async selectRadioButtonByLabel(label: string, option: string | undefined): Promise<void> {
+    public async selectRadioButtonByLabel(label: string, option: string | undefined, partial = false): Promise<void> {
         if (option) {
-            await gondola.click(this.radioButtonOptionByLabel.format(label, option));
+            const locator = partial ? this.radioButtonOptionByLabelPartialMatch : this.radioButtonOptionByLabel;
+            await gondola.click(locator.format(label, option));
         }
     }
 
-    public async isRadioButtonByLabelSelected(label: string, option: string): Promise<boolean> {
-        return await gondola.doesCheckboxChecked(this.radioButtonOptionByLabel.format(label, option) + '//input');
+    public async isRadioButtonByLabelSelected(
+        label: string,
+        option: string | undefined,
+        partial = false,
+    ): Promise<boolean> {
+        if (!option) {
+            return true;
+        }
+        const locator = partial ? this.radioButtonOptionByLabelPartialMatch : this.radioButtonOptionByLabel;
+        await gondola.waitUntilElementVisible(locator.format(label, option));
+        return await gondola.doesCheckboxChecked(locator.format(label, option) + '//input');
     }
 
     public async isTextFieldNumeric(control: any): Promise<boolean> {
@@ -488,14 +545,16 @@ export class GeneralPage {
         }
     }
 
-    public async setStateCheckboxByLabel(label: string, checked: boolean | undefined): Promise<void> {
+    public async setStateCheckboxByLabel(label: string, checked: boolean | undefined, partial = false): Promise<void> {
         if (checked === undefined) {
             return;
         }
+        const checkboxLocator = partial ? this.checkboxByLabelPartialMatch : this.checkboxByLabel;
+        const checkboxInputLocator = partial ? this.checkboxInputByLabelPartialMatch : this.checkboxInputByLabel;
         await this.setStateCustomizeCheckbox(
-            this.checkboxByLabel.format(label),
+            checkboxLocator.format(label),
             checked,
-            this.checkboxInputByLabel.format(label),
+            checkboxInputLocator.format(label),
         );
     }
 
@@ -544,6 +603,106 @@ export class GeneralPage {
 
     public async isPageTitleDisplayed(name: string): Promise<boolean> {
         return await gondola.doesControlDisplay(this.pageTitle.format(name));
+    }
+
+    public async clickSearchSelectionDropdownByLabel(label: string, partial = false): Promise<void> {
+        const locator = partial ? this.selectSelectionSpnByLabelPartialMatch : this.selectSelectionSpnByLabel;
+        await gondola.click(locator.format(label));
+    }
+
+    public async doesSearchSelectionDisplay(): Promise<boolean> {
+        FlagsCollector.collectTruth(
+            'Search text field should be displayed',
+            await gondola.doesControlDisplay(this.selectSelectionSearchField),
+        );
+        await gondola.waitForElement(this.selectSelectionOptions);
+        FlagsCollector.collectTruth(
+            'Search selection items should be displayed',
+            await gondola.doesControlDisplay(this.selectSelectionOptions),
+        );
+        return FlagsCollector.verifyFlags(LoggingType.REPORT);
+    }
+
+    public async enterSearchSelectionTextfield(text: string, partial = false): Promise<string> {
+        if (partial) {
+            text = Utilities.getRandomPartialCharacters(text);
+        }
+        await gondola.enter(this.selectSelectionSearchField, text);
+        return text;
+    }
+
+    public async selectSearchSelectionResult(text: string, partial = false): Promise<void> {
+        await gondola.waitForElementDisappearSoftly(this.selectSelectionLoadingResults, Constants.SHORT_TIMEOUT);
+        const locator = partial ? this.selectSelectionOptionByTextPartialMatch : this.selectSelectionOptionByText;
+        await gondola.click(locator.format(text));
+    }
+
+    public async doesSearchResultDisplayCorrectly(searchText: string): Promise<boolean> {
+        const results = await gondola.getElementsAttributes(this.selectSelectionOptions, 'innerText');
+        return Utilities.isFilterCorrect(searchText, results);
+    }
+
+    public async getSearchSelectionSelectedItemByLabel(label: string, partial = false): Promise<string> {
+        const locator = partial
+            ? this.selectSelectionSelectedItemByLabelPartialMatch
+            : this.selectSelectionSelectedItemByLabel;
+        return await gondola.getElementAttribute(locator.format(label), 'title');
+    }
+
+    public async clearSearchSelectionByLabel(label: string, partial = false): Promise<void> {
+        const locator = partial
+            ? this.selectSelectionClearButtonByLabelPartialMatch
+            : this.selectSelectionClearButtonByLabel;
+        await gondola.click(locator.format(label));
+    }
+
+    public async doesSelectedSearchResultEmpty(label: string, partial = false): Promise<boolean> {
+        const locator = partial
+            ? this.selectSelectionSelectedItemByLabelPartialMatch
+            : this.selectSelectionSelectedItemByLabel;
+        await gondola.waitUntilElementNotVisible(locator.format(label));
+        return !(await gondola.doesControlDisplay(locator.format(label)));
+    }
+
+    public async getRandomSelectionSearchResult(): Promise<string> {
+        const results = await gondola.getElementsAttributes(this.selectSelectionOptions, 'innerText');
+        const randomIdx = Utilities.getRandomNumber(1, results.length);
+        return results[randomIdx];
+    }
+
+    public async selectSearchSelectionByLabel(
+        label: string,
+        text: string | undefined,
+        labelPartial = false,
+        searchPartial = false,
+        selectPartial = false,
+    ): Promise<void> {
+        if (text) {
+            await this.clickSearchSelectionDropdownByLabel(label, labelPartial);
+            await this.enterSearchSelectionTextfield(text, searchPartial);
+            await this.selectSearchSelectionResult(text, selectPartial);
+        }
+    }
+
+    public async getTextFieldValidationMessageByLabel(label: string, partial = false): Promise<string> {
+        const locator = partial ? this.textFieldByLabelPartialMatch : this.textFieldByLabel;
+        return await gondola.getValidationMessage(locator.format(label));
+    }
+
+    public async getTextAreaValidationMessageByLabel(label: string, partial = false): Promise<string> {
+        const locator = partial ? this.textAreaByLabelPartialMatch : this.textAreaByLabel;
+        return await gondola.getValidationMessage(locator.format(label));
+    }
+
+    public async getSelectorValidationMessageByLabel(label: string, partial = false): Promise<string> {
+        const locator = partial ? this.selectorByLabelPartialMatch : this.selectorByLabel;
+        return await gondola.getValidationMessage(locator.format(label));
+    }
+
+    public async clickTabularTableLinkByText(columnType: SearchResultColumn, text: string): Promise<void> {
+        const locator = this.tabularTableLinkByText.format(columnType.tabulatorField, text);
+        await gondola.waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
+        await gondola.click(locator);
     }
 }
 export default new GeneralPage();

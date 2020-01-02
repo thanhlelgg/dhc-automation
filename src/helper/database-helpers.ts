@@ -19,19 +19,17 @@ export class DatabaseHelper {
      */
     public static async getConnection(database: string): Promise<Connection> {
         const host = process.env.MYSQL_HOST;
-        const port = +process.env.MYSQL_PORT;
+        const port = process.env.MYSQL_PORT;
         const username = process.env.MYSQL_USERNAME;
         const password = process.env.MYSQL_PASSWORD;
-        if (!username || !password) {
-            throw new Error(
-                'MySQL server credentials not found, please set the `MYSQL_USERNAME` and/or `MYSQL_PASSWORD` on .env file',
-            );
+        if (!username || !password || !host || !port) {
+            throw new Error('MySQL server credentials not found, please set all the MySQL credentials');
         }
         try {
             const connection = await createConnection({
                 type: 'mysql',
                 host: host,
-                port: port,
+                port: +port,
                 username: username,
                 password: password,
                 database: database,

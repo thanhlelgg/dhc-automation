@@ -21,6 +21,7 @@ import { RegistrationPage } from './registration-page';
 
 @page
 export class AddProjectPage extends RegistrationPage {
+    private pageUrl = `${Constants.bmsBaseUrl}/projects/add`;
     //#region project result
     @locator
     protected subTitleProjectResult = `//div[.='${this.translator.sectionName.addProject.volumeDetail}']`;
@@ -1636,6 +1637,11 @@ export class AddProjectPage extends RegistrationPage {
             );
         }
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
+    }
+
+    @action('is current page')
+    public async isCurrentPage(): Promise<boolean> {
+        return await super.isCurrentPage(this.pageUrl);
     }
 }
 export default new AddProjectPage();

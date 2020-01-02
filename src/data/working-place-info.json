@@ -1,0 +1,17 @@
+{
+    "requiredOnly": {
+        "name": "test name",
+        "code": "testcode",
+        "address": "test address",
+        "nearestStation1": "仁山"
+    },
+    "fullData": {
+        "name": "test name",
+        "code": "testcode",
+        "address": "test address",
+        "nearestStation1": "仁山",
+        "nearestStation2": "池田園",
+        "nearestStation3": "渡島沼尻",
+        "timezone": "(UTC-08:00) 太平洋標準時(米国およびカナダ)"
+    }
+}

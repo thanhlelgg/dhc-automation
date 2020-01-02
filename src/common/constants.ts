@@ -4,11 +4,17 @@ import path from 'path';
 
 export class Constants {
     public static translator = Translate.getTranslator();
-    public static readonly url = 'https://dhcdms.digitalhearts.com/language/ja_JP';
-    public static readonly addProjectUrl = 'https://dhcbms.digitalhearts.com/projects/add';
-    public static readonly itemsUrl = 'https://dhcbms.digitalhearts.com/items';
+    public static readonly baseUrl = 'http://ec2-52-79-224-196.ap-northeast-2.compute.amazonaws.com';
+    public static readonly tmsPort = '10015';
+    public static readonly tmsBaseUrl = `${Constants.baseUrl}:${Constants.tmsPort}`;
+    public static readonly bmsPort = '10013';
+    public static readonly bmsBaseUrl = `${Constants.baseUrl}:${Constants.bmsPort}`;
+    public static readonly ttsPort = '10014';
+    public static readonly ttsBaseUrl = `${Constants.baseUrl}:${Constants.ttsPort}`;
+    public static readonly loginPort = '10012';
+    public static readonly loginUrl = `${Constants.baseUrl}:${Constants.loginPort}/login`;
     public static readonly VERY_SHORT_TIMEOUT = 2;
-    public static readonly SHORT_TIMEOUT = 5;
+    public static readonly SHORT_TIMEOUT = 10;
     public static readonly MEDIUM_TIMEOUT = 30;
     public static readonly LONG_TIMEOUT = 90;
     // incase we have too many elements, scroll to the last of it will take really long time, so we should limit it a little
@@ -25,8 +31,8 @@ export class Constants {
     public static readonly POSITION_CSV_PATH = path.resolve('src/data/positions.csv');
 
     //#region Input data
-    public static adminUserName = 'logigear_admin';
-    public static adminPassword = 'log2019';
+    public static adminUserName = 'administrator';
+    public static adminPassword = '123456';
     public static modUserName = 'administrator';
     public static modPassword = '123456';
     public static exceededNOCMessage =
