@@ -191,6 +191,149 @@
             "positionName": "役職名",
             "positionAbbreviation": "省略名",
             "timeCardApprove": "タイムカード承認"
+        },
+        "addUser": {
+            "personalInfo": {
+                "id": "ID",
+                "name": "氏名",
+                "alphabetName": "氏名（アルファベット）",
+                "phoneticName": "氏名(フリガナ)",
+                "dateOfBirth": "生年月日",
+                "gender": "性別",
+                "groupId": "所属組織",
+                "labId": "所属拠点",
+                "timezone": "タイムゾーン",
+                "studentType": "学生",
+                "loginInfo": {
+                    "title": "ログイン情報",
+                    "loginId": "社員ID",
+                    "password": "パスワード",
+                    "roleId": "ロール"
+                },
+                "contactInfo": {
+                    "title": "連絡先情報",
+                    "zipcode": "郵便番号",
+                    "address1": "住所1（市区町村番地）",
+                    "address2": "住所2（ビル・マンション名など）",
+                    "nearestStation1": "最寄り駅1",
+                    "nearestStation2": "最寄り駅2",
+                    "nearestStation3": "最寄り駅3",
+                    "tel": "電話番号",
+                    "email": "メールアドレス"
+                },
+                "emergencyContactInfo": {
+                    "title": "緊急連絡先",
+                    "name": "氏名",
+                    "alphabetName": "氏名（アルファベット）",
+                    "phoneticName": "ふりがな",
+                    "relationship": "続柄",
+                    "zipcode": "郵便番号",
+                    "address1": "住所1（市区町村番地）",
+                    "address2": "住所2（ビル・マンション名など）",
+                    "tel": "電話番号"
+                },
+                "interviewInfo": {
+                    "title": "面接時情報",
+                    "interviewer": "面接担当",
+                    "manageAccession": "入社経路",
+                    "rating": "コミュ評価",
+                    "manageDebug": "デバッグ経験",
+                    "manageLeaderDesire": "リーダー志望"
+                },
+                "changePositionAndPriceHistory": "役職/単価変更履歴",
+                "employmentHistory": "雇用形態履歴",
+                "recruitmentHistory": "入社/転籍/退職履歴",
+                "comment": "コメント"
+            },
+            "professionalInfo": {
+                "attendanceInfo": {
+                    "title": "勤怠情報",
+                    "workAttitude": "勤務態度",
+                    "assignJudgment": "アサイン判定"
+                },
+                "trainingInfo": {
+                    "title": "トレーニング情報",
+                    "trainingSupplement": "トレーニング候補",
+                    "spiScore": "SPIスコア"
+                }
+            },
+            "skillInfo": {
+                "languageSkill": {
+                    "title": "言語スキル",
+                    "nativeLanguage": "第一言語",
+                    "nativeSecondLanguage": "第二言語",
+                    "nativeJapanese": "日本語能力"
+                }
+            },
+            "laborInfo": {
+                "paymentInfo": {
+                    "title": "支給情報",
+                    "bugyoId": "奉行ID",
+                    "taxClassification": "税区分",
+                    "transferBankCode": "振込銀行コード",
+                    "transferBankName": "振込銀行名",
+                    "transferBankPhoneticName": "振込銀行名 (Phonetic)",
+                    "transferBranchCode": "振込支店コード",
+                    "transferBranchName": "振込支店名",
+                    "depositClassification": "預金区分",
+                    "transferAccountNumber": "振込口座番号",
+                    "nameOfDepositAccount": "振込口座名義",
+                    "phoneticNameOfDepositAccount": "振込口座名義（フリガナ）"
+                },
+                "healthInsuranceInfo": {
+                    "title": "健康保険情報",
+                    "healthInsuranceNo": "被保険者番号"
+                },
+                "healthInsuranceHistory": "健康保険加入履歴",
+                "employeePensionInfo": {
+                    "title": "厚生年金情報",
+                    "pensionFundNo": "基礎年金番号"
+                },
+                "employeePensionHistory": "厚生年金加入履歴",
+                "careInsuranceInfo": {
+                    "title": "介護保険情報",
+                    "careInsuranceNo": "その他"
+                },
+                "careInsuranceHistory": "介護保険加入履歴",
+                "employmentInsuranceInfo": {
+                    "title": "雇用保険情報",
+                    "unemploymentInsuranceNo": "雇用保険番号",
+                    "unemploymentInsuranceInfo": "雇用保険情報",
+                    "leaveCompanyName": "前職社名",
+                    "leaveCompanyReason": "変更事由",
+                    "leaveCompanyDate": "変更事由発生日"
+                },
+                "employmentInsuranceHistory": "雇用保険加入履歴"
+            },
+            "visaInfo": {
+                "visaInfo": {
+                    "title": "ビザ情報",
+                    "visaName": "在留カード氏名",
+                    "nationality": "国籍",
+                    "residencePaperId": "在留資格",
+                    "termOfResidencePaper" : "有効期限",
+                    "isAllowedOutsideVisa": "資格外活動許可",
+                    "specificationPaper" : "指定書"
+                }
+            },
+            "roleInfo": {
+                "usedSystem": "利用システム",
+                "talentRole": {
+                    "title": "タレントシステム",
+                    "role": "ロール",
+                    "isSelectedAll": "全て選択"
+                },
+                "ttsRole": {
+                    "title": "TTSシステム",
+                    "role": "ロール",
+                    "isSelectedAll": "全て選択"
+                },
+                "businessRole": {
+                    "title": "営業管理システム",
+                    "role": "ロール",
+                    "isSelectedAll": "全て選択"
+                }
+            }
         }
     },
     "tableColumnName": {
@@ -212,6 +355,9 @@
         },
         "positions": {
             "searchTextBox": "検索"
+        },
+        "addUser" : {
+            "comment" : "コメント"
         }
     },
     "inputGroupName": {
@@ -293,6 +439,10 @@
             "workingPlace": "就業先(ラボ管理)",
             "groups": "部門（ユーザーグループ",
             "positions": "役職"
+        },
+        "userManagement": {
+            "title": "ユーザー管理",
+            "addUser": "新規ユーザー登録"
         }
     },
     "backButton": "戻る",
