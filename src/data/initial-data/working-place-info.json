@@ -1,0 +1,40 @@
+[
+    {
+        "name": "笹塚Lab.",
+        "code": "WP001",
+        "category": "ラボ",
+        "address": "東京都渋谷区笹塚1-64-8 Daiwa笹塚ビル 3F",
+        "nearestStation1": "京王線-笹塚",
+        "nearestStation2": "京王線-代田橋",
+        "timezone": "(UTC+09:00) 大阪、札幌、東京"
+    },
+    {
+        "name": "浅草Lab.",
+        "code": "WP002",
+        "category": "ラボ",
+        "address": "東京都台東区駒形1-12-14 日本生命浅草ビル9F",
+        "nearestStation1": "東京メトロ銀座線-浅草",
+        "nearestStation2": "都営浅草線-浅草",
+        "nearestStation3": "東京メトロ銀座線-田原町",
+        "timezone": "(UTC+09:00) 大阪、札幌、東京"
+    },
+    {
+        "name": "株式会社スクウェア・エニックス",
+        "code": "WP003",
+        "category": "クライアント",
+        "address": "東京都新宿区新宿6-27-30 新宿イーストサイドスクエア",
+        "nearestStation1": "都営大江戸線-東新宿",
+        "nearestStation2": "東京メトロ副都心線-東新宿",
+        "timezone": "(UTC+09:00) 大阪、札幌、東京"
+    },
+    {
+        "name": "サンプルLab.",
+        "code": "WP004",
+        "category": "ラボ",
+        "address": "東京都新宿区新宿1-2-3 テストビル",
+        "nearestStation1": "JR山手線-東京",
+        "nearestStation2": "JR山手線-神田",
+        "nearestStation3": "JR山手線-有楽町",
+        "timezone": "(UTC+09:00) 大阪、札幌、東京"
+    }
+]

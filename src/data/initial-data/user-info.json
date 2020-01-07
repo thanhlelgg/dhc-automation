@@ -1,0 +1,1244 @@
+[
+    {
+        "personalInfo": {
+            "name": "本社　太郎",
+            "alphabetName": "Honsha Taro",
+            "phoneticName": "オペ　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "honsha-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "honsha-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "本社　一郎",
+                "alphabetName": "Honsha Ichiro",
+                "phoneticName": "ホンシャ　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "system",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "正社員"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10001",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Honsha Taro",
+                "phoneticNameOfDepositAccount": "オペ　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234501"
+            },
+            "healthInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employeePensionInfo": {
+                "pensionFundNo": "01234501"
+            },
+            "employeePensionHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234501"
+            },
+            "careInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234501",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            },
+            "employmentInsuranceHistory": [{
+                "joinDate": "2010/01/01",
+                "status": "加入"
+            }]
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": true,
+            "isAccessBusinessSystem": true,
+            "talentRole": {
+                "role": "Admin",
+                "isSelectedAll": true
+            },
+            "ttsRole": {
+                "role": "Admin",
+                "isSelectedAll": true
+            },
+            "businessRole": {
+                "role": "Admin",
+                "isSelectedAll": true
+            }
+        }
+    },
+    {
+        "personalInfo": {
+            "name": "ラボ管　太郎",
+            "alphabetName": "Lab Taro",
+            "phoneticName": "ラボカン　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "lab-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "lab-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "ラボ管　一郎",
+                "alphabetName": "Lab Ichiro",
+                "phoneticName": "ラボカン　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "本社　太郎",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "changePositionAndPriceHistory": [{
+                "applyDate": "2010/01/01",
+                "position": "PM",
+                "unitPrice": 1000,
+                "allowance": 0
+            }],
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "正社員"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10002",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Lab Taro",
+                "phoneticNameOfDepositAccount": "ラボカン　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234502"
+            },
+            "healthInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employeePensionInfo": {
+                "pensionFundNo": "01234502"
+            },
+            "employeePensionHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234502"
+            },
+            "careInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234502",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            },
+            "employmentInsuranceHistory": [{
+                "joinDate": "2010/01/01",
+                "status": "加入"
+            }]
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": true,
+            "isAccessBusinessSystem": true,
+            "talentRole": {
+                "role": "Business (Lab Operation)",
+                "isSelectedAll": true
+            },
+            "ttsRole": {
+                "role": "Business (Lab Operation)",
+                "isSelectedAll": true
+            },
+            "businessRole": {
+                "role": "Business (Lab Operation)",
+                "isSelectedAll": true
+            }
+        }
+    },
+    {
+        "personalInfo": {
+            "name": "PM　太郎",
+            "alphabetName": "Pm Taro",
+            "phoneticName": "ピーエム　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "pm-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "pm-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "PM　一郎",
+                "alphabetName": "Pm Ichiro",
+                "phoneticName": "ピーエム　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "本社　太郎",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "changePositionAndPriceHistory": [{
+                "applyDate": "2010/01/01",
+                "position": "PM",
+                "unitPrice": 1000,
+                "allowance": 0
+            }],
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "正社員"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10003",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Pm Taro",
+                "phoneticNameOfDepositAccount": "ピーエム　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234503"
+            },
+            "healthInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employeePensionInfo": {
+                "pensionFundNo": "01234503"
+            },
+            "employeePensionHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234503"
+            },
+            "careInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234503",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            },
+            "employmentInsuranceHistory": [{
+                "joinDate": "2010/01/01",
+                "status": "加入"
+            }]
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": true,
+            "isAccessBusinessSystem": false,
+            "talentRole": {
+                "role": "Business (PM/Employee)",
+                "isSelectedAll": true
+            },
+            "ttsRole": {
+                "role": "Business (PM/Employee)",
+                "isSelectedAll": true
+            }
+        }
+    },
+    {
+        "personalInfo": {
+            "name": "ML　太郎",
+            "alphabetName": "Ml Taro",
+            "phoneticName": "エムエル　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "ml-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "ml-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "ML　一郎",
+                "alphabetName": "Ml Ichiro",
+                "phoneticName": "エムエル　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "本社　太郎",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "changePositionAndPriceHistory": [{
+                "applyDate": "2010/01/01",
+                "position": "PM",
+                "unitPrice": 1000,
+                "allowance": 0
+            }],
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "正社員"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10004",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Ml Taro",
+                "phoneticNameOfDepositAccount": "エムエル　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234504"
+            },
+            "healthInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employeePensionInfo": {
+                "pensionFundNo": "01234504"
+            },
+            "employeePensionHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234504"
+            },
+            "careInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234504",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            },
+            "employmentInsuranceHistory": [{
+                "joinDate": "2010/01/01",
+                "status": "加入"
+            }]
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": true,
+            "isAccessBusinessSystem": false,
+            "talentRole": {
+                "role": "Business (ML/Employee)",
+                "isSelectedAll": true
+            },
+            "ttsRole": {
+                "role": "Business (ML/Employee)",
+                "isSelectedAll": true
+            }
+        }
+    },
+    {
+        "personalInfo": {
+            "name": "TL　太郎",
+            "alphabetName": "Tl Taro",
+            "phoneticName": "ティーエル　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "tl-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "tl-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "TL　一郎",
+                "alphabetName": "Tl Ichiro",
+                "phoneticName": "ティーエル　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "本社　太郎",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "changePositionAndPriceHistory": [{
+                "applyDate": "2010/01/01",
+                "position": "TL",
+                "unitPrice": 1000,
+                "allowance": 0
+            }],
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "契約社員(時給)"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10005",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Tl Taro",
+                "phoneticNameOfDepositAccount": "ティーエル　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234505"
+            },
+            "healthInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employeePensionInfo": {
+                "pensionFundNo": "01234505"
+            },
+            "employeePensionHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234505"
+            },
+            "careInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234505",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            },
+            "employmentInsuranceHistory": [{
+                "joinDate": "2010/01/01",
+                "status": "加入"
+            }]
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": false,
+            "isAccessBusinessSystem": false,
+            "talentRole": {
+                "role": "Business (TL/Employee)",
+                "isSelectedAll": true
+            }
+        }
+    },
+    {
+        "personalInfo": {
+            "name": "スポット　太郎",
+            "alphabetName": "Spot Taro",
+            "phoneticName": "スポット　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "spot-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "spot-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "スポット　一郎",
+                "alphabetName": "Spot Ichiro",
+                "phoneticName": "スポット　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "本社　太郎",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "changePositionAndPriceHistory": [{
+                "applyDate": "2010/01/01",
+                "position": "T",
+                "unitPrice": 1000,
+                "allowance": 50
+            }],
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "登録テスター"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10006",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Spot Taro",
+                "phoneticNameOfDepositAccount": "スポット　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234506"
+            },
+            "employeePensionInfo": {
+                "pensionFundNo": "01234506"
+            },
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234506"
+            },
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234506",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            }
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": false,
+            "isAccessBusinessSystem": false,
+            "talentRole": {
+                "role": "Business (Tester)",
+                "isSelectedAll": true
+            }
+        }
+    },
+    {
+        "personalInfo": {
+            "name": "エキスポ　太郎",
+            "alphabetName": "Expo Taro",
+            "phoneticName": "エキスポ　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "expo-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "expo-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "エキスポ　一郎",
+                "alphabetName": "Expo Ichiro",
+                "phoneticName": "エキスポ　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "本社　太郎",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "changePositionAndPriceHistory": [{
+                "applyDate": "2010/01/01",
+                "position": "T",
+                "unitPrice": 1000,
+                "allowance": 50
+            }],
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "登録テスター"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10007",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Expo Taro",
+                "phoneticNameOfDepositAccount": "エキスポ　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234507"
+            },
+            "employeePensionInfo": {
+                "pensionFundNo": "01234507"
+            },
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234507"
+            },
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234507",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            }
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": false,
+            "isAccessBusinessSystem": false,
+            "talentRole": {
+                "role": "Business (Tester)",
+                "isSelectedAll": true
+            }
+        }
+    },
+    {
+        "personalInfo": {
+            "name": "BP　太郎",
+            "alphabetName": "Bp Taro",
+            "phoneticName": "ビーピー　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "bp-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "bp-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "BP　一郎",
+                "alphabetName": "Bp Ichiro",
+                "phoneticName": "ビーピー　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "本社　太郎",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "changePositionAndPriceHistory": [{
+                "applyDate": "2010/01/01",
+                "position": "T",
+                "unitPrice": 1000
+            }],
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "BP"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10008",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Bp Taro",
+                "phoneticNameOfDepositAccount": "ビーピー　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234508"
+            },
+            "employeePensionInfo": {
+                "pensionFundNo": "01234508"
+            },
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234508"
+            },
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234508",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            }
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": false,
+            "isAccessBusinessSystem": false,
+            "talentRole": {
+                "role": "Business (Tester)",
+                "isSelectedAll": true
+            }
+        }
+    },
+    {
+        "personalInfo": {
+            "name": "BPテスター　太郎",
+            "alphabetName": "Bptester Taro",
+            "phoneticName": "ビーピーテスター　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部 笹塚Lab.",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "bptester-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "bptester-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "BPテスター　一郎",
+                "alphabetName": "Bptester Ichiro",
+                "phoneticName": "ビーピーテスター　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "本社　太郎",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "changePositionAndPriceHistory": [{
+                "applyDate": "2010/01/01",
+                "position": "T",
+                "unitPrice": 1000
+            }],
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "BPテスター"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10009",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Bptester Taro",
+                "phoneticNameOfDepositAccount": "ビーピーテスター　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234509"
+            },
+            "employeePensionInfo": {
+                "pensionFundNo": "01234509"
+            },
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234509"
+            },
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234509",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            }
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": false,
+            "isAccessBusinessSystem": false,
+            "talentRole": {
+                "role": "Business (Tester)",
+                "isSelectedAll": true
+            }
+        }
+    },
+    {
+        "personalInfo": {
+            "name": "サンプル　太郎",
+            "alphabetName": "Sample Taro",
+            "phoneticName": "サンプル　タロウ",
+            "dateOfBirth": "1980/01/01",
+            "gender": "男性",
+            "groupId": "エンターテイメント事業本部 業務部",
+            "labId": "笹塚Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "studentType": "社会人",
+            "loginInfo": {
+                "loginId": "sample-taro",
+                "password": "123456",
+                "roleId": "Default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "nearestStation1": "京王線-初台",
+                "nearestStation2": "都営大江戸線-西新宿五丁目",
+                "tel": "03-3379-2053",
+                "email": "sample-taro@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "サンプル　一郎",
+                "alphabetName": "Sample Ichiro",
+                "phoneticName": "サンプル　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "address2": "東京オペラシティビル41F",
+                "tel": "03-3379-2053"
+            },
+            "interviewInfo": {
+                "interviewer": "本社　太郎",
+                "manageAccession": "インタビュー",
+                "rating": 1,
+                "manageDebug": true,
+                "manageLeaderDesire": true
+            },
+            "changePositionAndPriceHistory": [{
+                "applyDate": "2010/01/01",
+                "position": "T",
+                "unitPrice": 1000,
+                "allowance": 50
+            }],
+            "employmentHistory": [{
+                "date": "2010/01/01",
+                "type": "正社員"
+            }],
+            "recruitmentHistory": [{
+                "date": "2010/01/01",
+                "status": "入社"
+            }],
+            "comment": "コメントサンプル"
+        },
+        "professionalInfo": {
+            "attendanceInfo": {
+                "workAttitude": "なし",
+                "assignJudgment": "保存"
+            },
+            "trainingInfo": {
+                "trainingSupplement": true,
+                "spiScore": 100
+            }
+        },
+        "skillInfo": {
+            "languageSkill": {
+                "nativeLanguage": "アフガニスタン・イスラム共和国",
+                "nativeSecondLanguage": "アフガニスタン・イスラム共和国",
+                "nativeJapanese": "NONE"
+            }
+        },
+        "laborInfo": {
+            "paymentInfo": {
+                "bugyoId": "B10001",
+                "taxClassification": "甲種",
+                "transferBankCode": "1001",
+                "transferBankName": "サンプル",
+                "transferBankPhoneticName": "サンプル",
+                "transferBranchCode": "101",
+                "transferBranchName": "初台",
+                "depositClassification": "普通",
+                "transferAccountNumber": "12345678",
+                "nameOfDepositAccount": "Honsha Taro",
+                "phoneticNameOfDepositAccount": "オペ　タロウ"
+            },
+            "healthInsuranceInfo": {
+                "healthInsuranceNo": "01234501"
+            },
+            "healthInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employeePensionInfo": {
+                "pensionFundNo": "01234501"
+            },
+            "employeePensionHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "careInsuranceInfo": {
+                "careInsuranceNo": "01234501"
+            },
+            "careInsuranceHistory": [{
+                "joinDate": "2010/01/01"
+            }],
+            "employmentInsuranceInfo": {
+                "unemploymentInsuranceNo": "01234501",
+                "unemploymentInsuranceInfo": "雇用保険に加入していたことがある",
+                "leaveCompanyName": "株式会社テスト"
+            },
+            "employmentInsuranceHistory": [{
+                "joinDate": "2010/01/01",
+                "status": "加入"
+            }]
+        },
+        "visaInfo": {},
+        "roleInfo": {
+            "isAccessTTSSystem": true,
+            "isAccessBusinessSystem": true,
+            "talentRole": {
+                "role": "Admin",
+                "isSelectedAll": true
+            },
+            "ttsRole": {
+                "role": "Admin",
+                "isSelectedAll": true
+            },
+            "businessRole": {
+                "role": "Admin",
+                "isSelectedAll": true
+            }
+        }
+    }
+]

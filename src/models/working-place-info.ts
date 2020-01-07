@@ -1,4 +1,5 @@
 import workingPlaceInfo from '../data/working-place-info.json';
+import workingPlaceInitialData from '../data/initial-data/working-place-info.json';
 
 export class WorkingPlaceInfo {
     name!: string;
@@ -20,4 +21,7 @@ export class WorkingPlaceInfoData {
         new WorkingPlaceInfo(),
         workingPlaceInfo.requiredOnly,
     );
+    public static WORKING_PLACE_INITIAL_DATA: WorkingPlaceInfo[] = workingPlaceInitialData.map(item => {
+        return Object.assign(new WorkingPlaceInfo(), item);
+    });
 }

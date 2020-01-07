@@ -4,6 +4,7 @@ import '@src/string.extensions';
 import { WorkingPlaceInfo } from '../models/working-place-info';
 import { Constants } from '../common/constants';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
+import { Utilities } from '../common/utilities';
 
 @page
 export class AddWorkingPlacePage extends GeneralPage {
@@ -20,25 +21,34 @@ export class AddWorkingPlacePage extends GeneralPage {
         // Match label partial, search with full characters, select item match partial
         await this.selectSearchSelectionByLabel(
             this.workingPlaceFieldName.nearestStation1,
+            this.getStationNameFromResult(workingPlaceInfo.nearestStation1),
             workingPlaceInfo.nearestStation1,
             true,
             false,
             true,
         );
-        await this.selectSearchSelectionByLabel(
-            this.workingPlaceFieldName.nearestStation2,
-            workingPlaceInfo.nearestStation2,
-            true,
-            false,
-            true,
-        );
-        await this.selectSearchSelectionByLabel(
-            this.workingPlaceFieldName.nearestStation3,
-            workingPlaceInfo.nearestStation3,
-            true,
-            false,
-            true,
-        );
+
+        if (workingPlaceInfo.nearestStation2) {
+            await this.selectSearchSelectionByLabel(
+                this.workingPlaceFieldName.nearestStation2,
+                this.getStationNameFromResult(workingPlaceInfo.nearestStation2),
+                workingPlaceInfo.nearestStation2,
+                true,
+                false,
+                true,
+            );
+        }
+        if (workingPlaceInfo.nearestStation3) {
+            await this.selectSearchSelectionByLabel(
+                this.workingPlaceFieldName.nearestStation3,
+                this.getStationNameFromResult(workingPlaceInfo.nearestStation3),
+                workingPlaceInfo.nearestStation3,
+                true,
+                false,
+                true,
+            );
+        }
+
         await this.selectSelectorByLabel(this.workingPlaceFieldName.timeZone, workingPlaceInfo.timezone, true);
     }
 
@@ -74,7 +84,7 @@ export class AddWorkingPlacePage extends GeneralPage {
         FlagsCollector.collectEqual(
             'Working place nearest station 1 should be displayed correctly',
             workingPlaceInfo.nearestStation1,
-            this.getStationNameFromResult(nearestStation1Result),
+            nearestStation1Result,
         );
         const nearestStation2Result = await this.getSearchSelectionSelectedItemByLabel(
             this.workingPlaceFieldName.nearestStation2,
@@ -83,7 +93,7 @@ export class AddWorkingPlacePage extends GeneralPage {
         FlagsCollector.collectEqual(
             'Working place nearest station 2 should be displayed correctly',
             workingPlaceInfo.nearestStation2,
-            this.getStationNameFromResult(nearestStation2Result),
+            nearestStation2Result,
         );
         const nearestStation3Result = await this.getSearchSelectionSelectedItemByLabel(
             this.workingPlaceFieldName.nearestStation3,
@@ -92,7 +102,7 @@ export class AddWorkingPlacePage extends GeneralPage {
         FlagsCollector.collectEqual(
             'Working place nearest station 3 should be displayed correctly',
             workingPlaceInfo.nearestStation3,
-            this.getStationNameFromResult(nearestStation3Result),
+            nearestStation3Result,
         );
         FlagsCollector.collectEqual(
             'Working place code should be displayed correctly',
