@@ -27,12 +27,14 @@ export class AddProjectPage extends RegistrationPage {
     protected subTitleProjectResult = `//div[.='${this.translator.sectionName.addProject.volumeDetail}']`;
     protected roleCheckboxStr = "//div[contains(@class, 'custom-checkbox')]/label[text()='{0}']";
     protected roleCheckboxInput = "//div[label[text()='{0}']]//input[@type='checkbox']";
-    protected roleLabels = "//div[@id='project-result-bases']/div/label";
-    protected roleLabelByIndex = "(//div[@id='project-result-bases']/div/label)[{0}]";
+    protected roleLabels = "//div[contains(@class,'check-position')]//label";
+    protected roleLabelByIndex = "(//div[contains(@class,'check-position')]//label)[{0}]";
     protected roleRowStr = "//tr[contains(.,'{0}')]";
     protected roleBillingDetailsLine = "//tbody[@id='result-base-details']/tr[td[text()='{0}']]";
-    protected searchItemByRoleStr = "//tr[contains(.,'{0}')]//input[@class='search-items  form-control']";
-    protected debitCreditByRoleStr = "//tr[contains(.,'{0}')]//select[contains(@id, 'debit-credit-group-id')]";
+    protected searchItemTextfieldResultBase = "//input[@id='search-items']";
+    protected searchItemByRowStr =
+        "//div[.='{0}']/ancestor::div[@role='row']//input[@class='search-items  form-control']";
+    protected debitCreditSelector = "//select[@name='debit_credit_group_id']";
     protected planPeopleByRoleStr = "//tr[contains(.,'{0}')]//input[contains(@id, 'plan-people')]";
     protected planTimeByRoleStr = "//tr[contains(.,'{0}')]//input[contains(@id, 'plan-time')]";
     protected planTotalTimeByRoleStr = "//tr[contains(.,'{0}')]//input[contains(@id, 'plan-totalt-ime')]";
@@ -125,7 +127,7 @@ export class AddProjectPage extends RegistrationPage {
     @locator
     protected workingPlace = "//select[@name='place']";
     @locator
-    protected currencyId = "//select[@name='currency_id']";
+    protected exchangeId = "//select[@name='exchange_id']";
     @locator
     protected billingType = "//select[@name='billing_type']";
     @locator
@@ -148,8 +150,6 @@ export class AddProjectPage extends RegistrationPage {
     protected removeIconByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//a[@class='remove-project-details']";
     protected detailNameByRowStr =
         "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, '[name]') and not(contains(@name, 'item'))]";
-    protected searchItemByRowStr =
-        "//div[.='{0}']/ancestor::div[@role='row']//input[@class='search-items  form-control']";
     protected debitCreditByRowStr =
         "//div[.='{0}']/ancestor::div[@role='row']//select[contains(@name, '[debit_credit_group_id]')]";
     protected isTaxableByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@id, 'is-taxable')]";
@@ -157,12 +157,6 @@ export class AddProjectPage extends RegistrationPage {
     protected quantityByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, '[quantity]')]";
     protected unitByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, '[unit]')]";
     protected unitPriceByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, '[unit_price]')]";
-    protected shipDateByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, 'ship_date')]";
-    protected deliveryDateByRowStr =
-        "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, 'delivery_date')]";
-    protected acceptedDateByRowStr =
-        "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, 'accepted_date')]";
-    protected billingDateByRowStr = "//div[.='{0}']/ancestor::div[@role='row']//input[contains(@name, 'billing_date')]";
     //#endregion
 
     //#region resource
@@ -435,25 +429,22 @@ export class AddProjectPage extends RegistrationPage {
     }
 
     @action('clickResultsBaseItemTextfield')
-    public async clickResultsBaseItemTextfield(role: string): Promise<void> {
-        const searchItemXpath = Utilities.formatString(this.searchItemByRoleStr, role);
-        await gondola.click(searchItemXpath);
+    public async clickResultsBaseItemTextfield(): Promise<void> {
+        await gondola.click(this.searchItemTextfieldResultBase);
     }
 
     @action('getResultsBaseItemTextfieldValue')
-    public async getResultsBaseItemTextfieldValue(role: string): Promise<string> {
-        const searchItemXpath = Utilities.formatString(this.searchItemByRoleStr, role);
-        return await gondola.getControlProperty(searchItemXpath, 'value');
+    public async getResultsBaseItemTextfieldValue(): Promise<string> {
+        return await gondola.getControlProperty(this.searchItemTextfieldResultBase, 'value');
     }
 
     @action('searchItem')
-    public async searchItem(item: string, index: any, position: string): Promise<void> {
-        let searchItemXpath = Utilities.formatString(this.searchItemByRoleStr, index);
-        if (position === 'detail') {
-            searchItemXpath = Utilities.formatString(this.searchItemByRowStr, index);
+    public async searchItem(item: string | undefined, index?: string): Promise<void> {
+        if (!item) {
+            return;
         }
-
-        await gondola.click(searchItemXpath);
+        const locator = index ? this.searchItemByRowStr.format(index) : this.searchItemTextfieldResultBase;
+        await gondola.click(locator);
         await gondola.waitUntilElementVisible(this.itemFilter, Constants.LONG_TIMEOUT);
         await gondola.enter(this.itemFilter, item);
         await searchModalWindows.selectSearchResult(item);
@@ -508,8 +499,7 @@ export class AddProjectPage extends RegistrationPage {
         await gondola.select(this.accuracy, projectOverview.accuracy);
         await gondola.select(this.status, projectOverview.status);
         await gondola.select(this.workingPlace, projectOverview.workingPlace);
-        await gondola.select(this.currencyId, projectOverview.currencyId);
-        await gondola.select(this.billingType, projectOverview.billingType);
+        await gondola.select(this.exchangeId, projectOverview.exchangeId);
         await gondola.select(this.closingDate, projectOverview.closingDate);
         await this.selectSegment(projectOverview.segment);
         if (projectOverview.tag) {
@@ -526,8 +516,8 @@ export class AddProjectPage extends RegistrationPage {
     }
 
     @action('does debit credits options exists')
-    public async doesDebitCreditsOptionsExist(role: string, options: string[]): Promise<boolean> {
-        const locator = Utilities.formatString(this.debitCreditByRoleStr, role);
+    public async doesDebitCreditsOptionsExist(options: string[]): Promise<boolean> {
+        const locator = Utilities.formatString(this.debitCreditSelector);
         return await this.doesSelectorOptionsExist(locator, options);
     }
 
@@ -572,75 +562,61 @@ export class AddProjectPage extends RegistrationPage {
     }
 
     @action('inputProjectResultBases')
-    public async inputProjectResultBases(projectResultBases: ProjectResultBaseInfo[]): Promise<void> {
+    public async inputProjectResultBases(projectResultBases: ProjectResultBaseInfo): Promise<void> {
         const formExist = await gondola.doesControlExist(this.subTitleProjectResult);
         if (formExist) {
-            for (const projectResultBase of projectResultBases) {
-                await this.setStatusResultBasesRoleCheckbox(projectResultBase.role, true);
-                await this.searchItem(projectResultBase.item, projectResultBase.role, 'result bases');
-                await gondola.select(
-                    Utilities.formatString(this.debitCreditByRoleStr, projectResultBase.role),
-                    projectResultBase.debitCredit,
-                );
+            await this.searchItem(projectResultBases.item);
+            await gondola.select(this.debitCreditSelector, projectResultBases.debitCredit);
+            for (const record of projectResultBases.records) {
+                await this.setStatusResultBasesRoleCheckbox(record.role, true);
+
                 await gondola.enter(
-                    Utilities.formatString(this.planPeopleByRoleStr, projectResultBase.role),
-                    projectResultBase.planPeople + '',
+                    Utilities.formatString(this.planPeopleByRoleStr, record.role),
+                    record.planPeople + '',
                 );
-                await gondola.enter(
-                    Utilities.formatString(this.planTimeByRoleStr, projectResultBase.role),
-                    projectResultBase.planTime + '',
-                );
+                await gondola.enter(Utilities.formatString(this.planTimeByRoleStr, record.role), record.planTime + '');
                 // check plan total time
-                const totalTime =
-                    projectResultBase.planTime && projectResultBase.planPeople
-                        ? projectResultBase.planTime * projectResultBase.planPeople
-                        : null;
+                const totalTime = record.planTime && record.planPeople ? record.planTime * record.planPeople : null;
                 await this.checkPlanTotalTime(
                     totalTime,
-                    Utilities.formatString(this.planTotalTimeByRoleStr, projectResultBase.role),
+                    Utilities.formatString(this.planTotalTimeByRoleStr, record.role),
                 );
                 await gondola.controlPopupAndEnterText(
-                    Utilities.formatString(this.unitPriceWeekdayByRoleStr, projectResultBase.role),
-                    projectResultBase.unitPriceWeekday,
+                    Utilities.formatString(this.unitPriceWeekdayByRoleStr, record.role),
+                    record.unitPriceWeekday,
                 );
                 await gondola.enter(
-                    Utilities.formatString(this.unitPriceWeekdayOTByRoleStr, projectResultBase.role),
-                    projectResultBase.unitPriceWeekdayOT,
+                    Utilities.formatString(this.unitPriceWeekdayOTByRoleStr, record.role),
+                    record.unitPriceWeekdayOT,
                 );
                 await gondola.enter(
-                    Utilities.formatString(this.unitPriceHolidayByRoleStr, projectResultBase.role),
-                    projectResultBase.unitPriceHoliday,
+                    Utilities.formatString(this.unitPriceHolidayByRoleStr, record.role),
+                    record.unitPriceHoliday,
                 );
                 await gondola.enter(
-                    Utilities.formatString(this.unitPriceWeekdayLateByRoleStr, projectResultBase.role),
-                    projectResultBase.unitPriceWeekdayLate,
+                    Utilities.formatString(this.unitPriceWeekdayLateByRoleStr, record.role),
+                    record.unitPriceWeekdayLate,
                 );
                 await gondola.enter(
-                    Utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, projectResultBase.role),
-                    projectResultBase.unitPriceWeekdayLateOT,
+                    Utilities.formatString(this.unitPriceWeekdayLateOTByRoleStr, record.role),
+                    record.unitPriceWeekdayLateOT,
                 );
                 await gondola.enter(
-                    Utilities.formatString(this.unitPriceHolidayLateByRoleStr, projectResultBase.role),
-                    projectResultBase.unitPriceHolidayLate,
+                    Utilities.formatString(this.unitPriceHolidayLateByRoleStr, record.role),
+                    record.unitPriceHolidayLate,
                 );
-                await this.setTaxableState(projectResultBase.role, projectResultBase.isTaxable);
-                if (projectResultBase.isTaxable) {
-                    await gondola.select(
-                        Utilities.formatString(this.taxIdByRoleStr, projectResultBase.role),
-                        projectResultBase.taxId,
-                    );
+                await this.setTaxableState(record.role, record.isTaxable);
+                if (record.isTaxable) {
+                    await gondola.select(Utilities.formatString(this.taxIdByRoleStr, record.role), record.taxId);
                 }
 
-                if (projectResultBase.note) {
-                    await gondola.enter(
-                        Utilities.formatString(this.noteByRoleStr, projectResultBase.role),
-                        projectResultBase.note,
-                    );
+                if (record.note) {
+                    await gondola.enter(Utilities.formatString(this.noteByRoleStr, record.role), record.note);
                 }
-                if (projectResultBase.outputOrder) {
+                if (record.outputOrder) {
                     await gondola.enter(
-                        Utilities.formatString(this.outputOrderbyRoleStr, projectResultBase.role),
-                        projectResultBase.outputOrder,
+                        Utilities.formatString(this.outputOrderbyRoleStr, record.role),
+                        record.outputOrder,
                     );
                 }
             }
@@ -653,34 +629,13 @@ export class AddProjectPage extends RegistrationPage {
         for (const projectDetail of projectDetails) {
             await gondola.click(this.addProjectDetailBtn);
             await gondola.enter(Utilities.formatString(this.detailNameByRowStr, idx + ''), projectDetail.detailName);
-            await this.searchItem(projectDetail.item, idx + '', 'detail');
+            await this.searchItem(projectDetail.item, idx.toString());
             await gondola.select(Utilities.formatString(this.debitCreditByRowStr, idx + ''), projectDetail.debitCredit);
             await gondola.setState(Utilities.formatString(this.isTaxableByRowStr, idx + ''), projectDetail.isTaxable);
             await gondola.select(Utilities.formatString(this.taxIdByRowStr, idx + ''), projectDetail.taxId);
             await gondola.enter(Utilities.formatString(this.quantityByRowStr, idx + ''), projectDetail.quantity);
             await gondola.enter(Utilities.formatString(this.unitByRowStr, idx + ''), projectDetail.unit);
             await gondola.enter(Utilities.formatString(this.unitPriceByRowStr, idx + ''), projectDetail.unitPrice);
-            if (projectDetail.shipDate) {
-                await gondola.enter(Utilities.formatString(this.shipDateByRowStr, idx + ''), projectDetail.shipDate);
-            }
-            if (projectDetail.deliveryDate) {
-                await gondola.enter(
-                    Utilities.formatString(this.deliveryDateByRowStr, idx + ''),
-                    projectDetail.deliveryDate,
-                );
-            }
-            if (projectDetail.acceptedDate) {
-                await gondola.enter(
-                    Utilities.formatString(this.acceptedDateByRowStr, idx + ''),
-                    projectDetail.acceptedDate,
-                );
-            }
-            if (projectDetail.billingDate) {
-                await gondola.enter(
-                    Utilities.formatString(this.billingDateByRowStr, idx + ''),
-                    projectDetail.billingDate,
-                );
-            }
             idx++;
         }
     }
@@ -945,7 +900,7 @@ export class AddProjectPage extends RegistrationPage {
 
     @action('doesCurrencyIdDisplayCorrect')
     public async doesCurrencyIdDisplayCorrect(currencyId: string): Promise<boolean> {
-        const currentCurrencyId = await gondola.getSelectedOption(this.currencyId);
+        const currentCurrencyId = await gondola.getSelectedOption(this.exchangeId);
         return Utilities.isTextEqual(currentCurrencyId, currencyId);
     }
 
@@ -1027,11 +982,7 @@ export class AddProjectPage extends RegistrationPage {
         );
         FlagsCollector.collectTruth(
             'Project Currency id should be correct',
-            await this.doesCurrencyIdDisplayCorrect(projectOverview.currencyId),
-        );
-        FlagsCollector.collectTruth(
-            'Project Billing type should be correct',
-            await this.doesBillingTypeDisplayCorrect(projectOverview.billingType),
+            await this.doesCurrencyIdDisplayCorrect(projectOverview.exchangeId),
         );
         FlagsCollector.collectTruth(
             'Project Closing date should be correct',
@@ -1171,26 +1122,21 @@ export class AddProjectPage extends RegistrationPage {
 
     @action('doesContentOfProjectResultBasesDisplayCorrect')
     public async doesContentOfProjectResultBasesDisplayCorrect(
-        projectResultBases: ProjectResultBaseInfo[],
+        projectResultBases: ProjectResultBaseInfo,
     ): Promise<boolean> {
+        FlagsCollector.collectEqual(
+            `Debit credit should be selected`,
+            await gondola.getSelectedOption(this.debitCreditSelector),
+            projectResultBases.debitCredit,
+        );
+        FlagsCollector.collectEqual(
+            `Item should be selected`,
+            await gondola.getControlProperty(this.searchItemTextfieldResultBase, 'value'),
+            projectResultBases.item,
+        );
         let index = 0;
-        for (const projectResultBaseRow of projectResultBases) {
+        for (const projectResultBaseRow of projectResultBases.records) {
             gondola.report('Verify content of project result base, role: ' + projectResultBaseRow.role);
-            FlagsCollector.collectTruth(
-                `Record ${index}: Role should be selected`,
-                (
-                    await this.getTextBoxValue(
-                        Utilities.formatString(this.searchItemByRoleStr, projectResultBaseRow.role),
-                    )
-                ).includes(projectResultBaseRow.item),
-            );
-            FlagsCollector.collectEqual(
-                `Record ${index}: Debit credit should be selected`,
-                await gondola.getSelectedOption(
-                    Utilities.formatString(this.debitCreditByRoleStr, projectResultBaseRow.role),
-                ),
-                projectResultBaseRow.debitCredit,
-            );
             const totalTime =
                 projectResultBaseRow.planTime && projectResultBaseRow.planPeople
                     ? projectResultBaseRow.planTime * projectResultBaseRow.planPeople
@@ -1247,47 +1193,6 @@ export class AddProjectPage extends RegistrationPage {
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
     }
 
-    @action('doesProjectDetailDatesDisplayCorrect')
-    public async doesProjectDetailDatesDisplayCorrect(
-        rowIndex: string,
-        shipDate?: string,
-        deliveryDate?: string,
-        acceptedDate?: string,
-        billingDate?: string,
-    ): Promise<boolean> {
-        const currentShipDate = await this.getTextBoxValue(Utilities.formatString(this.shipDateByRowStr, rowIndex));
-        if (!shipDate) {
-            shipDate = '';
-        }
-        FlagsCollector.collectEqual('Ship date should be correct', shipDate, currentShipDate);
-
-        const currentDeliveryDate = await this.getTextBoxValue(
-            Utilities.formatString(this.deliveryDateByRowStr, rowIndex),
-        );
-        if (!deliveryDate) {
-            deliveryDate = '';
-        }
-        FlagsCollector.collectEqual('Delivery date should be correct', deliveryDate, currentDeliveryDate);
-
-        const currentAcceptedDate = await this.getTextBoxValue(
-            Utilities.formatString(this.acceptedDateByRowStr, rowIndex),
-        );
-        if (!acceptedDate) {
-            acceptedDate = '';
-        }
-        FlagsCollector.collectEqual('Delivery date should be correct', acceptedDate, currentAcceptedDate);
-
-        const currentBillingDate = await this.getTextBoxValue(
-            Utilities.formatString(this.billingDateByRowStr, rowIndex),
-        );
-        if (!billingDate) {
-            billingDate = '';
-        }
-        FlagsCollector.collectEqual('Delivery date should be correct', billingDate, currentBillingDate);
-
-        return FlagsCollector.verifyFlags();
-    }
-
     @action('doesContentOfProjectDetailsDisplayCorrect')
     public async doesContentOfProjectDetailsDisplayCorrect(projectDetails: ProjectDetailInfo[]): Promise<boolean> {
         for (let i = 1; i <= projectDetails.length; i++) {
@@ -1339,19 +1244,8 @@ export class AddProjectPage extends RegistrationPage {
                 await this.getTextBoxValue(Utilities.formatString(this.unitPriceByRowStr, i + '')),
                 projectDetailRow.unitPrice,
             );
-
-            FlagsCollector.collectTruth(
-                `Record ${i}. Project detail date should be correct`,
-                await this.doesProjectDetailDatesDisplayCorrect(
-                    i + '',
-                    projectDetailRow.shipDate,
-                    projectDetailRow.deliveryDate,
-                    projectDetailRow.acceptedDate,
-                    projectDetailRow.billingDate,
-                ),
-            );
         }
-        return FlagsCollector.verifyFlags();
+        return FlagsCollector.verifyFlags(LoggingType.REPORT);
     }
 
     @action('doesProjectLabDisplayCorrect')
@@ -1620,7 +1514,7 @@ export class AddProjectPage extends RegistrationPage {
         basePrice: number,
     ): Promise<boolean> {
         const dataMapping = new Map<ResultsBaseField, number>();
-        dataMapping.set(ResultsBaseField.UNIT_PRICE_WEEKDAY, basePrice);
+        dataMapping.set(ResultsBaseField.UNIT_PRICE_WEEKDAY, Math.floor(basePrice));
         dataMapping.set(ResultsBaseField.UNIT_PRICE_WEEKDAY_OVERTIME, Math.floor(basePrice * unitPrice.overtime));
         dataMapping.set(ResultsBaseField.UNIT_PRICE_HOLIDAY, Math.floor(basePrice * unitPrice.holiday));
         dataMapping.set(ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE, Math.floor(basePrice * unitPrice.late_night));

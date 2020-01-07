@@ -267,7 +267,8 @@ export class AddCustomerPage extends GeneralPage {
             if (!(await this.doesRecordFieldExist(RecordTable.CUSTOMER_UNIT_PRICES, i, RecordFieldName.START_DATE))) {
                 await gondola.click(this.addUnitPricesRecordButton);
             }
-            await this.enterRecordField(
+            //TODO: Switch back to normal entering after bug is fixed
+            await this.enterRecordFieldUsingJS(
                 RecordTable.CUSTOMER_UNIT_PRICES,
                 i,
                 RecordFieldName.START_DATE,
@@ -334,7 +335,8 @@ export class AddCustomerPage extends GeneralPage {
             ) {
                 await gondola.click(this.addCustomerMagnificationRecordButton);
             }
-            await this.enterRecordField(
+            //TODO: Switch back to normal entering after bug is fixed
+            await this.enterRecordFieldUsingJS(
                 RecordTable.CUSTOMER_MAGNIFICATIONS,
                 i,
                 RecordFieldName.START_DATE,

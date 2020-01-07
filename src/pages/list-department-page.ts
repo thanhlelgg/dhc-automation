@@ -1,8 +1,9 @@
 import { action, gondola, locator, page } from 'gondolajs';
 import { GeneralPage } from './general-page';
+import { Constants } from '../common/constants';
 @page
 export class ListDepartmentPage extends GeneralPage {
-    protected pageUrl = 'https://dhcbms.digitalhearts.com/departments';
+    protected pageUrl = `${Constants.bmsBaseUrl}/departments`;
     @locator
     protected departmentLink = "//div[@tabulator-field='cd']/a[text()='{0}']";
 

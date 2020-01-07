@@ -27,6 +27,7 @@ TestCase('BMS-198. BMS:マスタ:品目作成:標準販売単価:文字数', asy
     await addItemPage.enterTextFieldByLabel(ITEM_UNIT_PRICE_FIELD_NAME, UNIT_PRICE_16_DIGITS);
     await addItemPage.saveNewItem();
     gondola.report(`VP. 入力フィールドの下にエラー「16桁以内の数値を入力してください」が表示されないこと。`);
+    //BUG: we can't enter more than 11 characters
     let actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
     await gondola.checkEqual(actualFeedback, '', 'Invalid feedback message should not be displayed');
 

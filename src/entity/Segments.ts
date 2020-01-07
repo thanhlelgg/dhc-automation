@@ -6,11 +6,11 @@ export class Segments {
     id: number | undefined;
 
     @Column('text')
-    code: string | undefined;
+    code!: string;
 
     @Column('text')
     name: string | undefined;
 
     @Column('tinyint')
-    is_deleted: string | undefined;
+    is_deleted!: number;
 }

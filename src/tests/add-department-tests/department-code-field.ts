@@ -8,6 +8,8 @@ import { DatabaseHelper } from '../../helper/database-helpers';
 TestModule('Add Department - Department code field validation');
 
 const DEPARTMENT_CODE_TEXTFIELD_LABEL = Constants.translator.fieldName.addDepartment.code;
+const DEPARTMENT_NAME_TEXTFIELD_LABEL = Constants.translator.fieldName.addDepartment.name;
+
 const INVALID_DEPARTMENT_CODE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
 const ALREADY_IN_USE_ERROR_MESSAGE = Constants.translator.invalidFeedback.alreadyInUse;
 Before(setup);
@@ -102,6 +104,7 @@ TestCase('BMS-183. マスタ:部門作成:部門コード:重複時', async () =
     gondola.report(`Step 2. 「部門コード」で重複しているコードを入力し、「保存」ボタンをクリックする。`);
     const randomExistedDepartment = await DatabaseHelper.getRandomDepartment();
     await addDepartmentPage.enterTextFieldByLabel(DEPARTMENT_CODE_TEXTFIELD_LABEL, randomExistedDepartment.cd);
+    await addDepartmentPage.enterTextFieldByLabel(DEPARTMENT_NAME_TEXTFIELD_LABEL, Utilities.getRandomText(5));
     await addDepartmentPage.saveDepartment();
     gondola.report(
         `VP. 入力フィールドの下にエラー「既に使われている値のため異なる値を入力してください」が表示されること。`,

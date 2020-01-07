@@ -24,7 +24,7 @@ TestCase('BMS-17. 案件:案件作成:案件終了日:未入力 ', async () => {
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();
@@ -32,6 +32,7 @@ TestCase('BMS-17. 案件:案件作成:案件終了日:未入力 ', async () => {
     await listProjectPage.clickOnTTSLinkButton(projectNumber);
     gondola.report(`VP. エラーとなること。`);
     await gondola.waitForAlert();
+    //BUG: error message is not displayed correctly
     await gondola.checkEqual(
         await gondola.getPopupText(),
         Constants.translator.alertMessage.couldNotSend,

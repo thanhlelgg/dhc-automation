@@ -41,7 +41,7 @@ TestCase('BMS-34. 案件:案件作成:ステータス:「見込」の選択肢',
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();
@@ -64,7 +64,7 @@ TestCase('BMS-35. 案件:案件作成:ステータス:「見積済」の選択�
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();
@@ -87,7 +87,7 @@ TestCase('BMS-36. 案件:案件作成:ステータス:「延期」の選択肢�
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();
@@ -110,7 +110,7 @@ TestCase('BMS-37. 案件:案件作成:ステータス:「失注」の選択肢',
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();
@@ -133,7 +133,7 @@ TestCase('BMS-38. 案件:案件作成:ステータス:「仮受注」の選択�
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();
@@ -156,7 +156,7 @@ TestCase('BMS-39. 案件:案件作成:ステータス:「受注済」の選択�
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();
@@ -179,7 +179,7 @@ TestCase('BMS-40. 案件:案件作成:ステータス:「納品済」の選択�
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();
@@ -202,7 +202,7 @@ TestCase('BMS-41. 案件:案件作成:ステータス:「完了」の選択肢 '
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();

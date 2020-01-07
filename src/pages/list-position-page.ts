@@ -12,7 +12,7 @@ import { TimeCardApprove } from '../models/enum-class/timecard-approve';
 
 @page
 export class PositionsPage extends GeneralPage {
-    pageUrl = `${Constants.bmsBaseUrl}/positions`;
+    pageUrl = `${Constants.tmsBaseUrl}/positions`;
     @locator
     protected positionsTable = '//table';
     protected tableHelper = new HTMLTableHelper(this.positionsTable);

@@ -13,7 +13,7 @@ Before(setup);
 
 TestCase('TMS-127. マスタ:役職作成:役職名:文字数', async () => {
     gondola.report(`Step 2. 「役職名」で何も入力しなくて、「保存」ボタンをクリックする。`);
-    await addPositionPage.clickButtonByIcon(ButtonIcon.CHECK);
+    await addPositionPage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 入力フィールドの下にエラー「。。。」が表示されること。`);
     // TODO: update when requirement specified
     await gondola.checkEqual(
@@ -25,7 +25,7 @@ TestCase('TMS-127. マスタ:役職作成:役職名:文字数', async () => {
     const maximumNOC = 255;
     const randomText = Utilities.getRandomText(maximumNOC);
     await addPositionPage.enterTextFieldByLabel(POSITION_NAME, randomText, true);
-    await addPositionPage.clickButtonByIcon(ButtonIcon.CHECK);
+    await addPositionPage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 255文字まで入力できること。`);
     await gondola.checkEqual(
         await addPositionPage.getTextFieldValueByLabel(POSITION_NAME, true),
@@ -35,7 +35,7 @@ TestCase('TMS-127. マスタ:役職作成:役職名:文字数', async () => {
 
     gondola.report(`Step 4.「役職名」で256文字を入力する。`);
     await addPositionPage.enterTextFieldByLabel(POSITION_NAME, randomText + 'a', true);
-    await addPositionPage.clickButtonByIcon(ButtonIcon.CHECK);
+    await addPositionPage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 256目の文字まで入力できないこと。`);
     await gondola.checkEqual(
         await addPositionPage.getTextFieldValueByLabel(POSITION_NAME, true),

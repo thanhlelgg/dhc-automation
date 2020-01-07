@@ -26,6 +26,7 @@ TestCase('BMS-103. BMS:案件:従業員マスタ作成:従業員名:入力確認
     await addWorkerPage.enterTextFieldByLabel(WORKER_NAME_FIELD_NAME, TEXT_64_CHARACTERS);
     await addWorkerPage.saveNewWorker();
     gondola.report(`VP. 入力フィールドの下にエラー「64文字以内で入力してください」が表示されないこと。`);
+    //BUG: error message is not correct
     await gondola.checkEqual(
         await addWorkerPage.getTextFieldValueByLabel(WORKER_NAME_FIELD_NAME),
         TEXT_64_CHARACTERS,

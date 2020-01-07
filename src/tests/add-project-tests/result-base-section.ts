@@ -36,7 +36,7 @@ TestCase('BMS-51. 案件:案件作成:出来高明細:請求用役職別のチ�
     gondola.report(
         `Step 4. 該当する請求用役職の出来高明細行で任意の内容を入力し、チェックを入れたチェックボックスでチェックを外す。`,
     );
-    PROJECT_RESULT_BASE_DATA[0].role = randomRole;
+    PROJECT_RESULT_BASE_DATA.records[0].role = randomRole;
     await addProjectPage.inputProjectResultBases(PROJECT_RESULT_BASE_DATA);
     await addProjectPage.setStatusResultBasesRoleCheckbox(randomRole, false);
     gondola.report(`VP. 該当する請求用役職の出来高明細行が表示され、明細の入力ができる状態になること。`);
@@ -60,7 +60,7 @@ TestCase('BMS-51. 案件:案件作成:出来高明細:請求用役職別のチ�
     await addProjectPage.inputProjectOverviewInfo(PROJECT_OVERVIEW_REQUIRED_ONLY);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 当該請求用役職のデータは入力途中であってもクリアされること。`);
-    PROJECT_RESULT_BASE_EMPTY_RECORD[0].role = randomRole;
+    PROJECT_RESULT_BASE_EMPTY_RECORD.records[0].role = randomRole;
     await addProjectPage.setStatusResultBasesRoleCheckbox(randomRole, true);
     await gondola.checkEqual(
         await addProjectPage.doesContentOfProjectResultBasesDisplayCorrect(PROJECT_RESULT_BASE_EMPTY_RECORD),

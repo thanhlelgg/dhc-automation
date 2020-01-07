@@ -29,8 +29,7 @@ export class AddItemPage extends GeneralPage {
     private lbDisable = { xpath: "//input[@id='is-disable']/following-sibling::label" };
     private isDisable = "//input[@id='is-disable']";
     private remarks = { id: 'note' };
-    radioButtonByLabel =
-        "//div[label[text()='{0}']]//preceding-sibling::input[@type='radio']//following-sibling::label";
+    radioButtonByLabel = "//div[label[text()='{0}']]//label[text()='{1}']//preceding-sibling::input[1]";
 
     //#region search Segment
     @locator
@@ -207,7 +206,7 @@ export class AddItemPage extends GeneralPage {
         if (!tax) {
             return true;
         }
-        return await this.getCheckboxValue(this.radioButtonByLabel.format(this.fieldName.tax, tax), false);
+        return await gondola.doesCheckboxChecked(this.radioButtonByLabel.format(this.fieldName.tax, tax));
     }
 
     @action('is current page')

@@ -6,7 +6,10 @@ export class BusinessCustomers {
     id: number | undefined;
 
     @Column('text')
-    cd: string | undefined;
+    cd!: string;
+
+    @Column('text')
+    name!: string;
 
     @Column('tinyint')
     is_disable: string | undefined;

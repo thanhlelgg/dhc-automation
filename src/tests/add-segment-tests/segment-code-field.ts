@@ -4,6 +4,7 @@ import setup from './add-segment-setup';
 import addSegmentPage from '../../pages/add-segment-page';
 import { Utilities } from '../../common/utilities';
 import { DatabaseHelper } from '../../helper/database-helpers';
+import { SegmentInfoData } from '../../models/segment-info';
 
 TestModule('Add Segment - Segment code field validation');
 
@@ -93,8 +94,9 @@ TestCase('BMS-211. BMS:マスタ:セグメント作成:セグメントコード:
 
 TestCase('BMS-212. マスタ:セグメント作成:セグメントコード:重複時', async () => {
     gondola.report(`Step 2. 「セグメントコード」で重複しているコードを入力し、「保存」ボタンをクリックする。`);
-    const randomExistedSegment = await DatabaseHelper.getRandomSegments();
-    await addSegmentPage.enterTextFieldByLabel(SEGMENT_CODE_TEXTFIELD_LABEL, randomExistedSegment.code);
+    const segmentInfo = SegmentInfoData.SEGMENT_FULL_DATA;
+    segmentInfo.code = (await DatabaseHelper.getRandomSegments()).code;
+    await addSegmentPage.enterSegmentInformation(segmentInfo);
     await addSegmentPage.saveSegment();
     gondola.report(
         `VP. 入力フィールドの下にエラー「既に使われている値のため異なる値を入力してください」が表示されること。`,

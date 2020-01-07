@@ -1,9 +1,6 @@
 import customerInfo from '../data/customer-info.json';
 import customerInitialData from '../data/initial-data/customer-info.json';
-import { JsonUtility } from '../common/utilities.js';
-import { JsonProperty, JsonObject } from 'json2typescript';
 
-@JsonObject('Overview')
 export class Overview {
     code!: string;
     name!: string;
@@ -34,7 +31,6 @@ export class Overview {
     deliveryPlace?: string = undefined;
 }
 
-@JsonObject('UnitPrices')
 export class UnitPrices {
     startDate!: string;
     endDate?: string = undefined;
@@ -43,7 +39,6 @@ export class UnitPrices {
     dispatch!: number;
 }
 
-@JsonObject('CustomerMagnifications')
 export class CustomerMagnifications {
     startDate!: string;
     endDate?: string = undefined;

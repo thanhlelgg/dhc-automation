@@ -193,5 +193,13 @@ declare module 'gondolajs' {
          * @param timeOut
          */
         waitUntilConditionCorrect(condition: Function | PromiseLike<boolean>, timeOut?: number): Promise<void>;
+
+        /**
+         * Set attribute of an element using javascript
+         * @param control
+         * @param attribute
+         * @param value
+         */
+        setElementAttribute(control: any, attribute: string, value: string): Promise<void>;
     }
 }

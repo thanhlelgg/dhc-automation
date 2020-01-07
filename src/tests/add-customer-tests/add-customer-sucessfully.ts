@@ -92,6 +92,7 @@ TestCase('BMS-147. 案件:得意先マスタ作成:顧客情報:保存仕入先:
     gondola.report(`Step 2. 「区分」で「仕入先」を選択する。`);
     await addCustomerPage.selectSelectorByLabel(CUSTOMER_CLASSIFY_TEXTFIELD_LABEL, CUSTOMER_CLASSIFY_OPTIONS.supplier);
     gondola.report(`VP. 「顧客単価」と「割増」入力セッションが表示されないこと。`);
+    //BUG: currently we can't select customer type
     gondola.checkFalse(
         await addCustomerPage.doesSectionDisplay(Constants.translator.sectionName.addCustomer.customerMagnifications),
     );

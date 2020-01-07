@@ -18,7 +18,7 @@ export class DatabaseHelper {
      * @param database Schema name
      */
     public static async getConnection(database: string): Promise<Connection> {
-        const host = process.env.MYSQL_HOST;
+        const host = process.env.HOST;
         const port = process.env.MYSQL_PORT;
         const username = process.env.MYSQL_USERNAME;
         const password = process.env.MYSQL_PASSWORD;

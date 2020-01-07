@@ -167,8 +167,6 @@ Data(CUSTOMER_DATA).TestCase('InitialData5. BMS:案件:得意先マスタ作成'
         current.overview.code,
     );
     await listCustomerPage.clickSearchButton();
-    // Currently there's a bug with start date that doesn't allow us to enter a valid date,
-    // therefore we can't save customer and failed the test
     await listCustomerPage.openCustomerByCode(current.overview.code);
     gondola.report(
         `VP. 正常に保存でき、得意先一覧画面には登録した得意先が表示され、登録された得意先の内容は正しく保存されること。`,

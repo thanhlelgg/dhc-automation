@@ -29,7 +29,7 @@ TestCase('BMS-52. 案件:案件作成:出来高明細:品目:未入力', async (
 
 TestCase('BMS-53. 案件:案件作成:出来高明細:品目:品目の検索および結果表示', async () => {
     gondola.report(`Step 3. 出来高明細行の「品目」テキストボックスの枠内をクリックする。`);
-    await addProjectPage.clickResultsBaseItemTextfield(randomRole);
+    await addProjectPage.clickResultsBaseItemTextfield();
     gondola.report(`VP. 品目検索のモーダルウィンドウが起動すること。`);
     const isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE);
     await gondola.checkEqual(isModuleDisplayed, true, 'Search Item modal title should be displayed');
@@ -51,13 +51,13 @@ TestCase('BMS-53. 案件:案件作成:出来高明細:品目:品目の検索お�
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
     await searchModalWindows.selectSearchResult(randomResultName, SearchResultColumn.NAME);
     gondola.report(`VP. 案件登録画面に戻り、選択した品目名が表示されること。`);
-    const inputtedText = await addProjectPage.getResultsBaseItemTextfieldValue(randomRole);
+    const inputtedText = await addProjectPage.getResultsBaseItemTextfieldValue();
     await gondola.checkEqual(inputtedText, randomResultName, 'Item should be selected');
 });
 
 TestCase('BMS-54. 案件:案件作成:出来高明細:品目:モーダルウィンドウのクローズ', async () => {
     gondola.report(`Step 3. 「出来高明細」の「品目」テキストボックスの枠内をクリックする。`);
-    await addProjectPage.clickResultsBaseItemTextfield(randomRole);
+    await addProjectPage.clickResultsBaseItemTextfield();
     gondola.report(`VP. 品目検索のモーダルウィンドウが起動すること。`);
     let isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE);
     await gondola.checkEqual(isModuleDisplayed, true, 'Search item modal title should be displayed');
@@ -69,7 +69,7 @@ TestCase('BMS-54. 案件:案件作成:出来高明細:品目:モーダルウィ�
     await gondola.checkEqual(isModuleDisplayed, false, 'Search item modal title should not be displayed');
 
     gondola.report(`Step 4. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
-    await addProjectPage.clickResultsBaseItemTextfield(randomRole);
+    await addProjectPage.clickResultsBaseItemTextfield();
     await addProjectPage.clickOutsideOfWindowModal(SEARCH_ITEM_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
     isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_ITEM_MODAL_WINDOW_TITLE, false);

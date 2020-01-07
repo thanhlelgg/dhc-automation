@@ -17,6 +17,7 @@ TestCase('BMS-107. BMS:案件:従業員マスタ作成:備考:文字数', async 
     await addWorkerPage.enterTextAreaByLabel(WORKER_NOTE_FIELD_NAME, TEXT_1024_CHARACTERS);
     await addWorkerPage.saveNewWorker();
     gondola.report(`VP. 入力フィールドの下にエラー「1024文字以内で入力してください」が表示されないこと。`);
+    //BUG: no feedback was present
     let actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_NOTE_FIELD_NAME);
     await gondola.checkEqual(actualFeedback, '', 'Invalid feedback message should be not displayed');
 

@@ -95,10 +95,15 @@ TestCase('BMS-3. 案件:案件作成:取引先:得意先の検索および結果
     gondola.report(`Step 6. 検索結果を確認する。`);
     randomResult = await searchModalWindows.getOneResultItemAllColumns();
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
+    const randomResultRepName = Utilities.getMapValue(randomResult, SearchResultColumn.REP_NAME.tabulatorField);
     await searchModalWindows.selectSearchResult(randomResultName, SearchResultColumn.NAME);
     gondola.report(`VP. 案件登録画面に戻り、選択した社名と担当名が表示されること。`);
     const inputtedText = await addProjectPage.getTextFieldValueByLabel(BUSINESS_CUSTOMER_FIELD_NAME);
-    await gondola.checkEqual(inputtedText, randomResultName, 'Customer should be selected');
+    await gondola.checkEqual(
+        inputtedText,
+        `${randomResultName} - ${randomResultRepName}`,
+        'Customer should be selected',
+    );
 });
 
 TestCase('BMS-4. 案件:案件作成:取引先:未入力', async () => {

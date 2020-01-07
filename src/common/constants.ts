@@ -4,7 +4,7 @@ import path from 'path';
 
 export class Constants {
     public static translator = Translate.getTranslator();
-    public static readonly baseUrl = 'http://ec2-52-79-224-196.ap-northeast-2.compute.amazonaws.com';
+    public static readonly baseUrl = 'http://' + process.env.HOST;
     public static readonly tmsPort = '10015';
     public static readonly tmsBaseUrl = `${Constants.baseUrl}:${Constants.tmsPort}`;
     public static readonly bmsPort = '10013';

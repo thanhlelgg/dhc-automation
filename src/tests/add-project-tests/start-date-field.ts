@@ -26,7 +26,7 @@ TestCase('BMS-12. 案件:案件作成:案件開始日:未入力 ', async () => {
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
     await gondola.checkEqual(await addProjectPage.doesSavedMessageDisplay(), true, 'New project is saved');
-    const projectNumber = await addProjectPage.getTextFieldValueByLabel(PROJECT_NUMBER_FIELD_NAME);
+    const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
     await businessSystemPage.gotoListProject();
