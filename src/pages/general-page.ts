@@ -674,15 +674,16 @@ export class GeneralPage {
 
     public async selectSearchSelectionByLabel(
         label: string,
-        text: string | undefined,
+        searchKey: string | undefined,
+        selectResult: string | undefined,
         labelPartial = false,
         searchPartial = false,
         selectPartial = false,
     ): Promise<void> {
-        if (text) {
+        if (searchKey && selectResult) {
             await this.clickSearchSelectionDropdownByLabel(label, labelPartial);
-            await this.enterSearchSelectionTextfield(text, searchPartial);
-            await this.selectSearchSelectionResult(text, selectPartial);
+            await this.enterSearchSelectionTextfield(searchKey, searchPartial);
+            await this.selectSearchSelectionResult(selectResult, selectPartial);
         }
     }
 
