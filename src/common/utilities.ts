@@ -357,6 +357,12 @@ export class Utilities {
             fs.unlinkSync(path);
         }
     }
+
+    public static getStationNameFromNearestStationString(stationStr: string): string {
+        const regex = /-(.*)$/g;
+        const groups = regex.exec(stationStr);
+        return groups ? groups[1] : '';
+    }
 }
 
 export class JsonUtility {

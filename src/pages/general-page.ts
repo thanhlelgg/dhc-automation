@@ -42,7 +42,8 @@ export class GeneralPage {
     @locator
     protected textFieldByLabel = "//div[label[normalize-space()='{0}']]//input[@type='text' or @type='number']";
     @locator
-    protected textFieldByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//input[@type='text']";
+    protected textFieldByLabelPartialMatch =
+        "//div[label[contains(text(),'{0}')]]//input[@type='text' or @type='password' or @type='number']";
     @locator
     protected paragraphByLabel = "//div[label[normalize-space()='{0}']]//p";
     @locator
@@ -458,6 +459,18 @@ export class GeneralPage {
     ): Promise<boolean> {
         const locator = this.buildRecordFieldXpath(tableName, index, tableFieldName, fieldType);
         return await gondola.doesControlExist(locator);
+    }
+
+    public async selectRecordField(
+        tableName: RecordTable,
+        index: number,
+        tableFieldName: RecordFieldName,
+        selectElement: string,
+        fieldType = ElementType.SELECTOR,
+    ): Promise<void> {
+        const locator = this.buildRecordFieldXpath(tableName, index, tableFieldName, fieldType);
+        await gondola.waitForElementSoftly(locator, Constants.SHORT_TIMEOUT);
+        await gondola.select(locator, selectElement);
     }
 
     public async isSelectorByLabelEnabled(label: string): Promise<boolean> {
