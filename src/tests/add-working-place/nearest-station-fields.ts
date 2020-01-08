@@ -4,6 +4,7 @@ import addWorkingPlacePage from '../../pages/add-working-place-page';
 import { ButtonIcon } from '../../models/enum-class/button-icon';
 import { Constants } from '../../common/constants';
 import { WorkingPlaceInfoData } from '../../models/working-place-info';
+import { Utilities } from '../../common/utilities';
 
 const WORKING_PLACE_NEAREST_STATION_1 = Constants.translator.fieldName.addWorkingPlace.nearestStation1;
 const WORKING_PLACE_NEAREST_STATION_2 = Constants.translator.fieldName.addWorkingPlace.nearestStation2;
@@ -39,7 +40,7 @@ TestCase('TMS-123. マスタ:ラボ管理作成:最寄駅1:検索機能付プル
     );
     gondola.report(`Step 3. プルダウンリスト内の検索窓には駅名の一部を入力する。`);
     const randomItem = await addWorkingPlacePage.getRandomSelectionSearchResult();
-    const stationName = addWorkingPlacePage.getStationNameFromResult(randomItem);
+    const stationName = Utilities.getStationNameFromNearestStationString(randomItem);
     const partialSearch = await addWorkingPlacePage.enterSearchSelectionTextfield(stationName, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに対象の選択肢が表示されること。`);
     await gondola.checkTrue(
