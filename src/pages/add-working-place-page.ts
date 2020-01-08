@@ -4,6 +4,7 @@ import '@src/string.extensions';
 import { WorkingPlaceInfo } from '../models/working-place-info';
 import { Constants } from '../common/constants';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
+import { Utilities } from '../common/utilities';
 
 @page
 export class AddWorkingPlacePage extends GeneralPage {
