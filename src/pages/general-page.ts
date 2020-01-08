@@ -15,6 +15,8 @@ import { SearchResultColumn } from '../models/enum-class/search-result-column';
 export class GeneralPage {
     protected translator = Translate.getTranslator();
     @locator
+    protected menuButtonByTitle = "//li[@title='{0}']";
+    @locator
     protected pageTitle = "//h1[@class = 'page-title' and normalize-space()='{0}']";
     @locator
     protected captionSubject = { css: '.page-title-text' };
@@ -28,44 +30,44 @@ export class GeneralPage {
     protected talentManagementLink = `//a[.='${this.translator.headerMenu.home}']`;
     @locator
     protected invalidFeedBackByFieldLabel =
-        "//div[label[text()='{0}']]//div[@class='invalid-feedback' or @class='error-message']";
+        "//div[label[normalize-space()='{0}']]//div[@class='invalid-feedback' or @class='error-message']";
     @locator
     protected invalidFeedBackByFieldLabelPartialMatch =
         "//div[label[contains(text(),'{0}')]]//div[@class='invalid-feedback' or @class='error-message']";
     @locator
-    protected helpBlockErrorByLabel = "//div[label[text()='{0}']]//span[contains(@class,'help-block')]";
+    protected helpBlockErrorByLabel = "//div[label[normalize-space()='{0}']]//span[contains(@class,'help-block')]";
     @locator
     protected helpBlockErrorByLabelPartialMatch =
         "//div[label[contains(text(),'{0}')]]//span[contains(@class,'help-block')]";
     @locator
-    protected textFieldByLabel = "//div[label[text()='{0}']]//input[@type='text' or @type='number']";
+    protected textFieldByLabel = "//div[label[normalize-space()='{0}']]//input[@type='text' or @type='number']";
     @locator
     protected textFieldByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//input[@type='text']";
     @locator
-    protected paragraphByLabel = "//div[label[text()='{0}']]//p";
+    protected paragraphByLabel = "//div[label[normalize-space()='{0}']]//p";
     @locator
     protected paragraphByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//p";
     @locator
-    protected spanByLabel = "//div[label[text()='{0}']]//span";
+    protected spanByLabel = "//div[label[normalize-space()='{0}']]//span";
     @locator
     protected spanByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//span";
     @locator
     protected textFieldByPlaceHolder = "//input[@type='text' and @placeholder='{0}']";
     @locator
-    protected textAreaByLabel = "//div[label[text()='{0}']]//textarea";
+    protected textAreaByLabel = "//div[label[normalize-space()='{0}']]//textarea";
     @locator
     protected textAreaByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//textarea";
     @locator
-    protected selectorByLabel = "//div[label[text()='{0}']]//select";
+    protected selectorByLabel = "//div[label[normalize-space()='{0}']]//select";
     @locator
     protected selectorByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//select";
     @locator
-    protected radioButtonByLabel = "//div[label[text()='{0}']]//label[input[@type='radio']]";
+    protected radioButtonByLabel = "//div[label[normalize-space()='{0}']]//label[input[@type='radio']]";
     @locator
     protected radioButtonByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//label[input[@type='radio']]";
     @locator
     protected radioButtonOptionByLabel =
-        "//div[label[text()='{0}']]//label[(input[@type='radio'] or ./preceding-sibling::input[@type='radio']) and normalize-space()='{1}']";
+        "//div[label[normalize-space()='{0}']]//label[(input[@type='radio'] or ./preceding-sibling::input[@type='radio']) and normalize-space()='{1}']";
     @locator
     protected radioButtonOptionByLabelPartialMatch =
         "//div[label[contains(text(),'{0}')]]//label[(input[@type='radio'] or ./preceding-sibling::input[@type='radio']) and normalize-space()='{1}']";
@@ -74,27 +76,27 @@ export class GeneralPage {
     @locator
     protected modalTitle = { xpath: "//h5[@class='modal-title']" };
     @locator
-    protected modalTitleByText = "//h5[@class='modal-title' and text()='{0}']";
+    protected modalTitleByText = "//h5[@class='modal-title' and normalize-space()='{0}']";
     @locator
-    protected checkboxByLabel = "//div[contains(@class, 'custom-checkbox')]/label[text()='{0}']";
+    protected checkboxByLabel = "//div[contains(@class, 'custom-checkbox')]/label[normalize-space()='{0}']";
     @locator
     protected checkboxByLabelPartialMatch = "//div[contains(@class, 'custom-checkbox')]/label[contains(text(),'{0}')]";
     @locator
     protected checkboxInputByLabel =
-        "//div[contains(@class, 'custom-checkbox')][label[text()='{0}']]/input[@type='checkbox']";
+        "//div[contains(@class, 'custom-checkbox')][label[normalize-space()='{0}']]/input[@type='checkbox']";
     @locator
     protected checkboxInputByLabelPartialMatch =
         "//div[contains(@class, 'custom-checkbox')][label[contains(text(),'{0}')]]/input[@type='checkbox']";
     @locator
-    protected closeModuleButtonByName = "//div[h5[text()='{0}']]//span[text()='×']";
+    protected closeModuleButtonByName = "//div[h5[normalize-space()='{0}']]//span[normalize-space()='×']";
     @locator
-    protected savedMessage = "//div[@role='alert'  and text()='saved']";
+    protected savedMessage = "//div[@role='alert'  and normalize-space()='saved']";
     @locator
     protected currentLanguage = { css: '.langname' };
     @locator
     protected languageOption = "//a[@class='changeFlag' and contains(@href, '{0}')]";
     @locator
-    protected labelByName = "//div[label[text()='{0}']]";
+    protected labelByName = "//div[label[normalize-space()='{0}']]";
     @locator
     protected recordField = "//{0}[@name='{1}[{2}][{3}]']";
     @locator
@@ -115,14 +117,14 @@ export class GeneralPage {
     @locator
     protected inputGroupByName = "//div[div[@class='input-group-append']/span[normalize-space()='{0}']]/input";
     @locator
-    protected sectionName = "//div[@class='page-sub-title' and text()='{0}']";
+    protected sectionName = "//div[@class='page-sub-title' and normalize-space()='{0}']";
     @locator
     protected pagingLastPage = "//li[@class='page-item last']";
     @locator
-    protected modalWindowByName = "//div[@class='modal-content' and .//h5[text()='{0}']]";
+    protected modalWindowByName = "//div[@class='modal-content' and .//h5[normalize-space()='{0}']]";
     @locator
     protected modalWindowLoading =
-        "//div[@class='modal-content' and .//h5[text()='{0}']]//div[contains(@id, 'loading')]";
+        "//div[@class='modal-content' and .//h5[normalize-space()='{0}']]//div[contains(@id, 'loading')]";
     @locator
     protected menuLinkByTitle = "//a[span[@class='title' and normalize-space()='{0}']]";
     @locator
@@ -130,7 +132,7 @@ export class GeneralPage {
     @locator
     protected selectSelectionSpnByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//span[@role='combobox']";
     @locator
-    protected selectSelectionSpnByLabel = "//div[label[text()='{0}']]//span[@role='combobox']";
+    protected selectSelectionSpnByLabel = "//div[label[normalize-space()='{0}']]//span[@role='combobox']";
     @locator
     protected selectSelectionSearchField = "//input[@type='search']";
     @locator
@@ -141,21 +143,21 @@ export class GeneralPage {
     protected selectSelectionOptionByTextPartialMatch =
         "//li[contains(@class, 'results__option') and contains(text(),'{0}')]";
     @locator
-    protected selectSelectionOptionByText = "//li[contains(@class, 'results__option') and text()='{0}']";
+    protected selectSelectionOptionByText = "//li[contains(@class, 'results__option') and normalize-space()='{0}']";
     @locator
     protected selectSelectionSelectedItemByLabelPartialMatch =
         "//div[label[contains(text(),'{0}')]]//span[contains(@class, 'selection__rendered')]";
     @locator
     protected selectSelectionSelectedItemByLabel =
-        "//div[label[text()='{0}']]//span[contains(@class, 'selection__rendered')]";
+        "//div[label[normalize-space()='{0}']]//span[contains(@class, 'selection__rendered')]";
     @locator
     protected selectSelectionClearButtonByLabelPartialMatch =
         "//div[label[contains(text(),'{0}')]]//span[contains(@class, 'selection__clear')]";
     @locator
     protected selectSelectionClearButtonByLabel =
-        "//div[label[text()='{0}']]//span[contains(@class, 'selection__clear')]";
+        "//div[label[normalize-space()='{0}']]//span[contains(@class, 'selection__clear')]";
     @locator
-    protected tabularTableLinkByText = "//div[@tabulator-field='{0}']/a[text()='{1}']";
+    protected tabularTableLinkByText = "//div[@tabulator-field='{0}']/a[normalize-space()='{1}']";
 
     protected async isCurrentPage(pageUrl: string): Promise<boolean> {
         return (await gondola.getCurrentUrl()) === pageUrl;
@@ -735,6 +737,16 @@ export class GeneralPage {
         const locator = this.tabularTableLinkByText.format(columnType.tabulatorField, text);
         await gondola.waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
         await gondola.click(locator);
+    }
+
+    public async gotoPageByMenuButton(...buttonTitles: string[]): Promise<void> {
+        let currentLocator = this.menuButtonByTitle;
+        for (const buttonTitle of buttonTitles) {
+            currentLocator = currentLocator.format(buttonTitle);
+            await gondola.waitUntilElementVisible(currentLocator);
+            await gondola.click(currentLocator);
+            currentLocator += this.menuButtonByTitle;
+        }
     }
 }
 export default new GeneralPage();

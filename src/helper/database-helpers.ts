@@ -12,6 +12,7 @@ import { CustomerUnitPrices } from '../entity/CustomerUnitPrices';
 import { Projects } from '../entity/Projects';
 import { Utilities } from '../common/utilities';
 import { Constants } from '../common/constants';
+import { Taxes } from '../entity/Taxes';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -135,6 +136,18 @@ export class DatabaseHelper {
     }
 
     /**
+     * Check Business customer exist
+     * @param customerCode
+     */
+    public static async doesBusinessCustomerExist(customerCode: string): Promise<boolean> {
+        const availableCustomer = await DatabaseHelper.getActiveBusinessCustomers();
+        const taxNames = availableCustomer.map(customer => {
+            return customer.cd;
+        });
+        return taxNames.includes(customerCode);
+    }
+
+    /**
      * Get active Business Customers from the database by id
      */
     public static async getActiveBusinessCustomerById(id: string | undefined): Promise<BusinessCustomers> {
@@ -180,6 +193,18 @@ export class DatabaseHelper {
     }
 
     /**
+     * Check if Department exist
+     * @param departmentName
+     */
+    public static async doesDepartmentExist(departmentName: string): Promise<boolean> {
+        const availableDepartments = await DatabaseHelper.getActiveDepartments();
+        const departmentCodes = availableDepartments.map(department => {
+            return department.cd;
+        });
+        return departmentCodes.includes(departmentName);
+    }
+
+    /**
      * Get active Departments from the database
      */
     public static async getRandomDepartment(): Promise<Departments> {
@@ -198,6 +223,18 @@ export class DatabaseHelper {
         const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
         const workers = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Workers, alias, query);
         return workers;
+    }
+
+    /**
+     * Check if Worker exist
+     * @param workerName
+     */
+    public static async doesWorkerExist(workerName: string): Promise<boolean> {
+        const availableWorkers = await DatabaseHelper.getActiveWorkers();
+        const workerCodes = availableWorkers.map(worker => {
+            return worker.cd;
+        });
+        return workerCodes.includes(workerName);
     }
 
     /**
@@ -231,6 +268,40 @@ export class DatabaseHelper {
         const query = `${alias}.is_deleted = 0 AND ${alias}.code IS NOT NULL`;
         const segments = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Segments, alias, query);
         return segments;
+    }
+
+    /**
+     * Check if Segment exist
+     * @param segmentName
+     */
+    public static async doesSegmentExist(segmentName: string): Promise<boolean> {
+        const availableSegments = await DatabaseHelper.getActiveSegments();
+        const segmentCodes = availableSegments.map(segment => {
+            return segment.code;
+        });
+        return segmentCodes.includes(segmentName);
+    }
+
+    /**
+     * Get active Taxes from the database
+     */
+    public static async getActiveTaxes(): Promise<Taxes[]> {
+        const alias = 'segments';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.name IS NOT NULL`;
+        const taxes = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Taxes, alias, query);
+        return taxes;
+    }
+
+    /**
+     * Check if Tax name exist
+     * @param taxName
+     */
+    public static async doesTaxNameExist(taxName: string): Promise<boolean> {
+        const availableTaxes = await DatabaseHelper.getActiveTaxes();
+        const taxNames = availableTaxes.map(tax => {
+            return tax.name;
+        });
+        return taxNames.includes(taxName);
     }
 
     /**
@@ -274,6 +345,18 @@ export class DatabaseHelper {
         const query = `${alias}.is_deleted = 0 AND ${alias}.cd IS NOT NULL`;
         const items = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Items, alias, query);
         return items;
+    }
+
+    /**
+     * Check if Item exist
+     * @param taxName
+     */
+    public static async doesItemExist(taxName: string): Promise<boolean> {
+        const availableItems = await DatabaseHelper.getActiveItems();
+        const itemCodes = availableItems.map(item => {
+            return item.cd;
+        });
+        return itemCodes.includes(taxName);
     }
 
     /**

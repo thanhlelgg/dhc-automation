@@ -2,6 +2,7 @@ import { action, gondola, locator, page } from 'gondolajs';
 import { GeneralPage } from './general-page';
 @page
 export class BusinessSystemPage extends GeneralPage {
+    private verticalMenuButton = this.translator.verticalMenuBMS;
     // Project
     @locator
     protected projectLink = `//span[.='${this.translator.verticalMenuBMS.project.title}']`;
@@ -33,6 +34,12 @@ export class BusinessSystemPage extends GeneralPage {
     protected listDepartmentLink = `//a[@href='/departments']//span[contains(., '${this.translator.verticalMenuBMS.master.department.listLink}')]`;
     @locator
     protected addDepartmentLink = "//a[@href='/departments/add']";
+    @locator
+    protected taxLink = `//span[.='${this.translator.verticalMenuBMS.master.taxes.title}']`;
+    @locator
+    protected listTaxLink = `//a[@href='/departments']//span[contains(., '${this.translator.verticalMenuBMS.master.department.listLink}')]`;
+    @locator
+    protected addTaxLink = "//a[@href='/departments/add']";
     @locator
     protected segmentLink = `//span[.='${this.translator.verticalMenuBMS.master.segment.title}']`;
     @locator
@@ -113,6 +120,15 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.click(this.departmentLink);
         await gondola.waitUntilElementVisible(this.addDepartmentLink);
         await gondola.click(this.addDepartmentLink);
+    }
+
+    @action('go to department page')
+    public async gotoAddTaxPage(): Promise<void> {
+        await this.gotoPageByMenuButton(
+            this.verticalMenuButton.master.title,
+            this.verticalMenuButton.master.taxes.title,
+            this.verticalMenuButton.master.taxes.addLink,
+        );
     }
 
     @action('go to list worker')

@@ -124,6 +124,11 @@
             "nearestStation3": "最寄り駅 3",
             "timeZone": "タイムゾーン"
         },
+        "addTax": {
+            "name": "表示名",
+            "taxRate": "税率",
+            "displayOrder": "表示順"
+        },
         "listWorkingPlace": {
             "name": "就業先名称",
             "code": "就業先コード",

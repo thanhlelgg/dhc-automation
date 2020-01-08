@@ -1,0 +1,52 @@
+import { action, gondola, locator, page } from 'gondolajs';
+import { GeneralPage } from './general-page';
+import '@src/string.extensions';
+import { TaxInfo } from '../models/tax-info';
+import { SearchResultColumn } from '../models/enum-class/search-result-column';
+import { FilterType } from '../models/enum-class/filter-field-type';
+import searchModalWindows from './search-modal-windows';
+import { FlagsCollector, LoggingType } from '../helper/flags-collector';
+
+@page
+export class AddTaxPage extends GeneralPage {
+    @locator
+    protected addUnitPricesRecordButton = { id: 'addRow' };
+    @locator
+    protected addCustomerMagnificationRecordButton = { id: 'magnifyAddRow' };
+
+    fieldName = this.translator.fieldName.addTax;
+    placeHolder = this.translator.fieldPlaceHolder.addCustomer;
+
+    @action('save tax')
+    public async saveTax(): Promise<void> {
+        await gondola.click(this.saveButton);
+    }
+
+    @action('enter tax information')
+    public async enterTaxInformation(taxInfo: TaxInfo): Promise<void> {
+        await this.enterTextFieldByLabel(this.fieldName.name, taxInfo.name);
+        await this.enterTextFieldByLabel(this.fieldName.taxRate, taxInfo.taxRate);
+        await this.enterTextFieldByLabel(this.fieldName.displayOrder, taxInfo.displayOrder);
+    }
+
+    @action('does tax display correctly')
+    public async doesTaxDisplayCorrectly(taxInfo: TaxInfo): Promise<boolean> {
+        FlagsCollector.collectEqual(
+            'Tax code should be displayed correctly',
+            taxInfo.name,
+            await this.getTextFieldValueByLabel(this.fieldName.name),
+        );
+        FlagsCollector.collectEqual(
+            'Tax name should be displayed correctly',
+            taxInfo.name,
+            await this.getTextFieldValueByLabel(this.fieldName.name),
+        );
+        FlagsCollector.collectEqual(
+            'Tax department code should be displayed correctly',
+            taxInfo.displayOrder,
+            await this.getTextFieldValueByLabel(this.fieldName.displayOrder),
+        );
+        return FlagsCollector.verifyFlags(LoggingType.REPORT);
+    }
+}
+export default new AddTaxPage();
