@@ -21,31 +21,31 @@ export class AddWorkingPlacePage extends GeneralPage {
         // Match label partial, search with full characters, select item match partial
         await this.selectSearchSelectionByLabel(
             this.workingPlaceFieldName.nearestStation1,
-            this.getStationNameFromResult(workingPlaceInfo.nearestStation1),
+            Utilities.getStationNameFromNearestStationString(workingPlaceInfo.nearestStation1),
             workingPlaceInfo.nearestStation1,
             true,
             false,
-            true,
+            false,
         );
 
         if (workingPlaceInfo.nearestStation2) {
             await this.selectSearchSelectionByLabel(
                 this.workingPlaceFieldName.nearestStation2,
-                this.getStationNameFromResult(workingPlaceInfo.nearestStation2),
+                Utilities.getStationNameFromNearestStationString(workingPlaceInfo.nearestStation2),
                 workingPlaceInfo.nearestStation2,
                 true,
                 false,
-                true,
+                false,
             );
         }
         if (workingPlaceInfo.nearestStation3) {
             await this.selectSearchSelectionByLabel(
                 this.workingPlaceFieldName.nearestStation3,
-                this.getStationNameFromResult(workingPlaceInfo.nearestStation3),
+                Utilities.getStationNameFromNearestStationString(workingPlaceInfo.nearestStation3),
                 workingPlaceInfo.nearestStation3,
                 true,
                 false,
-                true,
+                false,
             );
         }
 
@@ -110,12 +110,6 @@ export class AddWorkingPlacePage extends GeneralPage {
             await this.getSelectedOptionByLabel(this.workingPlaceFieldName.timeZone, true),
         );
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
-    }
-
-    public getStationNameFromResult(result: string): string {
-        const regex = /-(.*)$/g;
-        const groups = regex.exec(result);
-        return groups ? groups[1] : '';
     }
 
     @action('is current page')
