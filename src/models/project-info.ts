@@ -9,7 +9,6 @@ export class ProjectDetailInfo {
     quantity!: string;
     unit!: string;
     unitPrice!: string;
-    shipDate?: string;
     deliveryDate?: string;
     acceptedDate?: string;
     billingDate?: string;
@@ -28,8 +27,7 @@ export class ProjectOverviewInfo {
     accuracy!: string;
     status!: string;
     workingPlace!: string;
-    currencyId!: string;
-    billingType!: string;
+    exchangeId!: string;
     closingDate!: string;
     segment!: string;
     tag?: string;
@@ -57,10 +55,8 @@ export class ProjectResourceInfo {
     resources!: SingleResource[];
 }
 
-export class ProjectResultBaseInfo {
+export class ProjectResultBaseRecord {
     role!: string;
-    item!: string;
-    debitCredit!: string;
     planPeople?: number;
     planTime?: number;
     unitPriceWeekday!: string;
@@ -73,6 +69,12 @@ export class ProjectResultBaseInfo {
     taxId!: string;
     note?: string;
     outputOrder?: string;
+}
+
+export class ProjectResultBaseInfo {
+    item!: string;
+    debitCredit!: string;
+    records!: ProjectResultBaseRecord[];
 }
 
 export class ResultBaseUnitPrices {
@@ -93,26 +95,31 @@ export class ProjectInfoData {
         new ProjectOverviewInfo(),
         projectInfo.projectOverview.requiredOnly,
     );
-    public static DETAIL_TWO_RECORDS: ProjectDetailInfo[] = Object.assign(
-        new ProjectDetailInfo(),
-        projectInfo.projectDetail.twoRecords,
-    );
+    public static DETAIL_TWO_RECORDS: ProjectDetailInfo[] = projectInfo.projectDetail.twoRecords.map(item => {
+        return Object.assign(new ProjectDetailInfo(), item);
+    });
     public static RESOURCE_FULL_DATA: ProjectResourceInfo = Object.assign(
         new ProjectResourceInfo(),
         projectInfo.projectResource.fullData,
     );
-    public static RESULT_BASE_TWO_RECORDS: ProjectResultBaseInfo[] = Object.assign(
-        new ProjectResultBaseInfo(),
-        projectInfo.projectResultBase.twoRecords,
-    );
-    public static RESULT_BASE_ONE_RECORD: ProjectResultBaseInfo[] = Object.assign(
-        new ProjectResultBaseInfo(),
-        projectInfo.projectResultBase.oneRecord,
-    );
-    public static RESULT_BASE_ONE_EMPTY_RECORD: ProjectResultBaseInfo[] = Object.assign(
-        new ProjectResultBaseInfo(),
-        projectInfo.projectResultBase.oneEmptyRecord,
-    );
+    public static RESULT_BASE_TWO_RECORDS: ProjectResultBaseInfo = {
+        item: projectInfo.projectResultBase.item,
+        debitCredit: projectInfo.projectResultBase.debitCredit,
+        records: [projectInfo.projectResultBase.record1, projectInfo.projectResultBase.record2],
+    };
+
+    public static RESULT_BASE_ONE_RECORD: ProjectResultBaseInfo = {
+        item: projectInfo.projectResultBase.item,
+        debitCredit: projectInfo.projectResultBase.debitCredit,
+        records: [projectInfo.projectResultBase.record1],
+    };
+
+    public static RESULT_BASE_ONE_EMPTY_RECORD: ProjectResultBaseInfo = {
+        item: projectInfo.projectResultBase.item,
+        debitCredit: projectInfo.projectResultBase.debitCredit,
+        records: [projectInfo.projectResultBase.emptyRecord],
+    };
+
     public static RESULT_BASE_UNIT_PRICES: ResultBaseUnitPrices = Object.assign(
         new ResultBaseUnitPrices(),
         projectInfo.projectResultBase.unitPrices,

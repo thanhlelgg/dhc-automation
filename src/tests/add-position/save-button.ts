@@ -25,8 +25,9 @@ Before(async () => {
     );
     await loginPage.gotoTalentManagement();
     await talentManagementMenu.gotoPositionsPage();
+    //BUG: currently we can't remove position because of no table header
     await listPositionPage.removePositionIfExist(POSITION_DATA.positionName, POSITION_DATA.abbreviationName);
-    await listPositionPage.clickAddButton();
+    await listPositionPage.clickButtonByIcon(ButtonIcon.ADD);
     gondola.report(`VP. 役職の新規登録画面に遷移すること。`);
     await gondola.checkTrue(await addPositionPage.isCurrentPage(), 'Should be navigated to Add position page');
 });

@@ -2,10 +2,9 @@ import { gondola, TestCase, TestModule } from 'gondolajs';
 import listProjectPage from '../../pages/list-project-page';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 import setup from './search-project-setup';
+import { DatabaseHelper } from '../../helper/database-helpers';
 
 TestModule('Search project - Search project by customer');
-
-const PROJECT_CUSTOMER_KEY_SEARCH = 'Gatebox';
 
 Before(setup);
 
@@ -13,9 +12,10 @@ TestCase('BMS-113. BMS:案件:案件検索:取引先', async () => {
     gondola.report(`Step 2. 検索付きプルダウンを確認する`);
     gondola.report(`Step 3. 検索条件を入力する`);
     gondola.report(`Step 4. 検索結果を選択し、検索する`);
-    await listProjectPage.searchProject({ customerName: PROJECT_CUSTOMER_KEY_SEARCH });
+    const randomCustomerName = (await DatabaseHelper.getRandomBusinessCustomer()).name;
+    await listProjectPage.searchProject({ customerName: randomCustomerName });
     const actualResult = await listProjectPage.verifySearchResultsByOneColumn(
-        PROJECT_CUSTOMER_KEY_SEARCH,
+        randomCustomerName,
         SearchResultColumn.SUPPLIERS,
         true,
     );

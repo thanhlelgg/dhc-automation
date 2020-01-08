@@ -124,7 +124,7 @@ class HelperExt extends Helper {
         const elements = await this.getOptions(control);
         for (const element of elements) {
             const optionText = await element.getText();
-            if (!options.includes(optionText)) {
+            if (optionText && !options.includes(optionText)) {
                 console.log(`Option: ${optionText} does not exist`);
                 return false;
             }
@@ -304,6 +304,11 @@ class HelperExt extends Helper {
     public async getValidationMessage(control: any): Promise<string> {
         const element = await this.getElement(control);
         return await browser.executeScript('return arguments[0].validationMessage;', element);
+    }
+
+    public async setElementAttribute(control: any, attribute: string, value: string): Promise<void> {
+        const element = await this.getElement(control);
+        await browser.executeScript(`arguments[0].setAttribute('${attribute}', '${value}')`, element);
     }
 
     public async awaitClick(control: any): Promise<boolean> {

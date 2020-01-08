@@ -1,7 +1,7 @@
 import { gondola, locator, page, action } from 'gondolajs';
 import { GeneralPage } from './general-page';
 import '@src/string.extensions';
-import { HTMLTableHelper } from '../helper/html-table-helper';
+import { TableHelper } from '../helper/table-helper';
 import { Utilities } from '../common/utilities';
 import { Constants } from '../common/constants';
 import { CsvHelpers } from '../helper/csv-helpers';
@@ -12,10 +12,10 @@ import { TimeCardApprove } from '../models/enum-class/timecard-approve';
 
 @page
 export class PositionsPage extends GeneralPage {
-    pageUrl = `${Constants.bmsBaseUrl}/positions`;
+    pageUrl = `${Constants.tmsBaseUrl}/positions`;
     @locator
     protected positionsTable = '//table';
-    protected tableHelper = new HTMLTableHelper(this.positionsTable);
+    protected tableHelper = new TableHelper(this.positionsTable);
     @locator
     protected importButton = "//a[i[@class='fa fa-upload']]";
     @locator

@@ -43,6 +43,7 @@ TestCase('BMS-102. BMS:案件:従業員マスタ作成:従業員コード:文字
     await addWorkerPage.enterTextFieldByLabel(WORKER_CODE_FIELD_NAME, TEXT_17_CHARACTERS);
     await addWorkerPage.saveNewWorker();
     gondola.report(`VP. 入力フィールドの下にエラー「16文字以内で入力してください」が表示されること。`);
+    //BUG: Can enter up to 17 characters
     await gondola.checkNotEqual(
         await addWorkerPage.getTextFieldValueByLabel(WORKER_CODE_FIELD_NAME),
         TEXT_17_CHARACTERS,
@@ -55,6 +56,7 @@ TestCase('BMS-174. BMS:案件:従業員マスタ作成:従業員コード:文字
     await addWorkerPage.enterTextFieldByLabel(WORKER_CODE_FIELD_NAME, TEXT_FULL_SIZE_ALPHANUMERIC);
     await addWorkerPage.saveNewWorker();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
+    //BUG: No error message displayed
     let actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
@@ -99,6 +101,7 @@ TestCase('BMS-175. BMS:案件:従業員マスタ作成:従業員コード:重複
         `VP. 入力フィールドの下にエラー「既に使われている値のため異なる値を入力してください」が表示されること。`,
     );
     const actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_CODE_FIELD_NAME);
+    //BUG: error message is not correct
     await gondola.checkEqual(
         actualFeedback,
         Constants.duplicatedTypeErrorMessage,

@@ -3,15 +3,15 @@
         "name": "test name",
         "code": "testcode",
         "address": "test address",
-        "nearestStation1": "仁山"
+        "nearestStation1": "JR函館本線(函館～長万部)-仁山"
     },
     "fullData": {
         "name": "test name",
         "code": "testcode",
         "address": "test address",
-        "nearestStation1": "仁山",
-        "nearestStation2": "池田園",
-        "nearestStation3": "渡島沼尻",
+        "nearestStation1": "JR函館本線(函館～長万部)-仁山",
+        "nearestStation2": "JR函館本線(函館～長万部)-大沼公園",
+        "nearestStation3": "JR函館本線(函館～長万部)-渡島沼尻",
         "timezone": "(UTC-08:00) 太平洋標準時(米国およびカナダ)"
     }
 }

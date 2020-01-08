@@ -54,9 +54,9 @@ export class ListProjectPage extends GeneralPage {
     @locator
     protected addNewButton = `//a[contains(.,'${this.translator.fieldName.listProject.addNewButton}')]`;
     @locator
-    protected ttsLinkByProjectId = `//div[div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.code}']/a[text()='{0}']]/div[@tabulator-field='${this.translator.fieldName.listProject.tableColumns.ttsLink}']//a`;
+    protected ttsLinkByProjectId = `//div[div[@tabulator-field='number']/a[text()='{0}']]/div[@tabulator-field='tts']//a`;
     @locator
-    protected editProjectLinkStr = `//div[@tabulator-field='cd']/a[.='{0}']`;
+    protected editProjectLinkStr = `//div[@tabulator-field='number']/a[.='{0}']`;
 
     @locator
     protected resultsByProjectCode = `//div[@tabulator-field='number' and @role='gridcell']`;
@@ -175,6 +175,7 @@ export class ListProjectPage extends GeneralPage {
     @action('click On TTS link button')
     public async clickOnTTSLinkButton(projectId: string): Promise<void> {
         const locator = Utilities.formatString(this.ttsLinkByProjectId, projectId);
+        await gondola.scrollToElement(locator);
         await gondola.click(locator);
     }
 

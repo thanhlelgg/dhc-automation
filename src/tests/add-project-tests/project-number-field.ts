@@ -4,12 +4,15 @@ import { Constants } from '../../common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import setup from './add-project-setup';
 import { DatabaseHelper } from '../../helper/database-helpers';
+import { ProjectInfoData } from '../../models/project-info';
 
 TestModule('Add Project - Project number validation');
 
 const PROJECT_NUMBER_FIELD_NAME = Constants.translator.fieldName.addProject.number;
 const INVALID_INPUT_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
 const ALREADY_IN_USE_ERROR_MESSAGE = Constants.translator.invalidFeedback.alreadyInUse;
+const PROJECT_OVERVIEW_REQUIRED_ONLY = ProjectInfoData.OVERVIEW_REQUIRED_ONLY;
+
 Before(setup);
 
 TestCase('BMS-31. 「案件番号」テキストボックスで何も入力しなくて、「保存」ボタンをクリックする。', async () => {
@@ -89,6 +92,7 @@ TestCase('BMS-162. 案件:案件作成:案件番号:文字種', async () => {
 
 TestCase('BMS-163. 案件:案件作成:案件番号:重複時', async () => {
     gondola.report(`Step 2. 「案件番号」で重複しているコードを入力し、「保存」ボタンをクリックする`);
+    await addProjectPage.inputProjectOverviewInfo(PROJECT_OVERVIEW_REQUIRED_ONLY);
     const randomExistProject = await DatabaseHelper.getRandomProject();
     await addProjectPage.enterTextFieldByLabel(PROJECT_NUMBER_FIELD_NAME, randomExistProject.number);
     await addProjectPage.saveNewProject();

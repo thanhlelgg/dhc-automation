@@ -20,6 +20,7 @@ Before(setup);
 
 TestCase('BMS-197. BMS:マスタ:品目作成:削除対象のカラムについて', async () => {
     gondola.report(`VP.「品目情報」セッションで「在庫評価単価」、「支給単価」、「原価センター」項目が削除されたこと。`);
+    //BUG: those fields should be removed
     await gondola.checkFalse(
         await addItemPage.doesTextfieldByLabelDisplay(INVENTORY_VALUATION_UNIT_PRICE),
         'Inventory valuation unit price should be deleted',

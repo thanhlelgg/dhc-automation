@@ -39,7 +39,8 @@ TestCase('TMS-123. マスタ:ラボ管理作成:最寄駅1:検索機能付プル
     );
     gondola.report(`Step 3. プルダウンリスト内の検索窓には駅名の一部を入力する。`);
     const randomItem = await addWorkingPlacePage.getRandomSelectionSearchResult();
-    const partialSearch = await addWorkingPlacePage.enterSearchSelectionTextfield(randomItem, true);
+    const stationName = addWorkingPlacePage.getStationNameFromResult(randomItem);
+    const partialSearch = await addWorkingPlacePage.enterSearchSelectionTextfield(stationName, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに対象の選択肢が表示されること。`);
     await gondola.checkTrue(
         await addWorkingPlacePage.doesSearchResultDisplayCorrectly(partialSearch),

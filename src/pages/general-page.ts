@@ -47,6 +47,10 @@ export class GeneralPage {
     @locator
     protected paragraphByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//p";
     @locator
+    protected spanByLabel = "//div[label[text()='{0}']]//span";
+    @locator
+    protected spanByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//span";
+    @locator
     protected textFieldByPlaceHolder = "//input[@type='text' and @placeholder='{0}']";
     @locator
     protected textAreaByLabel = "//div[label[text()='{0}']]//textarea";
@@ -241,6 +245,14 @@ export class GeneralPage {
         return await gondola.getText(locator);
     }
 
+    @action('getSpanValueByLabel')
+    public async getSpanValueByLabel(label: string, partialMatch = false): Promise<string> {
+        const locator = partialMatch
+            ? Utilities.formatString(this.spanByLabelPartialMatch, label)
+            : Utilities.formatString(this.spanByLabel, label);
+        return await gondola.getText(locator);
+    }
+
     @action('enterTextAreaByLabel')
     public async enterTextAreaByLabel(label: string, text: any | undefined, partial = false): Promise<void> {
         const locator = partial ? this.textAreaByLabelPartialMatch : this.textAreaByLabel;
@@ -334,7 +346,7 @@ export class GeneralPage {
 
     @action('doesControlRequired')
     public async doesControlRequired(control: any): Promise<boolean> {
-        return (await gondola.getControlProperty(control, 'class')).indexOf('required') < 0;
+        return (await gondola.getControlProperty(control, 'class')).indexOf('required') > 0;
     }
 
     @action('doesSelectorOptionsExist')
@@ -413,6 +425,18 @@ export class GeneralPage {
         const locator = this.buildRecordFieldXpath(tableName, index, tableFieldName, fieldType);
         await gondola.waitForElementSoftly(locator, Constants.SHORT_TIMEOUT);
         await gondola.enter(locator, text);
+    }
+
+    public async enterRecordFieldUsingJS(
+        tableName: RecordTable,
+        index: number,
+        tableFieldName: RecordFieldName,
+        text: string,
+        fieldType = ElementType.TEXTFIELD,
+    ): Promise<void> {
+        const locator = this.buildRecordFieldXpath(tableName, index, tableFieldName, fieldType);
+        await gondola.waitForElementSoftly(locator, Constants.SHORT_TIMEOUT);
+        await gondola.setElementAttribute(locator, 'value', text);
     }
 
     public async getTextRecordField(
@@ -590,6 +614,10 @@ export class GeneralPage {
         await gondola.click(this.addButton);
     }
 
+    public async doesPagingExist(): Promise<boolean> {
+        return await gondola.doesControlExist(this.pagingLastPage);
+    }
+
     public async clickPagingLastPage(): Promise<void> {
         await gondola.click(this.pagingLastPage);
     }
@@ -613,6 +641,7 @@ export class GeneralPage {
     }
 
     public async clickButtonByIcon(buttonIcon: ButtonIcon): Promise<void> {
+        await gondola.waitUntilElementVisible(this.buttonByIcon.format(buttonIcon._class));
         await gondola.click(this.buttonByIcon.format(buttonIcon._class));
     }
 

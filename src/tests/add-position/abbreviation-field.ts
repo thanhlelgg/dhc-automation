@@ -6,6 +6,7 @@ import { Constants } from '../../common/constants';
 import { Utilities } from '../../common/utilities';
 
 const POSITION_ABBREVIATION_NAME = Constants.translator.fieldName.addPosition.positionAbbreviation;
+const POSITION_NAME = Constants.translator.fieldName.addPosition.positionName;
 
 TestModule('Positions - Abbreviation field validation');
 
@@ -13,11 +14,13 @@ Before(setup);
 
 TestCase('TMS-128. マスタ:役職作成:省略名:文字数', async () => {
     gondola.report(`Step 2. 「省略名」で何も入力しなくて、「保存」ボタンをクリックする。`);
-    await addPositionPage.clickButtonByIcon(ButtonIcon.CHECK);
+    const randomName = Utilities.getRandomText(5);
+    await addPositionPage.enterTextFieldByLabel(POSITION_NAME, randomName, true);
+    await addPositionPage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 入力フィールドの下にエラー「。。。」が表示されること。`);
     // TODO: update when requirement specified
     await gondola.checkEqual(
-        await addPositionPage.getHelpBlockError(POSITION_ABBREVIATION_NAME, true),
+        await addPositionPage.getTextFieldValidationMessageByLabel(POSITION_ABBREVIATION_NAME, true),
         Constants.fieldRequiredErrorMessage,
         'Field is required error message should be displayed',
     );
@@ -25,7 +28,7 @@ TestCase('TMS-128. マスタ:役職作成:省略名:文字数', async () => {
     const maximumNOC = 2;
     const randomText = Utilities.getRandomText(maximumNOC);
     await addPositionPage.enterTextFieldByLabel(POSITION_ABBREVIATION_NAME, randomText, true);
-    await addPositionPage.clickButtonByIcon(ButtonIcon.CHECK);
+    await addPositionPage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 2文字まで入力できること。`);
     await gondola.checkEqual(
         await addPositionPage.getTextFieldValueByLabel(POSITION_ABBREVIATION_NAME, true),
@@ -35,7 +38,7 @@ TestCase('TMS-128. マスタ:役職作成:省略名:文字数', async () => {
 
     gondola.report(`Step 4.「省略名」で3文字を入力する。`);
     await addPositionPage.enterTextFieldByLabel(POSITION_ABBREVIATION_NAME, randomText + 'a', true);
-    await addPositionPage.clickButtonByIcon(ButtonIcon.CHECK);
+    await addPositionPage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 3目の文字まで入力できないこと。`);
     await gondola.checkEqual(
         await addPositionPage.getTextFieldValueByLabel(POSITION_ABBREVIATION_NAME, true),

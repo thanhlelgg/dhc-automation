@@ -1,9 +1,9 @@
 import { action, gondola, locator, page } from 'gondolajs';
 import { GeneralPage } from './general-page';
+import { Constants } from '../common/constants';
 @page
 export class ListSegmentPage extends GeneralPage {
-    protected pageUrl = 'https://dhcbms.digitalhearts.com/segments';
-    @locator
+    private pageUrl = `${Constants.bmsBaseUrl}/segments`;
     protected segmentLink = "//div[@tabulator-field='code']/a[text()='{0}']";
 
     @action('openCustomerByName')

@@ -62,6 +62,7 @@ export class BusinessSystemPage extends GeneralPage {
         await gondola.click(this.projectLink);
         await gondola.waitUntilElementVisible(this.listProjectLink);
         await gondola.click(this.listProjectLink);
+        if (await this.doesPagingExist()) await this.clickPagingLastPage();
     }
 
     @action('gotoAddWorkerPage')

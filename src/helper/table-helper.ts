@@ -3,8 +3,9 @@ import '@src/string.extensions';
 import { Utilities } from '../common/utilities';
 import { ActionButton } from '../models/enum-class/action-button';
 import { Constants } from '../common/constants';
+import TableType from '../models/enum-class/table-type';
 
-export class HTMLTableHelper {
+export class TableHelper {
     private tableLocator: string;
     private headerRowLocator: string;
     private headerNameLocator: string;
@@ -13,14 +14,24 @@ export class HTMLTableHelper {
     private rowLocator: string;
     private actionButton: string;
 
-    public constructor(locator: string) {
-        this.tableLocator = locator;
-        this.headerRowLocator = `${locator}/thead/tr`;
-        this.headerNameLocator = `${locator}/thead/tr/th`;
-        this.columnByIndexLocator = `${locator}/tbody/tr/td[{0}]`;
-        this.rowLocator = `${locator}/tbody/tr`;
-        this.recordRowCellsByIndex = `${locator}/tbody/tr[{0}]/td`;
-        this.actionButton = `${locator}/tbody/tr[{0}]/td[@class='actions text-center']/a[@title='{1}']`;
+    public constructor(locator: string, tableType = TableType.HTML_TABLE) {
+        if (tableType === TableType.TABULAR_DIV) {
+            this.tableLocator = locator;
+            this.headerRowLocator = `${locator}/div[@class="tabulator-headers"]`;
+            this.headerNameLocator = `${locator}//div[@role='columnheader']`;
+            this.columnByIndexLocator = `${locator}//div[@role='gridcell'][{0}]`;
+            this.rowLocator = `${locator}//div[@role='row']`;
+            this.recordRowCellsByIndex = `${locator}//div[@role='row'][1]/div[@role='gridcell']`;
+            this.actionButton = `${locator}//div[@role='row'][1]//a[@title="削除"]`;
+        } else {
+            this.tableLocator = locator;
+            this.headerRowLocator = `${locator}/thead/tr`;
+            this.headerNameLocator = `${locator}/thead/tr/th`;
+            this.columnByIndexLocator = `${locator}/tbody/tr/td[{0}]`;
+            this.rowLocator = `${locator}/tbody/tr`;
+            this.recordRowCellsByIndex = `${locator}/tbody/tr[{0}]/td`;
+            this.actionButton = `${locator}/tbody/tr[{0}]/td[@class='actions text-center']/a[@title='{1}']`;
+        }
     }
 
     public async getAllHeaderNames(headerName: string): Promise<string[]> {

@@ -73,7 +73,7 @@ export class FlagsCollector {
         }
     }
 
-    public static verifyFlags(loggingType = LoggingType.NONE): boolean {
+    public static verifyFlags(loggingType = LoggingType.REPORT): boolean {
         let result = true;
         if (FlagsCollector.failedFlags.length > 0) {
             if (loggingType === LoggingType.REPORT) {

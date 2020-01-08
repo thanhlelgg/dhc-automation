@@ -521,11 +521,12 @@
             "consolidate": "得意先合算"
         },
         "debitCreditGroupIds": {
-            "receivable": "売掛",
-            "advance": "前受",
-            "advanceConsumables": "立替(消耗品)",
-            "advanceTravelExpenses": "立替(旅費交通費)",
-            "advanceSystemRelatedExpenses": "立替(システム関係費)"
+            "accounts": "売掛/売上",
+            "advance": "前受/売上",
+            "accountReceivable": "売掛/前受",
+            "advanceConsumables": "立替(消耗品)/消耗品費",
+            "advanceTravelExpenses": "立替(旅費交通費)/旅費交通費",
+            "advanceSystemRelatedExpenses": "立替(システム関係費)/システム関連費"
         },
         "taxIds": {
             "": "",
