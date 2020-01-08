@@ -25,13 +25,14 @@ Before(async () => {
     );
     await loginPage.gotoTalentManagement();
     await talentManagementMenu.gotoPositionsPage();
+    //BUG: currently we can't remove position because of no table header
     await listPositionPage.removePositionIfExist(POSITION_DATA.positionName, POSITION_DATA.abbreviationName);
     await listPositionPage.clickButtonByIcon(ButtonIcon.ADD);
     gondola.report(`VP. 役職の新規登録画面に遷移すること。`);
     await gondola.checkTrue(await addPositionPage.isCurrentPage(), 'Should be navigated to Add position page');
 });
 
-TestCase('DebugTMS-131. マスタ:役職作成:戻るボタン', async () => {
+TestCase('TMS-131. マスタ:役職作成:戻るボタン', async () => {
     gondola.report(
         `Step 2. 「役職名」と「省略名」で有効な情報を入力し、「タイムカード承認」プルダウンで選択肢を選択し、「保存」ボタンをクリックする。`,
     );

@@ -17,7 +17,7 @@ TestCase('TMS-127. マスタ:役職作成:役職名:文字数', async () => {
     gondola.report(`VP. 入力フィールドの下にエラー「。。。」が表示されること。`);
     // TODO: update when requirement specified
     await gondola.checkEqual(
-        await addPositionPage.getHelpBlockError(POSITION_NAME, true),
+        await addPositionPage.getTextFieldValidationMessageByLabel(POSITION_NAME, true),
         Constants.fieldRequiredErrorMessage,
         'Field is required error message should be displayed',
     );

@@ -1,9 +1,7 @@
 import { gondola, TestCase, TestModule } from 'gondolajs';
 import { Constants } from '../../common/constants';
 import setup from './positions-setup';
-import { Utilities } from '../../common/utilities';
 import listPositionPage from '../../pages/list-position-page';
-import addPositionPage from '../../pages/add-position-page';
 import { ButtonIcon } from '../../models/enum-class/button-icon';
 
 TestModule('Positions - Search text box validation');
@@ -33,7 +31,7 @@ TestCase('TMS-138. マスタ:役職一覧:インポート操作:戻る', async (
         'Import modal windows should be displayed',
     );
     gondola.report(`Step 3.「戻る」ボタンをクリックする。`);
-    await listPositionPage.clickButtonByIcon(ButtonIcon.BACK);
+    await listPositionPage.clickButtonByIcon(ButtonIcon.DOUBLE_LEFT);
     gondola.report(`VP. 役職一覧画面に遷移すること。`);
     await gondola.checkFalse(
         await listPositionPage.doesImportModalDisplay(false),

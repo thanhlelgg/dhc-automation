@@ -63,7 +63,7 @@ TestCase('TMS-176. マスタ:ラボ管理作成:就業先コード:文字種', a
     );
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
-    //BUG: invalid feedback is not correct
+    //BUG: invalid feedback is not displayed
     await gondola.checkEqual(
         await addWorkingPlacePage.getInvalidFeedBack(WORKING_PLACE_CODE_FIELD_NAME),
         CODE_FIELD_INVALID_VALUE_MESSAGE,
@@ -78,7 +78,7 @@ TestCase('TMS-176. マスタ:ラボ管理作成:就業先コード:文字種', a
     );
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
-    //BUG: invalid feedback is not correct
+    //BUG: invalid feedback is not displayed
     await gondola.checkEqual(
         await addWorkingPlacePage.getInvalidFeedBack(WORKING_PLACE_CODE_FIELD_NAME),
         CODE_FIELD_INVALID_VALUE_MESSAGE,
@@ -89,7 +89,7 @@ TestCase('TMS-176. マスタ:ラボ管理作成:就業先コード:文字種', a
     await addWorkingPlacePage.enterTextFieldByLabel(WORKING_PLACE_CODE_FIELD_NAME, Constants.symbolString, true);
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
-    //BUG: invalid feedback is not correct
+    //BUG: invalid feedback is not displayed
     await gondola.checkEqual(
         await addWorkingPlacePage.getInvalidFeedBack(WORKING_PLACE_CODE_FIELD_NAME),
         CODE_FIELD_INVALID_VALUE_MESSAGE,
@@ -116,7 +116,7 @@ TestCase('TMS-177. 案件:得意先マスタ作成:顧客情報:取引先コー�
     gondola.report(
         `VP. 入力フィールドの下にエラー「既に使われている値のため異なる値を入力してください」が表示されること。`,
     );
-    //BUG: invalid feedback is not correct
+    //BUG: invalid feedback is not displayed
     await gondola.checkEqual(
         await addWorkingPlacePage.getInvalidFeedBack(WORKING_PLACE_CODE_FIELD_NAME, true),
         ALREADY_IN_USE_ERROR_MESSAGE,
