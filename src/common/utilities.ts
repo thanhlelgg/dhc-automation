@@ -3,7 +3,6 @@ import Kuroshiro from 'kuroshiro';
 import AFHConvert from 'ascii-fullwidth-halfwidth-convert';
 import { convertCircleDigitsCharacterToNumber } from '../helper/unicode-search';
 import * as fs from 'fs';
-import { parse } from 'papaparse';
 
 const converter = new AFHConvert();
 import { JsonConvert, ValueCheckingMode } from 'json2typescript';

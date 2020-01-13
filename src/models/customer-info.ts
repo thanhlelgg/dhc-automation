@@ -4,36 +4,36 @@ import customerInitialData from '../data/initial-data/customer-info.json';
 export class Overview {
     code!: string;
     name!: string;
-    repDepartment?: string = undefined;
-    repName?: string = undefined;
-    lastBusinessDate?: string = undefined;
+    repDepartment?: string;
+    repName?: string;
+    lastBusinessDate?: string;
     isDisable?: boolean;
-    zipcode?: string = undefined;
-    address1?: string = undefined;
-    address2?: string = undefined;
-    tel?: string = undefined;
-    fax?: string = undefined;
-    mail?: string = undefined;
-    fee_payer?: string = undefined;
-    roundCode?: string = undefined;
-    currency?: string = undefined;
-    closingDateGroup?: string = undefined;
-    taxCalculationMethod?: string = undefined;
-    advanceReceivedAuxCode?: string = undefined;
-    accountReceivableAuxCode?: string = undefined;
-    salesAuxCd?: string = undefined;
-    collectCycle?: string = undefined;
-    collectCycleMonth?: string = undefined;
-    collectCycleDay?: string = undefined;
-    paymentCycle?: string = undefined;
-    billingBankAccountNumber?: string = undefined;
-    note?: string = undefined;
-    deliveryPlace?: string = undefined;
+    zipcode?: string;
+    address1?: string;
+    address2?: string;
+    tel?: string;
+    fax?: string;
+    mail?: string;
+    fee_payer?: string;
+    roundCode?: string;
+    currency?: string;
+    closingDateGroup?: string;
+    taxCalculationMethod?: string;
+    advanceReceivedAuxCode?: string;
+    accountReceivableAuxCode?: string;
+    salesAuxCd?: string;
+    collectCycle?: string;
+    collectCycleMonth?: string;
+    collectCycleDay?: string;
+    paymentCycle?: string;
+    billingBankAccountNumber?: string;
+    note?: string;
+    deliveryPlace?: string;
 }
 
 export class UnitPrices {
     startDate!: string;
-    endDate?: string = undefined;
+    endDate?: string;
     leader!: number;
     tester!: number;
     dispatch!: number;
@@ -41,7 +41,7 @@ export class UnitPrices {
 
 export class CustomerMagnifications {
     startDate!: string;
-    endDate?: string = undefined;
+    endDate?: string;
     overtime!: number;
     lateNight!: number;
     lateNightOvertime!: number;
