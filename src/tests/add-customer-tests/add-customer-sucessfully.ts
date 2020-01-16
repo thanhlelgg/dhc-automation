@@ -109,7 +109,7 @@ TestCase('BMS-147. 案件:得意先マスタ作成:顧客情報:保存仕入先:
     gondola.report(`Step 4. 「保存」ボタンをクリックする。`);
     await addCustomerPage.saveCustomer();
     await addCustomerPage.clickReturnButton();
-    await listSupplierPage.clickPagingLastPage();
+    await listSupplierPage.gotoLastPage();
     await listSupplierPage.openSupplierByCode(requiredInfo.overview.code);
     gondola.report(
         `VP. 正常に保存でき、得意先一覧画面には登録した得意先が表示され、登録された得意先の内容は正しく保存されること。`,
@@ -141,7 +141,7 @@ TestCase('BMS-148. 案件:得意先マスタ作成:顧客情報:保存仕入先:
     gondola.report(`Step 5. 「保存」ボタンをクリックする。`);
     await addCustomerPage.saveCustomer();
     await addCustomerPage.clickReturnButton();
-    await listSupplierPage.clickPagingLastPage();
+    await listSupplierPage.gotoLastPage();
     await listSupplierPage.openSupplierByCode(requiredInfo.overview.code);
     gondola.report(
         `VP. 正常に保存でき、得意先一覧画面には登録した得意先が表示され、登録された得意先の内容は正しく保存されること。`,

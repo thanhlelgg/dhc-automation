@@ -1,6 +1,5 @@
-
 // Ref: http://xahlee.info/comp/unicode_circled_numbers.html
-const data_str = `24EA;CIRCLED DIGIT ZERO;No;0;ON;<circle> 0030;;0;0;N;;;;;
+const dataStr = `24EA;CIRCLED DIGIT ZERO;No;0;ON;<circle> 0030;;0;0;N;;;;;
 2460;CIRCLED DIGIT ONE;No;0;ON;<circle> 0031;;1;1;N;;;;;
 2461;CIRCLED DIGIT TWO;No;0;ON;<circle> 0032;;2;2;N;;;;;
 2462;CIRCLED DIGIT THREE;No;0;ON;<circle> 0033;;3;3;N;;;;;
@@ -53,24 +52,22 @@ const data_str = `24EA;CIRCLED DIGIT ZERO;No;0;ON;<circle> 0030;;0;0;N;;;;;
 32BF;CIRCLED NUMBER FIFTY;No;0;ON;<circle> 0035 0030;;;50;N;;;;;`;
 
 // key is integer (code point in base10). value is unicode name
-const g_data = new Map();
-(data_str.split("\n")).forEach((x) => {
-    const fields = (x.split(";"));
-    g_data.set(parseInt(fields[0], 16), fields[8]);
+const gData = new Map();
+dataStr.split('\n').forEach(x => {
+    const fields = x.split(';');
+    gData.set(parseInt(fields[0], 16), fields[8]);
 });
 
 export function convertCircleDigitsCharacterToNumber(stringValue: string): string {
-    var arrCharacter: string[] = [];
-    var tmp: number | undefined;
-    const srchString = stringValue.trim().replace(/-$/, '');
+    const arrCharacter: string[] = [];
+    let tmp: number | undefined;
+    const searchString = stringValue.trim().replace(/-$/, '');
 
-    for (const c of srchString) {
+    for (const c of searchString) {
         tmp = c.codePointAt(0);
-        if (typeof tmp !== 'undefined' && g_data.has(tmp))
-            arrCharacter.push(g_data.get(tmp));
-        else
-            arrCharacter.push(c);
+        if (typeof tmp !== 'undefined' && gData.has(tmp)) arrCharacter.push(gData.get(tmp));
+        else arrCharacter.push(c);
     }
-    
+
     return arrCharacter.join('');
-};
+}

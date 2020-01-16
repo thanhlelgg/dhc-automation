@@ -2,9 +2,6 @@ import { action, gondola, locator, page } from 'gondolajs';
 import { GeneralPage } from './general-page';
 import '@src/string.extensions';
 import { TaxInfo } from '../models/tax-info';
-import { SearchResultColumn } from '../models/enum-class/search-result-column';
-import { FilterType } from '../models/enum-class/filter-field-type';
-import searchModalWindows from './search-modal-windows';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
 
 @page

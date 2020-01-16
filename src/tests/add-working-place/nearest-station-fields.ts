@@ -25,7 +25,7 @@ TestCase('TMS-122. マスタ:ラボ管理作成:住所:文字数', async () => {
     // TODO: update when requirement specified
     await gondola.checkEqual(
         await addWorkingPlacePage.getSelectorValidationMessageByLabel(WORKING_PLACE_NEAREST_STATION_1, true),
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Field is required error message should be displayed',
     );
 });

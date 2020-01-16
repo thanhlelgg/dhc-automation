@@ -14,7 +14,7 @@ Before(async () => {
 
 TestCase('BMS-56. 案件:案件作成:出来高明細:予定人数:入力可能', async () => {
     gondola.report(`Step 3. 出来高明細行で「予定人数」で文字列を入力する。`);
-    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_PEOPLE, Constants.onlyWord);
+    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_PEOPLE, Constants.ONLY_WORD);
     gondola.report(`VP. 文字列を入力しても自動的に削除されること。`);
     await gondola.checkEqual(
         await addProjectPage.getProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_PEOPLE),
@@ -35,14 +35,14 @@ TestCase('BMS-56. 案件:案件作成:出来高明細:予定人数:入力可能'
     gondola.report(
         `Step 5. 出来高明細行の「予定人数」で小数値を入力し、「保存」ボタンをクリックする。（例：1.5を入力）`,
     );
-    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_PEOPLE, Constants.decimal);
+    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_PEOPLE, Constants.DECIMAL);
     await addProjectPage.saveNewProject();
     gondola.report(
         `VP. 入力フィールドの下にエラー「有効な値を入力してください。有効な値として最も近いのは〇と〇です」のアラートが表示されること。`,
     );
     await gondola.checkEqual(
         await addProjectPage.getProjectResultBaseTextfieldValidationMessage(randomRole, ResultsBaseField.PLAN_PEOPLE),
-        Constants.validationMessageForDecimal,
+        Constants.VALIDATION_MESSAGE_FOR_DECIMAL,
         'Invalid input value message should be displayed',
     );
     gondola.report(
@@ -58,7 +58,7 @@ TestCase('BMS-57. 案件:案件作成:出来高明細:予定人数:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.PLAN_PEOPLE,
-        Constants.oneBillion,
+        Constants.ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -72,7 +72,7 @@ TestCase('BMS-57. 案件:案件作成:出来高明細:予定人数:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.PLAN_PEOPLE,
-        Constants.moreThanOneBillion,
+        Constants.MORE_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -86,7 +86,7 @@ TestCase('BMS-57. 案件:案件作成:出来高明細:予定人数:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.PLAN_PEOPLE,
-        Constants.lessThanOneBillion,
+        Constants.LESS_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -102,7 +102,7 @@ TestCase('BMS-57. 案件:案件作成:出来高明細:予定人数:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.PLAN_PEOPLE,
-        Constants.negativeNumber,
+        Constants.NEGATIVE_NUMBER,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -125,7 +125,7 @@ TestCase('BMS-57. 案件:案件作成:出来高明細:予定人数:下限値・�
 
 TestCase('BMS-58. 案件:案件作成:出来高明細:予定時間:入力可能', async () => {
     gondola.report(`Step 3. 出来高明細行で「予定時間」で文字列を入力する。`);
-    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_TIME, Constants.onlyWord);
+    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_TIME, Constants.ONLY_WORD);
     gondola.report(`VP. 文字列を入力しても自動的に削除されること。`);
     await gondola.checkEqual(
         await addProjectPage.getProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_TIME),
@@ -146,14 +146,14 @@ TestCase('BMS-58. 案件:案件作成:出来高明細:予定時間:入力可能'
     gondola.report(
         `Step 5. 出来高明細行の「予定時間」で小数値を入力し、「保存」ボタンをクリックする。（例：1.5を入力）`,
     );
-    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_TIME, Constants.decimal);
+    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_TIME, Constants.DECIMAL);
     await addProjectPage.saveNewProject();
     gondola.report(
         `VP. 入力フィールドの下にエラー「有効な値を入力してください。有効な値として最も近いのは〇と〇です」のアラートが表示されること。`,
     );
     await gondola.checkEqual(
         await addProjectPage.getProjectResultBaseTextfieldValidationMessage(randomRole, ResultsBaseField.PLAN_TIME),
-        Constants.validationMessageForDecimal,
+        Constants.VALIDATION_MESSAGE_FOR_DECIMAL,
         'Invalid input value message should be displayed',
     );
     gondola.report(
@@ -166,7 +166,7 @@ TestCase('BMS-58. 案件:案件作成:出来高明細:予定時間:入力可能'
 
 TestCase('BMS-59. 案件:案件作成:出来高明細:予定時間:下限値・上限値', async () => {
     gondola.report(`Step 3. 出来高明細行の「予定時間」で10億の数値を入力し、「保存」ボタンをクリックする。`);
-    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_TIME, Constants.oneBillion);
+    await addProjectPage.enterProjectResultBaseTextfield(randomRole, ResultsBaseField.PLAN_TIME, Constants.ONE_BILLION);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
     await gondola.checkEqual(
@@ -179,7 +179,7 @@ TestCase('BMS-59. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.PLAN_TIME,
-        Constants.moreThanOneBillion,
+        Constants.MORE_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -193,7 +193,7 @@ TestCase('BMS-59. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.PLAN_TIME,
-        Constants.lessThanOneBillion,
+        Constants.LESS_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -209,7 +209,7 @@ TestCase('BMS-59. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.PLAN_TIME,
-        Constants.negativeNumber,
+        Constants.NEGATIVE_NUMBER,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);

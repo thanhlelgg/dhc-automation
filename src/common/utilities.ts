@@ -3,89 +3,17 @@ import Kuroshiro from 'kuroshiro';
 import AFHConvert from 'ascii-fullwidth-halfwidth-convert';
 import { convertCircleDigitsCharacterToNumber } from '../helper/unicode-search';
 import * as fs from 'fs';
-import { parse } from 'papaparse';
 
 const converter = new AFHConvert();
 import { JsonConvert, ValueCheckingMode } from 'json2typescript';
 
 export class Utilities {
+    //#region String
     public static formatString(str: string, ...val: string[]): string {
         for (let index = 0; index < val.length; index++) {
             str = str.replace(`{${index}}`, val[index]);
         }
         return str;
-    }
-
-    public static mapJsonToClass(mapper: any, json: any): any {
-        const adaptedObj: any = {};
-        const fields: Array<string> = Object.keys(mapper);
-        for (const field of fields) {
-            const targetField: any = mapper[field];
-            adaptedObj[targetField] = json[field];
-        }
-        return adaptedObj;
-    }
-
-    public static getRandomNumber(min: number, max: number, length = 0): number {
-        if (length == 0) return Math.floor(Math.random() * (max - min + 1) + min);
-
-        let numberAsString: string = '' + this.getRandomNumber(1, 9);
-        for (let i = 1; i < length; i++) numberAsString += this.getRandomNumber(0, 9);
-        return parseInt(numberAsString);
-    }
-
-    /**
-     * Check if keyword is filtered correctly
-     * @param keyword
-     * @param result
-     */
-    public static isFilterCorrect(keyword: string, result: string[], isCaseSensitive = false): boolean {
-        if (keyword === '') {
-            return true;
-        }
-        if (!isCaseSensitive) {
-            keyword = keyword.toLowerCase();
-        }
-        for (let item of result) {
-            if (!isCaseSensitive) {
-                item = item.toLowerCase();
-            }
-            if (!item.includes(keyword)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Check if keyword is filtered correctly
-     * @param keyword
-     * @param result
-     */
-    public static isFilterMultipleColumnCorrect(keyword: string, result: string[][], isCaseSensitive = false): boolean {
-        if (keyword === '') {
-            return true;
-        }
-        if (!isCaseSensitive) {
-            keyword = keyword.toLowerCase();
-        }
-        for (const row of result) {
-            let isMatched = false;
-            for (let item of row) {
-                if (!isCaseSensitive) {
-                    item = item.toLowerCase();
-                }
-                if (item.includes(keyword)) {
-                    isMatched = true;
-                    break;
-                }
-            }
-            if (!isMatched) {
-                console.log(`Filter for ${keyword} got incorrect row ${row}`);
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
@@ -141,32 +69,6 @@ export class Utilities {
         return checkValue === expectValue;
     }
 
-    /**
-     * Verify if date is in correct format
-     * @param date
-     * @param format
-     */
-    public static isDateFormatCorrect(date: string, format: string): boolean {
-        return moment(date, format, true).isValid();
-    }
-
-    /**
-     * Get date string with inputted format
-     * @param day
-     * @param month
-     * @param year
-     * @param dateFormat
-     */
-    public static getDateString(day: string, month: string, year: string, dateFormat: string): string {
-        const dateString = `${day}-${month}-${year}'`;
-        const momentObj = moment(dateString, 'DD-MM-YYYY');
-        return momentObj.format(dateFormat);
-    }
-
-    public static currentTimeInSeconds(): number {
-        return new Date().getTime() / 1000;
-    }
-
     public static getRandomText(numberOfCharacters: number, prefix?: string): string {
         const randomCharacter = Array(numberOfCharacters + 1)
             .join((Math.random().toString(36) + '00000000000000000').slice(2, 18))
@@ -174,68 +76,6 @@ export class Utilities {
 
         if (prefix) return prefix + randomCharacter;
         return randomCharacter;
-    }
-
-    /**
-     * Check if all results of partial search or full search are correct
-     * @param keyword
-     * @param result
-     */
-    public static isSearchResultCorrect(
-        keyword: string,
-        result: string[],
-        isPartialSearch = true,
-        isCaseSensitive = false,
-        doesIgnoreSize = true,
-        doesIgnoreDakuten = true,
-        doesIgnoreHiraKata = true,
-    ): boolean {
-        if (keyword === '') {
-            return true;
-        }
-        if (!isCaseSensitive) {
-            keyword = keyword.toLowerCase();
-        }
-        if (doesIgnoreSize) {
-            keyword = Utilities.convertToHalfSize(keyword);
-        }
-        if (doesIgnoreDakuten) {
-            keyword = Utilities.removeDakutenHandakutenCharacter(keyword);
-        }
-        if (doesIgnoreHiraKata) {
-            keyword = Utilities.convertToRomaji(keyword);
-        }
-
-        let isMatched = true;
-        for (let item of result) {
-            if (!isCaseSensitive) {
-                item = item.toLowerCase();
-            }
-            if (doesIgnoreSize) {
-                item = Utilities.convertToHalfSize(item);
-            }
-            if (doesIgnoreDakuten) {
-                item = Utilities.removeDakutenHandakutenCharacter(item);
-            }
-            if (doesIgnoreHiraKata) {
-                item = Utilities.convertToRomaji(item);
-            }
-
-            // Convert Circle Digit Character to string
-            item = convertCircleDigitsCharacterToNumber(item);
-            item = Utilities.convertToLatinh(item);
-
-            if (isPartialSearch && !item.includes(keyword)) {
-                isMatched = false;
-                console.log(`Search for ${keyword} got incorrect at ${item}`);
-            }
-            if (!isPartialSearch && !this.isTextEqual(item, keyword)) {
-                isMatched = false;
-                console.log(`Search for ${keyword} got incorrect at ${item}`);
-            }
-        }
-
-        return isMatched;
     }
 
     public static convertToHalfSize(text: string): string {
@@ -321,6 +161,187 @@ export class Utilities {
         return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
+    //#endregion
+
+    //#region Number
+    public static getRandomNumber(min: number, max: number, length = 0): number {
+        if (length == 0) return Math.floor(Math.random() * (max - min + 1) + min);
+
+        let numberAsString: string = '' + this.getRandomNumber(1, 9);
+        for (let i = 1; i < length; i++) numberAsString += this.getRandomNumber(0, 9);
+        return parseInt(numberAsString);
+    }
+
+    //#endregion
+
+    //#region Date time
+
+    /**
+     * Verify if date is in correct format
+     * @param date
+     * @param format
+     */
+    public static isDateFormatCorrect(date: string, format: string): boolean {
+        return moment(date, format, true).isValid();
+    }
+
+    /**
+     * Get date string with inputted format
+     * @param day
+     * @param month
+     * @param year
+     * @param dateFormat
+     */
+    public static getDateString(day: string, month: string, year: string, dateFormat: string): string {
+        const dateString = `${day}-${month}-${year}'`;
+        const momentObj = moment(dateString, 'DD-MM-YYYY');
+        return momentObj.format(dateFormat);
+    }
+
+    /**
+     * Get current time in seconds
+     */
+    public static currentTimeInSeconds(): number {
+        return new Date().getTime() / 1000;
+    }
+
+    public static addDaysToDate(date: Date, days: number, returnFormat: string): string {
+        date.setDate(date.getDate() + days);
+        return moment(date).format(returnFormat);
+    }
+
+    /**
+     * Compare two date and get the later one
+     * @param date1
+     * @param date2
+     * @param format
+     */
+    public static getLaterDateOfTwoDates(date1: string, date2: string, format: string): string {
+        const laterDate =
+            moment(date1, format) >= moment(date2, format) ? moment(date1, format) : moment(date2, format);
+        return laterDate.format(format);
+    }
+
+    //#endregion
+
+    //#region Business logic
+
+    /**
+     * Check if keyword is filtered correctly
+     * @param keyword
+     * @param result
+     */
+    public static isFilterCorrect(keyword: string, result: string[], isCaseSensitive = false): boolean {
+        if (keyword === '') {
+            return true;
+        }
+        if (!isCaseSensitive) {
+            keyword = keyword.toLowerCase();
+        }
+        for (let item of result) {
+            if (!isCaseSensitive) {
+                item = item.toLowerCase();
+            }
+            if (!item.includes(keyword)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if keyword is filtered correctly
+     * @param keyword
+     * @param result
+     */
+    public static isFilterMultipleColumnCorrect(keyword: string, result: string[][], isCaseSensitive = false): boolean {
+        if (keyword === '') {
+            return true;
+        }
+        if (!isCaseSensitive) {
+            keyword = keyword.toLowerCase();
+        }
+        for (const row of result) {
+            let isMatched = false;
+            for (let item of row) {
+                if (!isCaseSensitive) {
+                    item = item.toLowerCase();
+                }
+                if (item.includes(keyword)) {
+                    isMatched = true;
+                    break;
+                }
+            }
+            if (!isMatched) {
+                console.log(`Filter for ${keyword} got incorrect row ${row}`);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if all results of partial search or full search are correct
+     * @param keyword
+     * @param result
+     */
+    public static isSearchResultCorrect(
+        keyword: string,
+        result: string[],
+        isPartialSearch = true,
+        isCaseSensitive = false,
+        doesIgnoreSize = true,
+        doesIgnoreDakuten = true,
+        doesIgnoreHiraKata = true,
+    ): boolean {
+        if (keyword === '') {
+            return true;
+        }
+        if (!isCaseSensitive) {
+            keyword = keyword.toLowerCase();
+        }
+        if (doesIgnoreSize) {
+            keyword = Utilities.convertToHalfSize(keyword);
+        }
+        if (doesIgnoreDakuten) {
+            keyword = Utilities.removeDakutenHandakutenCharacter(keyword);
+        }
+        if (doesIgnoreHiraKata) {
+            keyword = Utilities.convertToRomaji(keyword);
+        }
+
+        let isMatched = true;
+        for (let item of result) {
+            if (!isCaseSensitive) {
+                item = item.toLowerCase();
+            }
+            if (doesIgnoreSize) {
+                item = Utilities.convertToHalfSize(item);
+            }
+            if (doesIgnoreDakuten) {
+                item = Utilities.removeDakutenHandakutenCharacter(item);
+            }
+            if (doesIgnoreHiraKata) {
+                item = Utilities.convertToRomaji(item);
+            }
+
+            // Convert Circle Digit Character to string
+            item = convertCircleDigitsCharacterToNumber(item);
+            item = Utilities.convertToLatinh(item);
+
+            if (isPartialSearch && !item.includes(keyword)) {
+                isMatched = false;
+                console.log(`Search for ${keyword} got incorrect at ${item}`);
+            }
+            if (!isPartialSearch && !this.isTextEqual(item, keyword)) {
+                isMatched = false;
+                console.log(`Search for ${keyword} got incorrect at ${item}`);
+            }
+        }
+
+        return isMatched;
+    }
+
     public static getNumberOfSearchResultRecords(pagingResultStr: string): number {
         const startPos = pagingResultStr.indexOf('表示(') + 3;
         const endPos = pagingResultStr.indexOf(' 件中)');
@@ -333,36 +354,57 @@ export class Utilities {
         return parseInt(pagingResultStr.substring(startPos, endPos));
     }
 
-    public static compareArrays(array1: any[], array2: any[]): boolean {
-        return array1.length === array2.length && array1.sort().every((value, index) => value === array2.sort()[index]);
-    }
-
-    public static addDaysToDate(date: Date, days: number, returnFormat: string): string {
-        date.setDate(date.getDate() + days);
-        return moment(date).format(returnFormat);
-    }
-
-    public static getLaterDateOfTwoDates(date1: string, date2: string, format: string): string {
-        const laterDate =
-            moment(date1, format) >= moment(date2, format) ? moment(date1, format) : moment(date2, format);
-        return laterDate.format(format);
-    }
-
-    public static isFileExist(path: string): boolean {
-        return fs.existsSync(path);
-    }
-
-    public static removeFileIfExist(path: string): void {
-        if (fs.existsSync(path)) {
-            fs.unlinkSync(path);
-        }
-    }
-
+    /**
+     * Get Station name from the format `<station location> - <station name>`
+     * @param stationStr
+     */
     public static getStationNameFromNearestStationString(stationStr: string): string {
         const regex = /-(.*)$/g;
         const groups = regex.exec(stationStr);
         return groups ? groups[1] : '';
     }
+
+    //#endregion
+
+    //#region Misc
+    public static compareArrays(array1: any[], array2: any[]): boolean {
+        return array1.length === array2.length && array1.sort().every((value, index) => value === array2.sort()[index]);
+    }
+    //#endregion
+
+    //#region Json
+
+    public static mapJsonToClass(mapper: any, json: any): any {
+        const adaptedObj: any = {};
+        const fields: Array<string> = Object.keys(mapper);
+        for (const field of fields) {
+            const targetField: any = mapper[field];
+            adaptedObj[targetField] = json[field];
+        }
+        return adaptedObj;
+    }
+
+    //#endregion
+
+    //#region File
+    /**
+     * check if file exist
+     * @param path
+     */
+    public static isFileExist(path: string): boolean {
+        return fs.existsSync(path);
+    }
+
+    /**
+     * Remove file if it's exist
+     * @param path
+     */
+    public static removeFileIfExist(path: string): void {
+        if (fs.existsSync(path)) {
+            fs.unlinkSync(path);
+        }
+    }
+    //#endregion
 }
 
 export class JsonUtility {

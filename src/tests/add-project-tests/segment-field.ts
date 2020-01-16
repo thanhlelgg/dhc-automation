@@ -20,7 +20,7 @@ TestCase('BMS-45. 案件:案件作成:セグメント:未入力', async () => {
     const actualFeedback = await addProjectPage.getInvalidFeedBack(SEGMENT_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 });

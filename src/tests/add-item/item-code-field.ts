@@ -10,10 +10,10 @@ import { Utilities } from '../../common/utilities';
 TestModule('Add Item - Item code field validation');
 
 const ITEM_CODE_FIELD_NAME = Constants.translator.fieldName.addItem.itemCode;
-const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.fullSizeAlphaNumericString;
-const TEXT_HIRAGANA_KATAKANA = Constants.hiraganaKatakanaString;
-const TEXT_SYMBOL = Constants.symbolString;
-const TEXT_HALF_SIZE_ALPHANUMERIC = Constants.halfSizeAlphaNumericString;
+const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.FULL_SIZE_ALPHA_NUMERIC_STRING;
+const TEXT_HIRAGANA_KATAKANA = Constants.HIRAGANA_KATAKANA_STRING;
+const TEXT_SYMBOL = Constants.SYMBOL_STRING;
+const TEXT_HALF_SIZE_ALPHANUMERIC = Constants.HALF_SIZE_ALPHA_NUMERIC_STRING;
 const ITEM_INFO_REQUIRED_ONLY = ItemInfoData.ITEM_REQUIRED_DATA;
 const TEXT_16_CHARACTERS = Utilities.getRandomText(16);
 const TEXT_17_CHARACTERS = Utilities.getRandomText(17);
@@ -27,7 +27,7 @@ TestCase('BMS-189. BMS:マスタ:品目作成:品目コード:文字種', async 
     let actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
     gondola.report(`Step 3. 「品目コード」で16文字を入力し、「保存」ボタンをクリックする。`);
@@ -44,7 +44,7 @@ TestCase('BMS-189. BMS:マスタ:品目作成:品目コード:文字種', async 
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.exceededNOCErrorMessage16,
+        Constants.EXCEEDED_NOC_ERROR_MESSAGE_16,
         'Invalid feedback message should be correct',
     );
 });
@@ -57,7 +57,7 @@ TestCase('BMS-190. BMS:マスタ:品目作成:品目コード:文字種', async 
     let actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
     gondola.report(`Step 3. 品目コード」でひらがな・カタカナ字を入力し、保存する。`);
@@ -67,7 +67,7 @@ TestCase('BMS-190. BMS:マスタ:品目作成:品目コード:文字種', async 
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
     gondola.report(`Step 4.「品目コード」で記号を入力し、保存する。`);
@@ -77,7 +77,7 @@ TestCase('BMS-190. BMS:マスタ:品目作成:品目コード:文字種', async 
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
     gondola.report(`Step 5.「品目コード」で半角英数字を入力し、保存する。`);
@@ -100,7 +100,7 @@ TestCase('BMS-191. BMS:マスタ:品目作成:品目コード:重複時', async 
     const actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.duplicatedTypeErrorMessage,
+        Constants.DUPLICATED_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 });

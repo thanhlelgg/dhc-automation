@@ -4,7 +4,7 @@ import { Constants } from '../common/constants';
 import { GeneralPage } from './general-page';
 @page
 export class ListItemPage extends GeneralPage {
-    private pageUrl = `${Constants.bmsBaseUrl}/items`;
+    private pageUrl = `${Constants.BMS_BASE_URL}/items`;
     @locator
     protected itemCode = "//input[@id='cd']";
     @locator

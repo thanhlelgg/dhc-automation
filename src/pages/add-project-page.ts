@@ -17,11 +17,11 @@ import { CustomerMagnifications } from '../entity/CustomerMagnifications';
 import { ElementType } from '../models/enum-class/element-type';
 import searchModalWindows from './search-modal-windows';
 import '@src/string.extensions';
-import { RegistrationPage } from './registration-page';
+import { GeneralPage } from './general-page';
 
 @page
-export class AddProjectPage extends RegistrationPage {
-    private pageUrl = `${Constants.bmsBaseUrl}/projects/add`;
+export class AddProjectPage extends GeneralPage {
+    private pageUrl = `${Constants.BMS_BASE_URL}/projects/add`;
     //#region project result
     @locator
     protected subTitleProjectResult = `//div[.='${this.translator.sectionName.addProject.volumeDetail}']`;
@@ -78,6 +78,8 @@ export class AddProjectPage extends RegistrationPage {
     protected projectName = { id: 'name' };
     @locator
     protected projectForm = "//select[@name='project_form']";
+    @locator
+    protected searchSegmentField = { id: 'search-segments' };
 
     //#region Search customer
     @locator
@@ -222,166 +224,7 @@ export class AddProjectPage extends RegistrationPage {
         "//tbody[@data-project-ordered-detail='rowMain']//tr[{0}]//input[contains(@name, '[billing_date]')]";
     //#endregion
 
-    @action('doesSearchResultDisplay')
-    public async doesSearchResultDisplay(itemName: string, type: SearchResultColumn): Promise<boolean> {
-        const locator = Utilities.formatString(this.searchResultByTabulatorFieldAndText, type.tabulatorField, itemName);
-        return await gondola.doesControlDisplay(locator);
-    }
-
-    @action('doesPartialSearchResultDisplayCorrectly')
-    public async doesPartialSearchResultDisplayCorrectly(
-        keyword: string,
-        column: SearchResultColumn,
-    ): Promise<boolean> {
-        const results = await this.getAllItemsOneColumn(column);
-        return Utilities.isFilterCorrect(keyword, results);
-    }
-
-    @action('selectRandomSearchResult')
-    public async selectRandomSearchResult(type: SearchResultColumn): Promise<string> {
-        await gondola.waitForElement(this.searchResultRow, Constants.LONG_TIMEOUT);
-        const numberOfResult = await gondola.getElementCount(this.searchResultRow);
-        const randomIdx = Utilities.getRandomNumber(1, numberOfResult);
-        const locator = Utilities.formatString(
-            this.searchResultByTabulatorFieldAndIndex,
-            type.tabulatorField,
-            randomIdx.toString(),
-        );
-        const selectedResult = await gondola.getText(locator);
-        await gondola.click(locator);
-        return selectedResult;
-    }
-
-    @action('filterCustomerAndVerifyResult')
-    public async filterCustomerAndVerifyResult(
-        customerInfo: Map<string, string>,
-        partialSearch = false,
-    ): Promise<boolean> {
-        //Get and process input data
-        let customerCode = Utilities.getMapValue(customerInfo, SearchResultColumn.CODE.tabulatorField);
-        let customerName = Utilities.getMapValue(customerInfo, SearchResultColumn.NAME.tabulatorField);
-        let customerRepName = Utilities.getMapValue(customerInfo, SearchResultColumn.REP_NAME.tabulatorField);
-        if (partialSearch) {
-            customerCode = Utilities.getRandomPartialCharacters(customerCode);
-            customerName = Utilities.getRandomPartialCharacters(customerName);
-            customerRepName = Utilities.getRandomPartialCharacters(customerRepName);
-        }
-
-        // Filter data
-        await this.filterResult(customerCode, FilterType.CUSTOMER_CODE);
-        await this.filterResult(customerName, FilterType.CUSTOMER_NAME);
-        await this.filterResult(customerRepName, FilterType.CUSTOMER_REP_NAME);
-
-        // Verify result
-        const customerCodeResults = await this.getAllItemsOneColumn(SearchResultColumn.CODE);
-        const isCustomerCodeFiltered = Utilities.isFilterCorrect(customerCode, customerCodeResults);
-        const customerNameResults = await this.getAllItemsOneColumn(SearchResultColumn.NAME);
-        const isCustomerNameFiltered = Utilities.isFilterCorrect(customerName, customerNameResults);
-        const customerRepNameResults = await this.getAllItemsOneColumn(SearchResultColumn.REP_NAME);
-        const isCustomerRepNameFiltered = Utilities.isFilterCorrect(customerRepName, customerRepNameResults);
-        return isCustomerCodeFiltered && isCustomerNameFiltered && isCustomerRepNameFiltered;
-    }
-
-    @action('filterDepartmentsAndVerifyResult')
-    public async filterDepartmentsAndVerifyResult(
-        customerInfo: Map<string, string>,
-        partialSearch = false,
-    ): Promise<boolean> {
-        //Get and process input data
-        let departmentCode = Utilities.getMapValue(customerInfo, SearchResultColumn.CODE.tabulatorField);
-        let departmentName = Utilities.getMapValue(customerInfo, SearchResultColumn.NAME.tabulatorField);
-        if (partialSearch) {
-            departmentCode = Utilities.getRandomPartialCharacters(departmentCode);
-            departmentName = Utilities.getRandomPartialCharacters(departmentName);
-        }
-
-        //Filter with data from all columns, checking if at least one column matches inputted data
-        for (const input of [departmentCode, departmentName]) {
-            let isMatched = false;
-            await this.filterResult(input, FilterType.DEPARTMENT);
-            const allResults = await this.getAllResultsAllColumns();
-
-            if (Utilities.isFilterMultipleColumnCorrect(input, allResults)) {
-                isMatched = true;
-                break;
-            }
-
-            if (!isMatched) {
-                console.log(`Filtering for ${input} is not working correctly`);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @action('filterWorkersAndVerifyResult')
-    public async filterWorkersAndVerifyResult(
-        customerInfo: Map<string, string>,
-        partialSearch = false,
-    ): Promise<boolean> {
-        //Get and process input data
-        let workerCode = Utilities.getMapValue(customerInfo, SearchResultColumn.CODE.tabulatorField);
-        let workerName = Utilities.getMapValue(customerInfo, SearchResultColumn.NAME.tabulatorField);
-        if (partialSearch) {
-            workerCode = Utilities.getRandomPartialCharacters(workerCode);
-            workerName = Utilities.getRandomPartialCharacters(workerName);
-        }
-
-        //Filter with data from all columns, checking if at least one column matches inputted data
-        for (const input of [workerCode, workerName]) {
-            let isMatched = false;
-            await this.filterResult(input, FilterType.WORKER);
-            const allResults = await this.getAllResultsAllColumns();
-
-            if (Utilities.isFilterMultipleColumnCorrect(input, allResults)) {
-                isMatched = true;
-                break;
-            }
-
-            if (!isMatched) {
-                console.log(`Filtering for ${input} is not working correctly`);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @action('filterItemsAndVerifyResult')
-    public async filterItemsAndVerifyResult(
-        customerInfo: Map<string, string>,
-        partialSearch = false,
-    ): Promise<boolean> {
-        //Get and process input data
-        let itemCode = Utilities.getMapValue(customerInfo, SearchResultColumn.CODE.tabulatorField);
-        let itemName = Utilities.getMapValue(customerInfo, SearchResultColumn.NAME.tabulatorField);
-        let itemUnitPrice = Utilities.getMapValue(customerInfo, SearchResultColumn.UNIT_PRICE.tabulatorField);
-        let itemIsTaxable = Utilities.getMapValue(customerInfo, SearchResultColumn.IS_TAXABLE.tabulatorField);
-        if (partialSearch) {
-            itemCode = Utilities.getRandomPartialCharacters(itemCode);
-            itemName = Utilities.getRandomPartialCharacters(itemName);
-            itemUnitPrice = Utilities.getRandomPartialCharacters(itemUnitPrice);
-            itemIsTaxable = Utilities.getRandomPartialCharacters(itemIsTaxable);
-        }
-
-        //Filter with data from all columns, checking if at least one column matches inputted data
-        for (const input of [itemCode, itemName, itemUnitPrice, itemIsTaxable]) {
-            let isMatched = false;
-            await this.filterResult(input, FilterType.ITEMS);
-            const allResults = await this.getAllResultsAllColumns();
-
-            if (Utilities.isFilterMultipleColumnCorrect(input, allResults)) {
-                isMatched = true;
-                break;
-            }
-
-            if (!isMatched) {
-                gondola.report(`Filtering for ${input} is not working correctly`);
-                return false;
-            }
-        }
-        return true;
-    }
-
+    @action('select random customer')
     public async selectRandomCustomer(): Promise<string> {
         await gondola.click(this.searchCustomerField);
         return await searchModalWindows.selectRandomSearchResult(SearchResultColumn.CODE);
@@ -777,11 +620,6 @@ export class AddProjectPage extends RegistrationPage {
         return Utilities.isSubset(expectedItemCodes, actualDisplayingItemCodes);
     }
 
-    @action('waitForTableUpdated')
-    public async waitForTableUpdated(): Promise<void> {
-        await gondola.waitUntilStalenessOfElement(this.searchResultRow);
-    }
-
     @action('doesSegmentsDisplayCorrect')
     public async doesSegmentsDisplayCorrect(): Promise<boolean> {
         const expectedActiveSegments = await DatabaseHelper.getActiveSegments();
@@ -932,6 +770,16 @@ export class AddProjectPage extends RegistrationPage {
             description = '';
         }
         return Utilities.isTextEqual(currentTag, description);
+    }
+
+    @action('doesProjectSegmentDisplayCorrect')
+    public async doesProjectSegmentDisplayCorrect(segmentStr: string, isMatchEntire: boolean): Promise<boolean> {
+        const currentSegment = await this.getTextBoxValue(this.searchSegmentField);
+        if (isMatchEntire) {
+            return Utilities.isTextEqual(currentSegment, segmentStr);
+        } else {
+            return currentSegment.includes(segmentStr);
+        }
     }
 
     @action('doesProjectOverviewDisplayCorrect')
@@ -1388,7 +1236,7 @@ export class AddProjectPage extends RegistrationPage {
     @action('get closing date as number')
     public async getClosingDateAsNumber(): Promise<string> {
         const selectedDate = await this.getSelectedOptionByLabel(Constants.translator.fieldName.addProject.closingDate);
-        return selectedDate === Constants.japaneseEndDate ? '31' : selectedDate;
+        return selectedDate === Constants.JAPANESE_END_DATE ? '31' : selectedDate;
     }
 
     @action('does tag display')

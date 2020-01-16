@@ -15,7 +15,7 @@ TestCase('BMS-213. マスタ:セグメント作成:セグメント名:文字数'
     gondola.report(`VP. 入力フィールドの下にエラー「入力必須項目です」が表示されること。`);
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_NAME_TEXTFIELD_LABEL),
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Field is required error message should be displayed',
     );
     gondola.report(`Step 3.「セグメント名」で64文字を入力し、「保存」ボタンをクリックする。`);
@@ -36,7 +36,7 @@ TestCase('BMS-213. マスタ:セグメント作成:セグメント名:文字数'
     //BUG: no invalid feedback is displayed
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_NAME_TEXTFIELD_LABEL),
-        maximumNOC.toString() + Constants.exceededNOCErrorMessage,
+        maximumNOC.toString() + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
         'Invalid feedback should be displayed correctly',
     );
 });

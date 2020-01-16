@@ -12,13 +12,13 @@ const PROJECT_OVERVIEW_DATA = ProjectInfoData.OVERVIEW_FULL_DATA;
 const PROJECT_RESULT_BASE_DATA = ProjectInfoData.RESULT_BASE_TWO_RECORDS;
 const PROJECT_DETAIL_DATA = ProjectInfoData.DETAIL_TWO_RECORDS;
 const PROJECT_RESOURCE_DATA = ProjectInfoData.RESOURCE_FULL_DATA;
-const PROJECT_FORM_CONTINUE = Constants.projectForms.continue;
-const PROJECT_FORM_SHOT = Constants.projectForms.shot;
+const PROJECT_FORM_CONTINUE = Constants.PROJECT_FORMS.continue;
+const PROJECT_FORM_SHOT = Constants.PROJECT_FORMS.shot;
 
 Before(async () => {
     gondola.report(`Precondition 1. 有効なユーザー名とパスワードでdh-connectシステムに正常にログインすること`);
     await loginPage.openWebsite();
-    await loginPage.login(Constants.adminUserName, Constants.adminPassword);
+    await loginPage.login(Constants.USER_NAME, Constants.PASSWORD);
 
     gondola.report('Step 1. 新規案件登録の画面に移動する');
     await loginPage.gotoBusinessSystem();

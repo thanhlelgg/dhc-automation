@@ -41,7 +41,7 @@ TestCase('BMS-85. 案件:得意先マスタ作成:顧客情報:住所(郵便番�
     gondola.report(`Step 4. 「住所(郵便番号)」で半角英字を入力する。（例：「abcd」を入力）`);
     await addCustomerPage.enterTextfieldByPlaceholder(
         ZIPCODE_TEXTFIELD_PLACEHOLDER,
-        Constants.singleByteAlphabetString,
+        Constants.SINGE_BYTE_ALPHABET_STRING,
     );
     gondola.report(`VP. 半角英字を入力できないこと。`);
     //BUG: till can enter invalid value
@@ -54,7 +54,7 @@ TestCase('BMS-85. 案件:得意先マスタ作成:顧客情報:住所(郵便番�
     gondola.report(`Step 5. 「住所(郵便番号)」で全角英数字を入力する。（例：「ａｂｃｄ１２３４」を入力）`);
     await addCustomerPage.enterTextfieldByPlaceholder(
         ZIPCODE_TEXTFIELD_PLACEHOLDER,
-        Constants.singleByteAlphabetString,
+        Constants.SINGE_BYTE_ALPHABET_STRING,
     );
     gondola.report(`VP. 全角英数字を入力できないこと。`);
     //BUG: till can enter invalid value
@@ -65,7 +65,10 @@ TestCase('BMS-85. 案件:得意先マスタ作成:顧客情報:住所(郵便番�
     );
 
     gondola.report(`Step 6. 「住所(郵便番号)」でひらがな・カタカナ字を入力する。`);
-    await addCustomerPage.enterTextfieldByPlaceholder(ZIPCODE_TEXTFIELD_PLACEHOLDER, Constants.hiraganaKatakanaString);
+    await addCustomerPage.enterTextfieldByPlaceholder(
+        ZIPCODE_TEXTFIELD_PLACEHOLDER,
+        Constants.HIRAGANA_KATAKANA_STRING,
+    );
     gondola.report(`VP. ひらがな・カタカナ字を入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -75,7 +78,7 @@ TestCase('BMS-85. 案件:得意先マスタ作成:顧客情報:住所(郵便番�
     );
 
     gondola.report(`Step 7. 「住所(郵便番号)」でハイフン以外の記号を入力する。`);
-    await addCustomerPage.enterTextfieldByPlaceholder(ZIPCODE_TEXTFIELD_PLACEHOLDER, Constants.symbolString);
+    await addCustomerPage.enterTextfieldByPlaceholder(ZIPCODE_TEXTFIELD_PLACEHOLDER, Constants.SYMBOL_STRING);
     gondola.report(`VP. ハイフン以外の記号を入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -85,11 +88,14 @@ TestCase('BMS-85. 案件:得意先マスタ作成:顧客情報:住所(郵便番�
     );
 
     gondola.report(`Step 8. 「住所(郵便番号)」で半角数値とハイフンを入力する。`);
-    await addCustomerPage.enterTextfieldByPlaceholder(ZIPCODE_TEXTFIELD_PLACEHOLDER, Constants.halfSizeNumberAndHyphen);
+    await addCustomerPage.enterTextfieldByPlaceholder(
+        ZIPCODE_TEXTFIELD_PLACEHOLDER,
+        Constants.HALF_SIZE_NUMBER_AND_HYPHEN,
+    );
     gondola.report(`VP. 半角数値とハイフンを入力できること。`);
     await gondola.checkEqual(
         await addCustomerPage.getTextfieldValueByPlaceholder(ZIPCODE_TEXTFIELD_PLACEHOLDER),
-        Constants.halfSizeNumberAndHyphen,
+        Constants.HALF_SIZE_NUMBER_AND_HYPHEN,
         'Should be able to enter the valid text',
     );
 });
@@ -159,7 +165,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
     );
 
     gondola.report(`Step 4. 「TEL」で半角英字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
+    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.SINGE_BYTE_ALPHABET_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
@@ -170,7 +176,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
     );
 
     gondola.report(`Step 5. 「TEL」で全角英数字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.fullSizeAlphaNumericString);
+    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.FULL_SIZE_ALPHA_NUMERIC_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
@@ -181,7 +187,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
     );
 
     gondola.report(`Step 6. 「TEL」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.hiraganaKatakanaString);
+    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.HIRAGANA_KATAKANA_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
@@ -192,7 +198,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
     );
 
     gondola.report(`Step 7. 「TEL」で「+」「-」以外の記号を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.symbolString);
+    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.SYMBOL_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
@@ -203,7 +209,7 @@ TestCase('BMS-88. 案件:得意先マスタ作成:顧客情報:TEL:入力確認'
     );
 
     gondola.report(`Step 8. 「TEL」で半角数値と「+」「-」を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.validContactNumber);
+    await addCustomerPage.enterTextFieldByLabel(TEL_TEXTFIELD_LABEL, Constants.VALID_CONTACT_NUMBER);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されないこと。`);
     await gondola.checkEqual(
@@ -235,7 +241,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
     );
 
     gondola.report(`Step 4. 「FAX」で半角英字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
+    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.SINGE_BYTE_ALPHABET_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
@@ -246,7 +252,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
     );
 
     gondola.report(`Step 5. 「FAX」で全角英数字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.singleByteAlphabetString);
+    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.SINGE_BYTE_ALPHABET_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
@@ -257,7 +263,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
     );
 
     gondola.report(`Step 6. 「FAX」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.hiraganaKatakanaString);
+    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.HIRAGANA_KATAKANA_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
@@ -268,7 +274,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
     );
 
     gondola.report(`Step 7. 「FAX」で「+」「-」以外の記号を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.symbolString);
+    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.SYMBOL_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: no invalid feedback were present
@@ -279,7 +285,7 @@ TestCase('BMS-89. 案件:得意先マスタ作成:顧客情報:FAX:入力確認'
     );
 
     gondola.report(`Step 8. 「FAX」で半角数値と「+」「-」を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.validContactNumber);
+    await addCustomerPage.enterTextFieldByLabel(FAX_TEXTFIELD_LABEL, Constants.VALID_CONTACT_NUMBER);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「電話(FAX)番号形式で入力してください」という文字種誤りのエラーが表示されないこと。`);
     await gondola.checkEqual(

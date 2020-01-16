@@ -16,7 +16,7 @@ Before(setup);
 
 TestCase('BMS-33. 案件:案件作成:ステータス:選択肢 ', async () => {
     gondola.report(`Step 2.「ステータス」プルダウンで選択肢を確認する。`);
-    const projectStatusOptions = Object.values(Constants.projectStatuses);
+    const projectStatusOptions = Object.values(Constants.PROJECT_STATUSES);
     gondola.report(`VP.確度」は必須項目であり`);
     await gondola.checkEqual(
         await addProjectPage.doesFieldRequired(PROJECT_STATUS_FIELD_NAME),
@@ -36,7 +36,7 @@ TestCase('BMS-34. 案件:案件作成:ステータス:「見込」の選択肢',
         `Step 2. 「ステータス」プルダウンで「見込」を選択し、他のフィールドで情報を入力し、「保存」ボタンをクリックする。`,
     );
     const overviewData = PROJECT_OVERVIEW_REQUIRED_ONLY;
-    overviewData.status = Constants.projectStatuses.prospecting;
+    overviewData.status = Constants.PROJECT_STATUSES.prospecting;
     await addProjectPage.inputProjectOverviewInfo(overviewData);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
@@ -59,7 +59,7 @@ TestCase('BMS-35. 案件:案件作成:ステータス:「見積済」の選択�
         `Step 2. 「ステータス」プルダウンで「見積済」を選択し、他のフィールドで情報を入力し、「保存」ボタンをクリックする。`,
     );
     const overviewData = PROJECT_OVERVIEW_REQUIRED_ONLY;
-    overviewData.status = Constants.projectStatuses.estimated;
+    overviewData.status = Constants.PROJECT_STATUSES.estimated;
     await addProjectPage.inputProjectOverviewInfo(overviewData);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
@@ -82,7 +82,7 @@ TestCase('BMS-36. 案件:案件作成:ステータス:「延期」の選択肢�
         `Step 2. 「ステータス」プルダウンで「延期」を選択し、他のフィールドで情報を入力し、「保存」ボタンをクリックする。`,
     );
     const overviewData = PROJECT_OVERVIEW_REQUIRED_ONLY;
-    overviewData.status = Constants.projectStatuses.postponed;
+    overviewData.status = Constants.PROJECT_STATUSES.postponed;
     await addProjectPage.inputProjectOverviewInfo(overviewData);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
@@ -105,7 +105,7 @@ TestCase('BMS-37. 案件:案件作成:ステータス:「失注」の選択肢',
         `Step 2. 「ステータス」プルダウンで「失注」を選択し、他のフィールドで情報を入力し、「保存」ボタンをクリックする。`,
     );
     const overviewData = PROJECT_OVERVIEW_REQUIRED_ONLY;
-    overviewData.status = Constants.projectStatuses.lost;
+    overviewData.status = Constants.PROJECT_STATUSES.lost;
     await addProjectPage.inputProjectOverviewInfo(overviewData);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
@@ -128,7 +128,7 @@ TestCase('BMS-38. 案件:案件作成:ステータス:「仮受注」の選択�
         `Step 2. 「ステータス」プルダウンで「仮受注」を選択し、他のフィールドで情報を入力し、「保存」ボタンをクリックする。`,
     );
     const overviewData = PROJECT_OVERVIEW_REQUIRED_ONLY;
-    overviewData.status = Constants.projectStatuses.temporaryOrdering;
+    overviewData.status = Constants.PROJECT_STATUSES.temporaryOrdering;
     await addProjectPage.inputProjectOverviewInfo(overviewData);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
@@ -151,7 +151,7 @@ TestCase('BMS-39. 案件:案件作成:ステータス:「受注済」の選択�
         `Step 2. 「ステータス」プルダウンで「受注済」を選択し、他のフィールドで情報を入力し、「保存」ボタンをクリックする。`,
     );
     const overviewData = PROJECT_OVERVIEW_REQUIRED_ONLY;
-    overviewData.status = Constants.projectStatuses.ordered;
+    overviewData.status = Constants.PROJECT_STATUSES.ordered;
     await addProjectPage.inputProjectOverviewInfo(overviewData);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
@@ -174,7 +174,7 @@ TestCase('BMS-40. 案件:案件作成:ステータス:「納品済」の選択�
         `Step 2. 「ステータス」プルダウンで「納品済」を選択し、他のフィールドで情報を入力し、「保存」ボタンをクリックする。`,
     );
     const overviewData = PROJECT_OVERVIEW_REQUIRED_ONLY;
-    overviewData.status = Constants.projectStatuses.delivered;
+    overviewData.status = Constants.PROJECT_STATUSES.delivered;
     await addProjectPage.inputProjectOverviewInfo(overviewData);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);
@@ -197,7 +197,7 @@ TestCase('BMS-41. 案件:案件作成:ステータス:「完了」の選択肢 '
         `Step 2. 「ステータス」プルダウンで「完了」を選択し、他のフィールドで情報を入力し、「保存」ボタンをクリックする。`,
     );
     const overviewData = PROJECT_OVERVIEW_REQUIRED_ONLY;
-    overviewData.status = Constants.projectStatuses.done;
+    overviewData.status = Constants.PROJECT_STATUSES.done;
     await addProjectPage.inputProjectOverviewInfo(overviewData);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 新しい案件が保存されること。`);

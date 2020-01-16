@@ -21,7 +21,7 @@ TestCase('TMS-128. マスタ:役職作成:省略名:文字数', async () => {
     // TODO: update when requirement specified
     await gondola.checkEqual(
         await addPositionPage.getTextFieldValidationMessageByLabel(POSITION_ABBREVIATION_NAME, true),
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Field is required error message should be displayed',
     );
     gondola.report(`Step 3.「省略名」で2文字を入力する。`);

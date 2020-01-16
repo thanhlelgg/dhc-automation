@@ -20,7 +20,7 @@ TestCase('BMS-194. BMS:マスタ:品目作成:セグメント:未入力', async 
     const actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_SEGMENT_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 });

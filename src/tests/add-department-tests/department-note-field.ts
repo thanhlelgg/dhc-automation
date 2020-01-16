@@ -31,7 +31,7 @@ TestCase('BMS-185. マスタ:部門作成:備考:文字数', async () => {
     //BUG: no invalid feedback is displayed
     await gondola.checkEqual(
         await addDepartmentPage.getInvalidFeedBack(DEPARTMENT_NOTE_TEXTFIELD_LABEL),
-        maximumNOC.toString() + Constants.exceededNOCErrorMessage,
+        maximumNOC.toString() + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
         'Invalid feedback should be displayed correctly',
     );
 });

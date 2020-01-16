@@ -5,7 +5,7 @@ import { Constants } from '../common/constants';
 
 @page
 export class AddWorkingPlacePage extends GeneralPage {
-    protected pageUrl = `${Constants.tmsBaseUrl}/working-place`;
+    protected pageUrl = `${Constants.TMS_BASE_URL}/working-place`;
 
     @action('is current page')
     public async isCurrentPage(): Promise<boolean> {

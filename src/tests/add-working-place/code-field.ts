@@ -25,7 +25,7 @@ TestCase('TMS-119. マスタ:ラボ管理作成:就業先コード:文字数', a
     // TODO: update when requirement specified
     await gondola.checkEqual(
         await addWorkingPlacePage.getTextFieldValidationMessageByLabel(WORKING_PLACE_CODE_FIELD_NAME, true),
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Field is required error message should be displayed',
     );
     gondola.report(`Step 3.「就業先コード」で16文字を入力し、「保存」ボタンをクリックする。`);
@@ -58,7 +58,7 @@ TestCase('TMS-176. マスタ:ラボ管理作成:就業先コード:文字種', a
     gondola.report(`Step 2. 「就業先コード」で全角英数字を入力し、「保存」ボタンをクリックする。`);
     await addWorkingPlacePage.enterTextFieldByLabel(
         WORKING_PLACE_CODE_FIELD_NAME,
-        Constants.fullSizeAlphaNumericString,
+        Constants.FULL_SIZE_ALPHA_NUMERIC_STRING,
         true,
     );
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
@@ -73,7 +73,7 @@ TestCase('TMS-176. マスタ:ラボ管理作成:就業先コード:文字種', a
     gondola.report(`Step 3. 「取引先コード」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
     await addWorkingPlacePage.enterTextFieldByLabel(
         WORKING_PLACE_CODE_FIELD_NAME,
-        Constants.hiraganaKatakanaString,
+        Constants.HIRAGANA_KATAKANA_STRING,
         true,
     );
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
@@ -86,7 +86,7 @@ TestCase('TMS-176. マスタ:ラボ管理作成:就業先コード:文字種', a
     );
 
     gondola.report(`Step 4. 「取引先コード」で記号を入力し、「保存」ボタンをクリックする。（例：「!"#$%&'()」を入力）`);
-    await addWorkingPlacePage.enterTextFieldByLabel(WORKING_PLACE_CODE_FIELD_NAME, Constants.symbolString, true);
+    await addWorkingPlacePage.enterTextFieldByLabel(WORKING_PLACE_CODE_FIELD_NAME, Constants.SYMBOL_STRING, true);
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not displayed

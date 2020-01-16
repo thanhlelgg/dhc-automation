@@ -11,7 +11,8 @@ import { Utilities } from '../common/utilities';
 
 @page
 export class AddItemPage extends GeneralPage {
-    private pageUrl = `${Constants.bmsBaseUrl}/items/add`;
+    private pageUrl = `${Constants.BMS_BASE_URL}/items/add`;
+    fieldName = this.translator.fieldName.addItem;
 
     //#region Item information
     @locator
@@ -30,24 +31,13 @@ export class AddItemPage extends GeneralPage {
     private isDisable = "//input[@id='is-disable']";
     private remarks = { id: 'note' };
     radioButtonByLabel = "//div[label[text()='{0}']]//label[text()='{1}']//preceding-sibling::input[1]";
+    //#endregion
 
     //#region search Segment
     @locator
     protected searchSegmentField = { id: 'search-segments' };
     @locator
     protected segmentTable = { id: 'modal-segments-table' };
-    //#endregion
-
-    fieldName = this.translator.fieldName.addItem;
-    //#endregion
-
-    //#region Item arrangement destination information
-    private arrangementLevel = { id: 'item-arrangements-0-arrange-level' };
-
-    private arrangementPlace = { id: 'item-arrangements-0-arrange-cd' };
-    private arrangementUnit = { id: 'item-arrangements-0-arrange-unit' };
-    private arrangementUnitMulp = { id: 'item-arrangements-0-arrange-unit-multiple' };
-    private unitPurchasePrice = { id: 'item-arrangements-0-purchase-unit-price' };
     //#endregion
 
     @action('saveNewItem')

@@ -23,7 +23,7 @@ TestCase('TMS-121. マスタ:ラボ管理作成:住所:文字数', async () => {
     // TODO: update when requirement specified
     await gondola.checkEqual(
         await addWorkingPlacePage.getTextAreaValidationMessageByLabel(WORKING_PLACE_ADDRESS, true),
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Field is required error message should be displayed',
     );
     gondola.report(`Step 3.「住所」で255文字を入力する。`);

@@ -11,10 +11,10 @@ TestModule('Add Worker - Worker code field validation');
 const WORKER_CODE_FIELD_NAME = Constants.translator.fieldName.addWorker.code;
 const TEXT_16_CHARACTERS = Utilities.getRandomText(16);
 const TEXT_17_CHARACTERS = Utilities.getRandomText(17);
-const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.fullSizeAlphaNumericString;
-const TEXT_HIRAGANA_KATAKANA = Constants.hiraganaKatakanaString;
-const TEXT_SYMBOL = Constants.symbolString;
-const TEXT_HALF_SIZE_ALPHANUMERIC = Constants.halfSizeAlphaNumericString;
+const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.FULL_SIZE_ALPHA_NUMERIC_STRING;
+const TEXT_HIRAGANA_KATAKANA = Constants.HIRAGANA_KATAKANA_STRING;
+const TEXT_SYMBOL = Constants.SYMBOL_STRING;
+const TEXT_HALF_SIZE_ALPHANUMERIC = Constants.HALF_SIZE_ALPHA_NUMERIC_STRING;
 const WORKER_INFO_REQUIRED_ONLY = WorkerInfoData.WORKER_REQUIRED_DATA;
 
 Before(setup);
@@ -26,7 +26,7 @@ TestCase('BMS-102. BMS:案件:従業員マスタ作成:従業員コード:文字
     const actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
     gondola.report(`Step 3.「従業員コード」で16文字を入力し、保存する`);
@@ -60,7 +60,7 @@ TestCase('BMS-174. BMS:案件:従業員マスタ作成:従業員コード:文字
     let actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
     gondola.report(`Step 3. 「従業員コード」でひらがな・カタカナ字を入力し、保存する`);
@@ -70,7 +70,7 @@ TestCase('BMS-174. BMS:案件:従業員マスタ作成:従業員コード:文字
     actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
     gondola.report(`Step 4. 「従業員コード」で記号を入力し、保存する`);
@@ -80,7 +80,7 @@ TestCase('BMS-174. BMS:案件:従業員マスタ作成:従業員コード:文字
     actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
     gondola.report(`Step 5. 「従業員コード」で半角英数字を入力し、保存する`);
@@ -104,7 +104,7 @@ TestCase('BMS-175. BMS:案件:従業員マスタ作成:従業員コード:重複
     //BUG: error message is not correct
     await gondola.checkEqual(
         actualFeedback,
-        Constants.duplicatedTypeErrorMessage,
+        Constants.DUPLICATED_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 });

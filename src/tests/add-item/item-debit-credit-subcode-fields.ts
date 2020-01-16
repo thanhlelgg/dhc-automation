@@ -13,10 +13,10 @@ const CREDIT_SUBCODE_FIELD_NAME = Constants.translator.fieldName.addItem.creditS
 const TEXT_16_CHARACTERS = Utilities.getRandomText(16);
 const TEXT_17_CHARACTERS = Utilities.getRandomText(17);
 
-const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.fullSizeAlphaNumericString;
-const TEXT_HIRAGANA_KATAKANA = Constants.hiraganaKatakanaString;
-const TEXT_SYMBOL = Constants.symbolString;
-const TEXT_HALF_SIZE_ALPHANUMERIC = Constants.halfSizeAlphaNumericString;
+const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.FULL_SIZE_ALPHA_NUMERIC_STRING;
+const TEXT_HIRAGANA_KATAKANA = Constants.HIRAGANA_KATAKANA_STRING;
+const TEXT_SYMBOL = Constants.SYMBOL_STRING;
+const TEXT_HALF_SIZE_ALPHANUMERIC = Constants.HALF_SIZE_ALPHA_NUMERIC_STRING;
 
 Before(setup);
 
@@ -35,7 +35,7 @@ TestCase('BMS-201. BMS:マスタ:品目作成:借方補助コード:文字数', 
     actualFeedback = await addItemPage.getInvalidFeedBack(DEBIT_SUBCODE_FIELD_NAME);
     gondola.checkEqual(
         actualFeedback,
-        Constants.exceededNOCErrorMessage16,
+        Constants.EXCEEDED_NOC_ERROR_MESSAGE_16,
         'Invalid feedback message should be correct',
     );
 });
@@ -48,7 +48,7 @@ TestCase('BMS-202. BMS:マスタ:品目作成:借方補助コード:文字種', 
     let actualFeedback = await addItemPage.getInvalidFeedBack(DEBIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -59,7 +59,7 @@ TestCase('BMS-202. BMS:マスタ:品目作成:借方補助コード:文字種', 
     actualFeedback = await addItemPage.getInvalidFeedBack(DEBIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -70,7 +70,7 @@ TestCase('BMS-202. BMS:マスタ:品目作成:借方補助コード:文字種', 
     actualFeedback = await addItemPage.getInvalidFeedBack(DEBIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -81,7 +81,7 @@ TestCase('BMS-202. BMS:マスタ:品目作成:借方補助コード:文字種', 
     actualFeedback = await addItemPage.getInvalidFeedBack(DEBIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 });
@@ -101,7 +101,7 @@ TestCase('BMS-203. BMS:マスタ:品目作成:貸方補助コード:文字数', 
     actualFeedback = await addItemPage.getInvalidFeedBack(CREDIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.exceededNOCErrorMessage16,
+        Constants.EXCEEDED_NOC_ERROR_MESSAGE_16,
         'Invalid feedback message should be correct',
     );
 });
@@ -114,7 +114,7 @@ TestCase('BMS-204. BMS:マスタ:品目作成:貸方補助コード:文字種', 
     let actualFeedback = await addItemPage.getInvalidFeedBack(CREDIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -125,7 +125,7 @@ TestCase('BMS-204. BMS:マスタ:品目作成:貸方補助コード:文字種', 
     actualFeedback = await addItemPage.getInvalidFeedBack(CREDIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -136,7 +136,7 @@ TestCase('BMS-204. BMS:マスタ:品目作成:貸方補助コード:文字種', 
     actualFeedback = await addItemPage.getInvalidFeedBack(CREDIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -147,7 +147,7 @@ TestCase('BMS-204. BMS:マスタ:品目作成:貸方補助コード:文字種', 
     actualFeedback = await addItemPage.getInvalidFeedBack(CREDIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputHalfSizeAlphaNumericTypeErrorMessage,
+        Constants.INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 });

@@ -11,7 +11,7 @@ Before(setup);
 
 TestCase('BMS-32. 案件:案件作成:確度:選択肢', async () => {
     gondola.report(`Step 2.「確度」プルダウンで選択肢を確認する。`);
-    const projectAccuracyOptions = Object.values(Constants.accuracyTypes);
+    const projectAccuracyOptions = Object.values(Constants.ACCURACY_TYPES);
     gondola.report(`VP.確度」は必須項目であり`);
     await gondola.checkEqual(
         await addProjectPage.doesFieldRequired(ACCURACY_FIELD_NAME),

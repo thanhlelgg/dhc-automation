@@ -3,7 +3,7 @@ import { GeneralPage } from './general-page';
 import { Constants } from '../common/constants';
 @page
 export class ListDepartmentPage extends GeneralPage {
-    protected pageUrl = `${Constants.bmsBaseUrl}/departments`;
+    protected pageUrl = `${Constants.BMS_BASE_URL}/departments`;
     @locator
     protected departmentLink = "//div[@tabulator-field='cd']/a[text()='{0}']";
 

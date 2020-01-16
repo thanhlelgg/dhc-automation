@@ -28,7 +28,7 @@ TestCase('BMS-107. BMS:案件:従業員マスタ作成:備考:文字数', async 
     actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_NOTE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.exceededNOCErrorMessage1024,
+        Constants.EXCEEDED_NOC_ERROR_MESSAGE_1024,
         'Invalid feedback message should be correct',
     );
 });

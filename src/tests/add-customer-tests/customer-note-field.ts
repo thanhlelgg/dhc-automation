@@ -28,7 +28,7 @@ TestCase('BMS-101. 案件:得意先マスタ作成:顧客情報:備考 :文字�
     //BUG: no invalid feedback is displayed
     await gondola.checkEqual(
         await addCustomerPage.getInvalidFeedBack(CUSTOMER_NOTE_TEXTAREA_LABEL),
-        maximumNOC.toString() + Constants.exceededNOCErrorMessage,
+        maximumNOC.toString() + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
         'Invalid feedback should be displayed correctly',
     );
 });

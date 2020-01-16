@@ -47,7 +47,7 @@ TestCase('BMS-92. 案件:得意先マスタ作成:顧客情報:取引通貨:選�
 TestCase('BMS-93. 案件:得意先マスタ作成:顧客情報:締め日:選択肢', async () => {
     gondola.report(`Step 2. 「締め日」プルダウンで選択肢を確認する。`);
     gondola.report(`VP. 「締め日」プルダウンには選択肢が31つあり、1～30および「末」を含んでいること。`);
-    const closingDateGroup = Object.values(Constants.closingDates);
+    const closingDateGroup = Object.values(Constants.CLOSING_DATES);
     await gondola.checkTrue(
         await addCustomerPage.doesSelectorByLabelOptionsExist(
             CUSTOMER_CLOSING_DATE_GROUP_DROPDOWN_LABEL,

@@ -27,7 +27,7 @@ TestCase('BMS-17. 案件:案件作成:案件終了日:未入力 ', async () => {
     const projectNumber = await addProjectPage.getSpanValueByLabel(PROJECT_NUMBER_FIELD_NAME);
 
     gondola.report(`Step 3. 垂直メニューで「案件」の「一覧」をクリックします。`);
-    await businessSystemPage.gotoListProject();
+    await businessSystemPage.gotoListProject(true);
     gondola.report(`Step 4. 上の登録した案件行で「TTS連携ボタン」(青い紙飛行機のアイコン)をクリックする。`);
     await listProjectPage.clickOnTTSLinkButton(projectNumber);
     gondola.report(`VP. エラーとなること。`);

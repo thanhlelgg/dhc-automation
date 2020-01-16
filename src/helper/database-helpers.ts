@@ -114,6 +114,10 @@ export class DatabaseHelper {
         }
     }
 
+    /**
+     * Get closing date by customer code
+     * @param code
+     */
     public static async getClosingDateByBusinessCustomerCode(code: string): Promise<number> {
         const alias = 'businessCustomers';
         const query = `${alias}.cd = "${code}"`;

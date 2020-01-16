@@ -191,7 +191,7 @@ export class GeneralPage {
 
     @action('openWebsite')
     public async openWebsite(): Promise<void> {
-        await gondola.navigate(Constants.loginUrl);
+        await gondola.navigate(Constants.LOGIN_URL);
         await gondola.maximize();
     }
 
@@ -398,6 +398,7 @@ export class GeneralPage {
         }
     }
 
+    @action('get checkbox state by label')
     public async getCheckboxStateByLabel(label: string): Promise<boolean> {
         return await gondola.doesCheckboxChecked(this.checkboxInputByLabel.format(label));
     }
@@ -417,6 +418,7 @@ export class GeneralPage {
         return this.recordField.format(fieldType.type, tableName.nameAttr, index.toString(), tableFieldName.nameAttr);
     }
 
+    @action('enter record field')
     public async enterRecordField(
         tableName: RecordTable,
         index: number,
@@ -429,6 +431,7 @@ export class GeneralPage {
         await gondola.enter(locator, text);
     }
 
+    @action('enter record field using javascript')
     public async enterRecordFieldUsingJS(
         tableName: RecordTable,
         index: number,
@@ -441,6 +444,7 @@ export class GeneralPage {
         await gondola.setElementAttribute(locator, 'value', text);
     }
 
+    @action('get text record field')
     public async getTextRecordField(
         tableName: RecordTable,
         index: number,
@@ -451,6 +455,7 @@ export class GeneralPage {
         return await gondola.getControlProperty(locator, 'value');
     }
 
+    @action('check if record field exist')
     public async doesRecordFieldExist(
         tableName: RecordTable,
         index: number,
@@ -461,6 +466,7 @@ export class GeneralPage {
         return await gondola.doesControlExist(locator);
     }
 
+    @action('select record field')
     public async selectRecordField(
         tableName: RecordTable,
         index: number,
@@ -473,16 +479,19 @@ export class GeneralPage {
         await gondola.select(locator, selectElement);
     }
 
+    @action('check selector is enabled by label')
     public async isSelectorByLabelEnabled(label: string): Promise<boolean> {
         return await gondola.isControlEnabled(this.selectorByLabel.format(label));
     }
 
+    @action('enter textfield by place holder')
     public async enterTextfieldByPlaceholder(placeholder: string, text: string | undefined): Promise<void> {
         if (text) {
             await gondola.enter(this.textFieldByPlaceHolder.format(placeholder), text);
         }
     }
 
+    @action('get textfield value by place holder')
     public async getTextfieldValueByPlaceholder(placeholder: string): Promise<string> {
         return await gondola.getControlProperty(this.textFieldByPlaceHolder.format(placeholder), 'value');
     }
@@ -505,12 +514,14 @@ export class GeneralPage {
         return Utilities.getNumberOfSearchResultPages(resultString);
     }
 
+    @action('check radio button options exist')
     public async doesRadioButtonOptionsExist(label: string, options: string[], partial = false): Promise<boolean> {
         const locator = partial ? this.radioButtonByLabelPartialMatch : this.radioButtonByLabel;
         const radioButtonNames = await gondola.getElementsAttributes(locator.format(label), 'innerText');
         return Utilities.compareArrays(radioButtonNames, options);
     }
 
+    @action('select radio button by label')
     public async selectRadioButtonByLabel(label: string, option: string | undefined, partial = false): Promise<void> {
         if (option) {
             const locator = partial ? this.radioButtonOptionByLabelPartialMatch : this.radioButtonOptionByLabel;
@@ -518,6 +529,7 @@ export class GeneralPage {
         }
     }
 
+    @action('check radio button label selected')
     public async isRadioButtonByLabelSelected(
         label: string,
         option: string | undefined,
@@ -531,24 +543,29 @@ export class GeneralPage {
         return await gondola.doesCheckboxChecked(locator.format(label, option) + '//input');
     }
 
+    @action('check if textfield is numeric')
     public async isTextFieldNumeric(control: any): Promise<boolean> {
         return (await gondola.getControlProperty(control, 'type')) === 'number';
     }
 
+    @action('check input group displays')
     public async doesInputGroupByNameDisplay(name: string): Promise<boolean> {
         return await gondola.doesControlDisplay(this.inputGroupByName.format(name));
     }
 
+    @action('check if input group is numeric')
     public async isInputGroupByNameNumeric(name: string): Promise<boolean> {
         return await this.isTextFieldNumeric(this.inputGroupByName.format(name));
     }
 
+    @action('enter input group by name')
     public async enterInputGroupByName(name: string, text: string | undefined): Promise<void> {
         if (text) {
             await gondola.enter(this.inputGroupByName.format(name), text);
         }
     }
 
+    @action('get text input group by name')
     public async getTextInputGroupByName(name: string): Promise<string> {
         return await gondola.getControlProperty(this.inputGroupByName.format(name), 'value');
     }
@@ -565,6 +582,7 @@ export class GeneralPage {
         return await gondola.doesControlDisplay(locator);
     }
 
+    @action('go back')
     public async goBack(): Promise<void> {
         await gondola.waitUntilElementVisible(this.backButton);
         await gondola.click(this.backButton);
@@ -620,8 +638,8 @@ export class GeneralPage {
         return await gondola.doesControlExist(this.pagingLastPage);
     }
 
-    public async clickPagingLastPage(): Promise<void> {
-        await gondola.click(this.pagingLastPage);
+    public async gotoLastPage(): Promise<void> {
+        if (await this.doesPagingExist()) await gondola.click(this.pagingLastPage);
     }
 
     @action('wait for search window fully loaded')
@@ -637,25 +655,30 @@ export class GeneralPage {
         await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 
+    @action('click menu link by title')
     public async clickMenuLinkByTitle(title: string): Promise<void> {
         await gondola.waitUntilElementVisible(this.menuLinkByTitle.format(title));
         await gondola.click(this.menuLinkByTitle.format(title));
     }
 
+    @action('click button by icon')
     public async clickButtonByIcon(buttonIcon: ButtonIcon): Promise<void> {
         await gondola.waitUntilElementVisible(this.buttonByIcon.format(buttonIcon._class));
         await gondola.click(this.buttonByIcon.format(buttonIcon._class));
     }
 
+    @action('check page title displays')
     public async isPageTitleDisplayed(name: string): Promise<boolean> {
         return await gondola.doesControlDisplay(this.pageTitle.format(name));
     }
 
+    @action('click search selection dropdown by label')
     public async clickSearchSelectionDropdownByLabel(label: string, partial = false): Promise<void> {
         const locator = partial ? this.selectSelectionSpnByLabelPartialMatch : this.selectSelectionSpnByLabel;
         await gondola.click(locator.format(label));
     }
 
+    @action('check search selection display')
     public async doesSearchSelectionDisplay(): Promise<boolean> {
         FlagsCollector.collectTruth(
             'Search text field should be displayed',
@@ -669,6 +692,7 @@ export class GeneralPage {
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
     }
 
+    @action('enter search selection textfield')
     public async enterSearchSelectionTextfield(text: string, partial = false): Promise<string> {
         if (partial) {
             text = Utilities.getRandomPartialCharacters(text);
@@ -677,17 +701,20 @@ export class GeneralPage {
         return text;
     }
 
+    @action('select search selection result')
     public async selectSearchSelectionResult(text: string, partial = false): Promise<void> {
         await gondola.waitForElementDisappearSoftly(this.selectSelectionLoadingResults, Constants.SHORT_TIMEOUT);
         const locator = partial ? this.selectSelectionOptionByTextPartialMatch : this.selectSelectionOptionByText;
         await gondola.click(locator.format(text));
     }
 
+    @action('check search result display')
     public async doesSearchResultDisplayCorrectly(searchText: string): Promise<boolean> {
         const results = await gondola.getElementsAttributes(this.selectSelectionOptions, 'innerText');
         return Utilities.isFilterCorrect(searchText, results);
     }
 
+    @action('get search selection selected item by label')
     public async getSearchSelectionSelectedItemByLabel(label: string, partial = false): Promise<string> {
         const locator = partial
             ? this.selectSelectionSelectedItemByLabelPartialMatch
@@ -695,6 +722,7 @@ export class GeneralPage {
         return await gondola.getElementAttribute(locator.format(label), 'title');
     }
 
+    @action('clear search selection by its label')
     public async clearSearchSelectionByLabel(label: string, partial = false): Promise<void> {
         const locator = partial
             ? this.selectSelectionClearButtonByLabelPartialMatch
@@ -702,6 +730,7 @@ export class GeneralPage {
         await gondola.click(locator.format(label));
     }
 
+    @action('check if selected search result empty')
     public async doesSelectedSearchResultEmpty(label: string, partial = false): Promise<boolean> {
         const locator = partial
             ? this.selectSelectionSelectedItemByLabelPartialMatch
@@ -710,12 +739,14 @@ export class GeneralPage {
         return !(await gondola.doesControlDisplay(locator.format(label)));
     }
 
+    @action('get random selection search result')
     public async getRandomSelectionSearchResult(): Promise<string> {
         const results = await gondola.getElementsAttributes(this.selectSelectionOptions, 'innerText');
         const randomIdx = Utilities.getRandomNumber(1, results.length);
         return results[randomIdx];
     }
 
+    @action('select search selection by label')
     public async selectSearchSelectionByLabel(
         label: string,
         searchKey: string | undefined,
@@ -731,27 +762,31 @@ export class GeneralPage {
         }
     }
 
+    @action('get textfield validation message by label')
     public async getTextFieldValidationMessageByLabel(label: string, partial = false): Promise<string> {
         const locator = partial ? this.textFieldByLabelPartialMatch : this.textFieldByLabel;
         return await gondola.getValidationMessage(locator.format(label));
     }
-
+    @action('get text area validation message by label')
     public async getTextAreaValidationMessageByLabel(label: string, partial = false): Promise<string> {
         const locator = partial ? this.textAreaByLabelPartialMatch : this.textAreaByLabel;
         return await gondola.getValidationMessage(locator.format(label));
     }
 
+    @action('get selector validation message')
     public async getSelectorValidationMessageByLabel(label: string, partial = false): Promise<string> {
         const locator = partial ? this.selectorByLabelPartialMatch : this.selectorByLabel;
         return await gondola.getValidationMessage(locator.format(label));
     }
 
+    @action('click tabular table link by text')
     public async clickTabularTableLinkByText(columnType: SearchResultColumn, text: string): Promise<void> {
         const locator = this.tabularTableLinkByText.format(columnType.tabulatorField, text);
         await gondola.waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
         await gondola.click(locator);
     }
 
+    @action('go to page using menu button')
     public async gotoPageByMenuButton(...buttonTitles: string[]): Promise<void> {
         let currentLocator = this.menuButtonByTitle;
         for (const buttonTitle of buttonTitles) {

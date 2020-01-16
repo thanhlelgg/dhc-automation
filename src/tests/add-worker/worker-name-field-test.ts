@@ -19,7 +19,7 @@ TestCase('BMS-103. BMS:案件:従業員マスタ作成:従業員名:入力確認
     const actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_NAME_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
     gondola.report(`Step 3.「従業員名」で64文字を入力し、保存する`);

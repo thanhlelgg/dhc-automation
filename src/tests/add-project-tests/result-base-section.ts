@@ -15,7 +15,7 @@ Before(setup);
 
 TestCase('BMS-51. 案件:案件作成:出来高明細:請求用役職別のチェックボックス', async () => {
     gondola.report(`Step 2.「案件形態」で「出来高案件」を選択する。`);
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     gondola.report(`VP. 出来高明細欄が表示されること。`);
     await gondola.checkEqual(
         await addProjectPage.isProjectResultSectionDisplayed(),

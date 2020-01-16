@@ -33,7 +33,7 @@ TestCase('BMS-216. マスタ:セグメント作成:会計システム部門コ�
     //BUG: no invalid feedback is displayed
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_DEPARTMENT_TEXTFIELD_LABEL),
-        maximumNOC.toString() + Constants.exceededNOCErrorMessage,
+        maximumNOC.toString() + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
         'Invalid feedback should be displayed correctly',
     );
 });
@@ -42,7 +42,7 @@ TestCase('BMS-217. BMS:マスタ:セグメント作成:会計システム部門�
     gondola.report(`Step 2. 「会計システム部門コード」で全角英数字を入力し、「保存」ボタンをクリックする。`);
     await addSegmentPage.enterTextFieldByLabel(
         SEGMENT_DEPARTMENT_TEXTFIELD_LABEL,
-        Constants.fullSizeAlphaNumericString,
+        Constants.FULL_SIZE_ALPHA_NUMERIC_STRING,
     );
     await addSegmentPage.saveSegment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
@@ -54,7 +54,7 @@ TestCase('BMS-217. BMS:マスタ:セグメント作成:会計システム部門�
     );
 
     gondola.report(`Step 3. 「会計システム部門コード」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
-    await addSegmentPage.enterTextFieldByLabel(SEGMENT_DEPARTMENT_TEXTFIELD_LABEL, Constants.hiraganaKatakanaString);
+    await addSegmentPage.enterTextFieldByLabel(SEGMENT_DEPARTMENT_TEXTFIELD_LABEL, Constants.HIRAGANA_KATAKANA_STRING);
     await addSegmentPage.saveSegment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct
@@ -67,7 +67,7 @@ TestCase('BMS-217. BMS:マスタ:セグメント作成:会計システム部門�
     gondola.report(
         `Step 4. 「会計システム部門コード」で記号を入力し、「保存」ボタンをクリックする。（例：「!"#$%&'()」を入力）`,
     );
-    await addSegmentPage.enterTextFieldByLabel(SEGMENT_DEPARTMENT_TEXTFIELD_LABEL, Constants.symbolString);
+    await addSegmentPage.enterTextFieldByLabel(SEGMENT_DEPARTMENT_TEXTFIELD_LABEL, Constants.SYMBOL_STRING);
     await addSegmentPage.saveSegment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct
@@ -80,7 +80,7 @@ TestCase('BMS-217. BMS:マスタ:セグメント作成:会計システム部門�
     gondola.report(`Step 5. 「会計システム部門コード」で半角英数字を入力し、「保存」ボタンをクリックする。`);
     await addSegmentPage.enterTextFieldByLabel(
         SEGMENT_DEPARTMENT_TEXTFIELD_LABEL,
-        Constants.halfSizeAlphaNumericString,
+        Constants.HALF_SIZE_ALPHA_NUMERIC_STRING,
     );
     await addSegmentPage.saveSegment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されないこと。`);

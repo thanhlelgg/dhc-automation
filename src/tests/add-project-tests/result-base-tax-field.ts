@@ -39,7 +39,7 @@ TestCase('BMS-75. 案件:案件作成:出来高明細:税率', async () => {
         `VP. 「税率」プルダウンには選択肢が税率マスタに登録されたものを含んでいること。(現状：「８％」、「10%」を含んでいる)`,
     );
     await gondola.checkEqual(
-        await addProjectPage.checkResultsBaseTaxOptions(randomRole, Object.values(Constants.taxIds)),
+        await addProjectPage.checkResultsBaseTaxOptions(randomRole, Object.values(Constants.TAX_IDS)),
         true,
         'Tax id dropdown should be displayed correctly',
     );

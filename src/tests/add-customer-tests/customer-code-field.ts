@@ -18,7 +18,7 @@ TestCase('BMS-81. 案件:得意先マスタ作成:顧客情報:取引先コー�
     gondola.report(`VP. 入力フィールドの下にエラー「入力必須項目です」が表示されること。`);
     await gondola.checkEqual(
         await addCustomerPage.getInvalidFeedBack(CUSTOMER_CODE_TEXTFIELD_LABEL),
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Invalid feedback should be displayed correctly',
     );
 
@@ -28,7 +28,7 @@ TestCase('BMS-81. 案件:得意先マスタ作成:顧客情報:取引先コー�
     gondola.report(`VP. 入力フィールドの下にエラー「16文字以内で入力してください」が表示されること。`);
     await gondola.checkEqual(
         await addCustomerPage.getInvalidFeedBack(CUSTOMER_CODE_TEXTFIELD_LABEL),
-        Constants.exceededNOCErrorMessage16,
+        Constants.EXCEEDED_NOC_ERROR_MESSAGE_16,
         'Invalid feedback should be displayed correctly',
     );
 
@@ -45,7 +45,10 @@ TestCase('BMS-81. 案件:得意先マスタ作成:顧客情報:取引先コー�
 
 TestCase('BMS-172. 案件:得意先マスタ作成:顧客情報:取引先コード :文字種', async () => {
     gondola.report(`Step 2. 「取引先コード」で全角英数字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(CUSTOMER_CODE_TEXTFIELD_LABEL, Constants.fullSizeAlphaNumericString);
+    await addCustomerPage.enterTextFieldByLabel(
+        CUSTOMER_CODE_TEXTFIELD_LABEL,
+        Constants.FULL_SIZE_ALPHA_NUMERIC_STRING,
+    );
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct
@@ -56,7 +59,7 @@ TestCase('BMS-172. 案件:得意先マスタ作成:顧客情報:取引先コー�
     );
 
     gondola.report(`Step 3. 「取引先コード」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
-    await addCustomerPage.enterTextFieldByLabel(CUSTOMER_CODE_TEXTFIELD_LABEL, Constants.hiraganaKatakanaString);
+    await addCustomerPage.enterTextFieldByLabel(CUSTOMER_CODE_TEXTFIELD_LABEL, Constants.HIRAGANA_KATAKANA_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct
@@ -67,7 +70,7 @@ TestCase('BMS-172. 案件:得意先マスタ作成:顧客情報:取引先コー�
     );
 
     gondola.report(`Step 4. 「取引先コード」で記号を入力し、「保存」ボタンをクリックする。（例：「!"#$%&'()」を入力）`);
-    await addCustomerPage.enterTextFieldByLabel(CUSTOMER_CODE_TEXTFIELD_LABEL, Constants.symbolString);
+    await addCustomerPage.enterTextFieldByLabel(CUSTOMER_CODE_TEXTFIELD_LABEL, Constants.SYMBOL_STRING);
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct

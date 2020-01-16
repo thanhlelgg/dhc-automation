@@ -19,7 +19,7 @@ TestCase('BMS-210. マスタ:セグメント作成:セグメントコード:文�
     gondola.report(`VP. 入力フィールドの下にエラー「入力必須項目です」が表示されること。`);
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_CODE_TEXTFIELD_LABEL),
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Field is required error message should be displayed',
     );
     gondola.report(`Step 3.「セグメントコード」で16文字を入力し、「保存」ボタンをクリックする。`);
@@ -40,14 +40,14 @@ TestCase('BMS-210. マスタ:セグメント作成:セグメントコード:文�
     //BUG: no invalid feedback is displayed
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_CODE_TEXTFIELD_LABEL),
-        maximumNOC.toString() + Constants.exceededNOCErrorMessage,
+        maximumNOC.toString() + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
         'Invalid feedback should be displayed correctly',
     );
 });
 
 TestCase('BMS-211. BMS:マスタ:セグメント作成:セグメントコード:文字種', async () => {
     gondola.report(`Step 2. 「セグメントコード」で全角英数字を入力し、「保存」ボタンをクリックする。`);
-    await addSegmentPage.enterTextFieldByLabel(SEGMENT_CODE_TEXTFIELD_LABEL, Constants.fullSizeAlphaNumericString);
+    await addSegmentPage.enterTextFieldByLabel(SEGMENT_CODE_TEXTFIELD_LABEL, Constants.FULL_SIZE_ALPHA_NUMERIC_STRING);
     await addSegmentPage.saveSegment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct
@@ -58,7 +58,7 @@ TestCase('BMS-211. BMS:マスタ:セグメント作成:セグメントコード:
     );
 
     gondola.report(`Step 3. 「セグメントコード」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
-    await addSegmentPage.enterTextFieldByLabel(SEGMENT_CODE_TEXTFIELD_LABEL, Constants.hiraganaKatakanaString);
+    await addSegmentPage.enterTextFieldByLabel(SEGMENT_CODE_TEXTFIELD_LABEL, Constants.HIRAGANA_KATAKANA_STRING);
     await addSegmentPage.saveSegment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct
@@ -71,7 +71,7 @@ TestCase('BMS-211. BMS:マスタ:セグメント作成:セグメントコード:
     gondola.report(
         `Step 4. 「セグメントコード」で記号を入力し、「保存」ボタンをクリックする。（例：「!"#$%&'()」を入力）`,
     );
-    await addSegmentPage.enterTextFieldByLabel(SEGMENT_CODE_TEXTFIELD_LABEL, Constants.symbolString);
+    await addSegmentPage.enterTextFieldByLabel(SEGMENT_CODE_TEXTFIELD_LABEL, Constants.SYMBOL_STRING);
     await addSegmentPage.saveSegment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct
@@ -82,7 +82,7 @@ TestCase('BMS-211. BMS:マスタ:セグメント作成:セグメントコード:
     );
 
     gondola.report(`Step 5. 「セグメントコード」で半角英数字を入力し、「保存」ボタンをクリックする。`);
-    await addSegmentPage.enterTextFieldByLabel(SEGMENT_CODE_TEXTFIELD_LABEL, Constants.halfSizeAlphaNumericString);
+    await addSegmentPage.enterTextFieldByLabel(SEGMENT_CODE_TEXTFIELD_LABEL, Constants.HALF_SIZE_ALPHA_NUMERIC_STRING);
     await addSegmentPage.saveSegment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されないこと。`);
     await gondola.checkEqual(

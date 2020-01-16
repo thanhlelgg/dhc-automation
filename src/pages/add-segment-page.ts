@@ -49,9 +49,6 @@ export class AddSegmentPage extends GeneralPage {
             segmentInfo.department,
             await this.getTextFieldValueByLabel(this.fieldName.kanjyoDepartmentCode),
         );
-        if (!segmentInfo.parentSegment) {
-            segmentInfo.parentSegment = '';
-        }
         FlagsCollector.collectEqual(
             'Segment parent segment should be displayed correctly',
             segmentInfo.parentSegment,

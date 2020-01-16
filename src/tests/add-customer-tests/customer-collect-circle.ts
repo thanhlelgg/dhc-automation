@@ -78,7 +78,10 @@ TestCase('BMS-99. 案件:得意先マスタ作成:顧客情報:回収サイク�
     // TODO: Verify error message when requirement available
 
     gondola.report(`Step 4. 「日後に回収」で数字以外を入力する。`);
-    await addCustomerPage.enterInputGroupByName(COLLECT_CYCLE_DAY_INPUT_GROUP_NAME, Constants.singleByteAlphabetString);
+    await addCustomerPage.enterInputGroupByName(
+        COLLECT_CYCLE_DAY_INPUT_GROUP_NAME,
+        Constants.SINGE_BYTE_ALPHABET_STRING,
+    );
     gondola.report(`VP. 数字しか入力できないこと。`);
     gondola.checkEqual(
         await addCustomerPage.getTextInputGroupByName(COLLECT_CYCLE_DAY_INPUT_GROUP_NAME),
@@ -126,7 +129,7 @@ TestCase('BMS-100. 案件:得意先マスタ作成:顧客情報:回収サイク�
     gondola.report(`Step 5. 「ケ月後」で数字以外を入力する。`);
     await addCustomerPage.enterInputGroupByName(
         COLLECT_CYCLE_MONTH_INPUT_GROUP_NAME,
-        Constants.singleByteAlphabetString,
+        Constants.SINGE_BYTE_ALPHABET_STRING,
     );
     gondola.report(`VP. 数字しか入力できないこと。`);
     gondola.checkEqual(
@@ -138,7 +141,7 @@ TestCase('BMS-100. 案件:得意先マスタ作成:顧客情報:回収サイク�
     gondola.report(`Step 6. 「日に回収」で数字以外を入力する。`);
     await addCustomerPage.enterInputGroupByName(
         COLLECT_CYCLE_MONTHLY_DAY_INPUT_GROUP_NAME,
-        Constants.singleByteAlphabetString,
+        Constants.SINGE_BYTE_ALPHABET_STRING,
     );
     gondola.report(`VP. 数字しか入力できないこと。`);
     gondola.checkEqual(

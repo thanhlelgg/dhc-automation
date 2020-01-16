@@ -4,15 +4,15 @@ import path from 'path';
 
 export class Constants {
     public static translator = Translate.getTranslator();
-    public static readonly baseUrl = 'http://' + process.env.HOST;
-    public static readonly tmsPort = '10015';
-    public static readonly tmsBaseUrl = `${Constants.baseUrl}:${Constants.tmsPort}`;
-    public static readonly bmsPort = '10013';
-    public static readonly bmsBaseUrl = `${Constants.baseUrl}:${Constants.bmsPort}`;
-    public static readonly ttsPort = '10014';
-    public static readonly ttsBaseUrl = `${Constants.baseUrl}:${Constants.ttsPort}`;
-    public static readonly loginPort = '10012';
-    public static readonly loginUrl = `${Constants.baseUrl}:${Constants.loginPort}/login`;
+    public static readonly BASE_URL = 'http://' + process.env.HOST;
+    public static readonly TMS_PORT = '10015';
+    public static readonly TMS_BASE_URL = `${Constants.BASE_URL}:${Constants.TMS_PORT}`;
+    public static readonly BMS_PORT = '10013';
+    public static readonly BMS_BASE_URL = `${Constants.BASE_URL}:${Constants.BMS_PORT}`;
+    public static readonly TTS_PORT = '10014';
+    public static readonly TTS_BASE_URL = `${Constants.BASE_URL}:${Constants.TTS_PORT}`;
+    public static readonly LOGIN_PORT = '10012';
+    public static readonly LOGIN_URL = `${Constants.BASE_URL}:${Constants.LOGIN_PORT}/login`;
     public static readonly VERY_SHORT_TIMEOUT = 2;
     public static readonly SHORT_TIMEOUT = 10;
     public static readonly MEDIUM_TIMEOUT = 30;
@@ -21,67 +21,66 @@ export class Constants {
     public static readonly LIMIT_SCROLL_TIMES = 10;
     public static readonly SLIGHTLY_RIGHT_OFFSET = { x: -50, y: 0 };
     public static readonly NORMAL_DATE_FORMAT = 'YYYY-MM-DD';
-    public static readonly EXAMPLE_DEFAULT_DATE = '2019-01-01';
-    public static readonly EXAMPLE_DEFAULT_DATE_SHORT = '2019-1-1';
-    public static readonly EXAMPLE_DATE_DIVIDED_BY_DOT = '2019.1.1';
-    public static readonly EXAMPLE_DATE_DIVIDED_BY_SLASH = '2019/1/1';
-    public static readonly DEFAULT_END_DATE = '9999-12-31';
     public static readonly DEFAULT_DOWNLOAD_FOLDER = downloadsFolder().replace('/', '\\');
     public static readonly DEFAULT_POSITION_DOWNLOAD_FILE_PATH = `${Constants.DEFAULT_DOWNLOAD_FOLDER}\\positions.csv`;
     public static readonly POSITION_CSV_PATH = path.resolve('src/data/positions.csv');
 
     //#region Input data
-    public static adminUserName = 'administrator';
-    public static adminPassword = '123456';
-    public static modUserName = 'administrator';
-    public static modPassword = '123456';
-    public static exceededNOCMessage =
+    public static USER_NAME = 'administrator';
+    public static PASSWORD = 'P@ssW0rd123';
+    public static EXCEEDED_NOC_MESSAGE =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor \
     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut \
     aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat \
     nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
-    public static singleByteAlphabetString = 'abcd';
-    public static singleByteNumberString = '1234';
-    public static fullSizeAlphaNumericString = 'ａｂｃｄ１２３４';
-    public static halfSizeAlphaNumericString = 'abcd1234';
-    public static symbolString = `!"#$%&'()`;
-    public static hiraganaKatakanaString = 'あああｱｱｱハハハ';
-    public static halfSizeNumberAndHyphen = '210-0021';
-    public static oneBillion = '1000000000';
-    public static decimal = '1.5';
-    public static validationMessageForDecimal = '有効な値を入力してください。有効な値として最も近いのは 1 と 2 です。';
-    public static lessThanOneBillion = '999999999';
-    public static moreThanOneBillion = '1000000001';
-    public static negativeNumber = '-1';
-    public static onlyWord = 'only text';
-    public static validContactNumber = '+8190-000-0001';
+    public static SINGE_BYTE_ALPHABET_STRING = 'abcd';
+    public static SINGLE_BYTE_NUMBER_STRING = '1234';
+    public static FULL_SIZE_ALPHA_NUMERIC_STRING = 'ａｂｃｄ１２３４';
+    public static HALF_SIZE_ALPHA_NUMERIC_STRING = 'abcd1234';
+    public static SYMBOL_STRING = `!"#$%&'()`;
+    public static HIRAGANA_KATAKANA_STRING = 'あああｱｱｱハハハ';
+    public static HALF_SIZE_NUMBER_AND_HYPHEN = '210-0021';
+    public static ONE_BILLION = '1000000000';
+    public static DECIMAL = '1.5';
+    public static VALIDATION_MESSAGE_FOR_DECIMAL =
+        '有効な値を入力してください。有効な値として最も近いのは 1 と 2 です。';
+    public static LESS_THAN_ONE_BILLION = '999999999';
+    public static MORE_THAN_ONE_BILLION = '1000000001';
+    public static NEGATIVE_NUMBER = '-1';
+    public static ONLY_WORD = 'only text';
+    public static VALID_CONTACT_NUMBER = '+8190-000-0001';
+    public static readonly EXAMPLE_DEFAULT_DATE = '2019-01-01';
+    public static readonly EXAMPLE_DEFAULT_DATE_SHORT = '2019-1-1';
+    public static readonly EXAMPLE_DATE_DIVIDED_BY_DOT = '2019.1.1';
+    public static readonly EXAMPLE_DATE_DIVIDED_BY_SLASH = '2019/1/1';
+    public static readonly DEFAULT_END_DATE = '9999-12-31';
     //#endregion
 
     //#region invalid feedback message
-    public static fieldRequiredErrorMessage = Constants.translator.invalidFeedback.fieldRequired;
-    public static exceededNOCErrorMessage = Constants.translator.invalidFeedback.exceededNOC;
-    public static exceededNOCErrorMessage16 = '16' + Constants.translator.invalidFeedback.exceededNOC;
-    public static exceededNOCErrorMessage255 = '255' + Constants.translator.invalidFeedback.exceededNOC;
-    public static exceededNOCErrorMessage50 = '50' + Constants.translator.invalidFeedback.exceededNOC;
-    public static exceededNOCErrorMessage1024 = '1024' + Constants.translator.invalidFeedback.exceededNOC;
-    public static exceededNOCErrorMessage64 = '64' + Constants.translator.invalidFeedback.exceededNOC;
+    public static FIELD_REQUIRED_ERROR_MESSAGE = Constants.translator.invalidFeedback.fieldRequired;
+    public static EXCEEDED_NOC_ERROR_MESSAGE = Constants.translator.invalidFeedback.exceededNOC;
+    public static EXCEEDED_NOC_ERROR_MESSAGE_16 = '16' + Constants.translator.invalidFeedback.exceededNOC;
+    public static EXCEEDED_NOC_ERROR_MESSAGE_255 = '255' + Constants.translator.invalidFeedback.exceededNOC;
+    public static EXCEEDED_NOC_ERROR_MESSAGE_50 = '50' + Constants.translator.invalidFeedback.exceededNOC;
+    public static EXCEEDED_NOC_ERROR_MESSAGE_1024 = '1024' + Constants.translator.invalidFeedback.exceededNOC;
+    public static EXCEEDED_NOC_ERROR_MESSAGE_64 = '64' + Constants.translator.invalidFeedback.exceededNOC;
     // this message content has been not decided yet
-    public static inputHalfSizeAlphaNumericTypeErrorMessage =
+    public static INPUT_HALF_SIZE_ALPHANUMERIC_TYPE_ERROR_MESSAGE =
         Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
-    public static duplicatedTypeErrorMessage = Constants.translator.invalidFeedback.duplicatedTypeError;
-    public static inputNumericTypeErrorMessage = Constants.translator.invalidFeedback.inputNumericTypeError;
-    public static decimalPlaceErrorMessage = Constants.translator.invalidFeedback.decimalPlaceTypeError;
+    public static DUPLICATED_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.duplicatedTypeError;
+    public static INPUT_NUMERIC_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputNumericTypeError;
+    public static DECIMAL_PLACE_ERROR_MESSAGE = Constants.translator.invalidFeedback.decimalPlaceTypeError;
     //#endregion
 
     //#region Project attributes
-    public static projectForms = Constants.translator.dropdownOptions.projectForms;
-    public static accuracyTypes = Constants.translator.dropdownOptions.accuracyTypes;
-    public static projectStatuses = Constants.translator.dropdownOptions.projectStatuses;
-    public static projectPlace = Constants.translator.dropdownOptions.projectPlace;
-    public static currencyIds = Constants.translator.dropdownOptions.currencyIds;
-    public static billingTypes = Constants.translator.dropdownOptions.billingTypes;
+    public static PROJECT_FORMS = Constants.translator.dropdownOptions.projectForms;
+    public static ACCURACY_TYPES = Constants.translator.dropdownOptions.accuracyTypes;
+    public static PROJECT_STATUSES = Constants.translator.dropdownOptions.projectStatuses;
+    public static PROJECT_PLACE = Constants.translator.dropdownOptions.projectPlace;
+    public static CURRENT_IDS = Constants.translator.dropdownOptions.currencyIds;
+    public static BILLING_TYPES = Constants.translator.dropdownOptions.billingTypes;
 
-    public static closingDates = {
+    public static CLOSING_DATES = {
         1: '1',
         2: '2',
         3: '3',
@@ -115,10 +114,10 @@ export class Constants {
         31: Constants.translator.dropdownOptions.date.endDate,
     };
 
-    public static japaneseEndDate = Constants.translator.dropdownOptions.date.endDate;
-    public static debitCreditGroupIds = Constants.translator.dropdownOptions.debitCreditGroupIds;
-    public static taxIds = Constants.translator.dropdownOptions.taxIds;
-    public static projectRole = Constants.translator.dropdownOptions.projectRole;
+    public static JAPANESE_END_DATE = Constants.translator.dropdownOptions.date.endDate;
+    public static DEBIT_CREDIT_GROUP_IDS = Constants.translator.dropdownOptions.debitCreditGroupIds;
+    public static TAX_IDS = Constants.translator.dropdownOptions.taxIds;
+    public static PROJECT_ROLE = Constants.translator.dropdownOptions.projectRole;
     //#endregion
 }
 

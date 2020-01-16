@@ -9,7 +9,7 @@ import { Utilities } from '../common/utilities';
 @page
 export class AddWorkingPlacePage extends GeneralPage {
     private workingPlaceFieldName = Constants.translator.fieldName.addWorkingPlace;
-    protected pageUrl = `${Constants.tmsBaseUrl}/working-place/add`;
+    protected pageUrl = `${Constants.TMS_BASE_URL}/working-place/add`;
 
     @action('input workingPlace info')
     public async inputWorkingPlaceInfo(workingPlaceInfo: WorkingPlaceInfo): Promise<void> {

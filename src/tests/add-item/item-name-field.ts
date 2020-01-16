@@ -20,7 +20,7 @@ TestCase('BMS-192. BMS:マスタ:品目作成:品目名:文字数', async () => 
     let actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_NAME_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -38,7 +38,7 @@ TestCase('BMS-192. BMS:マスタ:品目作成:品目名:文字数', async () => 
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_NAME_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.exceededNOCErrorMessage64,
+        Constants.EXCEEDED_NOC_ERROR_MESSAGE_64,
         'Invalid feedback message should be correct',
     );
 });

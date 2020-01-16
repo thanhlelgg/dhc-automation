@@ -17,7 +17,7 @@ TestCase('BMS-61. 案件:案件作成:出来高明細:予定時間:入力可能'
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY,
-        Constants.onlyWord,
+        Constants.ONLY_WORD,
     );
     gondola.report(`VP. 文字列を入力しても自動的に削除されること。`);
     await gondola.checkEqual(
@@ -42,7 +42,7 @@ TestCase('BMS-61. 案件:案件作成:出来高明細:予定時間:入力可能'
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY,
-        Constants.decimal,
+        Constants.DECIMAL,
     );
     await addProjectPage.saveNewProject();
     gondola.report(
@@ -53,7 +53,7 @@ TestCase('BMS-61. 案件:案件作成:出来高明細:予定時間:入力可能'
             randomRole,
             ResultsBaseField.UNIT_PRICE_WEEKDAY,
         ),
-        Constants.validationMessageForDecimal,
+        Constants.VALIDATION_MESSAGE_FOR_DECIMAL,
         'Invalid input value message should be displayed',
     );
     gondola.report(
@@ -71,7 +71,7 @@ TestCase('BMS-62. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY,
-        Constants.oneBillion,
+        Constants.ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -87,7 +87,7 @@ TestCase('BMS-62. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY,
-        Constants.moreThanOneBillion,
+        Constants.MORE_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -103,7 +103,7 @@ TestCase('BMS-62. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY,
-        Constants.lessThanOneBillion,
+        Constants.LESS_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -117,7 +117,7 @@ TestCase('BMS-62. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY,
-        Constants.negativeNumber,
+        Constants.NEGATIVE_NUMBER,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -143,7 +143,7 @@ TestCase('BMS-63. 案件:案件作成:出来高明細:請求単価:平日通常�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_OVERTIME,
-        Constants.onlyWord,
+        Constants.ONLY_WORD,
     );
     gondola.report(`VP. 文字列を入力しても自動的に削除されること。`);
     await gondola.checkEqual(
@@ -173,7 +173,7 @@ TestCase('BMS-63. 案件:案件作成:出来高明細:請求単価:平日通常�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_OVERTIME,
-        Constants.decimal,
+        Constants.DECIMAL,
     );
     await addProjectPage.saveNewProject();
     gondola.report(
@@ -184,7 +184,7 @@ TestCase('BMS-63. 案件:案件作成:出来高明細:請求単価:平日通常�
             randomRole,
             ResultsBaseField.UNIT_PRICE_WEEKDAY_OVERTIME,
         ),
-        Constants.validationMessageForDecimal,
+        Constants.VALIDATION_MESSAGE_FOR_DECIMAL,
         'Invalid input value message should be displayed',
     );
     gondola.report(
@@ -202,7 +202,7 @@ TestCase('BMS-64. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_OVERTIME,
-        Constants.oneBillion,
+        Constants.ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -221,7 +221,7 @@ TestCase('BMS-64. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_OVERTIME,
-        Constants.moreThanOneBillion,
+        Constants.MORE_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -240,7 +240,7 @@ TestCase('BMS-64. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_OVERTIME,
-        Constants.lessThanOneBillion,
+        Constants.LESS_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -259,7 +259,7 @@ TestCase('BMS-64. 案件:案件作成:出来高明細:予定時間:下限値・�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_OVERTIME,
-        Constants.negativeNumber,
+        Constants.NEGATIVE_NUMBER,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -293,7 +293,7 @@ TestCase('BMS-65. 案件:案件作成:出来高明細:請求単価:休日通常�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY,
-        Constants.onlyWord,
+        Constants.ONLY_WORD,
     );
     gondola.report(`VP. 文字列を入力しても自動的に削除されること。`);
     await gondola.checkEqual(
@@ -318,7 +318,7 @@ TestCase('BMS-65. 案件:案件作成:出来高明細:請求単価:休日通常�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY,
-        Constants.decimal,
+        Constants.DECIMAL,
     );
     await addProjectPage.saveNewProject();
     gondola.report(
@@ -329,7 +329,7 @@ TestCase('BMS-65. 案件:案件作成:出来高明細:請求単価:休日通常�
             randomRole,
             ResultsBaseField.UNIT_PRICE_HOLIDAY,
         ),
-        Constants.validationMessageForDecimal,
+        Constants.VALIDATION_MESSAGE_FOR_DECIMAL,
         'Invalid input value message should be displayed',
     );
     gondola.report(
@@ -347,7 +347,7 @@ TestCase('BMS-66. 案件:案件作成:出来高明細:請求単価:休日通常�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY,
-        Constants.oneBillion,
+        Constants.ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -363,7 +363,7 @@ TestCase('BMS-66. 案件:案件作成:出来高明細:請求単価:休日通常�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY,
-        Constants.moreThanOneBillion,
+        Constants.MORE_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -379,7 +379,7 @@ TestCase('BMS-66. 案件:案件作成:出来高明細:請求単価:休日通常�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY,
-        Constants.lessThanOneBillion,
+        Constants.LESS_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -393,7 +393,7 @@ TestCase('BMS-66. 案件:案件作成:出来高明細:請求単価:休日通常�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY,
-        Constants.negativeNumber,
+        Constants.NEGATIVE_NUMBER,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -419,7 +419,7 @@ TestCase('BMS-67. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE,
-        Constants.onlyWord,
+        Constants.ONLY_WORD,
     );
     gondola.report(`VP. 文字列を入力しても自動的に削除されること。`);
     await gondola.checkEqual(
@@ -444,7 +444,7 @@ TestCase('BMS-67. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE,
-        Constants.decimal,
+        Constants.DECIMAL,
     );
     await addProjectPage.saveNewProject();
     gondola.report(
@@ -455,7 +455,7 @@ TestCase('BMS-67. 案件:案件作成:出来高明細:請求単価:平日深夜�
             randomRole,
             ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE,
         ),
-        Constants.validationMessageForDecimal,
+        Constants.VALIDATION_MESSAGE_FOR_DECIMAL,
         'Invalid input value message should be displayed',
     );
     gondola.report(
@@ -473,7 +473,7 @@ TestCase('BMS-68. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE,
-        Constants.oneBillion,
+        Constants.ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -489,7 +489,7 @@ TestCase('BMS-68. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE,
-        Constants.moreThanOneBillion,
+        Constants.MORE_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -505,7 +505,7 @@ TestCase('BMS-68. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE,
-        Constants.lessThanOneBillion,
+        Constants.LESS_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -519,7 +519,7 @@ TestCase('BMS-68. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE,
-        Constants.negativeNumber,
+        Constants.NEGATIVE_NUMBER,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -545,7 +545,7 @@ TestCase('BMS-69. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
-        Constants.onlyWord,
+        Constants.ONLY_WORD,
     );
     gondola.report(`VP. 文字列を入力しても自動的に削除されること。`);
     await gondola.checkEqual(
@@ -582,7 +582,7 @@ TestCase('BMS-69. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
-        Constants.decimal,
+        Constants.DECIMAL,
     );
     await addProjectPage.saveNewProject();
     gondola.report(
@@ -593,7 +593,7 @@ TestCase('BMS-69. 案件:案件作成:出来高明細:請求単価:平日深夜�
             randomRole,
             ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
         ),
-        Constants.validationMessageForDecimal,
+        Constants.VALIDATION_MESSAGE_FOR_DECIMAL,
         'Invalid input value message should be displayed',
     );
     gondola.report(
@@ -611,7 +611,7 @@ TestCase('BMS-70. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
-        Constants.oneBillion,
+        Constants.ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -630,7 +630,7 @@ TestCase('BMS-70. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
-        Constants.moreThanOneBillion,
+        Constants.MORE_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -649,7 +649,7 @@ TestCase('BMS-70. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
-        Constants.lessThanOneBillion,
+        Constants.LESS_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -668,7 +668,7 @@ TestCase('BMS-70. 案件:案件作成:出来高明細:請求単価:平日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_WEEKDAY_LATE_OVERTIME,
-        Constants.negativeNumber,
+        Constants.NEGATIVE_NUMBER,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -706,7 +706,7 @@ TestCase('BMS-71. 案件:案件作成:出来高明細:請求単価:休日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY_LATE,
-        Constants.onlyWord,
+        Constants.ONLY_WORD,
     );
     gondola.report(`VP. 文字列を入力しても自動的に削除されること。`);
     await gondola.checkEqual(
@@ -731,7 +731,7 @@ TestCase('BMS-71. 案件:案件作成:出来高明細:請求単価:休日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY_LATE,
-        Constants.decimal,
+        Constants.DECIMAL,
     );
     await addProjectPage.saveNewProject();
     gondola.report(
@@ -742,7 +742,7 @@ TestCase('BMS-71. 案件:案件作成:出来高明細:請求単価:休日深夜�
             randomRole,
             ResultsBaseField.UNIT_PRICE_HOLIDAY_LATE,
         ),
-        Constants.validationMessageForDecimal,
+        Constants.VALIDATION_MESSAGE_FOR_DECIMAL,
         'Invalid input value message should be displayed',
     );
     gondola.report(
@@ -760,7 +760,7 @@ TestCase('BMS-72. 案件:案件作成:出来高明細:請求単価:休日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY_LATE,
-        Constants.oneBillion,
+        Constants.ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -776,7 +776,7 @@ TestCase('BMS-72. 案件:案件作成:出来高明細:請求単価:休日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY_LATE,
-        Constants.moreThanOneBillion,
+        Constants.MORE_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -792,7 +792,7 @@ TestCase('BMS-72. 案件:案件作成:出来高明細:請求単価:休日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY_LATE,
-        Constants.lessThanOneBillion,
+        Constants.LESS_THAN_ONE_BILLION,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);
@@ -806,7 +806,7 @@ TestCase('BMS-72. 案件:案件作成:出来高明細:請求単価:休日深夜�
     await addProjectPage.enterProjectResultBaseTextfield(
         randomRole,
         ResultsBaseField.UNIT_PRICE_HOLIDAY_LATE,
-        Constants.negativeNumber,
+        Constants.NEGATIVE_NUMBER,
     );
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「入力値が不正です」が表示されること。`);

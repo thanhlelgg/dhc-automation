@@ -16,11 +16,11 @@ const UNIT_PRICES_EMPTY = ProjectInfoData.RESULT_BASE_UNIT_PRICES_EMPTY;
 Before(setup);
 
 TestCase('BMS-73. 案件:案件作成:出来高明細:請求単価:自動計算:リーダの場合', async () => {
-    const projectRole = Constants.projectRole.leader;
+    const projectRole = Constants.PROJECT_ROLE.leader;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「リーダ」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 該当する請求用役職の出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
@@ -59,11 +59,11 @@ TestCase('BMS-73. 案件:案件作成:出来高明細:請求単価:自動計算:
 });
 
 TestCase('BMS-153. 案件:案件作成:出来高明細:請求単価:自動計算:テスターの場合', async () => {
-    const projectRole = Constants.projectRole.tester;
+    const projectRole = Constants.PROJECT_ROLE.tester;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「テスター」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. テスターの出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
@@ -102,11 +102,11 @@ TestCase('BMS-153. 案件:案件作成:出来高明細:請求単価:自動計算
 });
 
 TestCase('BMS-154. 案件:案件作成:出来高明細:請求単価:自動計算:PMの場合', async () => {
-    const projectRole = Constants.projectRole.PM;
+    const projectRole = Constants.PROJECT_ROLE.PM;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「PM」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. PMの出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
@@ -136,11 +136,11 @@ TestCase('BMS-154. 案件:案件作成:出来高明細:請求単価:自動計算
 });
 
 TestCase('BMS-155. 案件:案件作成:出来高明細:請求単価:自動計算:設計者の場合 ', async () => {
-    const projectRole = Constants.projectRole.designer;
+    const projectRole = Constants.PROJECT_ROLE.designer;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「設計者」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 設計者の出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
@@ -170,11 +170,11 @@ TestCase('BMS-155. 案件:案件作成:出来高明細:請求単価:自動計算
 });
 
 TestCase('BMS-156. 案件:案件作成:出来高明細:請求単価:自動計算:EXDBの場合', async () => {
-    const projectRole = Constants.projectRole.expert;
+    const projectRole = Constants.PROJECT_ROLE.expert;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「EXDB」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. EXDBの出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
@@ -204,11 +204,11 @@ TestCase('BMS-156. 案件:案件作成:出来高明細:請求単価:自動計算
 });
 
 TestCase('BMS-157. 案件:案件作成:出来高明細:請求単価:自動計算:予備1の場合', async () => {
-    const projectRole = Constants.projectRole.reserve1;
+    const projectRole = Constants.PROJECT_ROLE.reserve1;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「予備1」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備1の出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
@@ -238,11 +238,11 @@ TestCase('BMS-157. 案件:案件作成:出来高明細:請求単価:自動計算
 });
 
 TestCase('BMS-158. 案件:案件作成:出来高明細:請求単価:自動計算:予備2の場合', async () => {
-    const projectRole = Constants.projectRole.reserve2;
+    const projectRole = Constants.PROJECT_ROLE.reserve2;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「予備2」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備2の出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
@@ -272,11 +272,11 @@ TestCase('BMS-158. 案件:案件作成:出来高明細:請求単価:自動計算
 });
 
 TestCase('BMS-159. 案件:案件作成:出来高明細:請求単価:自動計算:予備3の場合', async () => {
-    const projectRole = Constants.projectRole.reserve3;
+    const projectRole = Constants.PROJECT_ROLE.reserve3;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「予備3」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備3の出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
@@ -306,11 +306,11 @@ TestCase('BMS-159. 案件:案件作成:出来高明細:請求単価:自動計算
 });
 
 TestCase('BMS-160. 案件:案件作成:出来高明細:請求単価:自動計算:予備4の場合', async () => {
-    const projectRole = Constants.projectRole.reserve4;
+    const projectRole = Constants.PROJECT_ROLE.reserve4;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「予備4」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備4の出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(
@@ -340,11 +340,11 @@ TestCase('BMS-160. 案件:案件作成:出来高明細:請求単価:自動計算
 });
 
 TestCase('BMS-161. 案件:案件作成:出来高明細:請求単価:自動計算:予備5の場合', async () => {
-    const projectRole = Constants.projectRole.reserve5;
+    const projectRole = Constants.PROJECT_ROLE.reserve5;
     gondola.report(
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の「予備5」チェックボックスでチェックを行う。`,
     );
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備5の出来高明細行が表示され、明細の入力ができる状態になること。`);
     await gondola.checkEqual(

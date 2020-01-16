@@ -28,7 +28,7 @@ TestCase('BMS-206. BMS:マスタ:品目作成:備考:文字数', async () => {
     actualFeedback = await addItemPage.getInvalidFeedBack(REMARKS_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.exceededNOCErrorMessage1024,
+        Constants.EXCEEDED_NOC_ERROR_MESSAGE_1024,
         'Invalid feedback message should be correct',
     );
 });

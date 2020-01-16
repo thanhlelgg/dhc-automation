@@ -13,10 +13,10 @@ const UNIT_PRICE_17_DIGITS = Utilities.getRandomNumber(0, 0, 17);
 const SECOND_DECIMAL = UNIT_PRICE_16_DIGITS / 100;
 const THIRD_DECIMAL = UNIT_PRICE_16_DIGITS / 1000;
 
-const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.fullSizeAlphaNumericString;
-const TEXT_ONE_BYTE_ALPHANUMERIC = Constants.fullSizeAlphaNumericString[0];
-const TEXT_HIRAGANA_KATAKANA = Constants.hiraganaKatakanaString;
-const TEXT_SYMBOL = Constants.symbolString;
+const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.FULL_SIZE_ALPHA_NUMERIC_STRING;
+const TEXT_ONE_BYTE_ALPHANUMERIC = Constants.FULL_SIZE_ALPHA_NUMERIC_STRING[0];
+const TEXT_HIRAGANA_KATAKANA = Constants.HIRAGANA_KATAKANA_STRING;
+const TEXT_SYMBOL = Constants.SYMBOL_STRING;
 const NUMBER_FULL_WIDTH = Utilities.getRandomNumber(0, 0, 16);
 const NUMBER_ONE_BYTE = Utilities.getRandomNumber(1, 9);
 
@@ -38,7 +38,7 @@ TestCase('BMS-198. BMS:マスタ:品目作成:標準販売単価:文字数', asy
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.exceededNOCErrorMessage16,
+        Constants.EXCEEDED_NOC_ERROR_MESSAGE_16,
         'Invalid feedback message should be correct',
     );
 
@@ -56,7 +56,7 @@ TestCase('BMS-198. BMS:マスタ:品目作成:標準販売単価:文字数', asy
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.decimalPlaceErrorMessage,
+        Constants.DECIMAL_PLACE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 });
@@ -69,7 +69,7 @@ TestCase('BMS-199. BMS:マスタ:品目作成:標準販売単価:文字種', asy
     let actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputNumericTypeErrorMessage,
+        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -80,7 +80,7 @@ TestCase('BMS-199. BMS:マスタ:品目作成:標準販売単価:文字種', asy
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputNumericTypeErrorMessage,
+        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -91,7 +91,7 @@ TestCase('BMS-199. BMS:マスタ:品目作成:標準販売単価:文字種', asy
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputNumericTypeErrorMessage,
+        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -102,7 +102,7 @@ TestCase('BMS-199. BMS:マスタ:品目作成:標準販売単価:文字種', asy
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputNumericTypeErrorMessage,
+        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
 
@@ -113,7 +113,7 @@ TestCase('BMS-199. BMS:マスタ:品目作成:標準販売単価:文字種', asy
     actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.inputNumericTypeErrorMessage,
+        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
         'Invalid feedback message should be displayed correctly',
     );
 

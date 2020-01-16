@@ -16,7 +16,7 @@ TestCase('BMS-82. 案件:得意先マスタ作成:顧客情報:取引先名 :文
     gondola.report(`VP. 入力フィールドの下にエラー「このフィールドは入力必須です」が表示されること。`);
     await gondola.checkEqual(
         await addCustomerPage.getInvalidFeedBack(CUSTOMER_NAME_TEXTFIELD_LABEL),
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Invalid feedback should be displayed correctly',
     );
 

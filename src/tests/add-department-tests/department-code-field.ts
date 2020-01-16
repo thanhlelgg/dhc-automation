@@ -20,7 +20,7 @@ TestCase('BMS-181. マスタ:部門作成:部門コード:文字数', async () =
     gondola.report(`VP. 入力フィールドの下にエラー「入力必須項目です」が表示されること。`);
     await gondola.checkEqual(
         await addDepartmentPage.getInvalidFeedBack(DEPARTMENT_CODE_TEXTFIELD_LABEL),
-        Constants.fieldRequiredErrorMessage,
+        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Field is required error message should be displayed',
     );
     gondola.report(`Step 3.「部門コード」で16文字を入力し、「保存」ボタンをクリックする。`);
@@ -44,7 +44,7 @@ TestCase('BMS-181. マスタ:部門作成:部門コード:文字数', async () =
     //BUG: no invalid feedback is displayed
     await gondola.checkEqual(
         await addDepartmentPage.getInvalidFeedBack(DEPARTMENT_CODE_TEXTFIELD_LABEL),
-        maximumNOC.toString() + Constants.exceededNOCErrorMessage,
+        maximumNOC.toString() + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
         'Invalid feedback should be displayed correctly',
     );
 });
@@ -53,7 +53,7 @@ TestCase('BMS-182. マスタ:部門作成:部門コード:文字種', async () =
     gondola.report(`Step 2. 「部門コード」で全角英数字を入力し、「保存」ボタンをクリックする`);
     await addDepartmentPage.enterTextFieldByLabel(
         DEPARTMENT_CODE_TEXTFIELD_LABEL,
-        Constants.fullSizeAlphaNumericString,
+        Constants.FULL_SIZE_ALPHA_NUMERIC_STRING,
     );
     await addDepartmentPage.saveDepartment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
@@ -65,7 +65,7 @@ TestCase('BMS-182. マスタ:部門作成:部門コード:文字種', async () =
     );
 
     gondola.report(`Step 3. 「部門コード」でひらがな・カタカナ字を入力し、「保存」ボタンをクリックする。`);
-    await addDepartmentPage.enterTextFieldByLabel(DEPARTMENT_CODE_TEXTFIELD_LABEL, Constants.hiraganaKatakanaString);
+    await addDepartmentPage.enterTextFieldByLabel(DEPARTMENT_CODE_TEXTFIELD_LABEL, Constants.HIRAGANA_KATAKANA_STRING);
     await addDepartmentPage.saveDepartment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct
@@ -76,7 +76,7 @@ TestCase('BMS-182. マスタ:部門作成:部門コード:文字種', async () =
     );
 
     gondola.report(`Step 4. 「部門コード」で記号を入力し、「保存」ボタンをクリックする。（例：「!"#$%&'()」を入力）`);
-    await addDepartmentPage.enterTextFieldByLabel(DEPARTMENT_CODE_TEXTFIELD_LABEL, Constants.symbolString);
+    await addDepartmentPage.enterTextFieldByLabel(DEPARTMENT_CODE_TEXTFIELD_LABEL, Constants.SYMBOL_STRING);
     await addDepartmentPage.saveDepartment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     //BUG: invalid feedback is not correct
@@ -89,7 +89,7 @@ TestCase('BMS-182. マスタ:部門作成:部門コード:文字種', async () =
     gondola.report(`Step 5. 「部門コード」で半角英数字を入力し、「保存」ボタンをクリックする。`);
     await addDepartmentPage.enterTextFieldByLabel(
         DEPARTMENT_CODE_TEXTFIELD_LABEL,
-        Constants.halfSizeAlphaNumericString,
+        Constants.HALF_SIZE_ALPHA_NUMERIC_STRING,
     );
     await addDepartmentPage.saveDepartment();
     gondola.report(`VP. 「半角英数で入力してください」という文字種誤りのエラーが表示されないこと。`);

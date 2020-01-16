@@ -1,5 +1,4 @@
 import { gondola } from 'gondolajs';
-import value from '*.json';
 
 export enum LoggingType {
     REPORT,
@@ -10,14 +9,12 @@ export enum LoggingType {
 export class FlagsCollector {
     private static failedFlags: string[];
 
-    public static async collectTruthLazy(
-        message: string,
-        getValue: (...args: any[]) => Promise<boolean>,
-        ...args: any[]
-    ): Promise<void> {
-        FlagsCollector.collectTruth(message, await getValue(...args), true);
-    }
-
+    /**
+     * Assert true but don't throw exception right away after failed. Need to call `verifyFlags` to assert result.
+     * @param message
+     * @param value
+     * @param skipIfUndefined
+     */
     public static collectTruth(message: string, value?: boolean, skipIfUndefined = true): void {
         if (value === undefined && skipIfUndefined) {
             return;
@@ -32,7 +29,7 @@ export class FlagsCollector {
 
     /**
      * Collect equal but check if expected data is available or not before calling the get actual data method
-     * this should be used when element is not exist to get it's attribute
+     * this should be used when we don't want to get actual value if expected value is undefined
      * @param message
      * @param expected
      * @param getActualValue
@@ -52,6 +49,13 @@ export class FlagsCollector {
         });
     }
 
+    /**
+     * Assert true but don't throw exception right away after failed. Need to call `verifyFlags` to assert result.
+     * @param message
+     * @param expected
+     * @param actual
+     * @param skipIfUndefined default true
+     */
     public static collectEqual(
         message: string,
         expected: string | number | boolean | undefined,
@@ -73,6 +77,10 @@ export class FlagsCollector {
         }
     }
 
+    /**
+     * Verify all cached checkpoints.
+     * @param loggingType
+     */
     public static verifyFlags(loggingType = LoggingType.REPORT): boolean {
         let result = true;
         if (FlagsCollector.failedFlags.length > 0) {

@@ -4,14 +4,14 @@ import { JsonProperty, JsonObject } from 'json2typescript';
 @JsonObject('PersonalInfo')
 export class PersonalInfo {
     name!: string;
-    alphabetName?: string = undefined;
+    alphabetName?: string;
     phoneticName!: string;
-    dateOfBirth?: string = undefined;
-    gender?: string = undefined;
+    dateOfBirth?: string;
+    gender?: string;
     groupId!: string;
     labId!: string;
     timezone!: string;
-    studentType?: string = undefined;
+    studentType?: string;
     loginInfo!: LoginInfo;
     contactInfo!: ContactInfo;
     emergencyContactInfo!: EmergencyContactInfo;
@@ -19,7 +19,7 @@ export class PersonalInfo {
     changePositionAndPriceHistory?: ChangePositionAndPriceHistory[];
     employmentHistory?: EmploymentHistory[];
     recruitmentHistory?: RecruitmentHistory[];
-    comment?: string = undefined;
+    comment?: string;
 }
 
 export class LoginInfo {
@@ -31,23 +31,23 @@ export class LoginInfo {
 export class ContactInfo {
     zipcode!: string;
     address1!: string;
-    address2?: string = undefined;
+    address2?: string;
     nearestStation1!: string;
-    nearestStation2?: string = undefined;
-    nearestStation3?: string = undefined;
+    nearestStation2?: string;
+    nearestStation3?: string;
     tel!: string;
     email!: string;
 }
 
 export class EmergencyContactInfo {
     name!: string;
-    alphabetName?: string = undefined;
+    alphabetName?: string;
     phoneticName!: string;
     relationship!: string;
     zipcode!: string;
     address1!: string;
-    address2?: string = undefined;
-    tel?: string = undefined;
+    address2?: string;
+    tel?: string;
 }
 
 export class InterviewInfo {
@@ -59,19 +59,19 @@ export class InterviewInfo {
 }
 
 export class ChangePositionAndPriceHistory {
-    applyDate?: string = undefined;
+    applyDate?: string;
     position!: string;
     unitPrice!: number;
-    allowance?: number = undefined;
+    allowance?: number;
 }
 
 export class EmploymentHistory {
-    date?: string = undefined;
+    date?: string;
     type!: string;
 }
 
 export class RecruitmentHistory {
-    date?: string = undefined;
+    date?: string;
     status!: string;
 }
 
@@ -81,13 +81,13 @@ export class ProfessionalInfo {
 }
 
 export class AttendanceInfo {
-    workAttitude?: string = undefined;
-    assignJudgment?: string = undefined;
+    workAttitude?: string;
+    assignJudgment?: string;
 }
 
 export class TrainingInfo {
     trainingSupplement?: boolean;
-    spiScore?: number = undefined;
+    spiScore?: number;
 }
 
 export class SkillInfo {
@@ -95,9 +95,9 @@ export class SkillInfo {
 }
 
 export class LanguageSkill {
-    nativeLanguage?: string = undefined;
-    nativeSecondLanguage?: string = undefined;
-    nativeJapanese?: string = undefined;
+    nativeLanguage?: string;
+    nativeSecondLanguage?: string;
+    nativeJapanese?: string;
 }
 
 export class LaborInfo {
@@ -113,64 +113,64 @@ export class LaborInfo {
 }
 
 export class PaymentInfo {
-    bugyoId?: string = undefined;
-    taxClassification?: string = undefined;
-    transferBankCode?: string = undefined;
-    transferBankName?: string = undefined;
-    transferBankPhoneticName?: string = undefined;
-    transferBranchCode?: string = undefined;
-    transferBranchName?: string = undefined;
-    depositClassification?: string = undefined;
-    transferAccountNumber?: string = undefined;
-    nameOfDepositAccount?: string = undefined;
-    phoneticNameOfDepositAccount?: string = undefined;
+    bugyoId?: string;
+    taxClassification?: string;
+    transferBankCode?: string;
+    transferBankName?: string;
+    transferBankPhoneticName?: string;
+    transferBranchCode?: string;
+    transferBranchName?: string;
+    depositClassification?: string;
+    transferAccountNumber?: string;
+    nameOfDepositAccount?: string;
+    phoneticNameOfDepositAccount?: string;
 }
 
 export class HealthInsuranceInfo {
-    healthInsuranceNo?: string = undefined;
+    healthInsuranceNo?: string;
 }
 
 export class HealthInsuranceHistory {
-    joinDate?: string = undefined;
-    stopDate?: string = undefined;
+    joinDate?: string;
+    stopDate?: string;
 }
 
 export class EmployeePensionInfo {
-    pensionFundNo?: string = undefined;
+    pensionFundNo?: string;
 }
 
 export class EmployeePensionHistory {
-    joinDate?: string = undefined;
-    stopDate?: string = undefined;
+    joinDate?: string;
+    stopDate?: string;
 }
 
 export class CareInsuranceInfo {
-    careInsuranceNo?: string = undefined;
+    careInsuranceNo?: string;
 }
 
 export class CareInsuranceHistory {
-    joinDate?: string = undefined;
-    stopDate?: string = undefined;
+    joinDate?: string;
+    stopDate?: string;
 }
 
 export class EmploymentInsuranceInfo {
-    unemploymentInsuranceNo?: string = undefined;
-    unemploymentInsuranceInfo?: string = undefined;
-    leaveCompanyName?: string = undefined;
-    leaveCompanyReason?: string = undefined;
-    leaveCompanyDate?: string = undefined;
+    unemploymentInsuranceNo?: string;
+    unemploymentInsuranceInfo?: string;
+    leaveCompanyName?: string;
+    leaveCompanyReason?: string;
+    leaveCompanyDate?: string;
 }
 
 export class EmploymentInsuranceHistory {
-    joinDate?: string = undefined;
-    status?: string = undefined;
+    joinDate?: string;
+    status?: string;
 }
 
 export class VisaInfo {
-    visaName?: string = undefined;
-    nationality?: string = undefined;
-    residencePaperId?: string = undefined;
-    termOfResidencePaper?: string = undefined;
+    visaName?: string;
+    nationality?: string;
+    residencePaperId?: string;
+    termOfResidencePaper?: string;
     isAllowedOutsideVisa?: boolean;
     specificationPaper?: boolean;
 }

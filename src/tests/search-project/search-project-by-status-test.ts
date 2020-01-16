@@ -7,7 +7,7 @@ import setup from './search-project-setup';
 TestModule('Search project - Search project by status');
 
 const PROJECT_STATUS_FIELD_NAME = Constants.translator.fieldName.addProject.status;
-const PROJECT_STATUSES = Object.values(Constants.projectStatuses);
+const PROJECT_STATUSES = Object.values(Constants.PROJECT_STATUSES);
 
 Before(setup);
 

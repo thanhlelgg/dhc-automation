@@ -8,7 +8,7 @@ import { FlagsCollector, LoggingType } from '../helper/flags-collector';
 @page
 export class AddPositionPage extends GeneralPage {
     private positionFieldName = Constants.translator.fieldName.addPosition;
-    protected pageUrl = `${Constants.tmsBaseUrl}/positions/add`;
+    protected pageUrl = `${Constants.TMS_BASE_URL}/positions/add`;
 
     @action('input position info')
     public async inputPositionInfo(positionInfo: PositionInfo): Promise<void> {

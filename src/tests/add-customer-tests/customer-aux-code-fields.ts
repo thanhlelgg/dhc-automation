@@ -34,7 +34,7 @@ TestCase('BMS-95. 案件:得意先マスタ作成:顧客情報:前受金補助�
     );
 
     gondola.report(`Step 4. 「前受金補助コード 」で全角英数字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.fullSizeAlphaNumericString);
+    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.FULL_SIZE_ALPHA_NUMERIC_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -44,7 +44,7 @@ TestCase('BMS-95. 案件:得意先マスタ作成:顧客情報:前受金補助�
     );
 
     gondola.report(`Step 5. 「前受金補助コード 」でひらがな・カタカナ字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.hiraganaKatakanaString);
+    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.HIRAGANA_KATAKANA_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -54,7 +54,7 @@ TestCase('BMS-95. 案件:得意先マスタ作成:顧客情報:前受金補助�
     );
 
     gondola.report(`Step 6. 「前受金補助コード 」で記号を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.symbolString);
+    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.SYMBOL_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -64,7 +64,7 @@ TestCase('BMS-95. 案件:得意先マスタ作成:顧客情報:前受金補助�
     );
 
     gondola.report(`Step 7. 「前受金補助コード 」で半角英字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.singleByteAlphabetString);
+    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.SINGE_BYTE_ALPHABET_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -74,11 +74,11 @@ TestCase('BMS-95. 案件:得意先マスタ作成:顧客情報:前受金補助�
     );
 
     gondola.report(`Step 8. 「前受金補助コード 」で半角数字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.singleByteNumberString);
+    await addCustomerPage.enterTextFieldByLabel(ADVANCE_RECEIVED_AUX_CODE, Constants.SINGLE_BYTE_NUMBER_STRING);
     gondola.report(`VP. 入力できること。`);
     await gondola.checkEqual(
         await addCustomerPage.getTextFieldValueByLabel(ADVANCE_RECEIVED_AUX_CODE),
-        Constants.singleByteNumberString,
+        Constants.SINGLE_BYTE_NUMBER_STRING,
         'Should be able to enter the valid text',
     );
 });
@@ -104,7 +104,7 @@ TestCase('BMS-96. 案件:得意先マスタ作成:顧客情報:売掛金補助�
     );
 
     gondola.report(`Step 4. 「売掛金補助コード」で全角英数字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.fullSizeAlphaNumericString);
+    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.FULL_SIZE_ALPHA_NUMERIC_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -114,7 +114,7 @@ TestCase('BMS-96. 案件:得意先マスタ作成:顧客情報:売掛金補助�
     );
 
     gondola.report(`Step 5. 「売掛金補助コード」でひらがな・カタカナ字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.hiraganaKatakanaString);
+    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.HIRAGANA_KATAKANA_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -124,7 +124,7 @@ TestCase('BMS-96. 案件:得意先マスタ作成:顧客情報:売掛金補助�
     );
 
     gondola.report(`Step 6. 「売掛金補助コード」で記号を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.symbolString);
+    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.SYMBOL_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -134,7 +134,7 @@ TestCase('BMS-96. 案件:得意先マスタ作成:顧客情報:売掛金補助�
     );
 
     gondola.report(`Step 7. 「売掛金補助コード」で半角英字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.singleByteAlphabetString);
+    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.SINGE_BYTE_ALPHABET_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -144,11 +144,11 @@ TestCase('BMS-96. 案件:得意先マスタ作成:顧客情報:売掛金補助�
     );
 
     gondola.report(`Step 8. 「売掛金補助コード」で半角数字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.singleByteNumberString);
+    await addCustomerPage.enterTextFieldByLabel(ACCOUNT_RECEIVABLE_AUX_CODE, Constants.SINGLE_BYTE_NUMBER_STRING);
     gondola.report(`VP. 入力できること。`);
     await gondola.checkEqual(
         await addCustomerPage.getTextFieldValueByLabel(ACCOUNT_RECEIVABLE_AUX_CODE),
-        Constants.singleByteNumberString,
+        Constants.SINGLE_BYTE_NUMBER_STRING,
         'Should be able to enter the valid text',
     );
 });
@@ -174,7 +174,7 @@ TestCase('BMS-97. 案件:得意先マスタ作成:顧客情報:売上金補助�
     );
 
     gondola.report(`Step 4. 「売上金補助コード」で全角英数字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.fullSizeAlphaNumericString);
+    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.FULL_SIZE_ALPHA_NUMERIC_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -184,7 +184,7 @@ TestCase('BMS-97. 案件:得意先マスタ作成:顧客情報:売上金補助�
     );
 
     gondola.report(`Step 5. 「売上金補助コード」でひらがな・カタカナ字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.hiraganaKatakanaString);
+    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.HIRAGANA_KATAKANA_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -194,7 +194,7 @@ TestCase('BMS-97. 案件:得意先マスタ作成:顧客情報:売上金補助�
     );
 
     gondola.report(`Step 6. 「売上金補助コード」で記号を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.symbolString);
+    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.SYMBOL_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -204,7 +204,7 @@ TestCase('BMS-97. 案件:得意先マスタ作成:顧客情報:売上金補助�
     );
 
     gondola.report(`Step 7. 「売上金補助コード」で半角英字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.singleByteAlphabetString);
+    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.SINGE_BYTE_ALPHABET_STRING);
     gondola.report(`VP. 入力できないこと。`);
     //BUG: till can enter invalid value
     await gondola.checkEqual(
@@ -214,11 +214,11 @@ TestCase('BMS-97. 案件:得意先マスタ作成:顧客情報:売上金補助�
     );
 
     gondola.report(`Step 8. 「売上金補助コード」で半角数字を入力する。`);
-    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.singleByteNumberString);
+    await addCustomerPage.enterTextFieldByLabel(SALES_AUX_CODE, Constants.SINGLE_BYTE_NUMBER_STRING);
     gondola.report(`VP. 入力できること。`);
     await gondola.checkEqual(
         await addCustomerPage.getTextFieldValueByLabel(SALES_AUX_CODE),
-        Constants.singleByteNumberString,
+        Constants.SINGLE_BYTE_NUMBER_STRING,
         'Should be able to enter the valid text',
     );
 });

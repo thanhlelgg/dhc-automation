@@ -9,7 +9,7 @@ export default async function setup(): Promise<string> {
         `Step 2.「案件形態」で「出来高案件」を選択し、「出来高明細」の請求用役職別のチェックボックスでチェックを行う。`,
     );
     const PROJECT_FORM_FIELD_NAME = Constants.translator.fieldName.addProject.projectForm;
-    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.projectForms.result);
+    await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     const randomRole = await addProjectPage.getRandomRoleLabel();
     await addProjectPage.setStatusResultBasesRoleCheckbox(randomRole, true);
     gondola.report(`VP. 該当する請求用役職の出来高明細行が表示され、明細の入力ができる状態になること。`);
