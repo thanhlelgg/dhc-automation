@@ -3,6 +3,7 @@ import { GeneralPage } from './general-page';
 import '@src/string.extensions';
 import { TaxInfo } from '../models/tax-info';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
+import { Constants } from '../common/constants';
 
 @page
 export class AddTaxPage extends GeneralPage {
@@ -10,6 +11,8 @@ export class AddTaxPage extends GeneralPage {
     protected addUnitPricesRecordButton = { id: 'addRow' };
     @locator
     protected addCustomerMagnificationRecordButton = { id: 'magnifyAddRow' };
+    @locator
+    protected pageUrl = `${Constants.BMS_BASE_URL}/taxes/add`;
 
     fieldName = this.translator.fieldName.addTax;
     placeHolder = this.translator.fieldPlaceHolder.addCustomer;
@@ -44,6 +47,11 @@ export class AddTaxPage extends GeneralPage {
             await this.getTextFieldValueByLabel(this.fieldName.displayOrder),
         );
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
+    }
+
+    @action('is current page')
+    public async isCurrentPage(): Promise<boolean> {
+        return await super.isCurrentPage(this.pageUrl);
     }
 }
 export default new AddTaxPage();

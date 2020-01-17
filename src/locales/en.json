@@ -389,7 +389,9 @@
         "decimalPlaceTypeError": "小数は第2位までが有効です"
     },
     "alertMessage": {
-        "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]"
+        "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]",
+        "agreeToDelete": "削除しますか？",
+        "couldNotDelete": "選択した税率 10% は案件の明細情報で使用されているため削除できません。"
     },
     "verticalMenuBMS": {
         "project": {
