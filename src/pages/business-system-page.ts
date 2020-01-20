@@ -37,7 +37,7 @@ export class BusinessSystemPage extends GeneralPage {
     }
 
     @action('gotoTaxesPage')
-    public async gotoTaxesPage(): Promise<void> {
+    public async gotoListTaxPage(): Promise<void> {
         await this.gotoPageByMenuButton(
             this.verticalMenuButton.master.title,
             this.verticalMenuButton.master.taxes.title,

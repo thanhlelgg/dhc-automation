@@ -93,6 +93,11 @@ export class GeneralPage {
     @locator
     protected savedMessage = "//div[@role='alert'  and normalize-space()='saved']";
     @locator
+    protected deleteSuccessMessage = "//div[@role='alert' and text()='税率 {0} を削除しました。']";
+    @locator
+    protected deleteFailMessage =
+        "//div[@role='alert' and text()='選択した税率 {0} は案件の明細情報で使用されているため削除できません。']";
+    @locator
     protected currentLanguage = { css: '.langname' };
     @locator
     protected languageOption = "//a[@class='changeFlag' and contains(@href, '{0}')]";
@@ -321,6 +326,18 @@ export class GeneralPage {
     @action('doesSavedMessageDisplay')
     public async doesSavedMessageDisplay(): Promise<boolean> {
         return await gondola.doesControlDisplay(this.savedMessage);
+    }
+
+    @action('doesDeleteSuccessMessageDisplay')
+    public async doesDeleteSuccessMessageDisplay(projectId: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.deleteSuccessMessage, projectId);
+        return await gondola.doesControlDisplay(locator);
+    }
+
+    @action('doesDeleteFailMessageDisplay')
+    public async doesDeleteFailMessageDisplay(projectId: string): Promise<boolean> {
+        const locator = Utilities.formatString(this.deleteFailMessage, projectId);
+        return await gondola.doesControlDisplay(locator);
     }
 
     @action('chooseLanguage')
