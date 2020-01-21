@@ -316,9 +316,9 @@
                     "visaName": "在留カード氏名",
                     "nationality": "国籍",
                     "residencePaperId": "在留資格",
-                    "termOfResidencePaper" : "有効期限",
+                    "termOfResidencePaper": "有効期限",
                     "isAllowedOutsideVisa": "資格外活動許可",
-                    "specificationPaper" : "指定書"
+                    "specificationPaper": "指定書"
                 }
             },
             "roleInfo": {
@@ -361,8 +361,8 @@
         "positions": {
             "searchTextBox": "検索"
         },
-        "addUser" : {
-            "comment" : "コメント"
+        "addUser": {
+            "comment": "コメント"
         }
     },
     "inputGroupName": {
@@ -390,7 +390,9 @@
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]",
-        "agreeToDelete": "削除しますか？"
+        "agreeToDelete": "削除しますか？",
+        "deleteFailMessage": "選択した税率 {0} は案件の明細情報で使用されているため削除できません。",
+        "deleteSuccessMessage": "税率 {0} を削除しました。"
     },
     "verticalMenuBMS": {
         "project": {

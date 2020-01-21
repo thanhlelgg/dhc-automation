@@ -42,8 +42,7 @@
                 "unit": "台",
                 "unitPrice": "3000"
             }
-        ]
-            ,
+        ],
         "twoRecords": [
             {
                 "detailName": "機器使用料金",
@@ -159,6 +158,6 @@
             "unitPriceHolidayLate": "2400",
             "isTaxable": true,
             "taxId": "10%"
-        }         
+        }
     }
 }

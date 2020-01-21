@@ -2,7 +2,6 @@ import { action, gondola, page, locator } from 'gondolajs';
 import { GeneralPage } from './general-page';
 import { Constants } from '../common/constants';
 import '@src/string.extensions';
-import utilities, { Utilities } from '../common/utilities';
 
 @page
 export class ListTaxPage extends GeneralPage {
@@ -13,39 +12,45 @@ export class ListTaxPage extends GeneralPage {
     @locator
     protected deleteButton = "//a[text()='{0}']/../..//div[@tabulator-field='delete']//a";
     @locator
-    protected couldNotDeleteMessage = '選択した税率 {0} は案件の明細情報で使用されているため削除できません。';
+    protected deleteSuccessMessage = `//div[@role='alert' and text()='${Constants.translator.alertMessage.deleteSuccessMessage}']`;
     @locator
-    protected couldDeleteMessage = '税率 {0} を削除しました。';
+    protected deleteFailMessage = `//div[@role='alert' and text()='${Constants.translator.alertMessage.deleteFailMessage}']`;
 
-    @action('getTextCouldNotDelete')
-    public getTextCouldNotDelte(text: string): string {
-        return Utilities.formatString(this.couldNotDeleteMessage, text);
+    @action('wait for alert')
+    public async waitForAlert(): Promise<void> {
+        await gondola.waitForAlert();
     }
 
-    @action('getTextCouldDelete')
-    public getTextCouldDelete(text: string): string {
-        return Utilities.formatString(this.couldDeleteMessage, text);
+    @action('does delete button display')
+    public async checkControlExist(projectId: string): Promise<boolean> {
+        const locator = this.deleteButton.format(projectId);
+        return await gondola.doesControlExist(locator);
     }
 
-    @action('openCustomerByName')
+    @action('does delete success message display')
+    public doesDeleteSuccessMessageDisplay(projectId: string): Promise<boolean> {
+        return this.doesAlertDisplay(this.deleteSuccessMessage, projectId);
+    }
+
+    @action('does delete fail message display')
+    public doesDeleteFailMessageDisplay(projectId: string): Promise<boolean> {
+        return this.doesAlertDisplay(this.deleteFailMessage, projectId);
+    }
+
+    @action('open customer by name')
     public async openTaxByCode(name: string): Promise<void> {
         await gondola.click(this.taxLink.format(name));
     }
 
     @action('click on delete button')
     public async clickOnDeleteButton(projectId: string): Promise<void> {
-        const locator = Utilities.formatString(this.deleteButton, projectId);
+        const locator = this.deleteButton.format(projectId);
         await gondola.click(locator);
     }
 
-    @action('isCurrentPage')
+    @action('is current page')
     public async isCurrentPage(): Promise<boolean> {
         return await super.isCurrentPage(this.pageUrl);
-    }
-
-    @action('checkControlExist')
-    public async checkControlExist(): Promise<void> {
-        await gondola.checkControlNotExist(this.deleteButton);
     }
 }
 export default new ListTaxPage();

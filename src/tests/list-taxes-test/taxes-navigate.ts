@@ -6,7 +6,7 @@ import loginPage from '../../pages/login-page';
 import businessSystemPage from '../../pages/business-system-page';
 import { ButtonIcon } from '../../models/enum-class/button-icon';
 
-TestModule('Tax page - navigate page');
+TestModule('Tax page - Navigate page tests');
 
 Before(setup);
 
