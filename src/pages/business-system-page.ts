@@ -36,7 +36,7 @@ export class BusinessSystemPage extends GeneralPage {
         );
     }
 
-    @action('gotoTaxesPage')
+    @action('go to list tax page')
     public async gotoListTaxPage(): Promise<void> {
         await this.gotoPageByMenuButton(
             this.verticalMenuButton.master.title,
@@ -72,7 +72,7 @@ export class BusinessSystemPage extends GeneralPage {
         );
     }
 
-    @action('go to department page')
+    @action('go to add tax page')
     public async gotoAddTaxPage(): Promise<void> {
         await this.gotoPageByMenuButton(
             this.verticalMenuButton.master.title,

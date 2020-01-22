@@ -99,7 +99,7 @@ export class ProjectInfoData {
         return Object.assign(new ProjectDetailInfo(), item);
     });
 
-    public static DETAIL_ONE_RECORDS: ProjectDetailInfo[] = projectInfo.projectDetail.oneRecords.map(item => {
+    public static DETAIL_ONE_RECORD: ProjectDetailInfo[] = projectInfo.projectDetail.oneRecord.map(item => {
         return Object.assign(new ProjectDetailInfo(), item);
     });
 

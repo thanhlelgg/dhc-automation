@@ -22,7 +22,7 @@ export class ListTaxPage extends GeneralPage {
     }
 
     @action('does delete button display')
-    public async checkControlExist(projectId: string): Promise<boolean> {
+    public async doesDeleteButtonDisplay(projectId: string): Promise<boolean> {
         const locator = this.deleteButton.format(projectId);
         return await gondola.doesControlExist(locator);
     }

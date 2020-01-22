@@ -323,9 +323,9 @@ export class GeneralPage {
         return await gondola.doesControlDisplay(this.savedMessage);
     }
 
-    @action('doesAlertDisplay')
-    public async doesAlertDisplay(message: string, projectId: string): Promise<boolean> {
-        const locator = message.format(projectId);
+    @action('does alert display')
+    public async doesAlertDisplay(messageLocator: string, projectId: string): Promise<boolean> {
+        const locator = messageLocator.format(projectId);
         return await gondola.doesControlDisplay(locator);
     }
 
@@ -801,6 +801,16 @@ export class GeneralPage {
             await gondola.click(currentLocator);
             currentLocator += this.menuButtonByTitle;
         }
+    }
+
+    @action('get popup text')
+    public async getPopupText(): Promise<string> {
+        return await gondola.getPopupText();
+    }
+
+    @action('click popup')
+    public async clickPopup(option: string): Promise<void> {
+        await gondola.clickPopup(option);
     }
 }
 export default new GeneralPage();

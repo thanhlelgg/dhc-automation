@@ -11,7 +11,7 @@ import { Utilities } from '../../common/utilities';
 import addTaxPage from '../../pages/add-tax-page';
 import { TaxInfoData } from '../../models/tax-info';
 
-const PROJECT_DETAIL_DATA = ProjectInfoData.DETAIL_ONE_RECORDS;
+const PROJECT_DETAIL_DATA = ProjectInfoData.DETAIL_ONE_RECORD;
 const AGREE_TO_DELETE = Constants.translator.alertMessage.agreeToDelete;
 
 TestModule('Tax page - Delete button tests');
@@ -20,7 +20,7 @@ Before(setup);
 
 TestCase('BMS-393. マスタ:税率一覧:削除ボタン:削除ボタン:削除対象の税率の案件作成済の場合', async () => {
     TaxInfoData.TAX_FULL_DATA.name = Utilities.getRandomText(4);
-    ProjectInfoData.DETAIL_ONE_RECORDS[0].taxId = TaxInfoData.TAX_FULL_DATA.name;
+    ProjectInfoData.DETAIL_ONE_RECORD[0].taxId = TaxInfoData.TAX_FULL_DATA.name;
     gondola.report('Precondition 2. 削除対象の税率の案件を作成しておく。');
     await loginPage.gotoBusinessSystem();
     await businessSystemPage.gotoAddTaxPage();
@@ -44,12 +44,12 @@ TestCase('BMS-393. マスタ:税率一覧:削除ボタン:削除ボタン:削除
     gondola.report('VP. 確認アラート画面が表示されること。');
     await listTaxPage.waitForAlert();
     await gondola.checkEqual(
-        await gondola.getPopupText(),
+        await listTaxPage.getPopupText(),
         AGREE_TO_DELETE,
         'Alert message should be displayed correctly',
     );
     gondola.report('Step 3. アラート画面で確認する');
-    await gondola.clickPopup('ok');
+    await listTaxPage.clickPopup('ok');
     gondola.report('VP. 削除はできない、エラー「この税率で案件情報があるため削除できません」が表示されること。');
     await gondola.checkEqual(
         await listTaxPage.doesDeleteFailMessageDisplay(TaxInfoData.TAX_FULL_DATA.name),
@@ -75,9 +75,13 @@ TestCase('BMS-394. マスタ:税率一覧:削除ボタン:削除対象の税率�
     await listTaxPage.clickOnDeleteButton(TaxInfoData.TAX_FULL_DATA.name);
     gondola.report('VP. 確認アラート画面が表示されること。');
     await listTaxPage.waitForAlert();
-    gondola.checkEqual(await gondola.getPopupText(), AGREE_TO_DELETE, 'alert message should be displayed correctly');
+    gondola.checkEqual(
+        await listTaxPage.getPopupText(),
+        AGREE_TO_DELETE,
+        'Alert message should be displayed correctly',
+    );
     gondola.report('Step 3. アラート画面で確認する');
-    await gondola.clickPopup('ok');
+    await listTaxPage.clickPopup('ok');
     gondola.report('VP. 正常に削除できること。');
     await gondola.checkEqual(
         await listTaxPage.doesDeleteSuccessMessageDisplay(TaxInfoData.TAX_FULL_DATA.name),
@@ -85,8 +89,8 @@ TestCase('BMS-394. マスタ:税率一覧:削除ボタン:削除対象の税率�
         'Alert message should be displayed correctly',
     );
     await gondola.checkEqual(
-        await listTaxPage.checkControlExist(TaxInfoData.TAX_FULL_DATA.name),
+        await listTaxPage.doesDeleteButtonDisplay(TaxInfoData.TAX_FULL_DATA.name),
         false,
-        'Delete button should not be existed',
+        'Delete button should not exist',
     );
 });
