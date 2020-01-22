@@ -139,5 +139,41 @@ export class BusinessSystemPage extends GeneralPage {
     public async gotoListRolePage(): Promise<void> {
         await this.gotoPageByMenuButton(this.verticalMenuButton.system.title, this.verticalMenuButton.system.role);
     }
+
+    @action('go to add exchange page')
+    public async gotoAddExchangePage(): Promise<void> {
+        await this.gotoPageByMenuButton(
+            this.verticalMenuButton.master.title,
+            this.verticalMenuButton.master.exchange.title,
+            this.verticalMenuButton.master.exchange.addCurrency,
+        );
+    }
+
+    @action('go to list exchange rate page')
+    public async gotoListExchangeRatePage(): Promise<void> {
+        await this.gotoPageByMenuButton(
+            this.verticalMenuButton.master.title,
+            this.verticalMenuButton.master.exchange.title,
+            this.verticalMenuButton.master.exchange.listExchangeRate,
+        );
+    }
+
+    @action('go to add exchange rate page')
+    public async gotoAddExchangeRatePage(): Promise<void> {
+        await this.gotoPageByMenuButton(
+            this.verticalMenuButton.master.title,
+            this.verticalMenuButton.master.exchange.title,
+            this.verticalMenuButton.master.exchange.addExchangeRate,
+        );
+    }
+
+    @action('got to list exchange page')
+    public async gotoListExchangePage(): Promise<void> {
+        await this.gotoPageByMenuButton(
+            this.verticalMenuButton.master.title,
+            this.verticalMenuButton.master.exchange.title,
+            this.verticalMenuButton.master.exchange.listCurrency,
+        );
+    }
 }
 export default new BusinessSystemPage();

@@ -71,6 +71,7 @@ export class Constants {
     public static SEVENTEEN_DIGIT_NUMBER = Constants.SIXTEEN_DIGIT_NUMBER + '9';
     public static NEGATIVE_NUMBER = '-1';
     public static ONLY_WORD = 'only text';
+    public static CODE_NUMBER = '1111';
     public static VALID_CONTACT_NUMBER = '+8190-000-0001';
     public static readonly EXAMPLE_DEFAULT_DATE = '2019-01-01';
     public static readonly EXAMPLE_DEFAULT_DATE_SHORT = '2019-1-1';
@@ -94,10 +95,10 @@ export class Constants {
         Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
     public static DUPLICATED_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.duplicatedTypeError;
     public static INPUT_NUMERIC_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputNumericTypeError;
+    public static INPUT_INTEGER_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputIntegerTypeError;
     public static DECIMAL_PLACE_ERROR_MESSAGE = Constants.translator.invalidFeedback.decimalPlaceTypeError;
     public static NOT_POSITIVE_INTEGER_NUMBER_ERROR_MESSAGE = Constants.translator.invalidFeedback.negativeNumberError;
     public static NEGATIVE_NUMBER_ERROR_MESSAGE = Constants.translator.invalidFeedback.negativeNumberError;
-    public static INPUT_INTEGER_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputIntegerTypeError;
     //#endregion
 
     //#region Project attributes

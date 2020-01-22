@@ -19,6 +19,8 @@ export class AddCustomerPage extends GeneralPage {
     protected paymentCycleMonth = "//input[@id='collect_cycle_month']";
     @locator
     protected paymentCycleMonthlyDay = "//input[@id='collect_cycle_monthly_day']";
+    @locator
+    protected currencyOption = "//select[@id='exchange-id']//option[text()='{0}']";
 
     fieldName = this.translator.fieldName.addCustomer;
     placeHolder = this.translator.fieldPlaceHolder.addCustomer;
@@ -424,6 +426,11 @@ export class AddCustomerPage extends GeneralPage {
             );
         }
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
+    }
+
+    @action('check currency exist')
+    public async checkCurrencyExist(currency: string): Promise<boolean> {
+        return await gondola.doesControlDisplay(this.currencyOption.format(currency));
     }
 
     public async doesCustomerDisplayCorrectly(customerInfo: CustomerInfo): Promise<boolean> {

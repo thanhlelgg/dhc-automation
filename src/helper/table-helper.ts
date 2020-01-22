@@ -72,6 +72,14 @@ export class TableHelper {
     }
 
     /**
+     *
+     * @param headerName
+     */
+    public async doesHeaderValueExist(headerName: string): Promise<boolean> {
+        return (await this.getHeaderIndex(headerName)) >= 1;
+    }
+
+    /**
      * Get all rows of one column by it's name
      * @param headerName
      */
