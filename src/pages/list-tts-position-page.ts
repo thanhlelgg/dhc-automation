@@ -3,7 +3,7 @@ import { GeneralPage } from './general-page';
 import { Constants } from '../common/constants';
 @page
 export class ListPositionPage extends GeneralPage {
-    private pageUrl = `${Constants.ttsBaseUrl}/positions`;
+    private pageUrl = `${Constants.TTS_BASE_URL}/positions`;
     protected positionLink = "//div[@tabulator-field='position_name']/a[text()='{0}']";
 
     @action('open Position by name')

@@ -3,7 +3,7 @@ import { GeneralPage } from './general-page';
 import { Constants } from '../common/constants';
 @page
 export class ListSpecialAllowancePage extends GeneralPage {
-    private pageUrl = `${Constants.ttsBaseUrl}/special-allowances`;
+    private pageUrl = `${Constants.TTS_BASE_URL}/special-allowances`;
     protected specialAllowanceLink = "//div[@tabulator-field='name']/a[text()='{0}']";
 
     @action('openCustomerByName')
