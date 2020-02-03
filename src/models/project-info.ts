@@ -98,6 +98,11 @@ export class ProjectInfoData {
     public static DETAIL_TWO_RECORDS: ProjectDetailInfo[] = projectInfo.projectDetail.twoRecords.map(item => {
         return Object.assign(new ProjectDetailInfo(), item);
     });
+
+    public static DETAIL_ONE_RECORD: ProjectDetailInfo[] = projectInfo.projectDetail.oneRecord.map(item => {
+        return Object.assign(new ProjectDetailInfo(), item);
+    });
+
     public static RESOURCE_FULL_DATA: ProjectResourceInfo = Object.assign(
         new ProjectResourceInfo(),
         projectInfo.projectResource.fullData,

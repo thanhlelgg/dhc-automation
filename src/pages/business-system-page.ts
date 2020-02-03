@@ -36,6 +36,15 @@ export class BusinessSystemPage extends GeneralPage {
         );
     }
 
+    @action('go to list tax page')
+    public async gotoListTaxPage(): Promise<void> {
+        await this.gotoPageByMenuButton(
+            this.verticalMenuButton.master.title,
+            this.verticalMenuButton.master.taxes.title,
+            this.verticalMenuButton.master.taxes.listLink,
+        );
+    }
+
     @action('gotoAddItemPage')
     public async gotoAddItemPage(): Promise<void> {
         await this.gotoPageByMenuButton(
@@ -63,7 +72,7 @@ export class BusinessSystemPage extends GeneralPage {
         );
     }
 
-    @action('go to department page')
+    @action('go to add tax page')
     public async gotoAddTaxPage(): Promise<void> {
         await this.gotoPageByMenuButton(
             this.verticalMenuButton.master.title,

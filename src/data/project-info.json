@@ -31,6 +31,18 @@
         }
     },
     "projectDetail": {
+        "oneRecord": [
+            {
+                "detailName": "機器使用料金3",
+                "item": "物販",
+                "debitCredit": "売掛/売上",
+                "isTaxable": true,
+                "taxId": "5%",
+                "quantity": "3",
+                "unit": "台",
+                "unitPrice": "3000"
+            }
+        ],
         "twoRecords": [
             {
                 "detailName": "機器使用料金",
@@ -146,6 +158,6 @@
             "unitPriceHolidayLate": "2400",
             "isTaxable": true,
             "taxId": "10%"
-        }         
+        }
     }
 }

@@ -323,6 +323,12 @@ export class GeneralPage {
         return await gondola.doesControlDisplay(this.savedMessage);
     }
 
+    @action('does alert display')
+    public async doesAlertDisplay(messageLocator: string, projectId: string): Promise<boolean> {
+        const locator = messageLocator.format(projectId);
+        return await gondola.doesControlDisplay(locator);
+    }
+
     @action('chooseLanguage')
     public async chooseLanguage(language: Language | string | undefined): Promise<void> {
         if (!language) {
@@ -795,6 +801,16 @@ export class GeneralPage {
             await gondola.click(currentLocator);
             currentLocator += this.menuButtonByTitle;
         }
+    }
+
+    @action('get popup text')
+    public async getPopupText(): Promise<string> {
+        return await gondola.getPopupText();
+    }
+
+    @action('click popup')
+    public async clickPopup(option: string): Promise<void> {
+        await gondola.clickPopup(option);
     }
 }
 export default new GeneralPage();
