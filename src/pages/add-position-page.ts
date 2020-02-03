@@ -1,4 +1,4 @@
-import { page, action } from 'gondolajs';
+import { page, action, gondola } from 'gondolajs';
 import { GeneralPage } from './general-page';
 import '@src/string.extensions';
 import { PositionInfo } from '../models/position-info';
@@ -12,6 +12,7 @@ export class AddPositionPage extends GeneralPage {
 
     @action('input position info')
     public async inputPositionInfo(positionInfo: PositionInfo): Promise<void> {
+        await this.waitForStalenessOfTextFieldByLabel(this.positionFieldName.positionName, true);
         await this.enterTextFieldByLabel(this.positionFieldName.positionName, positionInfo.positionName, true);
         await this.enterTextFieldByLabel(
             this.positionFieldName.positionAbbreviation,

@@ -343,7 +343,7 @@ class HelperExt extends Helper {
 
     public async waitForElementDisappearSoftly(control: any, timeOut: number): Promise<void> {
         try {
-            await this.helpers['GondolaHelper'].waitForElementDisappear(control, timeOut);
+            await this.helpers['GondolaHelper'].waitForDisappear(control, timeOut);
         } catch (error) {
             console.log(error);
         }

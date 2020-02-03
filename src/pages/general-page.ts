@@ -15,7 +15,7 @@ import { SearchResultColumn } from '../models/enum-class/search-result-column';
 export class GeneralPage {
     protected translator = Translate.getTranslator();
     @locator
-    protected menuButtonByTitle = "//li[@title='{0}']";
+    protected menuButtonByText = "//li[a[span[normalize-space()='{0}']] or @title='{0}']";
     @locator
     protected pageTitle = "//h1[@class = 'page-title' and normalize-space()='{0}']";
     @locator
@@ -25,7 +25,7 @@ export class GeneralPage {
     @locator
     protected businessSystemLink = `//a[.='${this.translator.headerMenu.businessSystem}']`;
     @locator
-    protected taskSystemLink = `//a[.='${this.translator.headerMenu.businessSystem}']`;
+    protected taskSystemLink = `//a[.='${this.translator.headerMenu.taskSystem}']`;
     @locator
     protected talentManagementLink = `//a[.='${this.translator.headerMenu.home}']`;
     @locator
@@ -91,7 +91,7 @@ export class GeneralPage {
     @locator
     protected closeModuleButtonByName = "//div[h5[normalize-space()='{0}']]//span[normalize-space()='×']";
     @locator
-    protected savedMessage = "//div[@role='alert'  and normalize-space()='saved']";
+    protected savedMessage = "//div[@role='alert'  and text()='saved']";
     @locator
     protected currentLanguage = { css: '.langname' };
     @locator
@@ -220,6 +220,12 @@ export class GeneralPage {
         } else {
             return await gondola.getText(locator);
         }
+    }
+
+    @action('enterTextFieldByLabel')
+    public async waitForStalenessOfTextFieldByLabel(label: string, partial = false): Promise<void> {
+        const locator = partial ? this.textFieldByLabelPartialMatch : this.textFieldByLabel;
+        await gondola.waitUntilStalenessOfElement(locator.format(label), Constants.VERY_SHORT_TIMEOUT);
     }
 
     @action('enterTextFieldByLabel')
@@ -794,12 +800,12 @@ export class GeneralPage {
 
     @action('go to page using menu button')
     public async gotoPageByMenuButton(...buttonTitles: string[]): Promise<void> {
-        let currentLocator = this.menuButtonByTitle;
+        let currentLocator = this.menuButtonByText;
         for (const buttonTitle of buttonTitles) {
             currentLocator = currentLocator.format(buttonTitle);
             await gondola.waitUntilElementVisible(currentLocator);
             await gondola.click(currentLocator);
-            currentLocator += this.menuButtonByTitle;
+            currentLocator += this.menuButtonByText;
         }
     }
 

@@ -15,7 +15,6 @@ export class AddSegmentPage extends GeneralPage {
     protected addCustomerMagnificationRecordButton = { id: 'magnifyAddRow' };
 
     fieldName = this.translator.fieldName.addSegment;
-    placeHolder = this.translator.fieldPlaceHolder.addCustomer;
 
     @action('save segment')
     public async saveSegment(): Promise<void> {

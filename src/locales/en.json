@@ -27,6 +27,17 @@
         }
     },
     "fieldName": {
+        "addTTSPosition": {
+            "name": "ポジション名",
+            "abbreviation": "省略名",
+            "payAllowance": "手当支給",
+            "timecardApprove": "タイムカード承認"
+        },
+        "addSpecialAllowance": {
+            "name": "特別手当名",
+            "amount": "手当額",
+            "skillNecessary": "必要スキル"
+        },
         "addProject": {
             "number": "案件番号",
             "name": "案件名",
@@ -451,6 +462,25 @@
         "userManagement": {
             "title": "ユーザー管理",
             "addUser": "新規ユーザー登録"
+        }
+    },
+    "verticalMenuTTS": {
+        "projectManagement": "案件管理",
+        "multipleProjects": "複数案件手配",
+        "specialAllowanceManagement": {
+            "title": "特殊手当管理",
+            "approval": "承認処理"
+        },
+        "masterDataManagement": {
+            "title": "マスタデータ管理",
+            "position": "職位",
+            "specialAllowance": "特殊手当"
+        },
+        "widgetSettings": {
+            "title": "ウィジェット設定",
+            "role": "ウィジェットロール",
+            "workers": "労働管理",
+            "employees": "稼働数管理"
         }
     },
     "backButton": "戻る",

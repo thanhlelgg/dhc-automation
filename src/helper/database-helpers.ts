@@ -13,6 +13,8 @@ import { Projects } from '../entity/Projects';
 import { Utilities } from '../common/utilities';
 import { Constants } from '../common/constants';
 import { Taxes } from '../entity/Taxes';
+import { SpecialAllowances } from '../entity/SpecialAllowances';
+import { Positions as TTSPositions } from '../entity/TTSPositions';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -239,6 +241,50 @@ export class DatabaseHelper {
             return worker.cd;
         });
         return workerCodes.includes(workerName);
+    }
+
+    /**
+     * Get active TTSPositions from the database
+     */
+    public static async getActiveTTSPositions(): Promise<TTSPositions[]> {
+        const alias = 'positions';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.position_name IS NOT NULL`;
+        const ttsPositions = await DatabaseHelper.getAll(DatabaseSchema.TTS, TTSPositions, alias, query);
+        return ttsPositions;
+    }
+
+    /**
+     * Check if TTSPosition exist
+     * @param ttsPositionName
+     */
+    public static async doesTTSPositionExist(ttsPositionName: string): Promise<boolean> {
+        const availableTTSPositions = await DatabaseHelper.getActiveTTSPositions();
+        const ttsPositionCodes = availableTTSPositions.map(ttsPosition => {
+            return ttsPosition.position_name;
+        });
+        return ttsPositionCodes.includes(ttsPositionName);
+    }
+
+    /**
+     * Get active Special Allowances from the database
+     */
+    public static async getActiveSpecialAllowances(): Promise<SpecialAllowances[]> {
+        const alias = 'special_allowances';
+        const query = `${alias}.name IS NOT NULL`;
+        const specialAllowances = await DatabaseHelper.getAll(DatabaseSchema.TTS, SpecialAllowances, alias, query);
+        return specialAllowances;
+    }
+
+    /**
+     * Check if SpecialAllowance exist
+     * @param specialAllowanceName
+     */
+    public static async doesSpecialAllowanceExist(specialAllowanceName: string): Promise<boolean> {
+        const availableSpecialAllowances = await DatabaseHelper.getActiveSpecialAllowances();
+        const specialAllowanceCodes = availableSpecialAllowances.map(specialAllowance => {
+            return specialAllowance.name;
+        });
+        return specialAllowanceCodes.includes(specialAllowanceName);
     }
 
     /**

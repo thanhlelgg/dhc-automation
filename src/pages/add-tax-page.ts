@@ -32,17 +32,17 @@ export class AddTaxPage extends GeneralPage {
     @action('does tax display correctly')
     public async doesTaxDisplayCorrectly(taxInfo: TaxInfo): Promise<boolean> {
         FlagsCollector.collectEqual(
-            'Tax code should be displayed correctly',
-            taxInfo.name,
-            await this.getTextFieldValueByLabel(this.fieldName.name),
-        );
-        FlagsCollector.collectEqual(
             'Tax name should be displayed correctly',
             taxInfo.name,
             await this.getTextFieldValueByLabel(this.fieldName.name),
         );
         FlagsCollector.collectEqual(
-            'Tax department code should be displayed correctly',
+            'Tax rate should be displayed correctly',
+            taxInfo.taxRate,
+            await this.getTextFieldValueByLabel(this.fieldName.taxRate),
+        );
+        FlagsCollector.collectEqual(
+            'Tax display order should be displayed correctly',
             taxInfo.displayOrder,
             await this.getTextFieldValueByLabel(this.fieldName.displayOrder),
         );
