@@ -1,13 +1,13 @@
-import 'gondolajs';
+import 'gondolajs/built/builtin';
 import { ILocation } from 'selenium-webdriver';
 
 interface String {
     format(...args: string[]): string;
 }
 
-declare module 'gondolajs' {
+declare module 'gondolajs/built/builtin' {
     // eslint-disable-next-line @typescript-eslint/interface-name-prefix
-    interface IGondola {
+    export interface IGondolaWeb {
         /**
          *Check if all options exist
          * @param control
