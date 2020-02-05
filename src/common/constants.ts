@@ -22,8 +22,10 @@ export class Constants {
     public static readonly SLIGHTLY_RIGHT_OFFSET = { x: -50, y: 0 };
     public static readonly NORMAL_DATE_FORMAT = 'YYYY-MM-DD';
     public static readonly DEFAULT_DOWNLOAD_FOLDER = downloadsFolder().replace('/', '\\');
-    public static readonly DEFAULT_POSITION_DOWNLOAD_FILE_PATH = `${Constants.DEFAULT_DOWNLOAD_FOLDER}\\positions.csv`;
+    public static readonly POSITION_FILENAME = 'positions.csv';
     public static readonly POSITION_CSV_PATH = path.resolve('src/data/positions.csv');
+    public static readonly DELIVERY_XLS_PATH = path.resolve('src/data/delivery.xls');
+    public static readonly DELIVERY_FILENAME = 'delivery.xls';
 
     //#region Input data
     public static USER_NAME = 'administrator';

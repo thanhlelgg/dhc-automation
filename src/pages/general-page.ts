@@ -93,6 +93,8 @@ export class GeneralPage {
     @locator
     protected savedMessage = "//div[@role='alert'  and text()='saved']";
     @locator
+    protected alertMessage = "//div[@role='alert'  and text()='{0}']";
+    @locator
     protected currentLanguage = { css: '.langname' };
     @locator
     protected languageOption = "//a[@class='changeFlag' and contains(@href, '{0}')]";
@@ -159,7 +161,22 @@ export class GeneralPage {
         "//div[label[normalize-space()='{0}']]//span[contains(@class, 'selection__clear')]";
     @locator
     protected tabularTableLinkByText = "//div[@tabulator-field='{0}']/a[normalize-space()='{1}']";
+    @locator
+    protected fileUpload = "//input[@type='file']";
 
+    @action('upload file')
+    public async uploadFile(filePath: string): Promise<void> {
+        await gondola.sendKeys(this.fileUpload, filePath);
+    }
+
+    @action('upload file')
+    public async getUploadedFileName(): Promise<string> {
+        await gondola.waitUntilTextAvailable(this.fileUpload);
+        const fullPath = await gondola.getElementAttribute(this.fileUpload, 'value');
+        return fullPath.replace('C:\\fakepath\\', '');
+    }
+
+    @action('is current page')
     protected async isCurrentPage(pageUrl: string): Promise<boolean> {
         return (await gondola.getCurrentUrl()) === pageUrl;
     }
@@ -633,6 +650,10 @@ export class GeneralPage {
         return await gondola.doesControlDisplay(this.sectionName.format(name));
     }
 
+    public async clickSubmitButton(): Promise<void> {
+        await gondola.click(this.saveButton);
+    }
+
     public async clickReturnButton(): Promise<void> {
         await gondola.click(this.returnButton);
     }
@@ -817,6 +838,35 @@ export class GeneralPage {
     @action('click popup')
     public async clickPopup(option: string): Promise<void> {
         await gondola.clickPopup(option);
+    }
+
+    @action('does alert message display')
+    public async doesAlertMessageDisplay(text: string): Promise<boolean> {
+        return await gondola.doesControlDisplay(this.alertMessage.format(text));
+    }
+
+    @action('remove file from download folder')
+    public async removeDownloadedFile(fileName: string): Promise<void> {
+        await Utilities.removeFileIfExist(`${Constants.DEFAULT_DOWNLOAD_FOLDER}\\${fileName}`);
+    }
+
+    @action('is file downloaded correctly')
+    public async isFileDownloadedCorrectly(fileName: string): Promise<boolean> {
+        const filePath = `${Constants.DEFAULT_DOWNLOAD_FOLDER}\\${fileName}`;
+        await gondola.waitUntilFileExists(filePath);
+        return Utilities.isFileExist(filePath);
+    }
+
+    @action('get windows alert message')
+    public async getWindowsAlertMessage(): Promise<string> {
+        await gondola.waitForAlert();
+        return await gondola.getPopupText();
+    }
+
+    @action('get windows alert message')
+    public async clickWindowAlertMessage(text: string): Promise<void> {
+        await gondola.waitForAlert();
+        await gondola.clickPopup(text);
     }
 }
 export default new GeneralPage();

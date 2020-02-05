@@ -51,18 +51,6 @@ export class PositionsPage extends GeneralPage {
         return await gondola.doesControlDisplay(this.importModalTitle);
     }
 
-    @action('remove downloaded position template')
-    public removeDownloadedPositionTemplate(): void {
-        Utilities.removeFileIfExist(Constants.DEFAULT_POSITION_DOWNLOAD_FILE_PATH);
-    }
-
-    @action('is file downloaded correctly')
-    public async isFileDownloadedCorrectly(): Promise<boolean> {
-        const filePath = Constants.DEFAULT_POSITION_DOWNLOAD_FILE_PATH;
-        await gondola.waitUntilFileExists(filePath);
-        return Utilities.isFileExist(filePath);
-    }
-
     @action('is position imported correctly')
     public async isPositionImportedCorrectly(filePath: string): Promise<boolean> {
         if (!PositionsTableHeader.POSITION_NAME.csvColumnName) {

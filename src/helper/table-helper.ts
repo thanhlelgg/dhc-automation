@@ -13,6 +13,7 @@ export class TableHelper {
     private recordRowCellsByIndex: string;
     private rowLocator: string;
     private actionButton: string;
+    private recordRowLink: string;
 
     /**
      * Generate all the locators for all parts of an table
@@ -26,8 +27,9 @@ export class TableHelper {
             this.headerNameLocator = `${locator}//div[@role='columnheader']`;
             this.columnByIndexLocator = `${locator}//div[@role='gridcell'][{0}]`;
             this.rowLocator = `${locator}//div[@role='row']`;
-            this.recordRowCellsByIndex = `${locator}//div[@role='row'][1]/div[@role='gridcell']`;
-            this.actionButton = `${locator}//div[@role='row'][1]//a[@title="削除"]`;
+            this.recordRowCellsByIndex = `${locator}//div[@role='row'][{0}]/div[@role='gridcell']`;
+            this.actionButton = `${locator}//div[@role='row'][{0}]//a[@title="削除"]`;
+            this.recordRowLink = `${locator}//div[@role='row'][{0}]//div[@role='cell'][{1}]//a`;
         } else {
             this.tableLocator = locator;
             this.headerRowLocator = `${locator}/thead/tr`;
@@ -35,7 +37,8 @@ export class TableHelper {
             this.columnByIndexLocator = `${locator}/tbody/tr/td[{0}]`;
             this.rowLocator = `${locator}/tbody/tr`;
             this.recordRowCellsByIndex = `${locator}/tbody/tr[{0}]/td`;
-            this.actionButton = `${locator}/tbody/tr[{0}]/td[@class='actions text-center']/a[@title='{1}']`;
+            this.actionButton = `${locator}/tbody/tr[{0}]/td/a[@title='{1}']`;
+            this.recordRowLink = `${locator}/tbody/tr[{0}]/td[{1}]/a`;
         }
     }
 
@@ -168,5 +171,11 @@ export class TableHelper {
             await gondola.clickPopup('OK');
             await gondola.waitUntilStalenessOfElement(this.tableLocator);
         }
+    }
+
+    public async clickRecordRowLinkByText(header: string, value: string): Promise<void> {
+        const rowIdx = await this.getRowIndexByValue(header, value);
+        const headerIdx = await this.getHeaderIndex(header);
+        await gondola.click(this.recordRowLink.format(rowIdx.toString(), headerIdx.toString()));
     }
 }

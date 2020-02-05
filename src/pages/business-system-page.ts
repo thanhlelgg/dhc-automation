@@ -107,5 +107,14 @@ export class BusinessSystemPage extends GeneralPage {
             this.verticalMenuButton.master.item.listLink,
         );
     }
+
+    @action('go to delivery template page')
+    public async gotoDeliveryTemplatePage(): Promise<void> {
+        await this.gotoPageByMenuButton(
+            this.verticalMenuButton.master.title,
+            this.verticalMenuButton.master.template.title,
+            this.verticalMenuButton.master.template.deliveryTemplateLink,
+        );
+    }
 }
 export default new BusinessSystemPage();

@@ -402,8 +402,10 @@
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]",
         "agreeToDelete": "削除しますか？",
+        "agreeToDeleteType2": "を削除してよろしいですか？",
         "deleteFailMessage": "選択した税率 {0} は案件の明細情報で使用されているため削除できません。",
-        "deleteSuccessMessage": "税率 {0} を削除しました。"
+        "deleteSuccessMessage": "税率 {0} を削除しました。",
+        "fileHasNotBeenSet": "ファイルがセットされていません。"
     },
     "verticalMenuBMS": {
         "project": {
@@ -626,6 +628,12 @@
     "checkboxOptions": {
         "addItem": {
             "disable": "無効にする"
+        }
+    },
+    "columnName": {
+        "deliveryTemplate": {
+            "fileName": "ファイル名",
+            "action": "操作"
         }
     }
 }

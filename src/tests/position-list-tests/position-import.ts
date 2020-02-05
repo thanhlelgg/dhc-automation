@@ -48,11 +48,11 @@ TestCase('TMS-139. マスタ:役職一覧:インポート操作:戻る', async (
         'Import modal windows should be displayed',
     );
     gondola.report(`Step 3.「サンプルファイルをDL」ボタンをクリックする。`);
-    await listPositionPage.removeDownloadedPositionTemplate();
+    await listPositionPage.removeDownloadedFile(Constants.POSITION_FILENAME);
     await listPositionPage.clickButtonByIcon(ButtonIcon.DOWNLOAD);
     gondola.report(`VP. インポート用のサンプルファイルは正常にダウンロードされること。`);
     await gondola.checkTrue(
-        await listPositionPage.isFileDownloadedCorrectly(),
+        await listPositionPage.isFileDownloadedCorrectly(Constants.POSITION_FILENAME),
         'Position template should be downloaded correctly',
     );
 });
