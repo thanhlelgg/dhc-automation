@@ -457,7 +457,7 @@
     "verticalMenuTMS": {
         "masterDataManagement": {
             "title": "マスタデータ管理",
-            "workingPlace": "就業先(ラボ管理)",
+            "workingPlace": "就業先",
             "groups": "部門（ユーザーグループ",
             "positions": "役職"
         },
