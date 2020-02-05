@@ -9,17 +9,6 @@ import { JsonConvert, ValueCheckingMode } from 'json2typescript';
 import { gondola } from 'gondolajs';
 
 export class Utilities {
-    /**
-     * Trim elements in array
-     * @param array
-     */
-    public static async trimElementsInArray(array: string[]): Promise<string[]> {
-        const result = await array.map(item => {
-            return item.trim();
-        });
-        return result;
-    }
-
     //#region String
     public static formatString(str: string, ...val: string[]): string {
         for (let index = 0; index < val.length; index++) {
@@ -385,7 +374,8 @@ export class Utilities {
     //#endregion
 
     //#region Misc
-    public static compareArrays(array1: any[], array2: any[]): boolean {
+    public static compareArrays(array1: any[], array2: any[], sort = true): boolean {
+        if (!sort) return array1.length === array2.length && array1.every((value, index) => value === array2[index]);
         return array1.length === array2.length && array1.sort().every((value, index) => value === array2.sort()[index]);
     }
     //#endregion

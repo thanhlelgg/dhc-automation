@@ -52,6 +52,15 @@ export class Constants {
     public static NUMBER_SPECIAL_CHARACTER_ONLY = ['+++', '---', '...'];
     public static MINUS_PLUS_DOTS_STRING = '---+++...';
     public static HALF_SIZE_NUMBER = '01012020';
+    public static SINGLE_BYTE_ALPHABET_CUSTOMER_LOWER_STRING = 'abc';
+    public static SINGLE_BYTE_ALPHABET_CUSTOMER_UPPER_STRING = 'ABC';
+    public static NO_STRING = 'No';
+    public static SINGLE_BYTE_NUMBER_CUSTOMER_STRING = '123';
+    public static SINGLE_BYTE_NUMBER_JAPANESE_CUSTOMER_STRING = '１２３';
+    public static HI_HI_STRING = 'ひひ';
+    public static BI_BI_STRING = 'びび';
+    public static PI_PI_STRING = 'ぴぴ';
+    public static NUMBER_ONE = '１';
     public static SYMBOL_STRING = `!"#$%&'()`;
     public static HIRAGANA_KATAKANA_STRING = 'あああｱｱｱハハハ';
     public static HALF_SIZE_NUMBER_AND_HYPHEN = '210-0021';
@@ -148,6 +157,12 @@ export class Constants {
         return taxInfo.name;
     });
     public static PROJECT_ROLE = Constants.translator.dropdownOptions.projectRole;
+    //#endregion
+
+    //#region Customer attributes
+    public static CUSTOMER_IS_DISABLE = Constants.translator.dropdownOptions.customerIsDisable;
+    public static CUSTOMER_SORT_FIELDS = Constants.translator.fieldName.listCustomer.tableColumns;
+    public static CUSTOMER_SEARCH_FIELDS = Constants.translator.fieldName.listCustomer.searchField;
     //#endregion
 }
 

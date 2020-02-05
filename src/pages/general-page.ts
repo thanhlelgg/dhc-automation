@@ -119,6 +119,10 @@ export class GeneralPage {
     protected addButton = "//a[i[@class='fa fa-plus']]";
     @locator
     protected labelCheckBox = "//div[@class='custom-control custom-checkbox']//label[contains(.,'{0}')]";
+    @locator
+    protected resetButton = "//a[@class='btn btn-secondary']";
+    @locator
+    protected sortButton = "//div[@class='tabulator-col-title'][normalize-space(text())='{0}']//a";
 
     @locator
     protected searchResultText = `//div[@class='paginator']//p`;
@@ -936,6 +940,17 @@ export class GeneralPage {
             FlagsCollector.collectEqual('Error message is not displayed correctly.', validationMessage, invalidMessage);
         }
         return FlagsCollector.verifyFlags();
+    }
+
+    @action('click reset button')
+    public async clickResetButton(): Promise<void> {
+        await gondola.click(this.resetButton);
+    }
+
+    @action('click button sort')
+    public async clickButtonSort(colomnName: string): Promise<void> {
+        await gondola.scrollToElement(this.sortButton.format(colomnName));
+        await gondola.click(this.sortButton.format(colomnName));
     }
 }
 export default new GeneralPage();

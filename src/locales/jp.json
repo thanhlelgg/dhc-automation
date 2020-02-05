@@ -201,6 +201,47 @@
             },
             "addNewButton": "新規登録"
         },
+        "listCustomer": {
+            "searchField": {
+                "customerCode": "顧客コード",
+                "customerName": "顧客名",
+                "closingDate": "締め日",
+                "displayTarget": "表示対象",
+                "subCode": "売掛金補助コード",
+                "aidCode": "売上金補助コード"
+            },
+            "tableColumns": {
+                "code": "顧客コード",
+                "name": "顧客名",
+                "contact": "取引先担当",
+                "department": "取引先担当",
+                "lastTradingDate": "最終取引日",
+                "invalidFlag": "無効フラグ",
+                "postalCode": "郵便番号",
+                "address1": "住所１",
+                "address2": "住所２（建物名）",
+                "tel": "TEL",
+                "fax": "FAX",
+                "mailAddress": "メールアドレス",
+                "feeBurden": "振込手数料負担",
+                "rounding": "端数処理",
+                "tradingCurrency": "取引通貨",
+                "closingDate": "締め日",
+                "taxUnit": "税計算単位",
+                "accountNumber": "個別請求口座番号",
+                "assistanceCode": "前受金補助コード",
+                "subCode": "売掛金補助コード",
+                "aidCode": "売上金補助コード",
+                "collectionCycle": "回収サイクル",
+                "collectionCycleMonth": "回収サイクル_月",
+                "collectionCycleDay": "回収サイクル_日",
+                "registrationDate": "登録日",
+                "registeredPerson": "登録者",
+                "updateDate": "更新日",
+                "updater": "更新者"
+            },
+            "addNewButton": "新規登録"
+        },
         "positions": {
             "name": "グループ名"
         },
@@ -448,7 +489,8 @@
         "agreeToDeleteType2": "を削除してよろしいですか？",
         "deleteFailMessage": "選択した税率 {0} は案件の明細情報で使用されているため削除できません。",
         "deleteSuccessMessage": "税率 {0} を削除しました。",
-        "fileHasNotBeenSet": "ファイルがセットされていません。"
+        "fileHasNotBeenSet": "ファイルがセットされていません。",
+        "deleteFailMessageDeleteCustomer": "({0}) {1} は案件情報で使用されているため削除できません。"
     },
     "verticalMenuBMS": {
         "project": {
@@ -460,8 +502,8 @@
             "title": "マスタ",
             "customer": {
                 "title": "顧客",
-                "listCustomerLink": "",
-                "listSupplierLink": "",
+                "listCustomerLink": "得意先一覧",
+                "listSupplierLink": "仕入先一覧",
                 "addLink": "登録"
             },
             "worker": {
@@ -631,6 +673,10 @@
         },
         "date": {
             "endDate": "末"
+        },
+        "customerIsDisable": {
+            "onlyValidCustomer": "有効な顧客のみ",
+            "onlyInvalidCustomer": "無効な顧客のみ"
         },
         "customer": {
             "classify": {

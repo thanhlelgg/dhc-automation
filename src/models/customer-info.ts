@@ -64,6 +64,13 @@ export class CustomerInfoData {
             customerInfo.customerMagnifications.record2,
         ],
     };
+
+    public static CUSTOMER_REQUIRED_DATA_RECORD: CustomerInfo = {
+        overview: customerInfo.overview.customer.requiredOnly,
+        unitPricesRecords: [customerInfo.unitPrices.record1],
+        customerMagnificationsRecords: [customerInfo.customerMagnifications.record1],
+    };
+
     public static CUSTOMER_ALL_DATA: CustomerInfo = {
         overview: customerInfo.overview.customer.allFields,
         unitPricesRecords: [customerInfo.unitPrices.record1, customerInfo.unitPrices.record2],

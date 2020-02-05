@@ -1,14 +1,16 @@
 import { action, gondola, locator, page } from 'gondolajs';
 import { GeneralPage } from './general-page';
-import { CustomerInfo, Overview, UnitPrices, CustomerMagnifications } from '../models/customer-info';
+import { CustomerInfo, Overview, UnitPrices, CustomerMagnifications, CustomerInfoData } from '../models/customer-info';
 import { RecordTable } from '../models/enum-class/recordTable';
 import { RecordFieldName } from '../models/enum-class/recordFieldName';
 import '@src/string.extensions';
-import { FlagsCollector, LoggingType } from '../helper/flags-collector';
+import { FlagsCollector, LoggingType, CustomerFieldName } from '../helper/flags-collector';
 import { Constants } from '../common/constants';
-
+import { ButtonIcon } from '../models/enum-class/button-icon';
+import { Utilities } from '../common/utilities';
 @page
 export class AddCustomerPage extends GeneralPage {
+    private pageUrl = `${Constants.BMS_BASE_URL}/customers/add`;
     @locator
     protected addUnitPricesRecordButton = { id: 'addRow' };
     @locator
@@ -432,6 +434,34 @@ export class AddCustomerPage extends GeneralPage {
             (await this.doesCustomerMagnificationsDisplayCorrectly(customerInfo.customerMagnificationsRecords)) &&
             (await this.doesUnitPricesDisplayCorrectly(customerInfo.unitPricesRecords))
         );
+    }
+
+    @action('is current page')
+    public async isCurrentPage(): Promise<boolean> {
+        return await super.isCurrentPage(this.pageUrl);
+    }
+
+    @action('create customer with specific value')
+    public async createCustomerWithSpecificValue(fieldName: CustomerFieldName, fieldValue: string): Promise<void> {
+        const requiredInfo = CustomerInfoData.CUSTOMER_REQUIRED_DATA_RECORD;
+        requiredInfo.overview.code = Utilities.getRandomText(5);
+        requiredInfo.overview.name = Utilities.getRandomText(5);
+        switch (fieldName) {
+            case CustomerFieldName.CUSTOMER_CODE:
+                requiredInfo.overview.code = fieldValue;
+                break;
+            case CustomerFieldName.CUSTOMER_NAME:
+                requiredInfo.overview.name = fieldValue;
+                break;
+            case CustomerFieldName.SUBCODE:
+                requiredInfo.overview.accountReceivableAuxCode = fieldValue;
+                break;
+            case CustomerFieldName.AID_CODE:
+                requiredInfo.overview.salesAuxCd = fieldValue;
+                break;
+        }
+        await this.inputCustomerInfo(requiredInfo);
+        await this.clickButtonByIcon(ButtonIcon.SAVE);
     }
 }
 export default new AddCustomerPage();
