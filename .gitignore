@@ -3,3 +3,4 @@ node_modules/
 results/
 debug.log
 src/tests/test.ts
+package-lock.json

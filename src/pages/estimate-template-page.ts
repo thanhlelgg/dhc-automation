@@ -6,12 +6,12 @@ import { TableHelper } from '../helper/table-helper';
 import { ActionButton } from '../models/enum-class/action-button';
 
 @page
-export class DeliveryTemplatePage extends GeneralPage {
-    protected pageUrl = `${Constants.BMS_BASE_URL}/projects/delivery-template-file-index`;
+export class EstimateTemplatePage extends GeneralPage {
+    protected pageUrl = `${Constants.BMS_BASE_URL}/projects/estimate-template-file-index`;
     @locator
     protected templateTable = '//table';
     protected tableHelper = new TableHelper(this.templateTable);
-    protected tableColumnName = Constants.translator.columnName.deliveryTemplate;
+    protected tableColumnName = Constants.translator.columnName.estimateTemplate;
 
     @action('is current page')
     public async isCurrentPage(): Promise<boolean> {
@@ -52,4 +52,4 @@ export class DeliveryTemplatePage extends GeneralPage {
         return await this.isFileDownloadedCorrectly(templateName);
     }
 }
-export default new DeliveryTemplatePage();
+export default new EstimateTemplatePage();

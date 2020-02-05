@@ -116,5 +116,23 @@ export class BusinessSystemPage extends GeneralPage {
             this.verticalMenuButton.master.template.deliveryTemplateLink,
         );
     }
+
+    @action('go to estimate template page')
+    public async gotoEstimateTemplatePage(): Promise<void> {
+        await this.gotoPageByMenuButton(
+            this.verticalMenuButton.master.title,
+            this.verticalMenuButton.master.template.title,
+            this.verticalMenuButton.master.template.estimateTemplateLink,
+        );
+    }
+
+    @action('go to billing template page')
+    public async gotoBillingTemplatePage(): Promise<void> {
+        await this.gotoPageByMenuButton(
+            this.verticalMenuButton.master.title,
+            this.verticalMenuButton.master.template.title,
+            this.verticalMenuButton.master.template.billingTemplateLink,
+        );
+    }
 }
 export default new BusinessSystemPage();

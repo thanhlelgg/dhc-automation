@@ -26,6 +26,10 @@ export class Constants {
     public static readonly POSITION_CSV_PATH = path.resolve('src/data/positions.csv');
     public static readonly DELIVERY_XLS_PATH = path.resolve('src/data/delivery.xls');
     public static readonly DELIVERY_FILENAME = 'delivery.xls';
+    public static readonly ESTIMATE_XLS_PATH = path.resolve('src/data/estimate.xls');
+    public static readonly ESTIMATE_FILENAME = 'estimate.xls';
+    public static readonly BILLING_XLS_PATH = path.resolve('src/data/bill.xls');
+    public static readonly BILLING_FILENAME = 'bill.xls';
 
     //#region Input data
     public static USER_NAME = 'administrator';

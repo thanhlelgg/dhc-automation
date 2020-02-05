@@ -634,6 +634,14 @@
         "deliveryTemplate": {
             "fileName": "ファイル名",
             "action": "操作"
+        },
+        "estimateTemplate": {
+            "fileName": "ファイル名",
+            "action": "操作"
+        },
+        "billingTemplate": {
+            "fileName": "ファイル名",
+            "action": "操作"
         }
     }
 }
