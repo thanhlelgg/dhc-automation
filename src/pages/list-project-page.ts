@@ -5,6 +5,7 @@ import { SearchResultColumn } from '../models/enum-class/search-result-column';
 import { Constants } from '../common/constants';
 @page
 export class ListProjectPage extends GeneralPage {
+    protected pageUrl = `${Constants.BMS_BASE_URL}/`;
     @locator
     protected projectCode = { id: 'number' };
     @locator
@@ -164,6 +165,12 @@ export class ListProjectPage extends GeneralPage {
     @action('get project link')
     public getProjectLink(projectCode: string): string {
         return Utilities.formatString(this.editProjectLinkStr, projectCode);
+    }
+
+    @action('open project by code')
+    public async openProject(projectCode: string): Promise<void> {
+        await gondola.scrollToElement(this.getProjectLink(projectCode));
+        await gondola.click(this.getProjectLink(projectCode));
     }
 
     @action('verify if TTS link is enabled')

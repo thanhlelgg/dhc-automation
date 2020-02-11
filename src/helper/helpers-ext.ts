@@ -133,6 +133,16 @@ class HelperExt extends Helper {
     }
 
     /**
+     * Get dropdown option by index
+     * @param control
+     * @param idx: index of option, start from 0
+     */
+    public async getOptionByIndex(control: any, idx: number): Promise<string> {
+        const elements = await this.getOptions(control);
+        return elements[idx].getText();
+    }
+
+    /**
      * Get available options from dropdown box
      * @param control
      */

@@ -3,7 +3,7 @@ import { GeneralPage } from './general-page';
 import '@src/string.extensions';
 import { Constants } from '../common/constants';
 import { TableHelper } from '../helper/table-helper';
-import { ActionButton } from '../models/enum-class/action-button';
+import { ButtonIcon } from '../models/enum-class/button-icon';
 
 @page
 export class BillingTemplatePage extends GeneralPage {
@@ -38,13 +38,13 @@ export class BillingTemplatePage extends GeneralPage {
 
     @action('remove template file')
     public async removeTemplateFile(fileName: string): Promise<void> {
-        await this.tableHelper.clickActionButton(ActionButton.DELETE, this.tableColumnName.fileName, fileName);
+        await this.tableHelper.clickActionButton(ButtonIcon.DELETE, this.tableColumnName.fileName, fileName);
     }
 
     @action('download template')
     public async downloadTemplate(templateName: string): Promise<void> {
         await this.removeDownloadedFile(templateName);
-        await this.tableHelper.clickRecordRowLinkByText(this.tableColumnName.fileName, templateName);
+        await this.tableHelper.clickCellLinkByText(this.tableColumnName.fileName, templateName);
     }
 
     @action('check template downloaded')

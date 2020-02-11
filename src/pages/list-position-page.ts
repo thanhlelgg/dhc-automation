@@ -7,8 +7,8 @@ import { Constants } from '../common/constants';
 import { CsvHelpers } from '../helper/csv-helpers';
 import { PositionsTableHeader } from '../models/enum-class/positions-table-header';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
-import { ActionButton } from '../models/enum-class/action-button';
 import { TimeCardApprove } from '../models/enum-class/timecard-approve';
+import { ButtonIcon } from '../models/enum-class/button-icon';
 
 @page
 export class PositionsPage extends GeneralPage {
@@ -31,7 +31,7 @@ export class PositionsPage extends GeneralPage {
     }
 
     @action('click action button')
-    public async clickActionButton(buttonType: ActionButton, columnName?: string, value?: string): Promise<void> {
+    public async clickActionButton(buttonType: ButtonIcon, columnName?: string, value?: string): Promise<void> {
         await this.tableHelper.clickActionButton(buttonType, columnName, value);
     }
 

@@ -181,6 +181,11 @@ export class GeneralPage {
         return (await gondola.getCurrentUrl()) === pageUrl;
     }
 
+    @action('is details page')
+    protected async isDetailsPage(pageUrl: string): Promise<boolean> {
+        return (await gondola.getCurrentUrl()).startsWith(pageUrl);
+    }
+
     @action('gotoHome')
     public async gotoHome(): Promise<void> {
         await gondola.waitUntilElementVisible(this.homeLink, Constants.MEDIUM_TIMEOUT);
@@ -427,6 +432,20 @@ export class GeneralPage {
         }
     }
 
+    /**
+     * Get state of DH customized checkbox
+     * @param control
+     * @param check boolean, check or uncheck
+     * @param checkboxStatusLocator: locator of checkbox status, if not provided, assume it's the child checkbox input
+     */
+    @action('get state customized checkbox')
+    public async getStateCustomizeCheckbox(control: string, checkboxStatusLocator?: string): Promise<boolean> {
+        if (!checkboxStatusLocator) {
+            checkboxStatusLocator = control + "//input[@type='checkbox']";
+        }
+        return await gondola.doesCheckboxChecked(checkboxStatusLocator);
+    }
+
     @action('get checkbox state by label')
     public async getCheckboxStateByLabel(label: string): Promise<boolean> {
         return await gondola.doesCheckboxChecked(this.checkboxInputByLabel.format(label));
@@ -668,7 +687,8 @@ export class GeneralPage {
     }
 
     public async doesPagingExist(): Promise<boolean> {
-        return await gondola.doesControlExist(this.pagingLastPage);
+        const isPagingExist = await gondola.doesControlExist(this.pagingLastPage);
+        return isPagingExist;
     }
 
     public async gotoLastPage(): Promise<void> {

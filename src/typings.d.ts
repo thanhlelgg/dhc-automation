@@ -15,6 +15,12 @@ declare module 'gondolajs/built/builtin' {
          */
         areOptionsExists(control: any, options: string[]): Promise<boolean>;
         /**
+         * Get dropdown option by index
+         * @param control
+         * @param idx: index of option, start from 0
+         */
+        getOptionByIndex(control: any, idx: number): Promise<string>;
+        /**
          * Enter text and accept alert if available
          * @param control
          * @param text

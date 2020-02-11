@@ -15,7 +15,7 @@ export class BusinessSystemPage extends GeneralPage {
             this.verticalMenuButton.project.title,
             this.verticalMenuButton.project.listLink,
         );
-        if (lastPage) this.gotoLastPage();
+        if (lastPage) await this.gotoLastPage();
     }
 
     @action('gotoAddWorkerPage')

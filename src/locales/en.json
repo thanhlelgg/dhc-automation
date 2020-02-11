@@ -19,7 +19,8 @@
     },
     "sectionName": {
         "addProject": {
-            "volumeDetail": "出来高明細"
+            "volumeDetail": "出来高明細",
+            "orderedDetail": "非稼働明細"
         },
         "addCustomer": {
             "customerUnitPrices": "顧客単価",
@@ -359,6 +360,23 @@
             "timeCardApprove": "タイムカード承認",
             "created": "作成日",
             "modified": "更新日"
+        },
+        "addProject": {
+            "orderedDetails": {
+                "name": "明細名",
+                "itemName": "品目",
+                "debitCreditGroup": "計上区分",
+                "taxable": "課税",
+                "taxRate": "税率",
+                "quantity": "数量",
+                "unit": "単位",
+                "unitPrice": "単価",
+                "amount": "金額",
+                "note": "備考",
+                "deliveryDate": "納品日",
+                "recordDate": "計上日",
+                "billingDate": "請求日"
+            }
         }
     },
     "fieldPlaceHolder": {
@@ -388,6 +406,7 @@
         "characterTypeError": "。。。",
         "taxFieldRequired": "課税の場合、このフィールドは入力必須です",
         "exceededNOC": "文字以内で入力してください",
+        "exceededNOD": "桁以内の数値を入力してください",
         "inputHalfSizeAlphaNumericTypeError": "半角英数で入力してください",
         "duplicatedTypeError": "既に使われている値のため異なる値を入力してください",
         "invalidInputValue": "入力値が不正です",
@@ -397,7 +416,8 @@
         "startDateExceedsEndDate": "終了日よりも前の日付を入力してください",
         "endDateLesserThanStartDate": "開始日以降の日付を入力してください",
         "inputNumericTypeError": "数値を入力してください",
-        "decimalPlaceTypeError": "小数は第2位までが有効です"
+        "decimalPlaceTypeError": "小数は第2位までが有効です",
+        "negativeNumberError": "0以上の数値を入力してください"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]",

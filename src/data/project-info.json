@@ -68,7 +68,7 @@
     },
     "projectResource": {
         "fullData": {
-            "labName": "DH横浜Lab.",
+            "labName": "浅草Lab.",
             "workingStartTime": "10:00",
             "workingEndTime": "19:00",
             "resources": [
@@ -158,6 +158,60 @@
             "unitPriceHolidayLate": "2400",
             "isTaxable": true,
             "taxId": "10%"
+        }
+    },
+    "orderedDetails": {
+        "record1": {
+                "name": "detail name 1",
+                "itemName": "ゲームデバッグ",
+                "debitCreditGroup": "売掛/売上",
+                "taxable": false,
+                "taxRate": "10%",
+                "quantity": "1",
+                "unit": "2",
+                "unitPrice": "3",
+                "note": "備考 1",
+                "deliveryDate": "2020-01-01",
+                "recordDate": "2020-02-02",
+                "billingDate": "2020-03-03"
+        },
+        "record2": {
+            "name": "detail name 2",
+            "itemName": "SES",
+            "debitCreditGroup": "前受/売上",
+            "taxable": true,
+            "taxRate": "8%",
+            "quantity": "3",
+            "unit": "2",
+            "unitPrice": "1",
+            "note": "備考 2",
+            "deliveryDate": "2020-11-11",
+            "recordDate": "2020-12-12",
+            "billingDate": "2020-10-10"
+        },
+        "record3": {
+            "name": "detail name 3",
+            "itemName": "受託開発",
+            "debitCreditGroup": "売掛/前受",
+            "taxable": true,
+            "taxRate": "8%",
+            "quantity": "2",
+            "unit": "5",
+            "unitPrice": "6",
+            "note": "備考 3",
+            "deliveryDate": "2021-11-11",
+            "recordDate": "2021-12-12",
+            "billingDate": "2021-10-10"
+        },
+        "recordRequiredOnly": {
+            "name": "required only",
+            "itemName": "受託開発",
+            "debitCreditGroup": "売掛/前受",
+            "taxable": true,
+            "taxRate": "8%",
+            "quantity": "2",
+            "unit": "5",
+            "unitPrice": "6"
         }
     }
 }

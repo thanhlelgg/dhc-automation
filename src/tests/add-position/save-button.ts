@@ -43,7 +43,7 @@ TestCase('TMS-131. マスタ:役職作成:戻るボタン', async () => {
         await listPositionPage.doesPositionValueDisplay(POSITION_DATA.positionName, PositionsTableHeader.POSITION_NAME),
         'New position should be displayed correctly',
     );
-    await listPositionPage.clickActionButton(ActionButton.VIEW, POSITION_NAME_HEADER_NAME, POSITION_DATA.positionName);
+    await listPositionPage.clickActionButton(ButtonIcon.VIEW, POSITION_NAME_HEADER_NAME, POSITION_DATA.positionName);
     await gondola.checkTrue(
         await addPositionPage.doesPositionInfoDisplayCorrectly(POSITION_DATA),
         'Position info should be displayed correctly',

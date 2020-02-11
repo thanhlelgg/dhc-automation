@@ -11,16 +11,19 @@ import '@src/string.extensions';
 @page
 export class SearchWindowModal extends GeneralPage {
     //#region Search
-    protected searchResult = "(//div[@role='row']//div[contains(.,'{0}')])[1]";
-    protected searchResultByTabulatorField = "//div[@class='tabulator-table']//div[@tabulator-field='{0}']";
+    protected searchResult = "(//div[@class='modal-content']//div[@role='row']//div[contains(.,'{0}')])[1]";
+    protected searchResultByTabulatorField =
+        "//div[@class='modal-content']//div[@class='tabulator-table']//div[@tabulator-field='{0}']";
     protected searchResultByTabulatorFieldAndIndex =
-        "(//div[@class='tabulator-table']//div[@tabulator-field='{0}'])[{1}]";
+        "(//div[@class='modal-content']//div[@class='tabulator-table']//div[@tabulator-field='{0}'])[{1}]";
     protected searchResultByTabulatorFieldAndText =
-        "//div[@class='tabulator-table']//div[@tabulator-field='{0}' and contains(text(),'{1}')]";
-    protected searchResultRow = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div";
-    protected searchResultRowByIndex = "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]";
+        "//div[@class='modal-content']//div[@class='tabulator-table']//div[@tabulator-field='{0}' and contains(text(),'{1}')]";
+    protected searchResultRow =
+        "//div[@class='modal-content']//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div";
+    protected searchResultRowByIndex =
+        "//div[@class='modal-content']//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]";
     protected searchResultColumnsByRowIndex =
-        "//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]/div";
+        "//div[@class='modal-content']//div[@class='tabulator-table' and not(contains(@style, 'hidden'))]/div[{0}]/div";
     @locator
     protected moduleTitle = "//h5[@class='modal-title' and text()='{0}']";
     //#endregion
@@ -104,6 +107,7 @@ export class SearchWindowModal extends GeneralPage {
             const value = await gondola.getText(attributesLocator);
             map.set(key, value);
         }
+        if (map.size === 0) throw new Error('No search result was found');
         return map;
     }
 
@@ -395,7 +399,8 @@ export class SearchWindowModal extends GeneralPage {
         }
         let maximumScroll = Math.floor(numberOfDatabaseRecords / numberOfDisplayingResults);
         maximumScroll = maximumScroll > Constants.LIMIT_SCROLL_TIMES ? Constants.LIMIT_SCROLL_TIMES : maximumScroll;
-        const scrollTime = Utilities.getRandomNumber(1, maximumScroll);
+        if (maximumScroll == 0) return;
+        const scrollTime = Utilities.getRandomNumber(0, maximumScroll);
         for (let i = 1; i <= scrollTime; i++) {
             await gondola.waitUntilStalenessOfElement(this.searchResultRow, Constants.VERY_SHORT_TIMEOUT);
             const lastIndex = await gondola.getElementCount(this.searchResultRow);

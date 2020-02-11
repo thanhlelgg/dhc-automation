@@ -9,7 +9,6 @@ import listWorkingPlacePage from '../../pages/list-working-place-page';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 import { Constants } from '../../common/constants';
 import addPositionPage from '../../pages/add-position-page';
-import { ActionButton } from '../../models/enum-class/action-button';
 import listPositionPage from '../../pages/list-position-page';
 import { PositionsTableHeader } from '../../models/enum-class/positions-table-header';
 import { PositionInfoData } from '../../models/position-info';
@@ -72,7 +71,7 @@ Data(POSITION_INFO).TestCase('InitialData7. マスタ:役職作成', async (curr
         await listPositionPage.doesPositionValueDisplay(current.positionName, PositionsTableHeader.POSITION_NAME),
         'New position should be displayed correctly',
     );
-    await listPositionPage.clickActionButton(ActionButton.VIEW, POSITION_NAME_HEADER_NAME, current.positionName);
+    await listPositionPage.clickActionButton(ButtonIcon.VIEW, POSITION_NAME_HEADER_NAME, current.positionName);
     await gondola.checkTrue(
         await addPositionPage.doesPositionInfoDisplayCorrectly(current),
         'Position info should be displayed correctly',

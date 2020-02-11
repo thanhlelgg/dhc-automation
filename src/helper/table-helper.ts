@@ -1,9 +1,9 @@
 import { gondola } from 'gondolajs';
 import '@src/string.extensions';
 import { Utilities } from '../common/utilities';
-import { ActionButton } from '../models/enum-class/action-button';
-import { Constants } from '../common/constants';
 import TableType from '../models/enum-class/table-type';
+import generalPage from '../pages/general-page';
+import { ButtonIcon } from '../models/enum-class/button-icon';
 
 export class TableHelper {
     private tableLocator: string;
@@ -13,7 +13,13 @@ export class TableHelper {
     private recordRowCellsByIndex: string;
     private rowLocator: string;
     private actionButton: string;
-    private recordRowLink: string;
+    private cellByIndex: string;
+    private cellLinkByIndex: string;
+    private cellTextfieldByIndex: string;
+    private cellTextareaByIndex: string;
+    private cellSelectorByIndex: string;
+    private cellCheckboxByIndex: string;
+    private cellInvalidFeedbackByIndex: string;
 
     /**
      * Generate all the locators for all parts of an table
@@ -28,18 +34,24 @@ export class TableHelper {
             this.columnByIndexLocator = `${locator}//div[@role='gridcell'][{0}]`;
             this.rowLocator = `${locator}//div[@role='row']`;
             this.recordRowCellsByIndex = `${locator}//div[@role='row'][{0}]/div[@role='gridcell']`;
-            this.actionButton = `${locator}//div[@role='row'][{0}]//a[@title="削除"]`;
-            this.recordRowLink = `${locator}//div[@role='row'][{0}]//div[@role='cell'][{1}]//a`;
+            this.actionButton = `${locator}//div[@role='row'][{0}]//a[i[contains(@class,'{1}')]]`;
+            this.cellByIndex = `${locator}//div[@role='row'][{0}]//div[@role='gridcell'][{1}]`;
         } else {
             this.tableLocator = locator;
             this.headerRowLocator = `${locator}/thead/tr`;
             this.headerNameLocator = `${locator}/thead/tr/th`;
-            this.columnByIndexLocator = `${locator}/tbody/tr/td[{0}]`;
-            this.rowLocator = `${locator}/tbody/tr`;
-            this.recordRowCellsByIndex = `${locator}/tbody/tr[{0}]/td`;
-            this.actionButton = `${locator}/tbody/tr[{0}]/td/a[@title='{1}']`;
-            this.recordRowLink = `${locator}/tbody/tr[{0}]/td[{1}]/a`;
+            this.columnByIndexLocator = `${locator}/tbody[not(@class='d-none')]/tr/td[{0}]`;
+            this.rowLocator = `${locator}/tbody[not(@class='d-none')]/tr`;
+            this.recordRowCellsByIndex = `${locator}/tbody[not(@class='d-none')]/tr[{0}]/td`;
+            this.actionButton = `${locator}/tbody[not(@class='d-none')]/tr[{0}]/td/a[i[contains(@class,'{1}')]]`;
+            this.cellByIndex = `${locator}/tbody[not(@class='d-none')]/tr[{0}]/td[{1}]`;
         }
+        this.cellLinkByIndex = this.cellByIndex + '//a';
+        this.cellTextfieldByIndex = this.cellByIndex + "//input[not(@type='hidden')]";
+        this.cellTextareaByIndex = this.cellByIndex + '//textarea';
+        this.cellSelectorByIndex = this.cellByIndex + '//select';
+        this.cellCheckboxByIndex = this.cellByIndex + "/div[input[@type='checkbox']]";
+        this.cellInvalidFeedbackByIndex = this.cellByIndex + "/div[@class='invalid-feedback']";
     }
 
     /**
@@ -124,10 +136,10 @@ export class TableHelper {
      * @param columnName Column name to find the row
      * @param value Cell's text of `columnName` column to find the correct row
      */
-    public async clickActionButton(buttonType: ActionButton, columnName?: string, value?: string): Promise<void> {
+    public async clickActionButton(buttonType: ButtonIcon, columnName?: string, value?: string): Promise<void> {
         const rowIdx =
             columnName && value ? await this.getRowIndexByValue(columnName, value) : await this.getRandomRow();
-        await gondola.click(this.actionButton.format(rowIdx.toString(), buttonType.title));
+        await gondola.click(this.actionButton.format(rowIdx.toString(), buttonType._class));
     }
 
     /**
@@ -166,16 +178,112 @@ export class TableHelper {
      */
     public async removeRecordIfValueExist(value: string, header: string): Promise<void> {
         if (await this.doesRowValueExists(header, value)) {
-            await this.clickActionButton(ActionButton.DELETE, header, value);
+            await this.clickActionButton(ButtonIcon.DELETE, header, value);
             await gondola.waitForAlert();
             await gondola.clickPopup('OK');
             await gondola.waitUntilStalenessOfElement(this.tableLocator);
         }
     }
 
-    public async clickRecordRowLinkByText(header: string, value: string): Promise<void> {
+    public async clickCellLinkByText(header: string, value: string): Promise<void> {
         const rowIdx = await this.getRowIndexByValue(header, value);
         const headerIdx = await this.getHeaderIndex(header);
-        await gondola.click(this.recordRowLink.format(rowIdx.toString(), headerIdx.toString()));
+        await gondola.click(this.cellLinkByIndex.format(rowIdx.toString(), headerIdx.toString()));
+    }
+
+    public async getNumberOfRows(): Promise<number> {
+        return await gondola.getElementCount(this.rowLocator);
+    }
+
+    public async enterCellTextfieldByIndex(header: string, rowIdx: string, text?: string): Promise<void> {
+        if (text === undefined) return;
+        const headerIdx = await this.getHeaderIndex(header);
+        await gondola.enter(this.cellTextfieldByIndex.format(rowIdx, headerIdx.toString()), text);
+    }
+
+    public async clickCellTextfieldByIndex(header: string, rowIdx: string): Promise<void> {
+        const headerIdx = await this.getHeaderIndex(header);
+        await gondola.click(this.cellTextfieldByIndex.format(rowIdx, headerIdx.toString()));
+    }
+
+    public async getTextCellTextfieldByIndex(header: string, rowIdx: string): Promise<string> {
+        const headerIdx = await this.getHeaderIndex(header);
+        return await gondola.getElementAttribute(
+            this.cellTextfieldByIndex.format(rowIdx, headerIdx.toString()),
+            'value',
+        );
+    }
+
+    public async enterCellTextareaByIndex(header: string, rowIdx: string, text?: string): Promise<void> {
+        if (!text) return;
+        const headerIdx = await this.getHeaderIndex(header);
+        await gondola.enter(this.cellTextareaByIndex.format(rowIdx, headerIdx.toString()), text);
+    }
+
+    public async getTextCellTextareaByIndex(header: string, rowIdx: string): Promise<string> {
+        const headerIdx = await this.getHeaderIndex(header);
+        return await gondola.getElementAttribute(
+            this.cellTextareaByIndex.format(rowIdx, headerIdx.toString()),
+            'value',
+        );
+    }
+
+    public async selectCellDropdownByIndex(header: string, rowIdx: string, text?: string): Promise<void> {
+        if (!text) return;
+        const headerIdx = await this.getHeaderIndex(header);
+        await gondola.select(this.cellSelectorByIndex.format(rowIdx, headerIdx.toString()), text);
+    }
+
+    public async getSelectedCellDropdownByIndex(header: string, rowIdx: string): Promise<string> {
+        const headerIdx = await this.getHeaderIndex(header);
+        return await gondola.getSelectedOption(this.cellSelectorByIndex.format(rowIdx, headerIdx.toString()));
+    }
+
+    public async setStateCellCheckboxByIndex(header: string, rowIdx: string, state?: boolean): Promise<void> {
+        if (state === undefined) return;
+        const headerIdx = await this.getHeaderIndex(header);
+        await generalPage.setStateCustomizeCheckbox(
+            this.cellCheckboxByIndex.format(rowIdx, headerIdx.toString()),
+            state,
+        );
+    }
+
+    public async getStateCellCheckboxByIndex(header: string, rowIdx: string): Promise<boolean> {
+        const headerIdx = await this.getHeaderIndex(header);
+        return await generalPage.getStateCustomizeCheckbox(
+            this.cellCheckboxByIndex.format(rowIdx, headerIdx.toString()),
+        );
+    }
+
+    public async getCellInvalidFeedback(header: string, rowIdx: string): Promise<string> {
+        const headerIdx = await this.getHeaderIndex(header);
+        const locator = this.cellInvalidFeedbackByIndex.format(rowIdx, headerIdx.toString());
+        const doesExist = await gondola.doesControlExist(locator);
+        return doesExist ? await gondola.getText(locator) : '';
+    }
+
+    public async doesCellDropdownOptionExist(header: string, rowIdx: string, options: string[]): Promise<boolean> {
+        const headerIdx = await this.getHeaderIndex(header);
+        const locator = this.cellSelectorByIndex.format(rowIdx, headerIdx.toString());
+        return await gondola.areOptionsExists(locator, options);
+    }
+
+    public async isCellDropdownFirstOptionSelected(header: string, rowIdx: string): Promise<boolean> {
+        const headerIdx = await this.getHeaderIndex(header);
+        const locator = this.cellSelectorByIndex.format(rowIdx, headerIdx.toString());
+        const firstOption = await gondola.getOptionByIndex(locator, 0);
+        return (await gondola.getSelectedOption(locator)) === firstOption;
+    }
+
+    public async isCellDropdownEnabled(header: string, rowIdx: string): Promise<boolean> {
+        const headerIdx = await this.getHeaderIndex(header);
+        const locator = this.cellSelectorByIndex.format(rowIdx, headerIdx.toString());
+        return await gondola.isControlEnabled(locator);
+    }
+
+    public async getCellTextfieldValidationMessage(header: string, rowIdx: string): Promise<string> {
+        const headerIdx = await this.getHeaderIndex(header);
+        const locator = this.cellSelectorByIndex.format(rowIdx, headerIdx.toString());
+        return await gondola.getValidationMessage(locator);
     }
 }

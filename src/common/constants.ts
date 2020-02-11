@@ -43,15 +43,22 @@ export class Constants {
     public static SINGLE_BYTE_NUMBER_STRING = '1234';
     public static FULL_SIZE_ALPHA_NUMERIC_STRING = 'ａｂｃｄ１２３４';
     public static HALF_SIZE_ALPHA_NUMERIC_STRING = 'abcd1234';
+    public static NON_HALF_SIZE_NUMBER_STRING = 'abcａｂｃははカｶｶ!@#';
     public static SYMBOL_STRING = `!"#$%&'()`;
     public static HIRAGANA_KATAKANA_STRING = 'あああｱｱｱハハハ';
     public static HALF_SIZE_NUMBER_AND_HYPHEN = '210-0021';
     public static ONE_BILLION = '1000000000';
     public static DECIMAL = '1.5';
+    public static DECIMAL_TWO_DIGITS = '1.25';
+    public static DECIMAL_THREE_DIGITS = '1.257';
     public static VALIDATION_MESSAGE_FOR_DECIMAL =
         '有効な値を入力してください。有効な値として最も近いのは 1 と 2 です。';
     public static LESS_THAN_ONE_BILLION = '999999999';
     public static MORE_THAN_ONE_BILLION = '1000000001';
+    public static EIGHT_DIGIT_NUMBER = '99999999';
+    public static NINE_DIGIT_NUMBER = '999999999';
+    public static SIXTEEN_DIGIT_NUMBER = Constants.EIGHT_DIGIT_NUMBER + Constants.EIGHT_DIGIT_NUMBER;
+    public static SEVENTEEN_DIGIT_NUMBER = Constants.SIXTEEN_DIGIT_NUMBER + '9';
     public static NEGATIVE_NUMBER = '-1';
     public static ONLY_WORD = 'only text';
     public static VALID_CONTACT_NUMBER = '+8190-000-0001';
@@ -65,6 +72,7 @@ export class Constants {
     //#region invalid feedback message
     public static FIELD_REQUIRED_ERROR_MESSAGE = Constants.translator.invalidFeedback.fieldRequired;
     public static EXCEEDED_NOC_ERROR_MESSAGE = Constants.translator.invalidFeedback.exceededNOC;
+    public static EXCEEDED_NOD_ERROR_MESSAGE = Constants.translator.invalidFeedback.exceededNOD;
     public static EXCEEDED_NOC_ERROR_MESSAGE_16 = '16' + Constants.translator.invalidFeedback.exceededNOC;
     public static EXCEEDED_NOC_ERROR_MESSAGE_255 = '255' + Constants.translator.invalidFeedback.exceededNOC;
     public static EXCEEDED_NOC_ERROR_MESSAGE_50 = '50' + Constants.translator.invalidFeedback.exceededNOC;
@@ -76,6 +84,7 @@ export class Constants {
     public static DUPLICATED_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.duplicatedTypeError;
     public static INPUT_NUMERIC_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputNumericTypeError;
     public static DECIMAL_PLACE_ERROR_MESSAGE = Constants.translator.invalidFeedback.decimalPlaceTypeError;
+    public static NEGATIVE_NUMBER_ERROR_MESSAGE = Constants.translator.invalidFeedback.negativeNumberError;
     //#endregion
 
     //#region Project attributes

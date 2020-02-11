@@ -86,6 +86,22 @@ export class ResultBaseUnitPrices {
     unitPriceHolidayLate!: string;
 }
 
+export class OrderedDetails {
+    name!: string;
+    itemName!: string;
+    debitCreditGroup!: string;
+    taxable?: boolean;
+    taxRate!: string;
+    quantity!: string;
+    unit!: string;
+    unitPrice?: string;
+    amount?: string;
+    note?: string;
+    deliveryDate?: string;
+    recordDate?: string;
+    billingDate?: string;
+}
+
 export class ProjectInfoData {
     public static OVERVIEW_FULL_DATA: ProjectOverviewInfo = Object.assign(
         new ProjectOverviewInfo(),
@@ -132,5 +148,22 @@ export class ProjectInfoData {
     public static RESULT_BASE_UNIT_PRICES_EMPTY: ResultBaseUnitPrices = Object.assign(
         new ResultBaseUnitPrices(),
         projectInfo.projectResultBase.emptyUnitPrices,
+    );
+
+    public static ORDERED_DETAILS_RECORD_1: OrderedDetails = Object.assign(
+        new OrderedDetails(),
+        projectInfo.orderedDetails.record1,
+    );
+    public static ORDERED_DETAILS_RECORD_2: OrderedDetails = Object.assign(
+        new OrderedDetails(),
+        projectInfo.orderedDetails.record2,
+    );
+    public static ORDERED_DETAILS_RECORD_3: OrderedDetails = Object.assign(
+        new OrderedDetails(),
+        projectInfo.orderedDetails.record3,
+    );
+    public static ORDERED_DETAILS_RECORD_REQUIRED_ONLY: OrderedDetails = Object.assign(
+        new OrderedDetails(),
+        projectInfo.orderedDetails.recordRequiredOnly,
     );
 }

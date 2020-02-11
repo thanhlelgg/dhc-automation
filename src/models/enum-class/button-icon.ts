@@ -8,6 +8,8 @@ export class ButtonIcon {
     static readonly DOWNLOAD = new ButtonIcon('Download', 'fa-download');
     static readonly SEARCH = new ButtonIcon('Search', 'fa-search');
     static readonly DELETE = new ButtonIcon('Delete', 'fa-trash-o');
+    static readonly EDIT = new ButtonIcon('Search', 'fa-edit');
+    static readonly VIEW = new ButtonIcon('Delete', 'fa-eye');
     // private to disallow creating other instances of this type
     private constructor(private readonly name: string, public readonly _class: string) {}
 
