@@ -185,27 +185,49 @@ export class TableHelper {
         }
     }
 
+    /**
+     * Create cell link by it's text
+     */
     public async clickCellLinkByText(header: string, value: string): Promise<void> {
         const rowIdx = await this.getRowIndexByValue(header, value);
         const headerIdx = await this.getHeaderIndex(header);
         await gondola.click(this.cellLinkByIndex.format(rowIdx.toString(), headerIdx.toString()));
     }
 
+    /**
+     * Get number of rows
+     */
     public async getNumberOfRows(): Promise<number> {
         return await gondola.getElementCount(this.rowLocator);
     }
 
+    /**
+     * Enter cell textfield by row index
+     * @param header
+     * @param rowIdx
+     * @param text
+     */
     public async enterCellTextfieldByIndex(header: string, rowIdx: string, text?: string): Promise<void> {
         if (text === undefined) return;
         const headerIdx = await this.getHeaderIndex(header);
         await gondola.enter(this.cellTextfieldByIndex.format(rowIdx, headerIdx.toString()), text);
     }
 
+    /**
+     * click cell textfield by row index
+     * @param header
+     * @param rowIdx
+     */
     public async clickCellTextfieldByIndex(header: string, rowIdx: string): Promise<void> {
         const headerIdx = await this.getHeaderIndex(header);
         await gondola.click(this.cellTextfieldByIndex.format(rowIdx, headerIdx.toString()));
     }
 
+    /**
+     * Get cell textfield value by row index
+     * @param header
+     * @param rowIdx
+     */
     public async getTextCellTextfieldByIndex(header: string, rowIdx: string): Promise<string> {
         const headerIdx = await this.getHeaderIndex(header);
         return await gondola.getElementAttribute(
@@ -214,12 +236,23 @@ export class TableHelper {
         );
     }
 
+    /**
+     * Enter cell textarea by row index
+     * @param header
+     * @param rowIdx
+     * @param text
+     */
     public async enterCellTextareaByIndex(header: string, rowIdx: string, text?: string): Promise<void> {
         if (!text) return;
         const headerIdx = await this.getHeaderIndex(header);
         await gondola.enter(this.cellTextareaByIndex.format(rowIdx, headerIdx.toString()), text);
     }
 
+    /**
+     * Get textarea value by row index
+     * @param header
+     * @param rowIdx
+     */
     public async getTextCellTextareaByIndex(header: string, rowIdx: string): Promise<string> {
         const headerIdx = await this.getHeaderIndex(header);
         return await gondola.getElementAttribute(
@@ -228,17 +261,34 @@ export class TableHelper {
         );
     }
 
+    /**
+     * Select cell dropdown by row index
+     * @param header
+     * @param rowIdx
+     * @param text
+     */
     public async selectCellDropdownByIndex(header: string, rowIdx: string, text?: string): Promise<void> {
         if (!text) return;
         const headerIdx = await this.getHeaderIndex(header);
         await gondola.select(this.cellSelectorByIndex.format(rowIdx, headerIdx.toString()), text);
     }
 
+    /**
+     * get selected item of cell dropdown by row index
+     * @param header
+     * @param rowIdx
+     */
     public async getSelectedCellDropdownByIndex(header: string, rowIdx: string): Promise<string> {
         const headerIdx = await this.getHeaderIndex(header);
         return await gondola.getSelectedOption(this.cellSelectorByIndex.format(rowIdx, headerIdx.toString()));
     }
 
+    /**
+     * set state of cell checkbox by row index
+     * @param header
+     * @param rowIdx
+     * @param state
+     */
     public async setStateCellCheckboxByIndex(header: string, rowIdx: string, state?: boolean): Promise<void> {
         if (state === undefined) return;
         const headerIdx = await this.getHeaderIndex(header);
@@ -248,6 +298,11 @@ export class TableHelper {
         );
     }
 
+    /**
+     * Get state of cell checkbox by row index
+     * @param header
+     * @param rowIdx
+     */
     public async getStateCellCheckboxByIndex(header: string, rowIdx: string): Promise<boolean> {
         const headerIdx = await this.getHeaderIndex(header);
         return await generalPage.getStateCustomizeCheckbox(
@@ -255,6 +310,11 @@ export class TableHelper {
         );
     }
 
+    /**
+     * Get invalid message of cell by row index
+     * @param header
+     * @param rowIdx
+     */
     public async getCellInvalidFeedback(header: string, rowIdx: string): Promise<string> {
         const headerIdx = await this.getHeaderIndex(header);
         const locator = this.cellInvalidFeedbackByIndex.format(rowIdx, headerIdx.toString());
@@ -262,12 +322,23 @@ export class TableHelper {
         return doesExist ? await gondola.getText(locator) : '';
     }
 
+    /**
+     * check jf cell dropdown's options exist by row index
+     * @param header
+     * @param rowIdx
+     * @param options
+     */
     public async doesCellDropdownOptionExist(header: string, rowIdx: string, options: string[]): Promise<boolean> {
         const headerIdx = await this.getHeaderIndex(header);
         const locator = this.cellSelectorByIndex.format(rowIdx, headerIdx.toString());
         return await gondola.areOptionsExists(locator, options);
     }
 
+    /**
+     * Check if cell dropdown's first option is selected by row index
+     * @param header
+     * @param rowIdx
+     */
     public async isCellDropdownFirstOptionSelected(header: string, rowIdx: string): Promise<boolean> {
         const headerIdx = await this.getHeaderIndex(header);
         const locator = this.cellSelectorByIndex.format(rowIdx, headerIdx.toString());
@@ -275,12 +346,22 @@ export class TableHelper {
         return (await gondola.getSelectedOption(locator)) === firstOption;
     }
 
+    /**
+     * check if cell dropdown is enabled by row index
+     * @param header
+     * @param rowIdx
+     */
     public async isCellDropdownEnabled(header: string, rowIdx: string): Promise<boolean> {
         const headerIdx = await this.getHeaderIndex(header);
         const locator = this.cellSelectorByIndex.format(rowIdx, headerIdx.toString());
         return await gondola.isControlEnabled(locator);
     }
 
+    /**
+     * get cell textfield validation message by row index
+     * @param header
+     * @param rowIdx
+     */
     public async getCellTextfieldValidationMessage(header: string, rowIdx: string): Promise<string> {
         const headerIdx = await this.getHeaderIndex(header);
         const locator = this.cellSelectorByIndex.format(rowIdx, headerIdx.toString());

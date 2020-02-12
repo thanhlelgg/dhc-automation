@@ -25,32 +25,39 @@ export class ProjectDetailsPage extends AddProjectPage {
         return await super.isDetailsPage(this.detailsPageUrl);
     }
 
+    @action('click add ordered details row button')
     public async clickAddOrderedDetailsRowButton(): Promise<void> {
         await gondola.click(this.addOrderedDetailsRowButton);
     }
 
+    @action('delete ordered details row')
     public async deleteOrderedDetailsRow(): Promise<void> {
         await this.orderedDetailsTableHelper.clickActionButton(ButtonIcon.DELETE);
     }
 
+    @action('does ordered details input line display')
     public async doesOrderedDetailsInputLineDisplay(): Promise<boolean> {
         return (await this.orderedDetailsTableHelper.getNumberOfRows()) === 1;
     }
 
+    @action('click ordered detail item name')
     public async clickOrderedDetailsItemName(rowIdx = '1'): Promise<void> {
         await this.orderedDetailsTableHelper.clickCellTextfieldByIndex(orderedDetailColumnName.itemName, rowIdx);
     }
 
+    @action('click ordered details textfield')
     public async clickOrderedDetailsTextfield(headerName: string, rowIdx = '1'): Promise<void> {
         await this.orderedDetailsTableHelper.clickCellTextfieldByIndex(headerName, rowIdx);
     }
 
+    @action('select ordered details item')
     public async selectOrderedDetailsItem(itemName: string, rowIdx: string): Promise<void> {
         await this.orderedDetailsTableHelper.clickCellTextfieldByIndex(orderedDetailColumnName.itemName, rowIdx);
         await searchModalWindows.filterResult(itemName, FilterType.ITEMS);
         await searchModalWindows.selectSearchResult(itemName, SearchResultColumn.NAME);
     }
 
+    @action('enter ordered details row')
     public async enterOrderedDetailsRow(orderedDetailsInfo: OrderedDetails, rowIdx = '1'): Promise<void> {
         await this.orderedDetailsTableHelper.enterCellTextfieldByIndex(
             orderedDetailColumnName.name,
@@ -115,6 +122,7 @@ export class ProjectDetailsPage extends AddProjectPage {
         );
     }
 
+    @action('does ordered details display correctly')
     public async doesOrderedDetailsDisplayCorrectly(
         orderedDetailsInfo: OrderedDetails,
         rowIdx: string,
@@ -204,34 +212,42 @@ export class ProjectDetailsPage extends AddProjectPage {
         return FlagsCollector.verifyFlags();
     }
 
+    @action('enter ordered details textfield')
     public async enterOrderedDetailsTextfield(headerName: string, text: string, rowIdx = '1'): Promise<void> {
         await this.orderedDetailsTableHelper.enterCellTextfieldByIndex(headerName, rowIdx, text);
     }
 
+    @action('get ordered details textfield')
     public async getOrderedDetailsTextfield(headerName: string, rowIdx = '1'): Promise<string> {
         return await this.orderedDetailsTableHelper.getTextCellTextfieldByIndex(headerName, rowIdx);
     }
 
+    @action('get ordered details textfield validation message')
     public async getOrderedDetailsTextfieldValidationMessage(headerName: string, rowIdx = '1'): Promise<string> {
         return await this.orderedDetailsTableHelper.getCellTextfieldValidationMessage(headerName, rowIdx);
     }
 
+    @action('enter ordered details textarea')
     public async enterOrderedDetailsTextarea(headerName: string, text: string, rowIdx = '1'): Promise<void> {
         await this.orderedDetailsTableHelper.enterCellTextareaByIndex(headerName, rowIdx, text);
     }
 
+    @action('select ordered details dropdown')
     public async selectOrderedDetailsDropdown(headerName: string, value: string, rowIdx = '1'): Promise<void> {
         await this.orderedDetailsTableHelper.enterCellTextfieldByIndex(headerName, rowIdx, value);
     }
 
+    @action('set state ordered details checkbox')
     public async setStateOrderedDetailsCheckbox(headerName: string, state: boolean, rowIdx = '1'): Promise<void> {
         await this.orderedDetailsTableHelper.setStateCellCheckboxByIndex(headerName, rowIdx, state);
     }
 
+    @action('get invalid feedback ordered details')
     public async getInvalidFeedBackOrderedDetails(headerName: string, rowIdx = '1'): Promise<string> {
         return await this.orderedDetailsTableHelper.getCellInvalidFeedback(headerName, rowIdx);
     }
 
+    @action('does ordered details dropdown option exist')
     public async doesOrderedDetailsDropdownOptionExist(
         headerName: string,
         options: string[],
@@ -240,10 +256,12 @@ export class ProjectDetailsPage extends AddProjectPage {
         return await this.orderedDetailsTableHelper.doesCellDropdownOptionExist(headerName, rowIdx, options);
     }
 
+    @action('is ordered details dropdown first option selected')
     public async isOrderedDetailsDropdownFirstOptionSelected(headerName: string, rowIdx = '1'): Promise<boolean> {
         return await this.orderedDetailsTableHelper.isCellDropdownFirstOptionSelected(headerName, rowIdx);
     }
 
+    @action('is ordered details dropdown enabled')
     public async isOrderedDetailsDropdownEnabled(headerName: string, rowIdx = '1'): Promise<boolean> {
         return await this.orderedDetailsTableHelper.isCellDropdownEnabled(headerName, rowIdx);
     }

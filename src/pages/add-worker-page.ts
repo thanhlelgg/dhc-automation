@@ -9,6 +9,7 @@ import { FilterType } from '../models/enum-class/filter-field-type';
 import searchModalWindows from './search-modal-windows';
 @page
 export class AddWorkerPage extends GeneralPage {
+    protected pageUrl = `${Constants.BMS_BASE_URL}/workers/add`;
     @locator
     protected workerCode = "//input[@id='cd']";
     @locator
@@ -91,6 +92,11 @@ export class AddWorkerPage extends GeneralPage {
         FlagsCollector.collectTruth('Worker note should be correct', await this.doesNoteDisplayCorrect(worker.note));
 
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
+    }
+
+    @action('is current page')
+    public async isCurrentPage(): Promise<boolean> {
+        return await super.isCurrentPage(this.pageUrl);
     }
 }
 export default new AddWorkerPage();

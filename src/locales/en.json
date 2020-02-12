@@ -417,7 +417,8 @@
         "endDateLesserThanStartDate": "開始日以降の日付を入力してください",
         "inputNumericTypeError": "数値を入力してください",
         "decimalPlaceTypeError": "小数は第2位までが有効です",
-        "negativeNumberError": "0以上の数値を入力してください"
+        "negativeNumberError": "0以上の数値を入力してください",
+        "segmentAlreadyInUse": "品目で使用されているため選択できません。"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]",

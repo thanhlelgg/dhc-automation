@@ -5,6 +5,7 @@ import { Constants } from '../../common/constants';
 import setup from './add-segment-setup';
 import { Utilities } from '../../common/utilities';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
+import { ItemInfoData } from '../../models/item-info';
 
 TestModule('Add Project - Parent segment field validation');
 
@@ -60,4 +61,18 @@ TestCase('BMS-215. マスタ:セグメント作成:親セグメント:セグメ�
     gondola.report(`VP. セグメント登録画面に戻り、選択したセグメント名が表示されること。`);
     const inputtedText = await addSegmentPage.getTextFieldValueByLabel(PARENT_SEGMENT_FIELD_NAME);
     await gondola.checkEqual(inputtedText, randomResultName, 'Segment should be selected');
+});
+
+TestCase('BMS-496. BMS:マスタ:セグメント作成:親セグメント:品目で使用済', async () => {
+    gondola.report(`Step 2. 「親セグメント」で前提条件のセグメントを選択し、「保存」ボタンをクリックする。`);
+    const selectedSegment = ItemInfoData.ITEM_INITIAL_DATA[0].segment;
+    await addSegmentPage.clickTextFieldByLabel(PARENT_SEGMENT_FIELD_NAME);
+    await searchModalWindows.selectSearchResult(selectedSegment, SearchResultColumn.NAME);
+    await addSegmentPage.saveSegment();
+    gondola.report(`VP. 入力フィールドの下にエラー「品目で使用されているため選択できません。」が表示されること。`);
+    gondola.checkEqual(
+        await addSegmentPage.getInvalidFeedBack(PARENT_SEGMENT_FIELD_NAME),
+        Constants.translator.invalidFeedback.segmentAlreadyInUse,
+        'Invalid feedback should be displayed correctly',
+    );
 });
