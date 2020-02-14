@@ -59,7 +59,7 @@ export class TableHelper {
      * @param headerName
      */
     public async getAllHeaderNames(): Promise<string[]> {
-        return await gondola.getElementsAttributes(this.headerNameLocator, 'innerText');
+        return await gondola.getElementsAttributes(this.headerNameLocator, 'innerText', true);
     }
 
     /**
@@ -270,7 +270,7 @@ export class TableHelper {
     public async selectCellDropdownByIndex(header: string, rowIdx: string, text?: string): Promise<void> {
         if (!text) return;
         const headerIdx = await this.getHeaderIndex(header);
-        await gondola.select(this.cellSelectorByIndex.format(rowIdx, headerIdx.toString()), text);
+        await gondola.selectOptionByText(this.cellSelectorByIndex.format(rowIdx, headerIdx.toString()), text);
     }
 
     /**

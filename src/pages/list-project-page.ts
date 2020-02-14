@@ -122,13 +122,13 @@ export class ListProjectPage extends GeneralPage {
             await this.selectCustomer(filter.customerName);
         }
         if (filter.status) {
-            await gondola.select(this.status, filter.status);
+            await gondola.selectOptionByText(this.status, filter.status);
         }
         if (filter.billingType) {
-            await gondola.select(this.billingType, filter.billingType);
+            await gondola.selectOptionByText(this.billingType, filter.billingType);
         }
         if (filter.accuracy) {
-            await gondola.select(this.accuracy, filter.accuracy);
+            await gondola.selectOptionByText(this.accuracy, filter.accuracy);
         }
         if (filter.tag) {
             await gondola.enter(this.tag, filter.tag);

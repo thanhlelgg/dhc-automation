@@ -312,7 +312,7 @@ export class AddProjectPage extends GeneralPage {
 
     @action('selectProjectForm')
     public async selectProjectForm(option: string): Promise<void> {
-        await gondola.select(this.projectForm, option);
+        await gondola.selectOptionByText(this.projectForm, option);
     }
 
     @action('isProjectResultSectionDisplayed')
@@ -323,7 +323,7 @@ export class AddProjectPage extends GeneralPage {
     @action('inputProjectOverviewInfo')
     public async inputProjectOverviewInfo(projectOverview: ProjectOverviewInfo): Promise<void> {
         await gondola.enter(this.projectName, projectOverview.projectName);
-        await gondola.select(this.projectForm, projectOverview.projectForm);
+        await gondola.selectOptionByText(this.projectForm, projectOverview.projectForm);
         await this.selectCustomerByName(projectOverview.customerName);
         await this.selectDepartment(projectOverview.department);
         await this.selectWorker(projectOverview.workerName);
@@ -339,11 +339,11 @@ export class AddProjectPage extends GeneralPage {
         if (projectOverview.scheduleEndDate) {
             await gondola.controlPopupAndEnterText(this.scheduleEndDate, projectOverview.scheduleEndDate);
         }
-        await gondola.select(this.accuracy, projectOverview.accuracy);
-        await gondola.select(this.status, projectOverview.status);
-        await gondola.select(this.workingPlace, projectOverview.workingPlace);
-        await gondola.select(this.exchangeId, projectOverview.exchangeId);
-        await gondola.select(this.closingDate, projectOverview.closingDate);
+        await gondola.selectOptionByText(this.accuracy, projectOverview.accuracy);
+        await gondola.selectOptionByText(this.status, projectOverview.status);
+        await gondola.selectOptionByText(this.workingPlace, projectOverview.workingPlace);
+        await gondola.selectOptionByText(this.exchangeId, projectOverview.exchangeId);
+        await gondola.selectOptionByText(this.closingDate, projectOverview.closingDate);
         await this.selectSegment(projectOverview.segment);
         if (projectOverview.tag) {
             await gondola.controlPopupAndEnterText(this.tag, projectOverview.tag);
@@ -409,7 +409,7 @@ export class AddProjectPage extends GeneralPage {
         const formExist = await gondola.doesControlExist(this.subTitleProjectResult);
         if (formExist) {
             await this.searchItem(projectResultBases.item);
-            await gondola.select(this.debitCreditSelector, projectResultBases.debitCredit);
+            await gondola.selectOptionByText(this.debitCreditSelector, projectResultBases.debitCredit);
             for (const record of projectResultBases.records) {
                 await this.setStatusResultBasesRoleCheckbox(record.role, true);
 
@@ -450,7 +450,10 @@ export class AddProjectPage extends GeneralPage {
                 );
                 await this.setTaxableState(record.role, record.isTaxable);
                 if (record.isTaxable) {
-                    await gondola.select(Utilities.formatString(this.taxIdByRoleStr, record.role), record.taxId);
+                    await gondola.selectOptionByText(
+                        Utilities.formatString(this.taxIdByRoleStr, record.role),
+                        record.taxId,
+                    );
                 }
 
                 if (record.note) {
@@ -473,9 +476,12 @@ export class AddProjectPage extends GeneralPage {
             await gondola.click(this.addProjectDetailBtn);
             await gondola.enter(Utilities.formatString(this.detailNameByRowStr, idx + ''), projectDetail.detailName);
             await this.searchItem(projectDetail.item, idx.toString());
-            await gondola.select(Utilities.formatString(this.debitCreditByRowStr, idx + ''), projectDetail.debitCredit);
+            await gondola.selectOptionByText(
+                Utilities.formatString(this.debitCreditByRowStr, idx + ''),
+                projectDetail.debitCredit,
+            );
             await gondola.setState(Utilities.formatString(this.isTaxableByRowStr, idx + ''), projectDetail.isTaxable);
-            await gondola.select(Utilities.formatString(this.taxIdByRowStr, idx + ''), projectDetail.taxId);
+            await gondola.selectOptionByText(Utilities.formatString(this.taxIdByRowStr, idx + ''), projectDetail.taxId);
             await gondola.enter(Utilities.formatString(this.quantityByRowStr, idx + ''), projectDetail.quantity);
             await gondola.enter(Utilities.formatString(this.unitByRowStr, idx + ''), projectDetail.unit);
             await gondola.enter(Utilities.formatString(this.unitPriceByRowStr, idx + ''), projectDetail.unitPrice);

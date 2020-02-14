@@ -15,6 +15,7 @@ import { Constants } from '../common/constants';
 import { Taxes } from '../entity/Taxes';
 import { SpecialAllowances } from '../entity/SpecialAllowances';
 import { Positions as TTSPositions } from '../entity/TTSPositions';
+import { Users } from '../entity/Users';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -343,6 +344,16 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get active Users from the database
+     */
+    public static async getActiveUsers(): Promise<Users[]> {
+        const alias = 'users';
+        const query = `${alias}.is_deleted = 0`;
+        const users = await DatabaseHelper.getAll(DatabaseSchema.TALENT, Users, alias, query);
+        return users;
+    }
+
+    /**
      * Check if Tax name exist
      * @param taxName
      */
@@ -352,6 +363,18 @@ export class DatabaseHelper {
             return tax.name;
         });
         return taxNames.includes(taxName);
+    }
+
+    /**
+     * Check if User name exist
+     * @param userName
+     */
+    public static async doesUserNameExist(userName: string): Promise<boolean> {
+        const availableUsers = await DatabaseHelper.getActiveUsers();
+        const loginId = availableUsers.map(user => {
+            return user.login_id;
+        });
+        return loginId.includes(userName);
     }
 
     /**

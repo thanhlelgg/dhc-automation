@@ -51,7 +51,7 @@ export class AddItemPage extends GeneralPage {
         await gondola.waitUntilElementVisible(this.itemCode);
         await gondola.enter(this.itemCode, itemInfo.itemCode);
         await gondola.enter(this.itemName, itemInfo.itemName);
-        await gondola.select(this.mgmtSection, itemInfo.managementSection);
+        await gondola.selectOptionByText(this.mgmtSection, itemInfo.managementSection);
         await this.selectSegment(itemInfo.segment, SearchResultColumn.NAME);
         await this.selectRadioButtonByLabel(Constants.translator.fieldName.addItem.tax, itemInfo.tax);
 

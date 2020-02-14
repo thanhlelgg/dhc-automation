@@ -40,10 +40,11 @@ export class GeneralPage {
     protected helpBlockErrorByLabelPartialMatch =
         "//div[label[contains(text(),'{0}')]]//span[contains(@class,'help-block')]";
     @locator
-    protected textFieldByLabel = "//div[label[normalize-space()='{0}']]//input[@type='text' or @type='number']";
+    protected textFieldByLabel =
+        "//div[label[normalize-space()='{0}']]//input[@type='text' or @type='number' or @type='password' or @type='email']";
     @locator
     protected textFieldByLabelPartialMatch =
-        "//div[label[contains(text(),'{0}')]]//input[@type='text' or @type='password' or @type='number']";
+        "//div[label[contains(text(),'{0}')]]//input[@type='text' or @type='password' or @type='number' or @type='email']";
     @locator
     protected paragraphByLabel = "//div[label[normalize-space()='{0}']]//p";
     @locator
@@ -54,6 +55,8 @@ export class GeneralPage {
     protected spanByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//span";
     @locator
     protected textFieldByPlaceHolder = "//input[@type='text' and @placeholder='{0}']";
+    @locator
+    protected textAreaByPlaceHolder = "//textarea[@placeholder='{0}']";
     @locator
     protected textAreaByLabel = "//div[label[normalize-space()='{0}']]//textarea";
     @locator
@@ -298,17 +301,16 @@ export class GeneralPage {
     }
 
     @action('clickTextFieldByLabel')
-    public async clickTextFieldByLabel(label: string): Promise<void> {
-        const locator = Utilities.formatString(this.textFieldByLabel, label);
-        await gondola.waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
-        await gondola.click(locator);
-        await gondola.waitForElement(this.modalTitle);
+    public async clickTextFieldByLabel(label: string, partial = false): Promise<void> {
+        const locator = partial ? this.textFieldByLabelPartialMatch : this.textFieldByLabel;
+        await gondola.waitUntilStalenessOfElement(locator.format(label), Constants.VERY_SHORT_TIMEOUT);
+        await gondola.click(locator.format(label));
     }
 
     @action('click outside textfield')
-    public async clickOutsideTextFieldByLabel(label: string): Promise<void> {
-        const locator = Utilities.formatString(this.textFieldByLabel, label);
-        await gondola.performClick(locator, Constants.SLIGHTLY_RIGHT_OFFSET);
+    public async clickOutsideTextFieldByLabel(label: string, partial = false): Promise<void> {
+        const locator = partial ? this.textFieldByLabelPartialMatch : this.textFieldByLabel;
+        await gondola.performClick(locator.format(label), Constants.SLIGHTLY_RIGHT_OFFSET);
     }
 
     @action('doesModalTitleDisplay')
@@ -402,7 +404,7 @@ export class GeneralPage {
             return;
         }
         const locator = partial ? this.selectorByLabelPartialMatch : this.selectorByLabel;
-        await gondola.select(locator.format(label), option);
+        await gondola.selectOptionByText(locator.format(label), option);
     }
 
     @action('selectSelectorByLabel')
@@ -536,6 +538,13 @@ export class GeneralPage {
     public async enterTextfieldByPlaceholder(placeholder: string, text: string | undefined): Promise<void> {
         if (text) {
             await gondola.enter(this.textFieldByPlaceHolder.format(placeholder), text);
+        }
+    }
+
+    @action('enter text area by place holder')
+    public async enterTextAreaByPlaceholder(placeholder: string, text: string | undefined): Promise<void> {
+        if (text) {
+            await gondola.enter(this.textAreaByPlaceHolder.format(placeholder), text);
         }
     }
 

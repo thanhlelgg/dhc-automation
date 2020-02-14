@@ -34,6 +34,11 @@ declare module 'gondolajs/built/builtin' {
         scrollToElement(control: any): Promise<void>;
 
         /**
+         * Scroll to top
+         */
+        scrollToTop(): Promise<void>;
+
+        /**
          * Execute a javascript click
          * @param control
          */
@@ -49,8 +54,9 @@ declare module 'gondolajs/built/builtin' {
          * Get attributes of all elements match the locator
          * @param control
          * @param attribute
+         * @param normalize Remove leading and trailing whitespace or not
          */
-        getElementsAttributes(control: any, attribute: string): Promise<string[]>;
+        getElementsAttributes(control: any, attribute: string, normalize?: boolean): Promise<string[]>;
 
         /**
          * Check if an element is displayed
@@ -207,5 +213,12 @@ declare module 'gondolajs/built/builtin' {
          * @param value
          */
         setElementAttribute(control: any, attribute: string, value: string): Promise<void>;
+
+        /**
+         * Select Option by text (temporary replaced for 'gondola.select' which is bugged)
+         * @param control
+         * @param text
+         */
+        selectOptionByText(control: any, text: string): Promise<void>;
     }
 }

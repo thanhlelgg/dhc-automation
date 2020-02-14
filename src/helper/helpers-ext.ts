@@ -54,6 +54,13 @@ class HelperExt extends Helper {
     }
 
     /**
+     * Scroll to top
+     */
+    public async scrollToTop(): Promise<void> {
+        await browser.executeScript('window.scrollTo(0,0);');
+    }
+
+    /**
      * Execute a javascript click
      * @param locator
      */
@@ -79,7 +86,7 @@ class HelperExt extends Helper {
     }
 
     /**
-     * Find elements using protractor directly
+     * Perform a click at a location
      * @param locator
      */
     public async performClick(locator: any, offset?: ILocation): Promise<void> {
@@ -105,12 +112,15 @@ class HelperExt extends Helper {
      * Get attributes of all elements match the locator
      * @param control
      * @param attribute
+     * @param normalize Remove leading and trailing whitespace or not
      */
-    public async getElementsAttributes(control: any, attribute: string): Promise<string[]> {
+    public async getElementsAttributes(control: any, attribute: string, normalize = false): Promise<string[]> {
         const elements = await this.getElements(control);
         const elementsAttribute = [];
         for (const element of elements) {
-            elementsAttribute.push(await element.getAttribute(attribute));
+            let value = await element.getAttribute(attribute);
+            if (normalize) value = value.trim();
+            elementsAttribute.push(value);
         }
         return elementsAttribute;
     }
@@ -148,6 +158,26 @@ class HelperExt extends Helper {
      */
     public async getOptions(control: any): Promise<protractor.WebElement[]> {
         return await (await this.getElement(control)).findElements({ css: 'option' });
+    }
+
+    public async selectOptionByText(control: any, text: string): Promise<void> {
+        const ele = await this.getElement(control);
+        const options = await ele.findElements({ css: 'option' });
+        for (const option of options) {
+            if ((await option.getText()) === text) {
+                await ele.click();
+                await option.click();
+                return;
+            }
+        }
+        const availableOptionsValue = await Promise.all(
+            options.map(
+                async (option): Promise<string> => {
+                    return await option.getText();
+                },
+            ),
+        );
+        throw new Error(`Option ${text} is not available. Available options: ${availableOptionsValue}`);
     }
 
     /**
@@ -232,7 +262,7 @@ class HelperExt extends Helper {
                 await browser.wait(protractor.until.elementIsVisible(element), timeOut);
             }
         } catch (e) {
-            console.log(`Can not find element with locator ${control} after ${timeOut} ms`);
+            console.log(`Can not find element with locator ${control} after ${timeOut} s`);
         }
     }
 

@@ -211,6 +211,7 @@
         },
         "addUser": {
             "personalInfo": {
+                "tabTitle": "基本情報",
                 "id": "ID",
                 "name": "氏名",
                 "alphabetName": "氏名（アルファベット）",
@@ -263,6 +264,7 @@
                 "comment": "コメント"
             },
             "professionalInfo": {
+                "tabTitle": "業務情報",
                 "attendanceInfo": {
                     "title": "勤怠情報",
                     "workAttitude": "勤務態度",
@@ -275,6 +277,7 @@
                 }
             },
             "skillInfo": {
+                "tabTitle": "スキル情報",
                 "languageSkill": {
                     "title": "言語スキル",
                     "nativeLanguage": "第一言語",
@@ -283,6 +286,7 @@
                 }
             },
             "laborInfo": {
+                "tabTitle": "労務情報",
                 "paymentInfo": {
                     "title": "支給情報",
                     "bugyoId": "奉行ID",
@@ -323,6 +327,7 @@
                 "employmentInsuranceHistory": "雇用保険加入履歴"
             },
             "visaInfo": {
+                "tabTitle": "ビザ情報",
                 "visaInfo": {
                     "title": "ビザ情報",
                     "visaName": "在留カード氏名",
@@ -334,6 +339,7 @@
                 }
             },
             "roleInfo": {
+                "tabTitle" : "利用システム",
                 "usedSystem": "利用システム",
                 "talentRole": {
                     "title": "タレントシステム",
@@ -663,6 +669,13 @@
         "billingTemplate": {
             "fileName": "ファイル名",
             "action": "操作"
+        },
+        "usersList": {
+            "id": "ID",
+            "loginId": "社員ID",
+            "mail": "メールアドレス",
+            "lap": "所属拠点",
+            "role": "ロール"
         }
     }
 }
