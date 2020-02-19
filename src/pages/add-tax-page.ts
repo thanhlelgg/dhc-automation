@@ -4,6 +4,7 @@ import '@src/string.extensions';
 import { TaxInfo } from '../models/tax-info';
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
 import { Constants } from '../common/constants';
+import businessSystemPage from './business-system-page';
 
 @page
 export class AddTaxPage extends GeneralPage {
@@ -38,12 +39,12 @@ export class AddTaxPage extends GeneralPage {
         );
         FlagsCollector.collectEqual(
             'Tax rate should be displayed correctly',
-            taxInfo.taxRate,
+            taxInfo.taxRate.toString(),
             await this.getTextFieldValueByLabel(this.fieldName.taxRate),
         );
         FlagsCollector.collectEqual(
             'Tax display order should be displayed correctly',
-            taxInfo.displayOrder,
+            taxInfo.displayOrder.toString(),
             await this.getTextFieldValueByLabel(this.fieldName.displayOrder),
         );
         return FlagsCollector.verifyFlags(LoggingType.REPORT);
@@ -52,6 +53,12 @@ export class AddTaxPage extends GeneralPage {
     @action('is current page')
     public async isCurrentPage(): Promise<boolean> {
         return await super.isCurrentPage(this.pageUrl);
+    }
+
+    @action('go to list tax page')
+    public async gotoListTaxPage(): Promise<void> {
+        await gondola.navigate(Constants.BMS_BASE_URL);
+        await businessSystemPage.gotoListTaxPage();
     }
 }
 export default new AddTaxPage();

@@ -383,6 +383,15 @@
                 "recordDate": "計上日",
                 "billingDate": "請求日"
             }
+        },
+        "taxesList": {
+            "name": "表示名",
+            "tax-rate": "税率",
+            "displayOrder": "表示順",
+            "created": "登録日",
+            "createdUser": "登録者",
+            "modified": "更新日",
+            "modifieduser": "更新者"
         }
     },
     "fieldPlaceHolder": {
@@ -413,7 +422,9 @@
         "taxFieldRequired": "課税の場合、このフィールドは入力必須です",
         "exceededNOC": "文字以内で入力してください",
         "exceededNOD": "桁以内の数値を入力してください",
+        "exceededNODUpdate": "表示順は現在の最大値以下の数値か、現在の最大値の次の数値を入力してください。",
         "inputHalfSizeAlphaNumericTypeError": "半角英数で入力してください",
+        "inputHalfSizeNumericTypeError": "半角数値で入力してください",
         "duplicatedTypeError": "既に使われている値のため異なる値を入力してください",
         "invalidInputValue": "入力値が不正です",
         "invalidContactNumber": "電話(FAX)番号形式で入力してください",
@@ -427,7 +438,9 @@
         "negativeNumberError": "0以上の数値を入力してください",
         "segmentAlreadyInUse": "品目で使用されているため選択できません。",
         "fieldNeedToBeFilled": "このフィールドを入力してください。",
-        "dropdownNeedToBeSelected": "リスト内の項目を選択してください。"
+        "dropdownNeedToBeSelected": "リスト内の項目を選択してください。",
+        "inputDecimalTypeError": "有効な値を入力してください。有効な値として最も近いのは 1 と 2 です。",
+        "inputIntegerTypeError": "整数で入力してください"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]",
