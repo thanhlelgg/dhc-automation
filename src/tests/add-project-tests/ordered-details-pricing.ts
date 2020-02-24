@@ -79,7 +79,7 @@ TestCase('BMS-303. BMS:案件:案件編集:非稼働明細:数量:文字数', as
     gondola.report(`VP. 入力フィールドの下にエラー「0以上の数値を入力してください」が表示されること。`);
     await gondola.checkEqual(
         await projectDetailsPage.getOrderedDetailsTextfieldValidationMessage(columnName.quantity),
-        Constants.NEGATIVE_NUMBER_ERROR_MESSAGE,
+        Constants.NOT_POSITIVE_INTEGER_NUMBER_ERROR_MESSAGE,
         'Invalid feedback message should not be displayed',
     );
 });
@@ -110,7 +110,7 @@ TestCase('BMS-306. BMS:案件:案件編集:非稼働明細:単位', async () => 
     gondola.report(`Step 10. 数量を9桁以上を入力し、「保存」ボタンをクリックする。`);
     await projectDetailsPage.enterOrderedDetailsTextfield(columnName.unit, Utilities.getRandomText(maximumNOC + 1));
     await projectDetailsPage.saveNewProject();
-    // BUG: Invalid feedback does not match with test case requirement
+    // BUG: No error message is displayed
     gondola.report(`VP. 入力フィールドの下にエラー「8桁以内の数値を入力してください」が表示されること。`);
     await gondola.checkEqual(
         await projectDetailsPage.getInvalidFeedBackOrderedDetails(columnName.unit),

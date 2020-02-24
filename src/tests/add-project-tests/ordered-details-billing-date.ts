@@ -57,6 +57,7 @@ TestCase('BMS-322. BMS:案件:案件編集:非稼働明細:請求日:「yyyy-m-d
     gondola.report(`Step 9. 他の必須フィールドで情報を入力して、「保存」ボタンをクリックする。`);
     await projectDetailsPage.enterOrderedDetailsRow(REQUIRED_ONLY_RECORD);
     await projectDetailsPage.saveNewProject();
+    //BUG: navigate to error page
     gondola.report(`VP. 入力した「案件開始日」は「yyyy-mm-dd」形式に自動的に変換されること`);
     const displayedDate = await projectDetailsPage.getOrderedDetailsTextfield(columnName.billingDate);
     await gondola.checkEqual(
@@ -76,6 +77,7 @@ TestCase('BMS-323. BMS:案件:案件編集:非稼働明細:請求日:「yyyy.mm.
     gondola.report(`Step 9. 他の必須フィールドで情報を入力して、「保存」ボタンをクリックする。`);
     await projectDetailsPage.enterOrderedDetailsRow(REQUIRED_ONLY_RECORD);
     await projectDetailsPage.saveNewProject();
+    //BUG: navigate to error page
     gondola.report(`VP. 入力した「案件開始日」は「yyyy-mm-dd」形式に自動的に変換されること`);
     const displayedDate = await projectDetailsPage.getOrderedDetailsTextfield(columnName.billingDate);
     await gondola.checkEqual(
@@ -95,6 +97,7 @@ TestCase('BMS-324. BMS:案件:案件編集:非稼働明細:請求日:「yyyy/mm/
     gondola.report(`Step 9. 他の必須フィールドで情報を入力して、「保存」ボタンをクリックする。`);
     await projectDetailsPage.enterOrderedDetailsRow(REQUIRED_ONLY_RECORD);
     await projectDetailsPage.saveNewProject();
+    //BUG: navigate to error page
     gondola.report(`VP. 入力した「案件開始日」は「yyyy-mm-dd」形式に自動的に変換されること`);
     const displayedDate = await projectDetailsPage.getOrderedDetailsTextfield(columnName.billingDate);
     await gondola.checkEqual(

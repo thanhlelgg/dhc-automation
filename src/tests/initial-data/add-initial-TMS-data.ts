@@ -21,7 +21,6 @@ TestModule('Add initial data for TMS');
 const WORKING_PLACE_INFO = WorkingPlaceInfoData.WORKING_PLACE_INITIAL_DATA;
 const POSITION_INFO = PositionInfoData.POSITION_INITIAL_DATA;
 const USER_INFO = UserInfoData.USER_INITIAL_DATA;
-const POSITION_NAME_HEADER_NAME = Constants.translator.tableColumnName.positionsList.positionName;
 
 Before(setup);
 
@@ -81,7 +80,7 @@ Data(POSITION_INFO).TestCase('TMS - InitialData 2. マスタ:役職作成', asyn
         await listPositionPage.doesPositionValueDisplay(current.positionName, PositionsTableHeader.POSITION_NAME),
         'New position should be displayed correctly',
     );
-    await listPositionPage.clickActionButton(ButtonIcon.VIEW, POSITION_NAME_HEADER_NAME, current.positionName);
+    await listPositionPage.openPosition(current.positionName);
     await gondola.checkTrue(
         await addPositionPage.doesPositionInfoDisplayCorrectly(current),
         'Position info should be displayed correctly',
@@ -93,8 +92,11 @@ Data(USER_INFO).TestCase('TMS - InitialData 3. ユーザー管理:ユーザー�
     gondola.report(
         `Step 1. 水平メニューで「タレントマネジメント」（または「ホーム」）をクリックして、垂直メニューで「ユーザー管理」→「新規ユーザー登録」をクリックする。`,
     );
-    await loginPage.gotoTalentManagement();
-    await talentManagementSystemPage.gotoUserPage();
+    // Currently for some stupid reason we can't select Nearest station if we go to the page using menu button (automation issue only),
+    // so this is a temporary solution to create the init data.
+    await addUserPage.openPage();
+    // await loginPage.gotoTalentManagement();
+    // await talentManagementSystemPage.gotoUserPage();
 
     gondola.report(`Step 2. 基本情報タブの必須項目で情報を入力する`);
     gondola.report(`Step 3. 基本情報タブで他の情報を入力する`);

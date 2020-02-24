@@ -18,14 +18,12 @@ TestCase('TMS-122. マスタ:ラボ管理作成:住所:文字数', async () => {
     gondola.report(`Step 2. 「最寄駅1 」で何も入力しなくて、「保存」ボタンをクリックする。`);
     const requireData = WorkingPlaceInfoData.WORKING_PLACE_REQUIRED_DATA;
     requireData.nearestStation1 = '';
-    //BUG: currently search function for nearest station is not working correctly
     await addWorkingPlacePage.inputWorkingPlaceInfo(requireData);
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
-    gondola.report(`VP. 入力フィールドの下にエラー「。。。」が表示されること。`);
-    // TODO: update when requirement specified
+    gondola.report(`VP. 入力フィールドの下にエラー「このフィールドは入力必須です」が表示されること。`);
     await gondola.checkEqual(
         await addWorkingPlacePage.getSelectorValidationMessageByLabel(WORKING_PLACE_NEAREST_STATION_1, true),
-        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
+        Constants.translator.invalidFeedback.dropdownNeedToBeSelected,
         'Field is required error message should be displayed',
     );
 });

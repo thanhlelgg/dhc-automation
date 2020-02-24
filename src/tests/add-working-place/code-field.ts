@@ -7,6 +7,7 @@ import { Utilities } from '../../common/utilities';
 import { WorkingPlaceInfoData } from '../../models/working-place-info';
 import { DatabaseHelper } from '../../helper/database-helpers';
 
+const WORKING_PLACE_NAME_FIELD_NAME = Constants.translator.fieldName.addWorkingPlace.name;
 const WORKING_PLACE_CODE_FIELD_NAME = Constants.translator.fieldName.addWorkingPlace.code;
 const CODE_FIELD_INVALID_VALUE_MESSAGE = Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
 const ALREADY_IN_USE_ERROR_MESSAGE = Constants.translator.invalidFeedback.duplicatedTypeError;
@@ -18,14 +19,12 @@ Before(setup);
 
 TestCase('TMS-119. マスタ:ラボ管理作成:就業先コード:文字数', async () => {
     gondola.report(`Step 2. 「就業先コード」で何も入力しなくて、「保存」ボタンをクリックする。`);
-    requireData.code = '';
-    await addWorkingPlacePage.inputWorkingPlaceInfo(requireData);
+    await addWorkingPlacePage.enterTextFieldByLabel(WORKING_PLACE_NAME_FIELD_NAME, Utilities.getRandomText(5), true);
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 入力フィールドの下にエラー「入力必須項目です」が表示されること。`);
-    // TODO: update when requirement specified
     await gondola.checkEqual(
         await addWorkingPlacePage.getTextFieldValidationMessageByLabel(WORKING_PLACE_CODE_FIELD_NAME, true),
-        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
+        Constants.translator.invalidFeedback.fieldNeedToBeFilled,
         'Field is required error message should be displayed',
     );
     gondola.report(`Step 3.「就業先コード」で16文字を入力し、「保存」ボタンをクリックする。`);
@@ -35,19 +34,20 @@ TestCase('TMS-119. マスタ:ラボ管理作成:就業先コード:文字数', a
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 入力フィールドの下にエラー「16文字以内で入力してください」が表示されないこと。`);
     await gondola.checkEqual(
-        await addWorkingPlacePage.getTextFieldValueByLabel(WORKING_PLACE_CODE_FIELD_NAME, true),
-        randomText,
-        'All characters should be displayed',
+        await addWorkingPlacePage.getInvalidFeedBack(WORKING_PLACE_CODE_FIELD_NAME, true),
+        '',
+        'Error message should not be displayed',
     );
 
     gondola.report(`Step 4.「就業先コード」で17文字以上を入力し、「保存」ボタンをクリックする。`);
     await addWorkingPlacePage.enterTextFieldByLabel(WORKING_PLACE_CODE_FIELD_NAME, randomText + 'a', true);
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
+    //BUG: no error message is displayed
     gondola.report(`VP. 入力フィールドの下にエラー「16文字以内で入力してください」が表示されること。`);
     await gondola.checkEqual(
-        await addWorkingPlacePage.getTextFieldValueByLabel(WORKING_PLACE_CODE_FIELD_NAME, true),
-        randomText,
-        'Exceed characters should be stripped',
+        await addWorkingPlacePage.getInvalidFeedBack(WORKING_PLACE_CODE_FIELD_NAME, true),
+        maximumNOC + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
+        'Error message should be displayed',
     );
 });
 

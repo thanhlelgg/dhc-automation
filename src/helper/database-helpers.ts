@@ -78,7 +78,7 @@ export class DatabaseHelper {
         if (data) {
             return data;
         } else {
-            throw new Error('No record was found.');
+            throw new Error(Constants.NO_RECORD_FOUND_ERROR_MESSAGE);
         }
     }
 
@@ -113,7 +113,7 @@ export class DatabaseHelper {
         if (data) {
             return data;
         } else {
-            throw new Error('No record was found.');
+            throw new Error(Constants.NO_RECORD_FOUND_ERROR_MESSAGE);
         }
     }
 

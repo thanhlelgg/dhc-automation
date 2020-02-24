@@ -13,37 +13,35 @@ Before(setup);
 
 TestCase('TMS-118. マスタ:ラボ管理作成:就業先名称:文字数', async () => {
     gondola.report(`Step 2. 「就業先名称」で何も入力しなくて、「保存」ボタンをクリックする。`);
-    const requireData = WorkingPlaceInfoData.WORKING_PLACE_REQUIRED_DATA;
-    requireData.name = '';
-    //BUG: currently search function for nearest station is not working correctly
-    await addWorkingPlacePage.inputWorkingPlaceInfo(requireData);
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
-    gondola.report(`VP. 入力フィールドの下にエラー「。。。」が表示されること。`);
-    // TODO: update when requirement specified
+    gondola.report(`VP. 入力フィールドの下にエラー「入力必須です」が表示されること。`);
     await gondola.checkEqual(
         await addWorkingPlacePage.getTextFieldValidationMessageByLabel(WORKING_PLACE_NAME, true),
-        Constants.FIELD_REQUIRED_ERROR_MESSAGE,
+        Constants.translator.invalidFeedback.fieldNeedToBeFilled,
         'Field is required error message should be displayed',
     );
-    gondola.report(`Step 3.「就業先名称」で50文字を入力する。`);
-    const maximumNOC = 50;
+    gondola.report(`Step 3.「就業先名称」で64文字を入力する。`);
+    const maximumNOC = 64;
     const randomText = Utilities.getRandomText(maximumNOC);
     await addWorkingPlacePage.enterTextFieldByLabel(WORKING_PLACE_NAME, randomText, true);
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
-    gondola.report(`VP. 50文字まで入力できること。`);
+    gondola.report(`VP. 入力フィールドの下にエラー「64文字以内で入力してください」が表示されないこと。`);
     await gondola.checkEqual(
-        await addWorkingPlacePage.getTextFieldValueByLabel(WORKING_PLACE_NAME, true),
-        randomText,
-        'All characters should be displayed',
+        await addWorkingPlacePage.getInvalidFeedBack(WORKING_PLACE_NAME, true),
+        '',
+        'Error message should not be displayed',
     );
 
-    gondola.report(`Step 4.「就業先名称」で51文字を入力する。`);
+    gondola.report(`Step 4.「就業先名称」で65文字を入力する。`);
+    const requireData = WorkingPlaceInfoData.WORKING_PLACE_REQUIRED_DATA;
+    requireData.name = '';
+    await addWorkingPlacePage.inputWorkingPlaceInfo(requireData);
     await addWorkingPlacePage.enterTextFieldByLabel(WORKING_PLACE_NAME, randomText + 'a', true);
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
-    gondola.report(`VP. 51目の文字まで入力できないこと。`);
+    gondola.report(`VP. 入力フィールドの下にエラー「64文字以内で入力してください」が表示されること。`);
     await gondola.checkEqual(
-        await addWorkingPlacePage.getTextFieldValueByLabel(WORKING_PLACE_NAME, true),
-        randomText,
-        'Exceed characters should be stripped',
+        await addWorkingPlacePage.getInvalidFeedBack(WORKING_PLACE_NAME, true),
+        maximumNOC + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
+        'Error message should be displayed',
     );
 });

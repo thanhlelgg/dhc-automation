@@ -11,27 +11,28 @@ const POSITION_NAME_HEADER_NAME = Constants.translator.tableColumnName.positions
 const POSITION_ABBREVIATION_HEADER_NAME = Constants.translator.tableColumnName.positionsList.positionAbbreviation;
 Before(setup);
 
-TestCase('TMS-132. マスタ:セグメント作成:セグメント名:文字数', async () => {
-    gondola.report(`Step 2.「検索」テキストボックスで「。。。」文字を入力する。`);
-    // TODO: this is just dummy data, replace to expected data when requirement is defined.
-    const maximumNOC = 10;
-    const randomInput = Utilities.getRandomText(maximumNOC);
-    await positionsPage.enterTextfieldByPlaceholder(SEARCH_TEXT_BOX_PLACEHOLDER_NAME, randomInput);
-    gondola.report(`VP. 「。。。」文字まで入力できること。`);
-    await gondola.checkEqual(
-        await positionsPage.getTextfieldValueByPlaceholder(SEARCH_TEXT_BOX_PLACEHOLDER_NAME),
-        randomInput,
-        'All characters should be entered',
-    );
-    gondola.report(`Step 3.「検索」テキストボックスで「。。。＋１」文字を入力する。`);
-    await positionsPage.enterTextfieldByPlaceholder(SEARCH_TEXT_BOX_PLACEHOLDER_NAME, randomInput + 'a');
-    gondola.report(`VP. 「。。。」文字まで入力できること。`);
-    await gondola.checkEqual(
-        await positionsPage.getTextfieldValueByPlaceholder(SEARCH_TEXT_BOX_PLACEHOLDER_NAME),
-        randomInput,
-        'Exceed characters should be stripped',
-    );
-});
+//TODO: Currently obsoleted, update when testcase is updated
+// TestCase('TMS-132. マスタ:セグメント作成:セグメント名:文字数', async () => {
+//     gondola.report(`Step 2.「検索」テキストボックスで「。。。」文字を入力する。`);
+//     // TODO: this is just dummy data, replace to expected data when requirement is defined.
+//     const maximumNOC = 10;
+//     const randomInput = Utilities.getRandomText(maximumNOC);
+//     await positionsPage.enterTextfieldByPlaceholder(SEARCH_TEXT_BOX_PLACEHOLDER_NAME, randomInput);
+//     gondola.report(`VP. 「。。。」文字まで入力できること。`);
+//     await gondola.checkEqual(
+//         await positionsPage.getTextfieldValueByPlaceholder(SEARCH_TEXT_BOX_PLACEHOLDER_NAME),
+//         randomInput,
+//         'All characters should be entered',
+//     );
+//     gondola.report(`Step 3.「検索」テキストボックスで「。。。＋１」文字を入力する。`);
+//     await positionsPage.enterTextfieldByPlaceholder(SEARCH_TEXT_BOX_PLACEHOLDER_NAME, randomInput + 'a');
+//     gondola.report(`VP. 「。。。」文字まで入力できること。`);
+//     await gondola.checkEqual(
+//         await positionsPage.getTextfieldValueByPlaceholder(SEARCH_TEXT_BOX_PLACEHOLDER_NAME),
+//         randomInput,
+//         'Exceed characters should be stripped',
+//     );
+// });
 
 TestCase('TMS-133. マスタ:役職一覧:検索:役職名で検索', async () => {
     gondola.report(`Step 2.「検索」テキストボックスで既存の役職名の部分を入力し、「拡大鏡アイコン」をクリックする。`);

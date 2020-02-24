@@ -29,24 +29,23 @@ TestCase('BMS-102. BMS:案件:従業員マスタ作成:従業員コード:文字
         Constants.FIELD_REQUIRED_ERROR_MESSAGE,
         'Invalid feedback message should be correct',
     );
-    gondola.report(`Step 3.「従業員コード」で16文字を入力し、保存する`);
+    gondola.report(`Step 3.「従業員コード」で16文字を入力し、「保存」ボタンをクリックする。`);
     await addWorkerPage.enterTextFieldByLabel(WORKER_CODE_FIELD_NAME, TEXT_16_CHARACTERS);
     await addWorkerPage.saveNewWorker();
     gondola.report(`VP. 入力フィールドの下にエラー「16文字以内で入力してください」が表示されないこと。`);
     await gondola.checkEqual(
-        await addWorkerPage.getTextFieldValueByLabel(WORKER_CODE_FIELD_NAME),
-        TEXT_16_CHARACTERS,
+        await addWorkerPage.getInvalidFeedBack(WORKER_CODE_FIELD_NAME),
+        '',
         'Invalid feedback message should be not displayed.',
     );
 
-    gondola.report(`Step 4. 「従業員コード」で17文字以上を入力する`);
+    gondola.report(`Step 4. 「従業員コード」で17文字以上を入力し、「保存」ボタンをクリックする。`);
     await addWorkerPage.enterTextFieldByLabel(WORKER_CODE_FIELD_NAME, TEXT_17_CHARACTERS);
     await addWorkerPage.saveNewWorker();
     gondola.report(`VP. 入力フィールドの下にエラー「16文字以内で入力してください」が表示されること。`);
-    //BUG: Can enter up to 17 characters
     await gondola.checkNotEqual(
-        await addWorkerPage.getTextFieldValueByLabel(WORKER_CODE_FIELD_NAME),
-        TEXT_17_CHARACTERS,
+        await addWorkerPage.getInvalidFeedBack(WORKER_CODE_FIELD_NAME),
+        16 + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
         'Invalid feedback message should be correct.',
     );
 });
@@ -101,10 +100,9 @@ TestCase('BMS-175. BMS:案件:従業員マスタ作成:従業員コード:重複
         `VP. 入力フィールドの下にエラー「既に使われている値のため異なる値を入力してください」が表示されること。`,
     );
     const actualFeedback = await addWorkerPage.getInvalidFeedBack(WORKER_CODE_FIELD_NAME);
-    //BUG: error message is not correct
     await gondola.checkEqual(
         actualFeedback,
-        Constants.DUPLICATED_TYPE_ERROR_MESSAGE,
+        WORKER_CODE_FIELD_NAME + Constants.translator.invalidFeedback.isDuplicated,
         'Invalid feedback message should be correct',
     );
 });

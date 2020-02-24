@@ -6,7 +6,7 @@
                 "name": "test name",
                 "fee_payer": "取引先",
                 "roundCode": "四捨五入",
-                "currency": "¥",
+                "currency": "JPY - 日本円 (￥)",
                 "closingDateGroup": "1"
             },
             "allFields": {
@@ -23,7 +23,7 @@
                 "mail": "test_email@logigear.com",
                 "fee_payer": "取引先",
                 "roundCode": "四捨五入",
-                "currency": "¥",
+                "currency": "JPY - 日本円 (￥)",
                 "closingDateGroup": "1",
                 "deliveryPlace": "test place",
                 "paymentCycle": "設定しない",
@@ -36,7 +36,7 @@
                 "name": "test name",
                 "fee_payer": "取引先",
                 "roundCode": "四捨五入",
-                "currency": "¥",
+                "currency": "JPY - 日本円 (￥)",
                 "closingDateGroup": "1",
                 "taxCalculationMethod": "請求書単位",
                 "billingBankAccountNumber": "bank account number"
@@ -55,7 +55,7 @@
                 "mail": "test_email@logigear.com",
                 "fee_payer": "取引先",
                 "roundCode": "四捨五入",
-                "currency": "¥",
+                "currency": "JPY - 日本円 (￥)",
                 "closingDateGroup": "1",
                 "taxCalculationMethod": "請求書単位",
                 "advanceReceivedAuxCode": "test ADRAC",

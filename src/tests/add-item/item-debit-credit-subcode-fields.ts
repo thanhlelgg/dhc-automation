@@ -31,6 +31,7 @@ TestCase('BMS-201. BMS:マスタ:品目作成:借方補助コード:文字数', 
     gondola.report(`Step 3.「借方補助コード」で17文字以上を入力し、保存する`);
     await addItemPage.enterTextFieldByLabel(DEBIT_SUBCODE_FIELD_NAME, TEXT_17_CHARACTERS);
     await addItemPage.saveNewItem();
+    //BUG: no error message
     gondola.report(`VP. 入力フィールドの下にエラー「16文字以内で入力してください」が表示されること。`);
     actualFeedback = await addItemPage.getInvalidFeedBack(DEBIT_SUBCODE_FIELD_NAME);
     gondola.checkEqual(
@@ -44,6 +45,7 @@ TestCase('BMS-202. BMS:マスタ:品目作成:借方補助コード:文字種', 
     gondola.report(`Step 2.「借方補助コード」で全角英数字を入力し、保存する。`);
     await addItemPage.enterTextFieldByLabel(DEBIT_SUBCODE_FIELD_NAME, TEXT_FULL_SIZE_ALPHANUMERIC);
     await addItemPage.saveNewItem();
+    //BUG: no error message
     gondola.report(`VP.「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     let actualFeedback = await addItemPage.getInvalidFeedBack(DEBIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
@@ -97,6 +99,7 @@ TestCase('BMS-203. BMS:マスタ:品目作成:貸方補助コード:文字数', 
     gondola.report(`Step 3.「貸方補助コード」で17文字以上を入力し、保存する`);
     await addItemPage.enterTextFieldByLabel(CREDIT_SUBCODE_FIELD_NAME, TEXT_17_CHARACTERS);
     await addItemPage.saveNewItem();
+    //BUG: no error message is displayed
     gondola.report(`VP. 入力フィールドの下にエラー「16文字以内で入力してください」が表示されること。`);
     actualFeedback = await addItemPage.getInvalidFeedBack(CREDIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(
@@ -110,6 +113,7 @@ TestCase('BMS-204. BMS:マスタ:品目作成:貸方補助コード:文字種', 
     gondola.report(`Step 2.「貸方補助コード」で全角英数字を入力し、保存する。`);
     await addItemPage.enterTextFieldByLabel(CREDIT_SUBCODE_FIELD_NAME, TEXT_FULL_SIZE_ALPHANUMERIC);
     await addItemPage.saveNewItem();
+    //BUG: no error message is displayed
     gondola.report(`VP.「半角英数で入力してください」という文字種誤りのエラーが表示されること。`);
     let actualFeedback = await addItemPage.getInvalidFeedBack(CREDIT_SUBCODE_FIELD_NAME);
     await gondola.checkEqual(

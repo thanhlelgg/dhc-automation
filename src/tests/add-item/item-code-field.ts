@@ -100,7 +100,7 @@ TestCase('BMS-191. BMS:マスタ:品目作成:品目コード:重複時', async 
     const actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_CODE_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.DUPLICATED_TYPE_ERROR_MESSAGE,
+        ITEM_CODE_FIELD_NAME + Constants.translator.invalidFeedback.isDuplicated,
         'Invalid feedback message should be correct',
     );
 });

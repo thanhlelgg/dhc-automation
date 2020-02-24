@@ -9,13 +9,14 @@ import { PositionsTableHeader } from '../models/enum-class/positions-table-heade
 import { FlagsCollector, LoggingType } from '../helper/flags-collector';
 import { TimeCardApprove } from '../models/enum-class/timecard-approve';
 import { ButtonIcon } from '../models/enum-class/button-icon';
+import TableType from '../models/enum-class/table-type';
 
 @page
 export class PositionsPage extends GeneralPage {
     pageUrl = `${Constants.TMS_BASE_URL}/positions`;
     @locator
-    protected positionsTable = '//table';
-    protected tableHelper = new TableHelper(this.positionsTable);
+    protected positionsTable = "//div[@id='data-table']";
+    protected tableHelper = new TableHelper(this.positionsTable, TableType.TABULAR_DIV);
     @locator
     protected importButton = "//a[i[@class='fa fa-upload']]";
     @locator
@@ -106,6 +107,11 @@ export class PositionsPage extends GeneralPage {
     @action('does position name display')
     public async doesPositionValueDisplay(value: string, header: PositionsTableHeader): Promise<boolean> {
         return await this.tableHelper.doesRowValueExists(header.uiColumnName, value);
+    }
+
+    @action('open position')
+    public async openPosition(positionName: string): Promise<void> {
+        await this.tableHelper.clickCellLinkByText(PositionsTableHeader.POSITION_NAME.uiColumnName, positionName);
     }
 
     // since both name and abbreviation must be unique, remove both of them

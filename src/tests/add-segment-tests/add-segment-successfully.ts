@@ -37,7 +37,6 @@ TestCase('BMS-220. マスタ:セグメント作成:保存ボタン:全ての項�
     gondola.report(`Step 3. 他の項目（「親セグメント」）で有効な情報を入力する。`);
     await addSegmentPage.enterSegmentInformation(segmentInfo);
     gondola.report(`Step 4.「保存」ボタンをクリックする。`);
-    //BUG: currently department is also required, so we can't create new segment, lead to testcase failed
     await addSegmentPage.saveSegment();
     gondola.report(
         `VP. 正常に保存でき、セグメント一覧画面には登録した部門が表示され、登録されたセグメントの内容は正しく保存されること。`,

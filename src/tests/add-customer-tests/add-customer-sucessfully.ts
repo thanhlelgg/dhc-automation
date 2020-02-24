@@ -90,6 +90,7 @@ TestCase('BMS-146. 案件:得意先マスタ作成:顧客情報:保存顧客:全
 
 TestCase('BMS-147. 案件:得意先マスタ作成:顧客情報:保存仕入先:必須項目のみ', async () => {
     gondola.report(`Step 2. 「区分」で「仕入先」を選択する。`);
+    //BUG: option supplier doesn't exist #142
     await addCustomerPage.selectSelectorByLabel(CUSTOMER_CLASSIFY_TEXTFIELD_LABEL, CUSTOMER_CLASSIFY_OPTIONS.supplier);
     gondola.report(`VP. 「顧客単価」と「割増」入力セッションが表示されないこと。`);
     //BUG: currently we can't select customer type
@@ -121,6 +122,7 @@ TestCase('BMS-147. 案件:得意先マスタ作成:顧客情報:保存仕入先:
 });
 
 TestCase('BMS-148. 案件:得意先マスタ作成:顧客情報:保存仕入先:全ての項目', async () => {
+    //BUG: option supplier doesn't exist #142
     gondola.report(`Step 2. 「区分」で「仕入先」を選択する。`);
     await addCustomerPage.selectSelectorByLabel(CUSTOMER_CLASSIFY_TEXTFIELD_LABEL, CUSTOMER_CLASSIFY_OPTIONS.supplier);
     gondola.report(`VP. 「顧客単価」と「割増」入力セッションが表示されないこと。`);

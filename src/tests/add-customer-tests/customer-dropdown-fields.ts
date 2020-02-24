@@ -36,7 +36,9 @@ TestCase('BMS-91. 案件:得意先マスタ作成:顧客情報:端数処理:選�
 
 TestCase('BMS-92. 案件:得意先マスタ作成:顧客情報:取引通貨:選択肢', async () => {
     gondola.report(`Step 2. 「取引通貨」プルダウンで選択肢を確認する。`);
-    gondola.report(`VP. 「取引通貨」プルダウンには選択肢が三つあり、「¥」、「$」、「₫」を含んでいること。`);
+    gondola.report(
+        `VP. 「取引通貨」プルダウンには選択肢が「JPY - 日本円(￥)」と通貨マスタよりのデータで、初期値は「JPY - 日本円(￥)」であること。`,
+    );
     const currencyOptions = Object.values(Constants.translator.dropdownOptions.customer.currency);
     await gondola.checkTrue(
         await addCustomerPage.doesSelectorByLabelOptionsExist(CUSTOMER_CURRENCY_DROPDOWN_LABEL, currencyOptions),

@@ -37,7 +37,7 @@ import { Constants } from '../common/constants';
 export class AddUserPage extends GeneralPage {
     fieldName = this.translator.fieldName.addUser;
     placeHolder = this.translator.fieldPlaceHolder.addUser;
-
+    protected pageUrl = `${Constants.TMS_BASE_URL}/users/add`;
     //#region personal info
     @locator
     protected userName = "//input[@id='name']";
@@ -134,10 +134,8 @@ export class AddUserPage extends GeneralPage {
         await this.selectSelectorByLabel(this.fieldName.personalInfo.studentType, personalInfo.studentType, true);
         gondola.report('Input login info');
         await this.inputLoginInfo(personalInfo.loginInfo);
-
         gondola.report('Input contact info');
         await this.inputContactInfo(personalInfo.contactInfo);
-
         gondola.report('Input emergency contact info');
         await this.inputEmergencyContactInfo(personalInfo.emergencyContactInfo);
 
@@ -756,6 +754,11 @@ export class AddUserPage extends GeneralPage {
         await gondola.waitForElement(locator, Constants.VERY_SHORT_TIMEOUT);
         await gondola.scrollToElement(locator);
         await gondola.executeClick(locator);
+    }
+
+    @action('go to page by url')
+    public async openPage(): Promise<void> {
+        await gondola.navigate(this.pageUrl);
     }
 }
 export default new AddUserPage();

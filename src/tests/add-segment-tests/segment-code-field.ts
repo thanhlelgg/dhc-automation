@@ -10,7 +10,6 @@ TestModule('Add Segment - Segment code field validation');
 
 const SEGMENT_CODE_TEXTFIELD_LABEL = Constants.translator.fieldName.addSegment.code;
 const INVALID_SEGMENT_CODE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
-const ALREADY_IN_USE_ERROR_MESSAGE = Constants.translator.invalidFeedback.alreadyInUse;
 Before(setup);
 
 TestCase('BMS-210. マスタ:セグメント作成:セグメントコード:文字数', async () => {
@@ -101,10 +100,9 @@ TestCase('BMS-212. マスタ:セグメント作成:セグメントコード:重�
     gondola.report(
         `VP. 入力フィールドの下にエラー「既に使われている値のため異なる値を入力してください」が表示されること。`,
     );
-    //BUG: invalid feedback is not correct
     await gondola.checkEqual(
         await addSegmentPage.getInvalidFeedBack(SEGMENT_CODE_TEXTFIELD_LABEL),
-        ALREADY_IN_USE_ERROR_MESSAGE,
+        SEGMENT_CODE_TEXTFIELD_LABEL + Constants.translator.invalidFeedback.isDuplicated,
         'Segment code is already in use feedback should be displayed',
     );
 });

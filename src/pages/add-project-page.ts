@@ -7,6 +7,7 @@ import {
     ProjectResultBaseInfo,
     SingleResource,
     ResultBaseUnitPrices,
+    ProjectInfoData,
 } from '../models/project-info';
 import { FilterType } from '../models/enum-class/filter-field-type';
 import { SearchResultColumn } from '../models/enum-class/search-result-column';
@@ -18,6 +19,7 @@ import { ElementType } from '../models/enum-class/element-type';
 import searchModalWindows from './search-modal-windows';
 import '@src/string.extensions';
 import { GeneralPage } from './general-page';
+import { Projects } from '../entity/Projects';
 
 @page
 export class AddProjectPage extends GeneralPage {
@@ -1327,6 +1329,22 @@ export class AddProjectPage extends GeneralPage {
         await gondola.enter(locator, text);
     }
 
+    @action('check number field by label validation functional')
+    public async doesResultBaseNumberFieldValidationWorkingCorrectly(
+        role: string,
+        attrName: ResultsBaseField,
+        saveButtonLocator = this.saveButton,
+        validationMessage = Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
+    ): Promise<boolean> {
+        for (const invalidNumber of Constants.NUMBER_SPECIAL_CHARACTER_ONLY) {
+            await this.enterProjectResultBaseTextfield(role, attrName, invalidNumber);
+            await gondola.click(saveButtonLocator);
+            const invalidMessage = await this.getInvalidFeedBackProjectResultsBase(role, attrName);
+            FlagsCollector.collectEqual('Error message is not displayed correctly.', validationMessage, invalidMessage);
+        }
+        return FlagsCollector.verifyFlags();
+    }
+
     @action('enter project result base text field')
     public async isProjectResultBaseTextFieldReadOnly(
         role: string,
@@ -1390,6 +1408,22 @@ export class AddProjectPage extends GeneralPage {
     @action('is current page')
     public async isCurrentPage(): Promise<boolean> {
         return await super.isCurrentPage(this.pageUrl);
+    }
+
+    public async getExistingProjectNumber(): Promise<string> {
+        let randomExistProject: Projects;
+        try {
+            randomExistProject = await DatabaseHelper.getRandomProject();
+        } catch (error) {
+            if (error.message === Constants.NO_RECORD_FOUND_ERROR_MESSAGE) {
+                await this.inputProjectOverviewInfo(ProjectInfoData.OVERVIEW_REQUIRED_ONLY);
+                await this.saveNewProject();
+                randomExistProject = await DatabaseHelper.getRandomProject();
+            } else {
+                throw error;
+            }
+        }
+        return randomExistProject.number;
     }
 }
 export default new AddProjectPage();

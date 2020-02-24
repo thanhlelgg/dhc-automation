@@ -3,25 +3,23 @@ import addProjectPage from '../../pages/add-project-page';
 import searchModalWindows from '../../pages/search-modal-windows';
 import { Constants } from '../../common/constants';
 import setup from './results-base-setup';
-import { ResultsBaseField } from '../../models/enum-class/project-results-base-field';
 import { Utilities } from '../../common/utilities';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 
 TestModule('Add Project - Results base - Item field validation');
 
 const SEARCH_ITEM_MODAL_WINDOW_TITLE = Constants.translator.modalWindows.searchItemTitle;
-let randomRole = '';
+const ITEM_FIELD_NAME = Constants.translator.resultBases.fieldName.item;
 
-Before(async () => {
-    randomRole = await setup();
-});
+Before(setup);
 
 TestCase('BMS-52. 案件:案件作成:出来高明細:品目:未入力', async () => {
     gondola.report(`Step 3. 出来高明細行の「品目」テキストボックスで何も入力しなくて、「保存」ボタンをクリックする。`);
     await addProjectPage.saveNewProject();
     gondola.report(`VP. 入力フィールドの下にエラー「このフィールドは入力必須です」が表示されること。`);
+    //BUG: no required error message is displayed
     await gondola.checkEqual(
-        await addProjectPage.getInvalidFeedBackProjectResultsBase(randomRole, ResultsBaseField.ITEM_ID),
+        await addProjectPage.getInvalidFeedBack(ITEM_FIELD_NAME),
         Constants.translator.invalidFeedback.fieldRequired,
         'Field is required message should be displayed',
     );

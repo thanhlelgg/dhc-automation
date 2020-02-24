@@ -54,8 +54,7 @@
             "recruitmentHistory": [{
                 "date": "2010/01/01",
                 "status": "入社"
-            }],
-            "comment": "コメントサンプル"
+            }]
         },
         "professionalInfo": {
             "attendanceInfo": {

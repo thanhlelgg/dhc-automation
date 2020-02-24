@@ -66,9 +66,11 @@ export class GeneralPage {
     @locator
     protected selectorByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//select";
     @locator
-    protected radioButtonByLabel = "//div[label[normalize-space()='{0}']]//label[input[@type='radio']]";
+    protected radioButtonByLabel =
+        "//div[label[normalize-space()='{0}']]//label[input[@type='radio'] or ./preceding-sibling::input[@type='radio']]";
     @locator
-    protected radioButtonByLabelPartialMatch = "//div[label[contains(text(),'{0}')]]//label[input[@type='radio']]";
+    protected radioButtonByLabelPartialMatch =
+        "//div[label[contains(text(),'{0}')]]//label[input[@type='radio'] or ./preceding-sibling::input[@type='radio']]";
     @locator
     protected radioButtonOptionByLabel =
         "//div[label[normalize-space()='{0}']]//label[(input[@type='radio'] or ./preceding-sibling::input[@type='radio']) and normalize-space()='{1}']";
@@ -102,7 +104,7 @@ export class GeneralPage {
     @locator
     protected languageOption = "//a[@class='changeFlag' and contains(@href, '{0}')]";
     @locator
-    protected labelByName = "//div[label[normalize-space()='{0}']]";
+    protected labelByName = "//div/label[normalize-space()='{0}']";
     @locator
     protected recordField = "//{0}[@name='{1}[{2}][{3}]']";
     @locator
@@ -256,7 +258,7 @@ export class GeneralPage {
     @action('enterTextFieldByLabel')
     public async enterTextFieldByLabel(label: string, text: any | undefined, partial = false): Promise<void> {
         const locator = partial ? this.textFieldByLabelPartialMatch : this.textFieldByLabel;
-        if (text) {
+        if (text != undefined) {
             await gondola.enter(locator.format(label), text);
         }
     }
@@ -718,9 +720,13 @@ export class GeneralPage {
     }
 
     @action('click menu link by title')
-    public async clickMenuLinkByTitle(title: string): Promise<void> {
-        await gondola.waitUntilElementVisible(this.menuLinkByTitle.format(title));
-        await gondola.click(this.menuLinkByTitle.format(title));
+    public async clickMenuLinkByTitle(title: string, isUnstable = false): Promise<void> {
+        const locator = this.menuLinkByTitle.format(title);
+        await gondola.waitUntilElementVisible(locator);
+        if (isUnstable) {
+            await gondola.waitUntilStalenessOfElement(locator, Constants.VERY_SHORT_TIMEOUT);
+        }
+        await gondola.click(locator);
     }
 
     @action('click button by icon')
@@ -772,6 +778,7 @@ export class GeneralPage {
 
     @action('check search result display')
     public async doesSearchResultDisplayCorrectly(searchText: string): Promise<boolean> {
+        await gondola.waitUntilStalenessOfElement(this.selectSelectionOptions, Constants.SHORT_TIMEOUT);
         const results = await gondola.getElementsAttributes(this.selectSelectionOptions, 'innerText');
         return Utilities.isFilterCorrect(searchText, results);
     }
@@ -859,6 +866,18 @@ export class GeneralPage {
         }
     }
 
+    @action('go to page using menu button')
+    public async gotoPageByMenuButtonUnstable(...buttonTitles: string[]): Promise<void> {
+        let currentLocator = this.menuButtonByText;
+        for (const buttonTitle of buttonTitles) {
+            currentLocator = currentLocator.format(buttonTitle);
+            await gondola.waitUntilElementVisible(currentLocator);
+            await gondola.waitUntilStalenessOfElement(currentLocator, Constants.VERY_SHORT_TIMEOUT);
+            await gondola.click(currentLocator);
+            currentLocator += this.menuButtonByText;
+        }
+    }
+
     @action('get popup text')
     public async getPopupText(): Promise<string> {
         return await gondola.getPopupText();
@@ -896,6 +915,21 @@ export class GeneralPage {
     public async clickWindowAlertMessage(text: string): Promise<void> {
         await gondola.waitForAlert();
         await gondola.clickPopup(text);
+    }
+
+    @action('check number field by label validation functional')
+    public async doesNumberFieldByLabelValidationWorkingCorrectly(
+        label: string,
+        saveButtonLocator = this.saveButton,
+        validationMessage = Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
+    ): Promise<boolean> {
+        for (const invalidNumber of Constants.NUMBER_SPECIAL_CHARACTER_ONLY) {
+            await this.enterTextFieldByLabel(label, invalidNumber);
+            await gondola.click(saveButtonLocator);
+            const invalidMessage = await this.getTextFieldValidationMessageByLabel(label);
+            FlagsCollector.collectEqual('Error message is not displayed correctly.', validationMessage, invalidMessage);
+        }
+        return FlagsCollector.verifyFlags();
     }
 }
 export default new GeneralPage();

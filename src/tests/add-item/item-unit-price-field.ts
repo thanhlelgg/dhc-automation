@@ -13,12 +13,8 @@ const UNIT_PRICE_17_DIGITS = Utilities.getRandomNumber(0, 0, 17);
 const SECOND_DECIMAL = UNIT_PRICE_16_DIGITS / 100;
 const THIRD_DECIMAL = UNIT_PRICE_16_DIGITS / 1000;
 
-const TEXT_FULL_SIZE_ALPHANUMERIC = Constants.FULL_SIZE_ALPHA_NUMERIC_STRING;
-const TEXT_ONE_BYTE_ALPHANUMERIC = Constants.FULL_SIZE_ALPHA_NUMERIC_STRING[0];
-const TEXT_HIRAGANA_KATAKANA = Constants.HIRAGANA_KATAKANA_STRING;
-const TEXT_SYMBOL = Constants.SYMBOL_STRING;
-const NUMBER_FULL_WIDTH = Utilities.getRandomNumber(0, 0, 16);
-const NUMBER_ONE_BYTE = Utilities.getRandomNumber(1, 9);
+const NON_HALF_SIZE_NUMBER_STRING = Constants.NON_HALF_SIZE_NUMBER_STRING;
+const SINGLE_BYTE_NUMBER_STRING = Constants.SINGLE_BYTE_NUMBER_STRING;
 
 Before(setup);
 
@@ -62,65 +58,28 @@ TestCase('BMS-198. BMS:マスタ:品目作成:標準販売単価:文字数', asy
 });
 
 TestCase('BMS-199. BMS:マスタ:品目作成:標準販売単価:文字種', async () => {
-    gondola.report(`Step 2.「標準販売単価」で全角英字を入力し、保存する`);
-    await addItemPage.enterTextFieldByLabel(ITEM_UNIT_PRICE_FIELD_NAME, TEXT_FULL_SIZE_ALPHANUMERIC);
-    await addItemPage.saveNewItem();
-    gondola.report(`VP.「数値を入力してください」という文字種誤りのエラーが表示されること。`);
-    let actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
+    gondola.report(`Step 2.「標準販売単価」で半角数字を入力する。（例：「1234」を入力）`);
+    await addItemPage.enterTextFieldByLabel(ITEM_UNIT_PRICE_FIELD_NAME, SINGLE_BYTE_NUMBER_STRING);
+    gondola.report(`VP.「-」「+」「.」以外に、半角数字以外の文字を入力できないこと。`);
     await gondola.checkEqual(
-        actualFeedback,
-        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
+        await addItemPage.getTextFieldValueByLabel(ITEM_UNIT_PRICE_FIELD_NAME),
+        SINGLE_BYTE_NUMBER_STRING,
+        'Number textfield should be displayed correctly',
+    );
+
+    gondola.report(`Step 3.「標準販売単価」で半角数字以外を入力する。（例：「abcａｂｃひひカｶｶ!@#」を入力）`);
+    await addItemPage.enterTextFieldByLabel(ITEM_UNIT_PRICE_FIELD_NAME, NON_HALF_SIZE_NUMBER_STRING);
+    gondola.report(`VP.「-」「+」「.」以外に、半角数字以外の文字を入力できないこと。`);
+    await gondola.checkEqual(
+        await addItemPage.getTextFieldValueByLabel(ITEM_UNIT_PRICE_FIELD_NAME),
+        '',
+        'Number textfield should be empty',
+    );
+
+    gondola.report(`Step 4.「標準販売単価」で「---」「+++」「...」などを入力し、「保存」ボタンをクリックする。`);
+    gondola.report(`VP. 文字種誤りエラー「数値を入力してください」が表示されること。`);
+    await gondola.checkTrue(
+        await addItemPage.doesNumberFieldByLabelValidationWorkingCorrectly(ITEM_UNIT_PRICE_FIELD_NAME),
         'Invalid feedback message should be correct',
     );
-
-    gondola.report(`Step 3.「標準販売単価」で半角英字を入力し、保存する`);
-    await addItemPage.enterTextFieldByLabel(ITEM_UNIT_PRICE_FIELD_NAME, TEXT_ONE_BYTE_ALPHANUMERIC);
-    await addItemPage.saveNewItem();
-    gondola.report(`VP.「数値を入力してください」という文字種誤りのエラーが表示されること。`);
-    actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
-    await gondola.checkEqual(
-        actualFeedback,
-        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
-        'Invalid feedback message should be correct',
-    );
-
-    gondola.report(`Step 4.「標準販売単価」でひらがな・カタカナ字を入力し、保存する`);
-    await addItemPage.enterTextFieldByLabel(ITEM_UNIT_PRICE_FIELD_NAME, TEXT_HIRAGANA_KATAKANA);
-    await addItemPage.saveNewItem();
-    gondola.report(`VP.「数値を入力してください」という文字種誤りのエラーが表示されること。`);
-    actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
-    await gondola.checkEqual(
-        actualFeedback,
-        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
-        'Invalid feedback message should be correct',
-    );
-
-    gondola.report(`Step 5.「標準販売単価」で記号を入力し、保存する`);
-    await addItemPage.enterTextFieldByLabel(ITEM_UNIT_PRICE_FIELD_NAME, TEXT_SYMBOL);
-    await addItemPage.saveNewItem();
-    gondola.report(`VP.「数値を入力してください」という文字種誤りのエラーが表示されないこと。`);
-    actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
-    await gondola.checkEqual(
-        actualFeedback,
-        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
-        'Invalid feedback message should be correct',
-    );
-
-    gondola.report(`Step 6.「標準販売単価」で全角数字を入力し、保存する`);
-    await addItemPage.enterTextFieldByLabel(ITEM_UNIT_PRICE_FIELD_NAME, NUMBER_FULL_WIDTH);
-    await addItemPage.saveNewItem();
-    gondola.report(`VP.「数値を入力してください」という文字種誤りのエラーが表示されること。`);
-    actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
-    await gondola.checkEqual(
-        actualFeedback,
-        Constants.INPUT_NUMERIC_TYPE_ERROR_MESSAGE,
-        'Invalid feedback message should be displayed correctly',
-    );
-
-    gondola.report(`Step 7.「標準販売単価」で半角数字を入力し、保存する`);
-    await addItemPage.enterTextFieldByLabel(ITEM_UNIT_PRICE_FIELD_NAME, NUMBER_ONE_BYTE);
-    await addItemPage.saveNewItem();
-    gondola.report(`VP. カンマが自動入力され、「数値を入力してください」という文字種誤りのエラーが表示されないこと。`);
-    actualFeedback = await addItemPage.getInvalidFeedBack(ITEM_UNIT_PRICE_FIELD_NAME);
-    await gondola.checkEqual(actualFeedback, '', 'Invalid feedback message should not be displayed');
 });

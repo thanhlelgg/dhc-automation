@@ -6,11 +6,9 @@ import loginPage from '../../pages/login-page';
 import { Constants } from '../../common/constants';
 import talentManagementMenu from '../../pages/talent-management-menu';
 import { ButtonIcon } from '../../models/enum-class/button-icon';
-import { ActionButton } from '../../models/enum-class/action-button';
 import { PositionsTableHeader } from '../../models/enum-class/positions-table-header';
 
 const POSITION_DATA = PositionInfoData.POSITION_FULL_DATA;
-const POSITION_NAME_HEADER_NAME = Constants.translator.tableColumnName.positionsList.positionName;
 
 TestModule('Positions - Save button validation');
 
@@ -43,7 +41,7 @@ TestCase('TMS-131. マスタ:役職作成:戻るボタン', async () => {
         await listPositionPage.doesPositionValueDisplay(POSITION_DATA.positionName, PositionsTableHeader.POSITION_NAME),
         'New position should be displayed correctly',
     );
-    await listPositionPage.clickActionButton(ButtonIcon.VIEW, POSITION_NAME_HEADER_NAME, POSITION_DATA.positionName);
+    await listPositionPage.openPosition(POSITION_DATA.positionName);
     await gondola.checkTrue(
         await addPositionPage.doesPositionInfoDisplayCorrectly(POSITION_DATA),
         'Position info should be displayed correctly',

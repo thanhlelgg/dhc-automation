@@ -113,8 +113,8 @@
             "tax": "課税区分",
             "managementUnit": "管理単位",
             "costCenter": "原価センター",
-            "debitSubcode": "借方補助コード",
-            "creditSubcode": "貸方補助コード",
+            "debitSubcode": "会計システム借方補助コード",
+            "creditSubcode": "会計システム貸方補助コード",
             "isInvalidation": "無効化",
             "remarks": "備考",
             "itemArrangerInfo": {
@@ -418,13 +418,16 @@
         "invalidInputValue": "入力値が不正です",
         "invalidContactNumber": "電話(FAX)番号形式で入力してください",
         "alreadyInUse": "既に使われている値のため異なる値を入力してください",
+        "isDuplicated": "が重複しています",
         "invalidDateFormat": "正しい日付を入力してください",
         "startDateExceedsEndDate": "終了日よりも前の日付を入力してください",
         "endDateLesserThanStartDate": "開始日以降の日付を入力してください",
-        "inputNumericTypeError": "数値を入力してください",
+        "inputNumericTypeError": "数字を入力してください。",
         "decimalPlaceTypeError": "小数は第2位までが有効です",
         "negativeNumberError": "0以上の数値を入力してください",
-        "segmentAlreadyInUse": "品目で使用されているため選択できません。"
+        "segmentAlreadyInUse": "品目で使用されているため選択できません。",
+        "fieldNeedToBeFilled": "このフィールドを入力してください。",
+        "dropdownNeedToBeSelected": "リスト内の項目を選択してください。"
     },
     "alertMessage": {
         "couldNotSend": "送信できませんでした。 [案件リソースが設定されていません。]",
@@ -514,9 +517,11 @@
     },
     "backButton": "戻る",
     "resultBases": {
-        "columnName": {
+        "fieldName": {
             "item": "品目",
-            "debitCredit": "計上区分",
+            "debitCredit": "計上区分"
+        },
+        "columnName": {
             "planPeople": "予定人数",
             "planTime": "予定時間",
             "planTotalTime": "予定総合時間",
@@ -595,11 +600,6 @@
             "advanceTravelExpenses": "立替(旅費交通費)/旅費交通費",
             "advanceSystemRelatedExpenses": "立替(システム関係費)/システム関連費"
         },
-        "taxIds": {
-            "": "",
-            "8": "８％",
-            "10": "10%"
-        },
         "projectRole": {
             "PM": "PM",
             "leader": "リーダ",
@@ -630,9 +630,7 @@
                 "ceil": "切り上げ"
             },
             "currency": {
-                "jpy": "¥",
-                "dollar": "$",
-                "vnd": "₫"
+                "jpy": "JPY - 日本円 (￥)"
             },
             "taxCalcMethod": {
                 "billing": "請求書単位",

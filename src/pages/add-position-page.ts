@@ -26,17 +26,17 @@ export class AddPositionPage extends GeneralPage {
     public async doesPositionInfoDisplayCorrectly(positionInfo: PositionInfo): Promise<boolean> {
         FlagsCollector.collectEqual(
             'Position name should be displayed correctly',
-            await this.getParagraphValueByLabel(this.positionFieldName.positionName, true),
+            await this.getTextFieldValueByLabel(this.positionFieldName.positionName, true),
             positionInfo.positionName,
         );
         FlagsCollector.collectEqual(
             'Position abbreviation should be displayed correctly',
-            await this.getParagraphValueByLabel(this.positionFieldName.positionAbbreviation, true),
+            await this.getTextFieldValueByLabel(this.positionFieldName.positionAbbreviation, true),
             positionInfo.abbreviationName,
         );
         FlagsCollector.collectEqual(
             'Time card approve should be displayed correctly',
-            await this.getParagraphValueByLabel(this.positionFieldName.timeCardApprove, true),
+            await this.getSelectedOptionByLabel(this.positionFieldName.timeCardApprove, true),
             positionInfo.timeCardApprove,
         );
         return FlagsCollector.verifyFlags(LoggingType.REPORT);

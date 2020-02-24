@@ -6,14 +6,14 @@ export class Projects {
     id: number | undefined;
 
     @Column('text')
-    number: string | undefined;
+    number!: string;
 
     @Column('text')
     name: string | undefined;
 
     @Column('text')
     accuracy: string | undefined;
-    
+
     @Column('text')
     tag: string | undefined;
 }

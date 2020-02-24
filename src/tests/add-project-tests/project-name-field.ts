@@ -3,6 +3,7 @@ import addProjectPage from '../../pages/add-project-page';
 import { Constants } from '../../common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import setup from './add-project-setup';
+import { Utilities } from '../../common/utilities';
 
 TestModule('Add Project - Project name validation');
 
@@ -49,15 +50,22 @@ TestCase('BMS-2. 案件:案件作成:案件名:未入力と境界値の入力', 
         'Invalid feedback message should be correct',
     );
 
-    gondola.report(`Step 3.「案件名」テキストボックスで256文字以上を入力し、「保存」ボタンをクリックする。`);
-    await addProjectPage.enterTextFieldByLabel(PROJECT_NAME_FIELD_NAME, Constants.EXCEEDED_NOC_MESSAGE);
+    gondola.report(`Step 3.「案件名」テキストボックスで64文字入力し、「保存」ボタンをクリックする。`);
+    await addProjectPage.enterTextFieldByLabel(PROJECT_NAME_FIELD_NAME, Utilities.getRandomText(64));
+    await addProjectPage.saveNewProject();
+    gondola.report(`VP. 入力フィールドの下にエラー「64文字以内で入力してください」が表示されないこと。`);
+    actualFeedback = await addProjectPage.getInvalidFeedBack(PROJECT_NAME_FIELD_NAME);
+    await gondola.checkEqual(actualFeedback, '', 'Invalid feedback message should not be displayed');
+
+    gondola.report(`Step 4.「案件名」テキストボックスで65文字以上を入力し、「保存」ボタンをクリックする。`);
+    await addProjectPage.enterTextFieldByLabel(PROJECT_NAME_FIELD_NAME, Utilities.getRandomText(65));
     await addProjectPage.saveNewProject();
     // BUG: Invalid feedback does not match with test case requirement
-    gondola.report(`VP. 入力フィールドの下にエラー「255文字以内で入力してください」が表示されること。`);
+    gondola.report(`VP. 入力フィールドの下にエラー「64文字以内で入力してください」が表示されること。`);
     actualFeedback = await addProjectPage.getInvalidFeedBack(PROJECT_NAME_FIELD_NAME);
     await gondola.checkEqual(
         actualFeedback,
-        Constants.EXCEEDED_NOC_ERROR_MESSAGE_255,
+        Constants.EXCEEDED_NOC_ERROR_MESSAGE_64,
         'Invalid feedback message should be correct',
     );
 });

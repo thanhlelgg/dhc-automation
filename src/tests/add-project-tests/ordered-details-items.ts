@@ -58,8 +58,8 @@ TestCase('BMS-274. BMS:案件:案件編集:非稼働明細:追加ボタン', asy
 
     gondola.report(`Step 8. 正常に保存`);
     await projectDetailsPage.saveNewProject();
-
     gondola.report(`VP. 一行目：課税チェックボックス⇒true`);
+    //BUG: go to error page #155
     await gondola.checkTrue(await projectDetailsPage.doesSavedMessageDisplay());
     await gondola.checkTrue(await projectDetailsPage.doesOrderedDetailsDisplayCorrectly(record1, '1'));
     await gondola.checkTrue(await projectDetailsPage.doesOrderedDetailsDisplayCorrectly(record2, '2'));

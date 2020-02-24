@@ -11,7 +11,7 @@ const DEPARTMENT_CODE_TEXTFIELD_LABEL = Constants.translator.fieldName.addDepart
 const DEPARTMENT_NAME_TEXTFIELD_LABEL = Constants.translator.fieldName.addDepartment.name;
 
 const INVALID_DEPARTMENT_CODE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputHalfSizeAlphaNumericTypeError;
-const ALREADY_IN_USE_ERROR_MESSAGE = Constants.translator.invalidFeedback.alreadyInUse;
+const ALREADY_IN_USE_ERROR_MESSAGE = Constants.translator.invalidFeedback.isDuplicated;
 Before(setup);
 
 TestCase('BMS-181. マスタ:部門作成:部門コード:文字数', async () => {
@@ -112,7 +112,7 @@ TestCase('BMS-183. マスタ:部門作成:部門コード:重複時', async () =
     //BUG: invalid feedback is not correct
     await gondola.checkEqual(
         await addDepartmentPage.getInvalidFeedBack(DEPARTMENT_CODE_TEXTFIELD_LABEL),
-        ALREADY_IN_USE_ERROR_MESSAGE,
+        DEPARTMENT_CODE_TEXTFIELD_LABEL + ALREADY_IN_USE_ERROR_MESSAGE,
         'Department code is already in use feedback should be displayed',
     );
 });

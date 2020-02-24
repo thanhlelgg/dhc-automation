@@ -4,7 +4,7 @@ import setup from './positions-setup';
 import listPositionPage from '../../pages/list-position-page';
 import { ButtonIcon } from '../../models/enum-class/button-icon';
 
-TestModule('Positions - Search text box validation');
+TestModule('Positions - Import validation');
 
 Before(setup);
 

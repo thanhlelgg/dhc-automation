@@ -1,6 +1,7 @@
 import { Translate } from '../locales/translate';
 import downloadsFolder from 'downloads-folder';
 import path from 'path';
+import { TaxInfoData } from '../models/tax-info';
 
 export class Constants {
     public static translator = Translate.getTranslator();
@@ -30,6 +31,7 @@ export class Constants {
     public static readonly ESTIMATE_FILENAME = 'estimate.xls';
     public static readonly BILLING_XLS_PATH = path.resolve('src/data/bill.xls');
     public static readonly BILLING_FILENAME = 'bill.xls';
+    public static readonly NO_RECORD_FOUND_ERROR_MESSAGE = 'No record was found.';
 
     //#region Input data
     public static USER_NAME = 'administrator';
@@ -44,6 +46,7 @@ export class Constants {
     public static FULL_SIZE_ALPHA_NUMERIC_STRING = 'ａｂｃｄ１２３４';
     public static HALF_SIZE_ALPHA_NUMERIC_STRING = 'abcd1234';
     public static NON_HALF_SIZE_NUMBER_STRING = 'abcａｂｃははカｶｶ!@#';
+    public static NUMBER_SPECIAL_CHARACTER_ONLY = ['+++', '---', '...'];
     public static SYMBOL_STRING = `!"#$%&'()`;
     public static HIRAGANA_KATAKANA_STRING = 'あああｱｱｱハハハ';
     public static HALF_SIZE_NUMBER_AND_HYPHEN = '210-0021';
@@ -56,7 +59,9 @@ export class Constants {
     public static LESS_THAN_ONE_BILLION = '999999999';
     public static MORE_THAN_ONE_BILLION = '1000000001';
     public static EIGHT_DIGIT_NUMBER = '99999999';
+    public static EIGHT_DIGIT_NUMBER_WITH_COMMAS = '99,999,999';
     public static NINE_DIGIT_NUMBER = '999999999';
+    public static NINE_DIGIT_NUMBER_WITH_COMMAS = '999,999,999';
     public static SIXTEEN_DIGIT_NUMBER = Constants.EIGHT_DIGIT_NUMBER + Constants.EIGHT_DIGIT_NUMBER;
     public static SEVENTEEN_DIGIT_NUMBER = Constants.SIXTEEN_DIGIT_NUMBER + '9';
     public static NEGATIVE_NUMBER = '-1';
@@ -67,6 +72,7 @@ export class Constants {
     public static readonly EXAMPLE_DATE_DIVIDED_BY_DOT = '2019.1.1';
     public static readonly EXAMPLE_DATE_DIVIDED_BY_SLASH = '2019/1/1';
     public static readonly DEFAULT_END_DATE = '9999-12-31';
+
     //#endregion
 
     //#region invalid feedback message
@@ -84,7 +90,7 @@ export class Constants {
     public static DUPLICATED_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.duplicatedTypeError;
     public static INPUT_NUMERIC_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputNumericTypeError;
     public static DECIMAL_PLACE_ERROR_MESSAGE = Constants.translator.invalidFeedback.decimalPlaceTypeError;
-    public static NEGATIVE_NUMBER_ERROR_MESSAGE = Constants.translator.invalidFeedback.negativeNumberError;
+    public static NOT_POSITIVE_INTEGER_NUMBER_ERROR_MESSAGE = Constants.translator.invalidFeedback.negativeNumberError;
     //#endregion
 
     //#region Project attributes
@@ -131,7 +137,9 @@ export class Constants {
 
     public static JAPANESE_END_DATE = Constants.translator.dropdownOptions.date.endDate;
     public static DEBIT_CREDIT_GROUP_IDS = Constants.translator.dropdownOptions.debitCreditGroupIds;
-    public static TAX_IDS = Constants.translator.dropdownOptions.taxIds;
+    public static TAX_IDS = TaxInfoData.TAX_INITIAL_DATA.map(taxInfo => {
+        return taxInfo.name;
+    });
     public static PROJECT_ROLE = Constants.translator.dropdownOptions.projectRole;
     //#endregion
 }
