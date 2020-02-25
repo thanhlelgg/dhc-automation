@@ -181,7 +181,7 @@ export class Utilities {
 
     public static getRandomNumberByLength(length: number): number {
         let numberAsString: string = '' + this.getRandomNumber(1, 9);
-        if (length <= 0) throw new Error(`Length: ${length} is not valid`);
+        if (length <= 0) throw new Error(`Length: ${length} is not valid, length must be greater than zero`);
         else {
             for (let i = 1; i < length; i++) numberAsString += this.getRandomNumber(0, 9);
         }

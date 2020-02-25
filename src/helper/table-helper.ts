@@ -59,10 +59,7 @@ export class TableHelper {
      * @param headerName
      */
     public async getAllHeaderNames(): Promise<string[]> {
-        const result = Utilities.trimElementsInArray(
-            await gondola.getElementsAttributes(this.headerNameLocator, 'innerText'),
-        );
-        return result;
+        return await gondola.getElementsAttributes(this.headerNameLocator, 'innerText', true);
     }
 
     /**
