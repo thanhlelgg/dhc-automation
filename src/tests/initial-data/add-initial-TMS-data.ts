@@ -6,8 +6,6 @@ import { WorkingPlaceInfoData, WorkingPlaceInfo } from '../../models/working-pla
 import addWorkingPlacePage from '../../pages/add-working-place-page';
 import { ButtonIcon } from '../../models/enum-class/button-icon';
 import listWorkingPlacePage from '../../pages/list-working-place-page';
-import { SearchResultColumn } from '../../models/enum-class/search-result-column';
-import { Constants } from '../../common/constants';
 import addPositionPage from '../../pages/add-position-page';
 import listPositionPage from '../../pages/list-position-page';
 import { PositionsTableHeader } from '../../models/enum-class/positions-table-header';
@@ -27,6 +25,7 @@ Before(setup);
 Data(WORKING_PLACE_INFO).TestCase(
     'TMS - InitialData 1. マスタ: 就業先(ラボ管理)作成',
     async (current: WorkingPlaceInfo) => {
+        if (await DatabaseHelper.doesLabExist(current.code)) return;
         gondola.report(
             `Step 1. 水平メニューで「タレントマネジメント」（または「ホーム」）をクリックして、垂直メニューで「マスタデータ管理」→「ラボ管理」をクリックして、「就業先一覧」画面で「就業先追加」ボタンをクリックする。`,
         );
@@ -47,20 +46,12 @@ Data(WORKING_PLACE_INFO).TestCase(
         gondola.report(
             `VP. 正常に保存でき、ラボ一覧画面には登録したラボが表示され、登録されたラボの内容は正しく保存されること。`,
         );
-        await listWorkingPlacePage.enterTextFieldByLabel(
-            Constants.translator.fieldName.listWorkingPlace.code,
-            current.code,
-        );
-        await listWorkingPlacePage.clickButtonByIcon(ButtonIcon.SEARCH);
-        await listWorkingPlacePage.clickTabularTableLinkByText(SearchResultColumn.NAME, current.name);
-        await gondola.checkTrue(
-            await addWorkingPlacePage.doesWorkingPlaceInfoDisplayCorrectly(current),
-            'Working place should be displayed correctly',
-        );
+        await gondola.checkTrue(await DatabaseHelper.doesLabExist(current.code));
     },
 );
 
 Data(POSITION_INFO).TestCase('TMS - InitialData 2. マスタ:役職作成', async (current: PositionInfo) => {
+    if (await DatabaseHelper.doesTMSPositionExist(current.positionName, current.abbreviationName)) return;
     gondola.report(
         `Step 1. 水平メニューで「タレントマネジメント」（または「ホーム」）をクリックして、垂直メニューで「マスタデータ管理」→「役職」をクリックして、「役職一覧」画面で「新規」ボタンをクリックする。`,
     );
@@ -79,11 +70,6 @@ Data(POSITION_INFO).TestCase('TMS - InitialData 2. マスタ:役職作成', asyn
     await gondola.checkTrue(
         await listPositionPage.doesPositionValueDisplay(current.positionName, PositionsTableHeader.POSITION_NAME),
         'New position should be displayed correctly',
-    );
-    await listPositionPage.openPosition(current.positionName);
-    await gondola.checkTrue(
-        await addPositionPage.doesPositionInfoDisplayCorrectly(current),
-        'Position info should be displayed correctly',
     );
 });
 

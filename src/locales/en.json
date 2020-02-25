@@ -495,6 +495,10 @@
                 "deliveryTemplateLink": "納品書",
                 "billingTemplateLink": "請求書"
             }
+        },
+        "system": {
+            "title": "システム",
+            "role": "ロール"
         }
     },
     "verticalMenuTMS": {

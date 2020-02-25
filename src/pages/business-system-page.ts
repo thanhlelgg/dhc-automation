@@ -134,5 +134,10 @@ export class BusinessSystemPage extends GeneralPage {
             this.verticalMenuButton.master.template.billingTemplateLink,
         );
     }
+
+    @action('go to list role page')
+    public async gotoListRolePage(): Promise<void> {
+        await this.gotoPageByMenuButton(this.verticalMenuButton.system.title, this.verticalMenuButton.system.role);
+    }
 }
 export default new BusinessSystemPage();

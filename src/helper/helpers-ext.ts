@@ -330,6 +330,28 @@ class HelperExt extends Helper {
     }
 
     /**
+     * Hold a key
+     * @param key
+     */
+    public async keyDown(key: string): Promise<void> {
+        await browser
+            .actions()
+            .keyDown(key)
+            .perform();
+    }
+
+    /**
+     * Release a key
+     * @param key
+     */
+    public async keyUp(key: string): Promise<void> {
+        await browser
+            .actions()
+            .keyUp(key)
+            .perform();
+    }
+
+    /**
      * Move to an element
      * @param key
      */

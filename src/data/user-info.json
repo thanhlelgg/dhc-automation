@@ -1,0 +1,51 @@
+{
+    "adminAccount": {
+        "personalInfo": {
+            "name": "administrator",
+            "phoneticName": "ラボカン　タロウ",
+            "groupId": "エンターテイメント事業本部",
+            "labId": "浅草Lab.",
+            "timezone": "(UTC+09:00) 大阪、札幌、東京",
+            "loginInfo": {
+                "loginId": "administrator",
+                "password": "P@ssW0rd123",
+                "roleId": "default"
+            },
+            "contactInfo": {
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2",
+                "nearestStation1": "京王新線-初台",
+                "tel": "0333792053",
+                "email": "administrator@test.com"
+            },
+            "emergencyContactInfo": {
+                "name": "ラボ管　一郎",
+                "phoneticName": "ラボカン　イチロウ",
+                "relationship": "父",
+                "zipcode": "163-1441",
+                "address1": "東京都新宿区西新宿3-20-2"
+            },
+            "interviewInfo": {
+                "interviewer": "system",
+                "manageAccession": "インタビュー",
+                "rating": 1
+            }
+        },
+        "roleInfo": {
+            "isAccessTTSSystem": true,
+            "isAccessBusinessSystem": true,
+            "talentRole": {
+                "role": "Admin",
+                "isSelectedAll": true
+            },
+            "ttsRole": {
+                "role": "Admin",
+                "isSelectedAll": true
+            },
+            "businessRole": {
+                "role": "Admin",
+                "isSelectedAll": true
+            }
+        }
+    }
+}

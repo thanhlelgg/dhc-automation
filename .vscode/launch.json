@@ -13,7 +13,7 @@
                 "run",
                 "--steps",
                 "--grep",
-                "^Debug",
+                "@Debug",
                 "--verbose"
             ],
             "outFiles": [

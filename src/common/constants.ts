@@ -34,8 +34,11 @@ export class Constants {
     public static readonly NO_RECORD_FOUND_ERROR_MESSAGE = 'No record was found.';
 
     //#region Input data
+    public static ADMIN_ROLE_NAME = 'Admin';
     public static USER_NAME = 'administrator';
     public static PASSWORD = 'P@ssW0rd123';
+    public static DEFAULT_ADMIN_USERNAME = 'system';
+    public static DEFAULT_ADMIN_PASSWORD = '123456';
     public static EXCEEDED_NOC_MESSAGE =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor \
     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut \

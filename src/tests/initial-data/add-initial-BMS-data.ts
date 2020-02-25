@@ -1,4 +1,4 @@
-import { gondola, Data, TestModule } from 'gondolajs';
+import { gondola, Data, TestModule, TestCase } from 'gondolajs';
 import setup from './precondition-setup';
 import addDepartmentPage from '../../pages/add-department-page';
 import addSegmentPage from '../../pages/add-segment-page';

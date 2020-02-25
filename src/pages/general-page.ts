@@ -888,6 +888,11 @@ export class GeneralPage {
         await gondola.clickPopup(option);
     }
 
+    @action('wait for alert message')
+    public async waitForAlertMessage(text: string): Promise<void> {
+        await gondola.waitUntilElementVisible(this.alertMessage.format(text));
+    }
+
     @action('does alert message display')
     public async doesAlertMessageDisplay(text: string): Promise<boolean> {
         return await gondola.doesControlDisplay(this.alertMessage.format(text));

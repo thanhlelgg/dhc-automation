@@ -220,5 +220,17 @@ declare module 'gondolajs/built/builtin' {
          * @param text
          */
         selectOptionByText(control: any, text: string): Promise<void>;
+
+        /**
+         * Hold a key
+         * @param key
+         */
+        keyDown(key: string): Promise<void>;
+
+        /**
+         * Release a key
+         * @param key
+         */
+        keyUp(key: string): Promise<void>;
     }
 }

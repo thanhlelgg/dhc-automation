@@ -15,7 +15,9 @@ import { Constants } from '../common/constants';
 import { Taxes } from '../entity/Taxes';
 import { SpecialAllowances } from '../entity/SpecialAllowances';
 import { Positions as TTSPositions } from '../entity/TTSPositions';
+import { Positions as TMSPositions } from '../entity/TMSPositions';
 import { Users } from '../entity/Users';
+import { Roles } from '../entity/Roles';
 export class DatabaseHelper {
     /**
      * Get the connection to MySQL
@@ -267,6 +269,34 @@ export class DatabaseHelper {
     }
 
     /**
+     * Get active TMSPositions from the database
+     */
+    public static async getActiveTMSPositions(): Promise<TMSPositions[]> {
+        const alias = 'positions';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.position_name IS NOT NULL`;
+        const ttsPositions = await DatabaseHelper.getAll(DatabaseSchema.TALENT, TMSPositions, alias, query);
+        return ttsPositions;
+    }
+
+    /**
+     * Check if TMSPosition exist
+     * @param ttsPositionName
+     */
+    public static async doesTMSPositionExist(
+        ttsPositionName: string,
+        ttsPositionAbbreviation: string,
+    ): Promise<boolean> {
+        const availableTMSPositions = await DatabaseHelper.getActiveTMSPositions();
+        const ttsPositionNames = availableTMSPositions.map(ttsPosition => {
+            return ttsPosition.position_name;
+        });
+        const ttsPositionAbbreviations = availableTMSPositions.map(ttsPosition => {
+            return ttsPosition.abbreviation;
+        });
+        return ttsPositionNames.includes(ttsPositionName) && ttsPositionAbbreviations.includes(ttsPositionAbbreviation);
+    }
+
+    /**
      * Get active Special Allowances from the database
      */
     public static async getActiveSpecialAllowances(): Promise<SpecialAllowances[]> {
@@ -297,6 +327,18 @@ export class DatabaseHelper {
         const query = `${category} ${alias}.is_deleted IS NOT NULL`;
         const labs = await DatabaseHelper.getAll(DatabaseSchema.TALENT, Labs, alias, query);
         return labs;
+    }
+
+    /**
+     * Check if Lab exist
+     * @param labsCode
+     */
+    public static async doesLabExist(labsCode: string): Promise<boolean> {
+        const availableLabs = await DatabaseHelper.getLabs();
+        const labCodes = availableLabs.map(lab => {
+            return lab.code;
+        });
+        return labCodes.includes(labsCode);
     }
 
     /**
@@ -528,5 +570,27 @@ export class DatabaseHelper {
 
         const projects = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Projects, alias, query);
         return projects;
+    }
+
+    /**
+     * Get active Roles from the database
+     */
+    public static async getActiveRoles(): Promise<Roles[]> {
+        const alias = 'roles';
+        const query = `${alias}.is_deleted = 0 AND ${alias}.name IS NOT NULL`;
+        const roles = await DatabaseHelper.getAll(DatabaseSchema.BUSINESS, Roles, alias, query);
+        return roles;
+    }
+
+    /**
+     * Check Role exist
+     * @param roleName
+     */
+    public static async doesRoleExist(roleName: string): Promise<boolean> {
+        const availableRoles = await DatabaseHelper.getActiveRoles();
+        const roleNames = availableRoles.map(role => {
+            return role.name;
+        });
+        return roleNames.includes(roleName);
     }
 }

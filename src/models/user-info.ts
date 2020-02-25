@@ -1,4 +1,5 @@
 import userInitialData from '../data/initial-data/user-info.json';
+import userData from '../data/user-info.json';
 import { JsonProperty, JsonObject } from 'json2typescript';
 
 @JsonObject('PersonalInfo')
@@ -219,4 +220,5 @@ export class UserInfoData {
         };
         return userData;
     });
+    public static ADMIN_USER_INFO: UserInfo = Object.assign(new UserInfo(), userData.adminAccount);
 }

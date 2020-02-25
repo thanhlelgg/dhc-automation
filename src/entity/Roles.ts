@@ -1,13 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Positions {
+export class Roles {
     @PrimaryGeneratedColumn()
     id: number | undefined;
 
     @Column('text')
-    position_name!: string;
+    name!: string;
 
-    @Column('text')
-    abbreviation!: string;
+    @Column('tinyint')
+    is_deleted: string | undefined;
 }
