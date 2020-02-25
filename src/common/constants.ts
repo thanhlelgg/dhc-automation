@@ -47,6 +47,8 @@ export class Constants {
     public static HALF_SIZE_ALPHA_NUMERIC_STRING = 'abcd1234';
     public static NON_HALF_SIZE_NUMBER_STRING = 'abcａｂｃははカｶｶ!@#';
     public static NUMBER_SPECIAL_CHARACTER_ONLY = ['+++', '---', '...'];
+    public static MINUS_PLUS_DOTS_STRING = '---+++...';
+    public static HALF_SIZE_NUMBER = '01012020';
     public static SYMBOL_STRING = `!"#$%&'()`;
     public static HIRAGANA_KATAKANA_STRING = 'あああｱｱｱハハハ';
     public static HALF_SIZE_NUMBER_AND_HYPHEN = '210-0021';
@@ -91,6 +93,8 @@ export class Constants {
     public static INPUT_NUMERIC_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputNumericTypeError;
     public static DECIMAL_PLACE_ERROR_MESSAGE = Constants.translator.invalidFeedback.decimalPlaceTypeError;
     public static NOT_POSITIVE_INTEGER_NUMBER_ERROR_MESSAGE = Constants.translator.invalidFeedback.negativeNumberError;
+    public static NEGATIVE_NUMBER_ERROR_MESSAGE = Constants.translator.invalidFeedback.negativeNumberError;
+    public static INPUT_INTEGER_TYPE_ERROR_MESSAGE = Constants.translator.invalidFeedback.inputIntegerTypeError;
     //#endregion
 
     //#region Project attributes

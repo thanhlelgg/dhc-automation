@@ -8,8 +8,8 @@ import { Utilities } from '../../common/utilities';
 TestModule('Add Item - Standard sales unit price field validation');
 
 const ITEM_UNIT_PRICE_FIELD_NAME = Constants.translator.fieldName.addItem.unitPrice;
-const UNIT_PRICE_16_DIGITS = Utilities.getRandomNumber(0, 0, 16);
-const UNIT_PRICE_17_DIGITS = Utilities.getRandomNumber(0, 0, 17);
+const UNIT_PRICE_16_DIGITS = Utilities.getRandomNumberByLength(16);
+const UNIT_PRICE_17_DIGITS = Utilities.getRandomNumberByLength(17);
 const SECOND_DECIMAL = UNIT_PRICE_16_DIGITS / 100;
 const THIRD_DECIMAL = UNIT_PRICE_16_DIGITS / 1000;
 
