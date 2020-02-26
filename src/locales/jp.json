@@ -603,7 +603,7 @@
         },
 
         "currencyIds": {
-            "jpy": "JPY"
+            "jpy": "JPY - 日本円 (￥)"
         },
         "billingTypes": {
             "eachTime": "案件個別",

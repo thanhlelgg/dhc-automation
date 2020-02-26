@@ -39,6 +39,7 @@ TestCase('TMS-118. マスタ:ラボ管理作成:就業先名称:文字数', asyn
     await addWorkingPlacePage.enterTextFieldByLabel(WORKING_PLACE_NAME, randomText + 'a', true);
     await addWorkingPlacePage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 入力フィールドの下にエラー「64文字以内で入力してください」が表示されること。`);
+    //BUG: no error message is displayed #167
     await gondola.checkEqual(
         await addWorkingPlacePage.getInvalidFeedBack(WORKING_PLACE_NAME, true),
         maximumNOC + Constants.EXCEEDED_NOC_ERROR_MESSAGE,
