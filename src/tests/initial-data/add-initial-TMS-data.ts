@@ -13,6 +13,7 @@ import { PositionInfoData, PositionInfo } from '../../models/position-info';
 import { UserInfoData, UserInfo } from '../../models/user-info';
 import addUserPage from '../../pages/add-user-page';
 import { DatabaseHelper } from '../../helper/database-helpers';
+import { Constants } from '../../common/constants';
 
 TestModule('Add initial data for TMS');
 
@@ -67,10 +68,7 @@ Data(POSITION_INFO).TestCase('TMS - InitialData 2. マスタ:役職作成', asyn
     await addPositionPage.inputPositionInfo(current);
     await addPositionPage.clickButtonByIcon(ButtonIcon.SAVE);
     gondola.report(`VP. 正常に保存でき、新しい役職が役職一覧画面で表示されること。`);
-    await gondola.checkTrue(
-        await listPositionPage.doesPositionValueDisplay(current.positionName, PositionsTableHeader.POSITION_NAME),
-        'New position should be displayed correctly',
-    );
+    await gondola.checkTrue(await DatabaseHelper.doesTMSPositionExist(current.positionName, current.abbreviationName));
 });
 
 Data(USER_INFO).TestCase('TMS - InitialData 3. ユーザー管理:ユーザー登録', async (current: UserInfo) => {
@@ -81,6 +79,7 @@ Data(USER_INFO).TestCase('TMS - InitialData 3. ユーザー管理:ユーザー�
     // Currently for some stupid reason we can't select Nearest station if we go to the page using menu button (automation issue only),
     // so this is a temporary solution to create the init data.
     await addUserPage.openPage();
+    await addUserPage.gotoPageByMenuButton(Constants.translator.verticalMenuTMS.userManagement.addUser);
     // await loginPage.gotoTalentManagement();
     // await talentManagementSystemPage.gotoUserPage();
 

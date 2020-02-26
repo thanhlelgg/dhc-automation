@@ -694,6 +694,7 @@ export class AddUserPage extends GeneralPage {
     @action('input role information')
     public async inputRoleInfo(roleInfo: RoleInfo): Promise<void> {
         await this.openTab(this.fieldName.roleInfo.tabTitle);
+        await gondola.scrollToTop();
         if (roleInfo.isAccessTTSSystem) {
             await this.setStateCustomizeCheckbox(this.accessTtsSystemLabel, true);
         }
