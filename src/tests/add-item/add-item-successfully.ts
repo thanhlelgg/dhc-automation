@@ -19,15 +19,12 @@ TestCase('BMS-208. BMS:マスタ:品目作成:保存ボタン:必須項目のみ
     await addItemPage.inputItemInformation(ITEM_INFO_REQUIRED_ONLY);
     gondola.report(`Step 3. 保存する`);
     await addItemPage.saveNewItem();
-    gondola.report(
-        `VP. 正常に保存でき、品目一覧画面には登録した部門が表示され、登録された品目の内容は正しく保存されること`,
-    );
-    // await gondola.checkEqual(await addItemPage.doesSavedMessageDisplay(), true, 'New Items is saved');
+    gondola.report(`VP 1. 正常に保存でき、品目一覧画面には登録した部門が表示され`);
     await businessSystemPage.gotoListItem();
     await listItemPage.searchItem({ itemCode: ITEM_INFO_REQUIRED_ONLY.itemCode });
     gondola.checkControlExist(listItemPage.getItemLink(ITEM_INFO_REQUIRED_ONLY.itemCode));
 
-    gondola.report('Verify content of new project are displayed correctly');
+    gondola.report(`VP 2. 登録された品目の内容は正しく保存されること`);
 
     await gondola.click(listItemPage.getItemLink(ITEM_INFO_REQUIRED_ONLY.itemCode));
     await gondola.checkEqual(
@@ -45,17 +42,14 @@ TestCase('BMS-209. BMS:マスタ:品目作成:保存ボタン:全ての項目', 
     gondola.report(`Step 2. 必須項目で情報を入力する`);
     gondola.report(`Step 3. 他の項目で情報を入力する`);
     await addItemPage.inputItemInformation(itemFullData);
-    gondola.report(`Step 3. 保存する `);
+    gondola.report(`Step 4. 保存する `);
     await addItemPage.saveNewItem();
-    gondola.report(
-        `VP. 正常に保存でき、品目一覧画面には登録した部門が表示され、登録された品目の内容は正しく保存されること。`,
-    );
-    // await gondola.checkTrue(await addItemPage.doesSavedMessageDisplay(), 'New Items is saved');
+    gondola.report(`VP 1. 正常に保存でき、品目一覧画面には登録した部門が表示され`);
     await businessSystemPage.gotoListItem();
     await listItemPage.searchItem({ itemCode: itemFullData.itemCode });
     gondola.checkControlExist(listItemPage.getItemLink(itemFullData.itemCode));
 
-    gondola.report('Verify content of new project are displayed correctly');
+    gondola.report(`VP 2. 登録された品目の内容は正しく保存されること。`);
 
     await gondola.click(listItemPage.getItemLink(itemFullData.itemCode));
     await gondola.checkEqual(

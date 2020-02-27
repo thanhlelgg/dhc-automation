@@ -16,20 +16,20 @@ TestCase('BMS-311. BMS:案件:案件編集:非稼働明細:納品日:「yyyy-mm-
     await projectDetailsPage.clickOrderedDetailsTextfield(columnName.deliveryDate);
     gondola.report(`VP. カレンダー入力画面が表示されこと。`);
     let isDatePickerDisplayed = await projectDetailsPage.doesDatePickerDisplay();
-    await gondola.checkEqual(isDatePickerDisplayed, true, 'Date picker should be displayed');
+    await gondola.checkTrue(isDatePickerDisplayed, 'Date picker should be displayed');
 
     gondola.report(`Step 9. カレンダー枠外をクリックする。`);
     await projectDetailsPage.clickOutsideDatePicker();
     gondola.report(`VP. カレンダーは消えること。`);
     isDatePickerDisplayed = await projectDetailsPage.doesDatePickerDisplay(false);
-    await gondola.checkEqual(isDatePickerDisplayed, false, 'Date picker should not be displayed');
+    await gondola.checkFalse(isDatePickerDisplayed, 'Date picker should not be displayed');
 
     gondola.report(`Step 10. 「納品日」の枠内をクリックし、日付を選択する。`);
     await projectDetailsPage.clickOrderedDetailsTextfield(columnName.deliveryDate);
     const pickedDate = await projectDetailsPage.selectRandomDate();
     gondola.report(`VP. 入力画面に戻り、選択した日付が「yyyy-mm-dd」形式で表示されること。`);
     const displayedDate = await projectDetailsPage.getOrderedDetailsTextfield(columnName.deliveryDate);
-    await gondola.checkEqual(pickedDate, displayedDate, 'Date should be selected correctly in the textfield');
+    await gondola.checkEqual(displayedDate, pickedDate, 'Date should be selected correctly in the textfield');
 
     gondola.report(`Step 11. 案件開始日」テキストボックスで「yyyy-mm-dd」形式で日付を直接入力する`);
     await projectDetailsPage.enterOrderedDetailsTextfield(columnName.deliveryDate, Constants.EXAMPLE_DEFAULT_DATE);
@@ -63,8 +63,8 @@ TestCase('BMS-312. BMS:案件:案件編集:非稼働明細:納品日:「yyyy-m-d
     gondola.report(`VP. 入力した「案件開始日」は「yyyy-mm-dd」形式に自動的に変換されること`);
     const displayedDate = await projectDetailsPage.getOrderedDetailsTextfield(columnName.deliveryDate);
     await gondola.checkEqual(
-        Constants.EXAMPLE_DEFAULT_DATE,
         displayedDate,
+        Constants.EXAMPLE_DEFAULT_DATE,
         'Date should be selected correctly in the textfield',
     );
 });
@@ -82,8 +82,8 @@ TestCase('BMS-313. BMS:案件:案件編集:非稼働明細:納品日:「yyyy.mm.
     gondola.report(`VP. 入力した「案件開始日」は「yyyy-mm-dd」形式に自動的に変換されること`);
     const displayedDate = await projectDetailsPage.getOrderedDetailsTextfield(columnName.deliveryDate);
     await gondola.checkEqual(
-        Constants.EXAMPLE_DEFAULT_DATE,
         displayedDate,
+        Constants.EXAMPLE_DEFAULT_DATE,
         'Date should be selected correctly in the textfield',
     );
 });
@@ -101,8 +101,8 @@ TestCase('BMS-314. BMS:案件:案件編集:非稼働明細:納品日:「yyyy/mm/
     gondola.report(`VP. 入力した「案件開始日」は「yyyy-mm-dd」形式に自動的に変換されること`);
     const displayedDate = await projectDetailsPage.getOrderedDetailsTextfield(columnName.deliveryDate);
     await gondola.checkEqual(
-        Constants.EXAMPLE_DEFAULT_DATE,
         displayedDate,
+        Constants.EXAMPLE_DEFAULT_DATE,
         'Date should be selected correctly in the textfield',
     );
 });
@@ -114,8 +114,8 @@ TestCase('BMS-315.BMS:案件:案件編集:非稼働明細:納品日:下限値・
     gondola.report(`VP. 入力フィールドの下にエラー「正しい日付を入力してください」が表示されること。`);
     //BUG: no error message presents
     await gondola.checkEqual(
-        INVALID_DATE_ERROR_MESSAGE,
         await projectDetailsPage.getInvalidFeedBack(columnName.deliveryDate),
+        INVALID_DATE_ERROR_MESSAGE,
         'Invalid date error message should be displayed',
     );
 

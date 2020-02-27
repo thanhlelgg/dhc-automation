@@ -51,9 +51,8 @@ TestCase('BMS-393. マスタ:税率一覧:削除ボタン:削除ボタン:削除
     gondola.report('Step 3. アラート画面で確認する');
     await listTaxPage.clickPopup('ok');
     gondola.report('VP. 削除はできない、エラー「この税率で案件情報があるため削除できません」が表示されること。');
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await listTaxPage.doesDeleteFailMessageDisplay(TaxInfoData.TAX_FULL_DATA.name),
-        true,
         'Alert message should be displayed correctly',
     );
 });
@@ -83,14 +82,12 @@ TestCase('BMS-394. マスタ:税率一覧:削除ボタン:削除対象の税率�
     gondola.report('Step 3. アラート画面で確認する');
     await listTaxPage.clickPopup('ok');
     gondola.report('VP. 正常に削除できること。');
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await listTaxPage.doesDeleteSuccessMessageDisplay(TaxInfoData.TAX_FULL_DATA.name),
-        true,
         'Alert message should be displayed correctly',
     );
-    await gondola.checkEqual(
+    await gondola.checkFalse(
         await listTaxPage.doesDeleteButtonDisplay(TaxInfoData.TAX_FULL_DATA.name),
-        false,
         'Delete button should not exist',
     );
 });

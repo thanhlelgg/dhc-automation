@@ -13,9 +13,8 @@ TestCase('BMS-55. 案件:案件作成:取引通貨:選択肢', async () => {
     gondola.report(
         `VP.「計上区分」プルダウンには選択肢が五つあり、「売掛」、「前受」、「立替(消耗品)」、「立替(旅費交通費)」と「立替(システム関係費)」を含んでいること。`,
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesDebitCreditsOptionsExist(debitCreditGroupIds),
-        true,
         'Debit credit options should be displayed correctly',
     );
 });

@@ -233,9 +233,8 @@ TestCase('BMS-59. 案件:案件作成:出来高明細:予定時間:下限値・�
 TestCase('BMS-60. 案件:案件作成:出来高明細:予定時間:下限値・上限値', async () => {
     gondola.report(`Step 3. 出来高明細行の「予定総合時間」で入力可能を確認する。`);
     gondola.report(`VP. 出来高明細行の「予定総合時間」フィールドは非入力項目であり、入力できないこと。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.isProjectResultBaseTextFieldReadOnly(randomRole, ResultsBaseField.TOTAL_TIME),
-        true,
         'Total time text field should be readonly',
     );
 

@@ -23,9 +23,8 @@ TestCase('BMS-73. 案件:案件作成:出来高明細:請求単価:自動計算:
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 該当する請求用役職の出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);
@@ -43,9 +42,8 @@ TestCase('BMS-73. 案件:案件作成:出来高明細:請求単価:自動計算:
     await addProjectPage.enterTextFieldByLabel(START_DATE_FIELD_NAME, validStartDate);
     await addProjectPage.selectCustomerByCode(businessCustomer.cd);
     gondola.report(`VP. 得意先マスタの当該取引先の顧客単価と割増率をもとに、請求単価が自動計算されること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.isUnitPriceCalculatedCorrectly(projectRole, customerMagnification, unitPrice.leader),
-        true,
         'Unit prices should be calculated correctly',
     );
 
@@ -66,9 +64,8 @@ TestCase('BMS-153. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. テスターの出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);
@@ -86,9 +83,8 @@ TestCase('BMS-153. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.enterTextFieldByLabel(START_DATE_FIELD_NAME, validStartDate);
     await addProjectPage.selectCustomerByCode(businessCustomer.cd);
     gondola.report(`VP. 得意先マスタの当該取引先の顧客単価と割増率をもとに、請求単価が自動計算されること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.isUnitPriceCalculatedCorrectly(projectRole, customerMagnification, unitPrice.tester),
-        true,
         'Unit prices should be calculated correctly',
     );
 
@@ -109,9 +105,8 @@ TestCase('BMS-154. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. PMの出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);
@@ -143,9 +138,8 @@ TestCase('BMS-155. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 設計者の出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);
@@ -177,9 +171,8 @@ TestCase('BMS-156. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. EXDBの出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);
@@ -211,9 +204,8 @@ TestCase('BMS-157. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備1の出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);
@@ -245,9 +237,8 @@ TestCase('BMS-158. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備2の出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);
@@ -279,9 +270,8 @@ TestCase('BMS-159. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備3の出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);
@@ -313,9 +303,8 @@ TestCase('BMS-160. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備4の出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);
@@ -347,9 +336,8 @@ TestCase('BMS-161. 案件:案件作成:出来高明細:請求単価:自動計算
     await addProjectPage.selectSelectorByLabel(PROJECT_FORM_FIELD_NAME, Constants.PROJECT_FORMS.result);
     await addProjectPage.setStatusResultBasesRoleCheckbox(projectRole, true);
     gondola.report(`VP. 予備5の出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(projectRole),
-        true,
         'Billing details line for role should be displayed',
     );
     gondola.report(`Step 3. 出来高明細行で「請求単価」で何も入力しなくて、「取引先」と「案件開始日」を入力する。`);

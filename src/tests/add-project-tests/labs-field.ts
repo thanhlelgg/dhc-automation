@@ -19,14 +19,12 @@ TestCase('BMS-42. 案件:案件作成:場所:選択肢', async () => {
     gondola.report(
         `VP.「場所」は必須項目であり、「場所」プルダウンには選択肢が三つあり、「社内」、「出向」、「派遣」を含んでいること。`,
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesFieldRequired(PROJECT_PLACE_FIELD_NAME),
-        true,
         'Project place field should be required',
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesSelectorByLabelOptionsExist(PROJECT_PLACE_FIELD_NAME, placeOptions),
-        true,
         'Project place options should be displayed correctly',
     );
 
@@ -36,11 +34,7 @@ TestCase('BMS-42. 案件:案件作成:場所:選択肢', async () => {
     await addProjectPage.selectSelectorByLabel(PROJECT_PLACE_FIELD_NAME, Constants.PROJECT_PLACE.house);
     await addProjectPage.clickTextFieldByLabel(LAB_NAME_FIELD_NAME);
     gondola.report(`VP. お客様先が表示されなくて、社内のラボのみが表示されること。`);
-    await gondola.checkEqual(
-        await addProjectPage.doesLabsDisplayCorrect(true),
-        true,
-        'Labs should be displayed correctly',
-    );
+    await gondola.checkTrue(await addProjectPage.doesLabsDisplayCorrect(true), 'Labs should be displayed correctly');
     await addProjectPage.clickOutsideOfWindowModal(SEARCH_LABS_MODULE_TITLE);
 
     gondola.report(
@@ -50,11 +44,7 @@ TestCase('BMS-42. 案件:案件作成:場所:選択肢', async () => {
     await addProjectPage.clickTextFieldByLabel(LAB_NAME_FIELD_NAME);
     await searchModalWindows.waitForTableUpdated();
     gondola.report(`VP. お客様先が表示されること。`);
-    await gondola.checkEqual(
-        await addProjectPage.doesLabsDisplayCorrect(false),
-        true,
-        'Labs should be displayed correctly',
-    );
+    await gondola.checkTrue(await addProjectPage.doesLabsDisplayCorrect(false), 'Labs should be displayed correctly');
     await addProjectPage.clickOutsideOfWindowModal(SEARCH_LABS_MODULE_TITLE);
 
     gondola.report(
@@ -64,9 +54,5 @@ TestCase('BMS-42. 案件:案件作成:場所:選択肢', async () => {
     await addProjectPage.clickTextFieldByLabel(LAB_NAME_FIELD_NAME);
     await searchModalWindows.waitForTableUpdated();
     gondola.report(`VP. お客様先が表示されること。`);
-    await gondola.checkEqual(
-        await addProjectPage.doesLabsDisplayCorrect(false),
-        true,
-        'Labs should be displayed correctly',
-    );
+    await gondola.checkTrue(await addProjectPage.doesLabsDisplayCorrect(false), 'Labs should be displayed correctly');
 });
