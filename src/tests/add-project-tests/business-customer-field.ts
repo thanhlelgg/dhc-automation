@@ -18,13 +18,12 @@ TestCase('BMS-3. 案件:案件作成:取引先:得意先の検索および結果
     await addProjectPage.clickTextFieldByLabel(BUSINESS_CUSTOMER_FIELD_NAME);
     gondola.report(`VP. 取引先検索のモーダルウィンドウが起動すること。`);
     const isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
-    await gondola.checkEqual(isModuleDisplayed, true, 'Search customer modal title should be displayed');
+    await gondola.checkTrue(isModuleDisplayed, 'Search customer modal title should be displayed');
     gondola.report(`Step 3. 取引先のデータ表示を確認する`);
     // BUG: disabled item is till displayed
     gondola.report(`VP. 得意先マスタで有効としたものは表示され、無効としたものは表示されないこと。`);
-    gondola.checkEqual(
+    gondola.checkTrue(
         await addProjectPage.doesBusinessCustomerDisplayCorrect(),
-        true,
         'Business customers should be displayed correctly',
     );
 
@@ -37,7 +36,7 @@ TestCase('BMS-3. 案件:案件作成:取引先:得意先の検索および結果
         `VP. AND検索で絞り込みができ、各結果行で取引先コード、取引先名、取引先担当名は入力したフィールドと一致すること。`,
     );
     // BUG: filtering is not working correctly
-    await gondola.checkEqual(doesFilteringWorkCorrectly, true, 'Filtering should be working correctly');
+    await gondola.checkTrue(doesFilteringWorkCorrectly, 'Filtering should be working correctly');
 
     gondola.report(`Step 6. 検索結果を確認する。`);
     randomResult = await searchModalWindows.getOneResultItemAllColumns();
@@ -70,18 +69,18 @@ TestCase('BMS-5. 案件:案件作成:取引先:モーダルウィンドウのク
     await addProjectPage.clickTextFieldByLabel(BUSINESS_CUSTOMER_FIELD_NAME);
     gondola.report(`VP. モーダルウィンドウが起動すること。`);
     let isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
-    await gondola.checkEqual(isModuleDisplayed, true, 'Search customer modal title should be displayed');
+    await gondola.checkTrue(isModuleDisplayed, 'Search customer modal title should be displayed');
 
     gondola.report(`Step 3.「×」をクリックする。`);
     await addProjectPage.closeModalWindowByName(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
     isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE, false);
-    await gondola.checkEqual(isModuleDisplayed, false, 'Search customer modal title should not be displayed');
+    await gondola.checkFalse(isModuleDisplayed, 'Search customer modal title should not be displayed');
 
     gondola.report(`Step 4. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
     await addProjectPage.clickTextFieldByLabel(BUSINESS_CUSTOMER_FIELD_NAME);
     await addProjectPage.clickOutsideOfWindowModal(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
     isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_CUSTOMER_MODAL_WINDOW_TITLE, false);
-    await gondola.checkEqual(isModuleDisplayed, false, 'Search customer modal title should not be displayed');
+    await gondola.checkFalse(isModuleDisplayed, 'Search customer modal title should not be displayed');
 });

@@ -29,9 +29,8 @@ TestCase('BMS-143. BMS:案件:従業員マスタ作成:保存:必須項目のみ
     gondola.report('Verify content of new project are displayed correctly');
 
     await gondola.click(listWorkerPage.getWorkerLink(WORKER_INFO_REQUIRED_ONLY.workerCode));
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addWorkerPage.doesContentOfWorkerDisplayCorrect(WORKER_INFO_REQUIRED_ONLY),
-        true,
         'One of content of worker displays incorrectly.',
     );
 });
@@ -54,9 +53,8 @@ TestCase('BMS-144. BMS:案件:従業員マスタ作成:保存:全ての項目', 
     gondola.report('Verify content of new project are displayed correctly');
 
     await gondola.click(listWorkerPage.getWorkerLink(WORKER_INFO_FULL.workerCode));
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addWorkerPage.doesContentOfWorkerDisplayCorrect(WORKER_INFO_FULL),
-        true,
         'One of content of worker displays incorrectly.',
     );
 });
