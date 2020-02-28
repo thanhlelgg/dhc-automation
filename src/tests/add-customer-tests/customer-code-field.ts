@@ -26,6 +26,7 @@ TestCase('BMS-81. 案件:得意先マスタ作成:顧客情報:取引先コー�
     await addCustomerPage.enterTextFieldByLabel(CUSTOMER_CODE_TEXTFIELD_LABEL, Utilities.getRandomText(17));
     await addCustomerPage.saveCustomer();
     gondola.report(`VP. 入力フィールドの下にエラー「16文字以内で入力してください」が表示されること。`);
+    //BUG: no error message is displayed
     await gondola.checkEqual(
         await addCustomerPage.getInvalidFeedBack(CUSTOMER_CODE_TEXTFIELD_LABEL),
         Constants.EXCEEDED_NOC_ERROR_MESSAGE_16,

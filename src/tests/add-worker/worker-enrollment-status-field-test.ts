@@ -10,5 +10,5 @@ TestCase('BMS-106. BMS:案件:従業員マスタ作成:在籍状況:選択肢', 
     gondola.report(`Step 2. 「在籍状況」チェックボックスで選択肢を確認する`);
     gondola.report(`VP. 「在籍状況」の選択肢が一つあり、「退職済」を含めていること。`);
     const actualResult = await addWorkerPage.doesCheckboxLabelExist('退職済');
-    await gondola.checkEqual(actualResult, true, 'Checkbox label does not exist');
+    await gondola.checkTrue(actualResult, 'Checkbox label does not exist');
 });

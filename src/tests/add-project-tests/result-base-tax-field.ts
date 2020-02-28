@@ -17,17 +17,12 @@ TestCase('BMS-74. 案件:案件作成:出来高明細:課税', async () => {
     gondola.report(`Step 3. 出来高明細行の「課税」でチェックを入れる。`);
     await addProjectPage.setTaxableState(randomRole, true);
     gondola.report(`VP. 「税率」プルダウンが有効になり、選択できること。`);
-    await gondola.checkEqual(
-        await addProjectPage.isTaxDropdownEnabled(randomRole),
-        true,
-        'Tax id dropdown should be enabled',
-    );
+    await gondola.checkTrue(await addProjectPage.isTaxDropdownEnabled(randomRole), 'Tax id dropdown should be enabled');
     gondola.report(`Step 4. 出来高明細行の「課税」でチェックを外す。`);
     await addProjectPage.setTaxableState(randomRole, false);
     gondola.report(`VP. 「税率」プルダウンが無効になり、選択できないこと。`);
-    await gondola.checkEqual(
+    await gondola.checkFalse(
         await addProjectPage.isTaxDropdownEnabled(randomRole),
-        false,
         'Tax id dropdown should be disabled',
     );
 });
@@ -38,9 +33,8 @@ TestCase('BMS-75. 案件:案件作成:出来高明細:税率', async () => {
     gondola.report(
         `VP. 「税率」プルダウンには選択肢が税率マスタに登録されたものを含んでいること。(現状：「８％」、「10%」を含んでいる)`,
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.checkResultsBaseTaxOptions(randomRole, Constants.TAX_IDS),
-        true,
         'Tax id dropdown should be displayed correctly',
     );
     gondola.report(

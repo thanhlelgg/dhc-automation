@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug",
+            "name": "@Debug",
             "program": "${workspaceFolder}/node_modules/gondolajs/bin/gondola.js",
             "args": [
                 "run",

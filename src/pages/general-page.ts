@@ -406,6 +406,7 @@ export class GeneralPage {
             return;
         }
         const locator = partial ? this.selectorByLabelPartialMatch : this.selectorByLabel;
+        await gondola.scrollToElement(locator.format(label));
         await gondola.selectOptionByText(locator.format(label), option);
     }
 
@@ -771,14 +772,14 @@ export class GeneralPage {
 
     @action('select search selection result')
     public async selectSearchSelectionResult(text: string, partial = false): Promise<void> {
-        await gondola.waitForElementDisappearSoftly(this.selectSelectionLoadingResults, Constants.SHORT_TIMEOUT);
+        await gondola.waitForElementDisappearSoftly(this.selectSelectionLoadingResults, Constants.VERY_SHORT_TIMEOUT);
         const locator = partial ? this.selectSelectionOptionByTextPartialMatch : this.selectSelectionOptionByText;
         await gondola.click(locator.format(text));
     }
 
     @action('check search result display')
     public async doesSearchResultDisplayCorrectly(searchText: string): Promise<boolean> {
-        await gondola.waitUntilStalenessOfElement(this.selectSelectionOptions, Constants.SHORT_TIMEOUT);
+        await gondola.waitUntilStalenessOfElement(this.selectSelectionOptions, Constants.VERY_SHORT_TIMEOUT);
         const results = await gondola.getElementsAttributes(this.selectSelectionOptions, 'innerText');
         return Utilities.isFilterCorrect(searchText, results);
     }

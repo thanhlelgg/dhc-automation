@@ -11,6 +11,7 @@ import { Utilities } from '../common/utilities';
 dotenv.config();
 declare let browser: ProtractorBrowser;
 const DEFAULT_TIMEOUT = 5;
+const HEADER_OFFSET = 100;
 
 class HelperExt extends Helper {
     @action('does popup exist', 'test if a popup exist')
@@ -50,7 +51,8 @@ class HelperExt extends Helper {
      */
     public async scrollToElement(control: any): Promise<void> {
         const element = await this.getElement(control);
-        await browser.executeScript('arguments[0].scrollIntoView(true)', element);
+        const location = await element.getLocation();
+        await browser.executeScript(`window.scrollTo('${location.x}', '${location.y - HEADER_OFFSET}')`);
     }
 
     /**

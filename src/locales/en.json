@@ -141,6 +141,13 @@
             "taxRate": "税率",
             "displayOrder": "表示順"
         },
+        "addExchange": {
+            "code": "コード（略称）",
+            "currencyName": "通貨名",
+            "currencyUnit": "通貨単位",
+            "currencySymbol": "通貨記号",
+            "remarks": "備考"
+        },
         "listWorkingPlace": {
             "name": "就業先名称",
             "code": "就業先コード",
@@ -392,6 +399,12 @@
             "createdUser": "登録者",
             "modified": "更新日",
             "modifieduser": "更新者"
+        },
+        "exchangeRateList": {
+            "code": "コード（略称）",
+            "currencyName": "通貨名",
+            "currencyUnit": "通貨単位",
+            "currencySymbol": "通貨記号"
         }
     },
     "fieldPlaceHolder": {
@@ -494,6 +507,13 @@
                 "estimateTemplateLink": "見積書",
                 "deliveryTemplateLink": "納品書",
                 "billingTemplateLink": "請求書"
+            },
+            "exchange": {
+                "title": "為替",
+                "listCurrency": "通貨一覧",
+                "addCurrency": "通貨登録",
+                "listExchangeRate": "為替相場一覧",
+                "addExchangeRate": "為替相場登録"
             }
         },
         "system": {
@@ -601,9 +621,8 @@
             "secondment": "出向",
             "dispatch": "派遣"
         },
-
         "currencyIds": {
-            "jpy": "JPY"
+            "jpy": "JPY - 日本円 (￥)"
         },
         "billingTypes": {
             "eachTime": "案件個別",
@@ -691,6 +710,16 @@
             "mail": "メールアドレス",
             "lap": "所属拠点",
             "role": "ロール"
+        },
+        "exchangeInfor": {
+            "code": "コード（略称）",
+            "currencyName": "通貨名",
+            "currencyUnit": "通貨単位",
+            "currencySymbol": "通貨記号",
+            "registrationDate": "登録日",
+            "registeredPerson": "登録者",
+            "updateDate": "更新日",
+            "updater": "更新者"
         }
     }
 }

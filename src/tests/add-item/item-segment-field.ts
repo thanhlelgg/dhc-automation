@@ -42,7 +42,7 @@ TestCase('BMS-195. BMS:マスタ:品目作成:セグメント:モーダルウィ
         'A modal window for segment search should be hidden',
     );
 
-    gondola.report(`Step 3. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
+    gondola.report(`Step 4. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
     await addItemPage.clickTextFieldByLabel(ITEM_SEGMENT_FIELD_NAME);
     await addItemPage.clickOutsideTextFieldByLabel(ITEM_SEGMENT_FIELD_NAME);
     gondola.report(`VP.モーダルウィンドウが非表示になること。`);

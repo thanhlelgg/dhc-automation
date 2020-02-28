@@ -25,7 +25,7 @@ Before(async () => {
     await businessSystemPage.gotoAddProjectPage();
 });
 
-TestCase("BMS-108. Verify add project with form '出来高案件' successfully", async () => {
+TestCase('BMS-108. 案件:案件作成:全項目:保存:案件形態の出来高案件 ', async () => {
     gondola.report('Step 2. 案件概要を入力する');
     const projectOverview = ProjectInfoData.OVERVIEW_FULL_DATA;
     await addProjectPage.inputProjectOverviewInfo(projectOverview);
@@ -48,40 +48,36 @@ TestCase("BMS-108. Verify add project with form '出来高案件' successfully",
     const projectCode = await addProjectPage.getProjectCode();
     await addProjectPage.saveNewProject();
 
-    gondola.report('Verify result: new project is added successfully and display on project list page');
+    gondola.report('VP 1. 正常に保存でき、案件一覧画面には登録した案件が表示され');
     await businessSystemPage.gotoListProject();
     await gondola.checkControlExist(listProjectPage.getProjectLink(projectCode));
 
-    gondola.report('Verify content of new project are displayed correctly');
+    gondola.report('VP 2. 登録された案件の内容は正しく保存されること。');
     await gondola.click(listProjectPage.getProjectLink(projectCode));
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesProjectOverviewDisplayCorrect(projectOverview),
-        true,
         'One of content of project overview displays incorrectly.',
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesContentOfProjectResultBasesDisplayCorrect(PROJECT_RESULT_BASE_DATA),
-        true,
         'One of content of project result base row displays incorrectly.',
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesContentOfProjectDetailsDisplayCorrect(PROJECT_DETAIL_DATA),
-        true,
         'One of content of project detail row displays incorrectly',
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesContentOfProjectResourcesDisplayCorrect(
             PROJECT_RESOURCE_DATA.labName,
             PROJECT_RESOURCE_DATA.workingStartTime,
             PROJECT_RESOURCE_DATA.workingEndTime,
             PROJECT_RESOURCE_DATA.resources,
         ),
-        true,
         'One of content of project resource displays incorrectly',
     );
 });
 
-TestCase("BMS-109. Verify add project with form '継続案件' successfully", async () => {
+TestCase('BMS-109. 案件:案件作成:全項目:保存:案件形態の継続案件', async () => {
     gondola.report('Step 2. 案件概要を入力する');
     const projectOverview = PROJECT_OVERVIEW_DATA;
     projectOverview.projectForm = PROJECT_FORM_CONTINUE;
@@ -102,35 +98,32 @@ TestCase("BMS-109. Verify add project with form '継続案件' successfully", as
     const projectCode = await addProjectPage.getProjectCode();
     await addProjectPage.saveNewProject();
 
-    gondola.report('Verify result: new project is added successfully and display on project list page');
+    gondola.report('VP 1. 正常に保存でき、案件一覧画面には登録した案件が表示され');
     await businessSystemPage.gotoListProject();
     await gondola.checkControlExist(listProjectPage.getProjectLink(projectCode));
 
-    gondola.report('Verify content of new project are displayed correctly');
+    gondola.report('VP 2. 登録された案件の内容は正しく保存されること。');
     await gondola.click(listProjectPage.getProjectLink(projectCode));
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesProjectOverviewDisplayCorrect(projectOverview),
-        true,
         'One of content of project overview displays incorrectly.',
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesContentOfProjectDetailsDisplayCorrect(PROJECT_DETAIL_DATA),
-        true,
         'One of content of project detail row displays incorrectly',
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesContentOfProjectResourcesDisplayCorrect(
             PROJECT_RESOURCE_DATA.labName,
             PROJECT_RESOURCE_DATA.workingStartTime,
             PROJECT_RESOURCE_DATA.workingEndTime,
             PROJECT_RESOURCE_DATA.resources,
         ),
-        true,
         'One of content of project resource displays incorrectly',
     );
 });
 
-TestCase("BMS-110. Verify add project with form 'ショット案件' successfully", async () => {
+TestCase('BMS-110. 案件:案件作成:全項目:保存:案件形態のショット案件', async () => {
     gondola.report('Step 2. 案件概要を入力する');
     const projectOverview = PROJECT_OVERVIEW_DATA;
     projectOverview.projectForm = PROJECT_FORM_SHOT;
@@ -151,30 +144,27 @@ TestCase("BMS-110. Verify add project with form 'ショット案件' successfull
     const projectCode = await addProjectPage.getProjectCode();
     await addProjectPage.saveNewProject();
 
-    gondola.report('Verify result: new project is added successfully and display on project list page');
+    gondola.report('VP 1. 正常に保存でき、案件一覧画面には登録した案件が表示され');
     await businessSystemPage.gotoListProject();
     await gondola.checkControlExist(listProjectPage.getProjectLink(projectCode));
 
-    gondola.report('Verify content of new project are displayed correctly');
+    gondola.report('VP 2. 登録された案件の内容は正しく保存されること。');
     await gondola.click(listProjectPage.getProjectLink(projectCode));
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesProjectOverviewDisplayCorrect(projectOverview),
-        true,
         'One of content of project overview displays incorrectly.',
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesContentOfProjectDetailsDisplayCorrect(PROJECT_DETAIL_DATA),
-        true,
         'One of content of project detail row displays incorrectly',
     );
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesContentOfProjectResourcesDisplayCorrect(
             PROJECT_RESOURCE_DATA.labName,
             PROJECT_RESOURCE_DATA.workingStartTime,
             PROJECT_RESOURCE_DATA.workingEndTime,
             PROJECT_RESOURCE_DATA.resources,
         ),
-        true,
         'One of content of project resource displays incorrectly',
     );
 });

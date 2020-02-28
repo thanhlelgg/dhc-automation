@@ -18,12 +18,11 @@ TestCase('BMS-104. BMS:案件:従業員マスタ作成:所属部門:所属部門
     await addWorkerPage.clickTextFieldByLabel(WORKER_DEPARTMENT_FIELD_NAME);
     gondola.report(`VP. 所属部門検索のモーダルウィンドウが起動すること。`);
     const isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE);
-    await gondola.checkEqual(isModuleDisplayed, true, 'Search department modal title should be displayed');
+    await gondola.checkTrue(isModuleDisplayed, 'Search department modal title should be displayed');
     gondola.report(`Step 3. 所属部門のデータ表示を確認する。`);
     gondola.report(`VP. 部門マスタで有効としたものは表示されること。`);
-    gondola.checkEqual(
+    gondola.checkTrue(
         await searchModalWindows.doesDepartmentsDisplayCorrect(),
-        true,
         'Department should be displayed correctly',
     );
 
@@ -34,7 +33,7 @@ TestCase('BMS-104. BMS:案件:従業員マスタ作成:所属部門:所属部門
     const doesFilteringWorkCorrectly = await searchModalWindows.filterDepartmentsAndVerifyResult(randomResult, true);
     gondola.report(`VP. 1文字入力するごとにリアルタイムに検索(部分一致)できること。`);
     gondola.report(`VP. 各結果行でコード、または部門名は入力したフィールドと一致すること。`);
-    await gondola.checkEqual(doesFilteringWorkCorrectly, true, 'Filtering should be working correctly');
+    await gondola.checkTrue(doesFilteringWorkCorrectly, 'Filtering should be working correctly');
 
     gondola.report(`Step 6. 任意の検索結果を選択する。`);
     const randomResultName = Utilities.getMapValue(randomResult, SearchResultColumn.NAME.tabulatorField);
@@ -50,18 +49,18 @@ TestCase('BMS-105. BMS:案件:従業員マスタ作成:所属部門:モーダル
     await addWorkerPage.clickTextFieldByLabel(WORKER_DEPARTMENT_FIELD_NAME);
     gondola.report(`VP. 部門検索のモーダルウィンドウが起動すること。`);
     let isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE);
-    await gondola.checkEqual(isModuleDisplayed, true, 'Search departments modal title should be displayed');
+    await gondola.checkTrue(isModuleDisplayed, 'Search departments modal title should be displayed');
 
     gondola.report(`Step 3. 「×」をクリックする。`);
     await searchModalWindows.closeModalWindowByName(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
     isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE, false);
-    await gondola.checkEqual(isModuleDisplayed, false, 'Search Departments modal title should not be displayed');
+    await gondola.checkFalse(isModuleDisplayed, 'Search Departments modal title should not be displayed');
 
     gondola.report(`Step 4. もう一回モーダルウィンドウを起動して、ウィンドウ外をクリックする。`);
     await addWorkerPage.clickTextFieldByLabel(WORKER_DEPARTMENT_FIELD_NAME);
     await searchModalWindows.clickOutsideOfWindowModal(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE);
     gondola.report(`VP. モーダルウィンドウが非表示になること。`);
     isModuleDisplayed = await searchModalWindows.doesModalTitleDisplay(SEARCH_DEPARTMENT_MODAL_WINDOW_TITLE, false);
-    await gondola.checkEqual(isModuleDisplayed, false, 'Search Departments modal title should not be displayed');
+    await gondola.checkFalse(isModuleDisplayed, 'Search Departments modal title should not be displayed');
 });

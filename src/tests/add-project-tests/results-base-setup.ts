@@ -13,9 +13,8 @@ export default async function setup(): Promise<string> {
     const randomRole = await addProjectPage.getRandomRoleLabel();
     await addProjectPage.setStatusResultBasesRoleCheckbox(randomRole, true);
     gondola.report(`VP. 該当する請求用役職の出来高明細行が表示され、明細の入力ができる状態になること。`);
-    await gondola.checkEqual(
+    await gondola.checkTrue(
         await addProjectPage.doesRoleBillingDetailsLineDisplay(randomRole),
-        true,
         'Billing details line for role should be displayed',
     );
     return randomRole;

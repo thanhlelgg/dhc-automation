@@ -6,6 +6,7 @@ import * as fs from 'fs';
 
 const converter = new AFHConvert();
 import { JsonConvert, ValueCheckingMode } from 'json2typescript';
+import { gondola } from 'gondolajs';
 
 export class Utilities {
     /**
@@ -259,6 +260,7 @@ export class Utilities {
                 item = item.toLowerCase();
             }
             if (!item.includes(keyword)) {
+                // gondola.report(`abc`);
                 return false;
             }
         }
