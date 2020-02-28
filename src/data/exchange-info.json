@@ -1,0 +1,22 @@
+{
+    "requiredOnly": {
+        "code": "testcode",
+        "currencyUnit": "12345"
+    },
+    "fullData": {
+        "code": "testcode",
+        "currencyName": "test name",
+        "currencyUnit": "12345",
+        "currencySymbol": "testsymbol",
+        "remarks": "test remarks"
+    },
+    "recordsData": [
+        {
+            "code": "testcode",
+            "currencyName": "test name",
+            "currencyUnit": "",
+            "currencySymbol": "testsymbol",
+            "remarks": ""
+        }
+    ]
+}
