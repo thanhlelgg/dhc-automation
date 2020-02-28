@@ -38,17 +38,17 @@ Data(SPECIAL_ALLOWANCE_INFO).TestCase(
 );
 
 Data(POSITION_INFO).TestCase('TTS - InitialData 2. Create new Position', async (current: PositionInfo) => {
-    if (await DatabaseHelper.doesTTSPositionExist(current.name)) return;
+    if (await DatabaseHelper.doesTTSPositionExist(current.name, current.abbreviationName)) return;
     gondola.report(`Step 1. Go to Add special Allowance page`);
     await loginPage.gotoTaskSystem();
     await taskSystemMenu.gotoListPositionPage();
+    await listPositionPage.removePositionIfExist(current.name, current.abbreviationName);
     await listPositionPage.clickButtonByIcon(ButtonIcon.ADD);
 
     gondola.report(`Step 2. Create new Special Allowance`);
-
     await addPositionPage.enterPositionInformation(current);
     await addPositionPage.clickButtonByIcon(ButtonIcon.SAVE);
 
     gondola.report(`VP. Check new Special Allowance is created`);
-    gondola.checkTrue(await DatabaseHelper.doesTTSPositionExist(current.name));
+    gondola.checkTrue(await DatabaseHelper.doesTTSPositionExist(current.name, current.abbreviationName));
 });

@@ -260,12 +260,15 @@ export class DatabaseHelper {
      * Check if TTSPosition exist
      * @param ttsPositionName
      */
-    public static async doesTTSPositionExist(ttsPositionName: string): Promise<boolean> {
+    public static async doesTTSPositionExist(ttsPositionName: string, ttsPositionAbbreviation: string): Promise<boolean> {
         const availableTTSPositions = await DatabaseHelper.getActiveTTSPositions();
-        const ttsPositionCodes = availableTTSPositions.map(ttsPosition => {
+        const ttsPositionNames = availableTTSPositions.map(ttsPosition => {
             return ttsPosition.position_name;
         });
-        return ttsPositionCodes.includes(ttsPositionName);
+        const ttsPositionAbbreviations = availableTTSPositions.map(ttsPosition => {
+            return ttsPosition.abbreviation;
+        });
+        return ttsPositionNames.includes(ttsPositionName) && ttsPositionAbbreviations.includes(ttsPositionAbbreviation);
     }
 
     /**
@@ -280,20 +283,20 @@ export class DatabaseHelper {
 
     /**
      * Check if TMSPosition exist
-     * @param ttsPositionName
+     * @param tmsPositionName
      */
     public static async doesTMSPositionExist(
-        ttsPositionName: string,
-        ttsPositionAbbreviation: string,
+        tmsPositionName: string,
+        tmsPositionAbbreviation: string,
     ): Promise<boolean> {
         const availableTMSPositions = await DatabaseHelper.getActiveTMSPositions();
-        const ttsPositionNames = availableTMSPositions.map(ttsPosition => {
-            return ttsPosition.position_name;
+        const tmsPositionNames = availableTMSPositions.map(tmsPosition => {
+            return tmsPosition.position_name;
         });
-        const ttsPositionAbbreviations = availableTMSPositions.map(ttsPosition => {
-            return ttsPosition.abbreviation;
+        const tmsPositionAbbreviations = availableTMSPositions.map(tmsPosition => {
+            return tmsPosition.abbreviation;
         });
-        return ttsPositionNames.includes(ttsPositionName) && ttsPositionAbbreviations.includes(ttsPositionAbbreviation);
+        return tmsPositionNames.includes(tmsPositionName) && tmsPositionAbbreviations.includes(tmsPositionAbbreviation);
     }
 
     /**
