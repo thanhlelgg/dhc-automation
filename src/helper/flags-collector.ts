@@ -6,13 +6,6 @@ export enum LoggingType {
     NONE,
 }
 
-export enum CustomerFieldName {
-    CUSTOMER_CODE,
-    CUSTOMER_NAME,
-    SUBCODE,
-    AID_CODE,
-}
-
 export class FlagsCollector {
     private static failedFlags: string[];
 

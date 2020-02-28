@@ -1,9 +1,8 @@
 import { TestModule, Data, gondola } from 'gondolajs';
 import addCustomerPage from '../../pages/add-customer-page';
 import businessSystemPage from '../../pages/business-system-page';
-import listCustomerPage from '../../pages/list-customer-page';
-import preconditionSetup from './list-customer-precodition-setup';
-import { CustomerSearchResultColumn } from '../../models/enum-class/customer-search-result-column';
+import listCustomerPage, { CustomerSearchResultColumn } from '../../pages/list-customer-page';
+import preconditionSetup from './list-customer-precondition-setup';
 TestModule('List customer page - button reset test');
 
 const CUSTOMER_SEARCH_FIELD = Object.values(CustomerSearchResultColumn);

@@ -1,10 +1,10 @@
 import { TestModule, Data, gondola } from 'gondolajs';
 import { Constants } from '../../common/constants';
 import setup from './set-up';
-import listCustomerPage from '../../pages/list-customer-page';
+import listCustomerPage, { CustomerSearchResultColumn } from '../../pages/list-customer-page';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 
-TestModule('List customer page - Search customer by closing date');
+TestModule('List customer page - Search customer by closing date').concat('');
 
 const CUSTOMER_CLOSING_DATE_FIELD_NAME = Constants.translator.fieldName.listCustomer.searchField.closingDate;
 const CUSTOMER_CLOSING_DATE = Object.values(Constants.CLOSING_DATES);
@@ -15,15 +15,12 @@ Data(CUSTOMER_CLOSING_DATE).TestCase('BMS-456. BMS:マスタ:得意先検索:締
     await gondola.report(`Step 2. 「締日」プルダウンの選択肢を確認する。`, '');
     gondola.report(`VP. 「締日」プルダウンの選択肢が「1」～「30」と「末」を含めていること。`);
     await gondola.checkTrue(
-        await listCustomerPage.doesSelectorByLabelOptionsExist(
-            CUSTOMER_CLOSING_DATE_FIELD_NAME,
-            CUSTOMER_CLOSING_DATE.concat(''),
-        ),
+        await listCustomerPage.doesSelectorByLabelOptionsExist(CUSTOMER_CLOSING_DATE_FIELD_NAME, CUSTOMER_CLOSING_DATE),
         'Customer options should be displayed correctly',
     );
 
     gondola.report(`Step 3. 「締日」プルダウンで任意の選択肢を選択し、「検索」ボタンをクリックする。`);
-    await listCustomerPage.searchCustomer({ closingDate: current });
+    await listCustomerPage.searchCustomer(CustomerSearchResultColumn.CUSTOMER_CLOSING_DATE, current);
     const actualResult = await listCustomerPage.verifySearchResultsByOneColumn(
         current,
         SearchResultColumn.CLOSING_DATE,

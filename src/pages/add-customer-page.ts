@@ -4,10 +4,16 @@ import { CustomerInfo, Overview, UnitPrices, CustomerMagnifications, CustomerInf
 import { RecordTable } from '../models/enum-class/recordTable';
 import { RecordFieldName } from '../models/enum-class/recordFieldName';
 import '@src/string.extensions';
-import { FlagsCollector, LoggingType, CustomerFieldName } from '../helper/flags-collector';
 import { Constants } from '../common/constants';
 import { ButtonIcon } from '../models/enum-class/button-icon';
 import { Utilities } from '../common/utilities';
+import { FlagsCollector, LoggingType } from '../helper/flags-collector';
+export enum CustomerFieldName {
+    CUSTOMER_CODE,
+    CUSTOMER_NAME,
+    SUBCODE,
+    AID_CODE,
+}
 @page
 export class AddCustomerPage extends GeneralPage {
     private pageUrl = `${Constants.BMS_BASE_URL}/customers/add`;

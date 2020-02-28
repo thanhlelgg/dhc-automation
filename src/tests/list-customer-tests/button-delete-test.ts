@@ -1,5 +1,5 @@
 import { TestModule, TestCase, gondola } from 'gondolajs';
-import precoditionSetup from './list-customer-precodition-setup';
+import preconditionSetup from './list-customer-precondition-setup';
 import addCustomerPage from '../../pages/add-customer-page';
 import businessSystemPage from '../../pages/business-system-page';
 import listCustomerPage from '../../pages/list-customer-page';
@@ -14,7 +14,7 @@ const AGREE_TO_DELETE = Constants.translator.alertMessage.agreeToDelete;
 
 TestModule('List customer page - button delete test');
 
-Before(precoditionSetup);
+Before(preconditionSetup);
 
 TestCase('BMS-513. マスタ:得意先検索:削除ボタン:削除対象の得意先の案件未作成の場合', async () => {
     const requiredInfo = CustomerInfoData.CUSTOMER_ALL_DATA;

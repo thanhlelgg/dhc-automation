@@ -13,5 +13,5 @@ Data(CUSTOMER_SORT_FIELDS).TestCase('BMS-520. マスタ:得意先検索:ソー�
     gondola.report('Step 2. 一覧の各タイトルでソートボタンをクリックする。');
     await listCustomerPage.clickButtonSort(current);
     gondola.report('VP. 検索結果全体はソートされ、nullは最小値としてソートされること。');
-    gondola.checkTrue(await listCustomerPage.doRowsSortCorrectly(current), 'Element should be sorted correctly');
+    gondola.checkTrue(await listCustomerPage.areRowsSortedCorrectly(current), 'Element should be sorted correctly');
 });

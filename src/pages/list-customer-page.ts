@@ -7,7 +7,14 @@ import { Utilities } from '../common/utilities';
 import { TableHelper } from '../helper/table-helper';
 import TableType from '../models/enum-class/table-type';
 import { CustomerInfoData } from '../models/customer-info';
-import { CustomerSearchResultColumn } from '../models/enum-class/customer-search-result-column';
+export enum CustomerSearchResultColumn {
+    CUSTOMER_CODE,
+    CUSTOMER_NAME,
+    CUSTOMER_CLOSING_DATE,
+    CUSTOMER_IS_DISBALE,
+    CUSTOMER_AID_CODE,
+    CUSTOMER_SUBCODE,
+}
 @page
 export class ListCustomerPage extends GeneralPage {
     fieldName = Constants.translator.fieldName.listCustomer.searchField;
@@ -110,24 +117,31 @@ export class ListCustomerPage extends GeneralPage {
         const requiredInfo = CustomerInfoData.CUSTOMER_ALL_DATA;
         switch (current) {
             case CustomerSearchResultColumn.CUSTOMER_CODE:
-                this.searchCustomer({ customerCode: requiredInfo.overview.code });
+                this.searchCustomer(CustomerSearchResultColumn.CUSTOMER_CODE, requiredInfo.overview.code);
                 break;
             case CustomerSearchResultColumn.CUSTOMER_NAME:
-                this.searchCustomer({ customerName: requiredInfo.overview.name });
+                this.searchCustomer(CustomerSearchResultColumn.CUSTOMER_NAME, requiredInfo.overview.name);
                 break;
             case CustomerSearchResultColumn.CUSTOMER_CLOSING_DATE:
-                this.searchCustomer({ closingDate: requiredInfo.overview.closingDateGroup });
+                this.searchCustomer(
+                    CustomerSearchResultColumn.CUSTOMER_CLOSING_DATE,
+                    requiredInfo.overview.closingDateGroup,
+                );
                 break;
             case CustomerSearchResultColumn.CUSTOMER_IS_DISBALE:
-                this.searchCustomer({
-                    isDisable: Constants.translator.dropdownOptions.customerIsDisable['onlyValidCustomer'],
-                });
+                this.searchCustomer(
+                    CustomerSearchResultColumn.CUSTOMER_IS_DISBALE,
+                    Constants.translator.dropdownOptions.customerIsDisable['onlyValidCustomer'],
+                );
                 break;
             case CustomerSearchResultColumn.CUSTOMER_SUBCODE:
-                this.searchCustomer({ subCode: requiredInfo.overview.advanceReceivedAuxCode });
+                this.searchCustomer(
+                    CustomerSearchResultColumn.CUSTOMER_SUBCODE,
+                    requiredInfo.overview.advanceReceivedAuxCode,
+                );
                 break;
             case CustomerSearchResultColumn.CUSTOMER_AID_CODE:
-                this.searchCustomer({ aidCode: requiredInfo.overview.salesAuxCd });
+                this.searchCustomer(CustomerSearchResultColumn.CUSTOMER_AID_CODE, requiredInfo.overview.salesAuxCd);
                 break;
         }
         await this.clickButtonByIcon(ButtonIcon.SEARCH);
@@ -135,31 +149,24 @@ export class ListCustomerPage extends GeneralPage {
     }
 
     @action('search customer')
-    public async searchCustomer(filter: {
-        customerCode?: string;
-        customerName?: string;
-        closingDate?: string;
-        isDisable?: string;
-        subCode?: string;
-        aidCode?: string;
-    }): Promise<void> {
-        if (filter.customerCode) {
-            await gondola.enter(this.customerCode, filter.customerCode);
-        }
-        if (filter.customerName) {
-            await gondola.enter(this.customerName, filter.customerName);
-        }
-        if (filter.closingDate) {
-            await gondola.select(this.closingDate, filter.closingDate);
-        }
-        if (filter.isDisable) {
-            await gondola.select(this.isDisable, filter.isDisable);
-        }
-        if (filter.subCode) {
-            await gondola.enter(this.subCode, filter.subCode);
-        }
-        if (filter.aidCode) {
-            await gondola.enter(this.aidCode, filter.aidCode);
+    public async searchCustomer(filter: CustomerSearchResultColumn, value?: string): Promise<void> {
+        if (!value) throw new Error('Value should not be empty');
+        switch (filter) {
+            case CustomerSearchResultColumn.CUSTOMER_CODE:
+                await gondola.enter(this.customerCode, value);
+                break;
+            case CustomerSearchResultColumn.CUSTOMER_NAME:
+                await gondola.enter(this.customerName, value);
+                break;
+            case CustomerSearchResultColumn.CUSTOMER_CLOSING_DATE:
+                await gondola.select(this.closingDate, value);
+                break;
+            case CustomerSearchResultColumn.CUSTOMER_SUBCODE:
+                await gondola.enter(this.subCode, value);
+                break;
+            case CustomerSearchResultColumn.CUSTOMER_AID_CODE:
+                await gondola.enter(this.aidCode, value);
+                break;
         }
         await this.clickButtonByIcon(ButtonIcon.SEARCH);
         await gondola.waitUntilStalenessOfElement(this.resultTable);
@@ -231,24 +238,17 @@ export class ListCustomerPage extends GeneralPage {
     }
 
     @action('get input invalid flag')
-    public getInputInvalidFlag(input: any): any {
-        if (input == Constants.CUSTOMER_IS_DISABLE['onlyInvalidCustomer']) {
+    public getInputInvalidFlag(input: string): string {
+        if (input == Constants.CUSTOMER_IS_DISABLE['onlyValidCustomer']) {
             return Constants.NO_STRING;
         }
-        if (input == Constants.CUSTOMER_IS_DISABLE['onlyInvalidCustomer']) {
-            return '';
-        }
+        return '';
     }
 
     @action('click on delete button')
     public async clickOnDeleteButton(customerId: string): Promise<void> {
         const locator = this.deleteButton.format(customerId);
         await gondola.click(locator);
-    }
-
-    @action('wait for alert')
-    public async waitForAlert(): Promise<void> {
-        await gondola.waitForAlert();
     }
 
     @action('does delete button display')
@@ -265,17 +265,17 @@ export class ListCustomerPage extends GeneralPage {
     @action('does alert customer display')
     public async doesAlertCustomerDisplay(
         messageLocator: string,
-        parameter1: string,
-        parameter2: string,
+        customerCode: string,
+        customerName: string,
     ): Promise<boolean> {
-        const locator = messageLocator.format(parameter1, parameter2);
+        const locator = messageLocator.format(customerCode, customerName);
         return await gondola.doesControlDisplay(locator);
     }
 
-    @action('does row sort correctly')
-    public async doRowsSortCorrectly(columnName: string): Promise<boolean> {
+    @action('are row sorted correctly')
+    public async areRowsSortedCorrectly(columnName: string): Promise<boolean> {
         const arr = await this.tableHelper.getAllRowsOneColumn(columnName);
-        return Utilities.compareArrays(arr, arr.sort(), false);
+        return Utilities.isArraySorted(arr, arr.sort());
     }
 }
 export default new ListCustomerPage();

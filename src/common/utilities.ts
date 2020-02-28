@@ -375,8 +375,15 @@ export class Utilities {
 
     //#region Misc
     public static compareArrays(array1: any[], array2: any[], sort = true): boolean {
-        if (!sort) return array1.length === array2.length && array1.every((value, index) => value === array2[index]);
-        return array1.length === array2.length && array1.sort().every((value, index) => value === array2.sort()[index]);
+        if (sort) {
+            array1 = array1.sort();
+            array2 = array2.sort();
+        }
+        return array1.length === array2.length && array1.every((value, index) => value === array2[index]);
+    }
+
+    public static isArraySorted(array1: any[], array2: any[]): boolean {
+        return this.compareArrays(array1, array2, false);
     }
     //#endregion
 

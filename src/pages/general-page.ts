@@ -948,9 +948,14 @@ export class GeneralPage {
     }
 
     @action('click button sort')
-    public async clickButtonSort(colomnName: string): Promise<void> {
-        await gondola.scrollToElement(this.sortButton.format(colomnName));
-        await gondola.click(this.sortButton.format(colomnName));
+    public async clickButtonSort(columnName: string): Promise<void> {
+        await gondola.scrollToElement(this.sortButton.format(columnName));
+        await gondola.click(this.sortButton.format(columnName));
+    }
+
+    @action('wait for alert')
+    public async waitForAlert(): Promise<void> {
+        await gondola.waitForAlert();
     }
 }
 export default new GeneralPage();
