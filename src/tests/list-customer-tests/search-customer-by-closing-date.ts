@@ -4,10 +4,10 @@ import setup from './set-up';
 import listCustomerPage, { CustomerSearchResultColumn } from '../../pages/list-customer-page';
 import { SearchResultColumn } from '../../models/enum-class/search-result-column';
 
-TestModule('List customer page - Search customer by closing date').concat('');
+TestModule('List customer page - Search customer by closing date');
 
 const CUSTOMER_CLOSING_DATE_FIELD_NAME = Constants.translator.fieldName.listCustomer.searchField.closingDate;
-const CUSTOMER_CLOSING_DATE = Object.values(Constants.CLOSING_DATES);
+const CUSTOMER_CLOSING_DATE = Object.values(Constants.CLOSING_DATES).concat('');
 
 Before(setup);
 
